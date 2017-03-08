@@ -1,6 +1,8 @@
 tpv.service('f00Service', ['$http', '$q', function ($http, $q) {
    "use strict";
    
+   const urlBase="http://localhost:8080/SPRING.tpv.M.1.2.0-SNAPSHOT/api/v0";
+   
    this.request = function(config) {
 	      let deferred = $q.defer();
 	      $http(config).then(function (response) {
@@ -21,7 +23,7 @@ tpv.service('f00Service', ['$http', '$q', function ($http, $q) {
    this.version = function () {
       let config = {
  	     method: 'GET',
- 	     url: "http://localhost:8080/SPRING.tpv.1.0.0-SNAPSHOT/api/v0/admins",
+ 	     url: urlBase+"/admins",
 	  };
       return this.request(config);
    }
@@ -33,7 +35,7 @@ tpv.service('f00Service', ['$http', '$q', function ($http, $q) {
 		  $http.defaults.headers.common['Authorization'] = 'Basic ' + Base64.encode(mobile + ':' + password);
 		  let config = {
 		 	 method: 'POST',
-		 	 url: "http://localhost:8080/SPRING.tpv.1.0.0-SNAPSHOT/api/v0/tokens",
+		 	 url: urlBase+"/tokens",
 		  };
 	      return this.request(config);
 	   }
@@ -47,7 +49,7 @@ tpv.service('f00Service', ['$http', '$q', function ($http, $q) {
 	    	  resource="customers";
 		  let config = {
 	 	      method: 'POST',
-	 	      url: "http://localhost:8080/SPRING.tpv.1.0.0-SNAPSHOT/api/v0/" + resource,
+	 	      url: urlBase+"/" + resource,
 	 	      data: {'mobile': mobile, 'username': username, 'password': password}
 		  };
 	      return this.request(config);
@@ -57,7 +59,7 @@ tpv.service('f00Service', ['$http', '$q', function ($http, $q) {
 	      $http.defaults.headers.common['Authorization'] = 'Basic ' + Base64.encode(sessionStorage.token + ':');
 	      let config = {
 	 	     method: 'DELETE',
-	 	     url: "http://localhost:8080/SPRING.tpv.1.0.0-SNAPSHOT/api/v0/admins",
+	 	     url: urlBase+"/admins",
 		  };
 	      return this.request(config);
 	   }
