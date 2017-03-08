@@ -29,7 +29,7 @@ public class Token {
     public Token(User user) {
         assert user != null;
         this.user = user;
-        this.value = new Encrypt().encryptInBase64UrlSafe("" + user.getId() + Long.toString(new Date().getTime()));
+        this.value = new Encrypting().encryptInBase64UrlSafe("" + user.getId() + Long.toString(new Date().getTime()));
     }
 
     public int getId() {

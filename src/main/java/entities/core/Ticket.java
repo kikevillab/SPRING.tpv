@@ -16,7 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import entities.users.Encrypt;
+import entities.users.Encrypting;
 import entities.users.User;
 
 @Entity
@@ -48,7 +48,7 @@ public class Ticket {
         created = Calendar.getInstance();
         this.ticketState = ticketState;
         shoppingList = new ArrayList<>();
-        reference = new Encrypt().encryptInBase64UrlSafe("" + this.getId() + Long.toString(new Date().getTime()));
+        reference = new Encrypting().encryptInBase64UrlSafe("" + this.getId() + Long.toString(new Date().getTime()));
     }
 
     public long getId() {

@@ -9,7 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-import entities.users.Encrypt;
+import entities.users.Encrypting;
 
 @Entity
 public class Voucher {
@@ -30,7 +30,7 @@ public class Voucher {
     }
 
     public Voucher(BigDecimal value) {
-        reference = new Encrypt().encryptInBase64UrlSafe("" + value + Long.toString(new Date().getTime()));
+        reference = new Encrypting().encryptInBase64UrlSafe("" + value + Long.toString(new Date().getTime()));
         this.value = value;
         created = Calendar.getInstance();
         dateOfUse = null;

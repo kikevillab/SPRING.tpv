@@ -7,7 +7,7 @@ import java.util.Base64;
 
 import org.apache.logging.log4j.LogManager;
 
-public class Encrypt {
+public class Encrypting {
 
     public static final String SHA1 = "SHA-1";
 
@@ -19,11 +19,11 @@ public class Encrypt {
 
     private String algorithm;
 
-    public Encrypt(String algorithm) {
+    public Encrypting(String algorithm) {
         this.algorithm = algorithm;
     }
 
-    public Encrypt() {
+    public Encrypting() {
         this(SHA1);
     }
 

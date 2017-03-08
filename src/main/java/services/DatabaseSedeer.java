@@ -18,7 +18,7 @@ import entities.users.User;
 @Service
 @Transactional
 @PropertySource(ResourceNames.PROPERTIES)
-public class Populate {
+public class DatabaseSedeer {
 
     private String adminUsername;
 
