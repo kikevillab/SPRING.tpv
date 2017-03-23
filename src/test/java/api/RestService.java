@@ -6,7 +6,7 @@ import wrappers.UserWrapper;
 
 public class RestService {
 
-    public static final String URL = "http://localhost:8080/SPRING.tpv.1.1.0-SNAPSHOT/api" + Uris.VERSION;
+    public static final String URL = "http://localhost:8080/SPRING.tpv.1.2.0-SNAPSHOT/api" + Uris.VERSION;
 
     public void deleteAll() {
         new RestBuilder<TokenWrapper>(RestService.URL).path(Uris.ADMINS).basicAuth(this.loginAdmin(), "").delete().build();
