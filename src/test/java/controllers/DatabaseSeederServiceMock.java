@@ -2,7 +2,7 @@ package controllers;
 
 import services.DatabaseSeederService;
 
-public class DataServiceMock extends DatabaseSeederService {
+public class DatabaseSeederServiceMock extends DatabaseSeederService {
 
     private boolean executed = false;
 

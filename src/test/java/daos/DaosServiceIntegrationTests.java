@@ -13,14 +13,14 @@ import services.DatabaseSeederService;
 public class DaosServiceIntegrationTests {
 
     @Autowired
-    private DatabaseSeederService dataService;
+    private DatabaseSeederService databaseSeederService;
 
     @PostConstruct
     public void populate() {
-        dataService.seedDatabase(DEFAULT_SEED_FILE);
+        databaseSeederService.seedDatabase(DEFAULT_SEED_FILE);
     }
 
     public void deleteAll() {
-        dataService.deleteAllExceptAdmin();
+        databaseSeederService.deleteAllExceptAdmin();
     }
 }
