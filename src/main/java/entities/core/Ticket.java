@@ -41,18 +41,27 @@ public class Ticket {
     private User user;
 
     public Ticket() {
+        created = Calendar.getInstance();
+        shoppingList = new ArrayList<>();
     }
 
     public Ticket(long id, TicketState ticketState) {
-        this.id = id;
-        created = Calendar.getInstance();
+        this();
+        setId(id);
         this.ticketState = ticketState;
-        shoppingList = new ArrayList<>();
-        reference = new Encrypting().encryptInBase64UrlSafe("" + this.getId() + Long.toString(new Date().getTime()));
     }
 
     public long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+        updateReference();
+    }
+    
+    private void updateReference() {
+        reference = new Encrypting().encryptInBase64UrlSafe("" + this.getId() + Long.toString(new Date().getTime()));
     }
 
     public TicketState getTicketState() {

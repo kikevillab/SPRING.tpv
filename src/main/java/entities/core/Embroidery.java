@@ -27,12 +27,24 @@ public class Embroidery extends Product {
         return stitches;
     }
 
+    public void setStitches(int stitches) {
+        this.stitches = stitches;
+    }
+
     public int getColors() {
         return colors;
     }
 
+    public void setColors(int colors) {
+        this.colors = colors;
+    }
+
     public int getSquareMillimeters() {
         return squareMillimeters;
+    }
+
+    public void setSquareMillimeters(int squareMillimeters) {
+        this.squareMillimeters = squareMillimeters;
     }
 
     @Override

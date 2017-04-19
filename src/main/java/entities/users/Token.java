@@ -28,8 +28,7 @@ public class Token {
 
     public Token(User user) {
         assert user != null;
-        this.user = user;
-        this.value = new Encrypting().encryptInBase64UrlSafe("" + user.getId() + Long.toString(new Date().getTime()));
+        setUser(user);
     }
 
     public int getId() {
@@ -42,6 +41,15 @@ public class Token {
 
     public User getUser() {
         return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+        updateValue();
+    }
+    
+    private void updateValue() {
+        this.value = new Encrypting().encryptInBase64UrlSafe("" + user.getId() + Long.toString(new Date().getTime()));
     }
 
     @Override

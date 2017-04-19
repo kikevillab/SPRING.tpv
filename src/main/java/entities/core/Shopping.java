@@ -57,12 +57,24 @@ public class Shopping {
         return productId;
     }
 
+    public void setProductId(long productId) {
+        this.productId = productId;
+    }
+
     public String getDescription() {
         return description;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public BigDecimal getRetailPrice() {
         return retailPrice;
+    }
+
+    public void setRetailPrice(BigDecimal retailPrice) {
+        this.retailPrice = retailPrice;
     }
 
     @Override
