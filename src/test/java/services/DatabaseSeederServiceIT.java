@@ -182,12 +182,12 @@ public class DatabaseSeederServiceIT {
 
     @Test
     public void testExistentFile() {
-        assertTrue(databaseSeederService.checkYamlFileExists(DEFAULT_SEED_FILE));
+        assertTrue(databaseSeederService.existsYamlFile(DEFAULT_SEED_FILE));
     }
 
     @Test
     public void testNonexistentFile() {
-        assertFalse(databaseSeederService.checkYamlFileExists("nonexistent.yml"));
+        assertFalse(databaseSeederService.existsYamlFile("nonexistent.yml"));
     }
 
     @After

@@ -115,7 +115,7 @@ public class DatabaseSeederService {
         }
     }
 
-    public boolean checkYamlFileExists(String fileName) {
+    public boolean existsYamlFile(String fileName) {
         Resource resource = appContext.getResource(YAML_FILES_ROOT + fileName);
         return resource.exists();
     }
