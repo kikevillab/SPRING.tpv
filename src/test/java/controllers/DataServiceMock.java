@@ -1,8 +1,8 @@
 package controllers;
 
-import services.DataService;
+import services.DatabaseSeederService;
 
-public class DataServiceMock extends DataService {
+public class DataServiceMock extends DatabaseSeederService {
 
     private boolean executed = false;
 

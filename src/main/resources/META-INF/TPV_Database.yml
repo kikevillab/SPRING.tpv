@@ -1,0 +1,304 @@
+userList:
+  - &user666000000
+    mobile: 666000000
+    username: customer0
+    password: pass
+  - &user666000001
+    mobile: 666000001
+    username: customer1
+    password: pass
+  - &user666000002
+    mobile: 666000002
+    username: customer2
+    password: pass
+    address: Calle Goya, 102. Madrid
+    dni: 1235678Z
+    email: user2@user2.com
+  - &user666000003
+    mobile: 666000003
+    username: customer3
+    password: pass
+    address: Calle Gran Vía, 23. Madrid
+    dni: 1235678X
+    email: user@user.com
+
+authorizationList:
+  - user: *user666000000
+    role: CUSTOMER
+  - user: *user666000001
+    role: CUSTOMER
+  - user: *user666000002
+    role: CUSTOMER
+  - user: *user666000003
+    role: CUSTOMER
+
+tokenList:
+  - user: *user666000000
+
+voucherList:
+  - value: 20
+  - value: 40.00
+  - value: 60.00
+  - value: 80
+    dateOfUse: 2017-08-14 11:00:00.00 +1
+
+providerList:
+  - &provider666100000
+    company: company0
+    address: address0
+    mobile: 666100000
+    phone: 916661000
+    paymentConditions: No
+    note: No
+  - &provider666100001
+    company: company1
+    address: address1
+    mobile: 666100001
+    phone: 916661001
+    paymentConditions: No
+    note: No
+  - company: company2
+    address: address2
+    mobile: 666100002
+    phone: 916661002
+    paymentConditions: No
+    note: No
+  - company: company3
+    address: address3
+    mobile: 666100003
+    phone: 916661003
+    paymentConditions: No
+    note: No
+
+articleList:
+  - &article84000001111
+    id: 84000001111
+    reference: article0
+    retailPrice: 20
+    description: article0
+    wholesalePrice: 10
+    provider: *provider666100000
+  - &article84000001112
+    id: 84000001112
+    reference: article1
+    retailPrice: 21
+    description: article1
+    wholesalePrice: 11
+    provider: *provider666100000
+  - id: 84000001113
+    reference: article2
+    retailPrice: 22
+    description: article2
+    wholesalePrice: 12
+    provider: *provider666100000
+  - id: 84000001114
+    reference: article3
+    retailPrice: 23
+    description: article3
+    wholesalePrice: 13
+    provider: *provider666100000
+  - id: 84000001115
+    reference: article4
+    retailPrice: 24
+    description: article4
+    wholesalePrice: 14
+    provider: *provider666100001
+  - id: 84000001116
+    reference: article5
+    retailPrice: 25
+    description: article5
+    wholesalePrice: 15
+    provider: *provider666100001
+  - id: 84000001117
+    reference: article6
+    retailPrice: 26
+    description: article6
+    wholesalePrice: 16
+    provider: *provider666100001
+  - id: 84000001118
+    reference: article7
+    retailPrice: 27
+    description: article7
+    wholesalePrice: 17
+    provider: *provider666100001
+
+embroideryList:
+  - id: 84000002222
+    reference: embroidery0
+    retailPrice: 20
+    description: embroidery0
+    stitches: 0
+    colors: 0
+    squareMillimeters: 0
+  - id: 84000002223
+    reference: embroidery1
+    retailPrice: 21
+    description: embroidery1
+    stitches: 1000
+    colors: 1
+    squareMillimeters: 10
+  - id: 84000002224
+    reference: embroidery2
+    retailPrice: 22
+    description: embroidery2
+    stitches: 2000
+    colors: 2
+    squareMillimeters: 20
+  - id: 84000002225
+    reference: embroidery3
+    retailPrice: 23
+    description: embroidery3
+    stitches: 3000
+    colors: 3
+    squareMillimeters: 30
+
+textilePrintingList:
+  - id: 84000003333
+    reference: textilePrinting0
+    retailPrice: 20
+    description: textilePrinting0
+    type: ploter
+  - id: 84000003334
+    reference: textilePrinting1
+    retailPrice: 21
+    description: textilePrinting1
+    type: ploter
+  - id: 84000003335
+    reference: textilePrinting2
+    retailPrice: 22
+    description: textilePrinting2
+    type: ploter
+  - id: 84000003336
+    reference: textilePrinting3
+    retailPrice: 23
+    description: textilePrinting3
+    type: ploter
+
+ticketList:
+  - id: 1
+    ticketState: CLOSED
+    shoppingList:
+      - amount: 1
+        discount: 0
+        productId: 84000001111
+        description: article0
+        retailPrice: 20
+      - amount: 2
+        discount: 0
+        productId: 84000001112
+        description: article1
+        retailPrice: 21
+      - amount: 3
+        discount: 0
+        productId: 84000001113
+        description: article2
+        retailPrice: 22
+      - amount: 4
+        discount: 0
+        productId: 84000001114
+        description: article3
+        retailPrice: 23
+  - id: 2
+    ticketState: OPENED
+    shoppingList:
+      - amount: 1
+        discount: 0
+        productId: 84000002222
+        description: embroidery0
+        retailPrice: 20
+      - amount: 2
+        discount: 0
+        productId: 84000002223
+        description: embroidery1
+        retailPrice: 21
+      - amount: 3
+        discount: 0
+        productId: 84000002224
+        description: embroidery2
+        retailPrice: 22
+      - amount: 4
+        discount: 0
+        productId: 84000002225
+        description: embroidery3
+        retailPrice: 23
+    user: *user666000003
+  - &ticket3
+    id: 3
+    ticketState: CLOSED
+    shoppingList:
+      - amount: 1
+        discount: 10
+        productId: 84000003333
+        description: textilePrinting0
+        retailPrice: 20
+      - amount: 2
+        discount: 10
+        productId: 84000003334
+        description: textilePrinting1
+        retailPrice: 21
+      - amount: 3
+        discount: 10
+        productId: 84000003335
+        description: textilePrinting2
+        retailPrice: 22
+      - amount: 6
+        discount: 10
+        productId: 84000003336
+        description: textilePrinting3
+        retailPrice: 23
+    user: *user666000003
+  - &ticket4
+    id: 4
+    ticketState: CLOSED
+    shoppingList:
+      - amount: 1
+        discount: 10
+        productId: 84000003333
+        description: textilePrinting0
+        retailPrice: 20
+      - amount: 2
+        discount: 10
+        productId: 84000003334
+        description: textilePrinting1
+        retailPrice: 21
+      - amount: 3
+        discount: 10
+        productId: 84000003335
+        description: textilePrinting2
+        retailPrice: 22
+      - amount: 3
+        discount: 10
+        productId: 84000003336
+        description: textilePrinting3
+        retailPrice: 23
+    user: *user666000002
+  - id: 5
+    ticketState: CLOSED
+    shoppingList:
+      - amount: 1
+        discount: 10
+        productId: 84000003333
+        description: textilePrinting0
+        retailPrice: 20
+      - amount: 2
+        discount: 10
+        productId: 84000003334
+        description: textilePrinting1
+        retailPrice: 21
+      - amount: 3
+        discount: 10
+        productId: 84000003335
+        description: textilePrinting2
+        retailPrice: 22
+      - amount: 5
+        discount: 10
+        productId: 84000003336
+        description: textilePrinting3
+        retailPrice: 23
+    user: *user666000002
+
+invoiceList:
+  - id: 20170001
+    ticket: *ticket3
+  - id: 20170002
+    ticket: *ticket4

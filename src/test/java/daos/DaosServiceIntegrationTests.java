@@ -31,7 +31,7 @@ import entities.users.Authorization;
 import entities.users.Role;
 import entities.users.Token;
 import entities.users.User;
-import services.DataService;
+import services.DatabaseSeederService;
 
 @Service
 public class DaosServiceIntegrationTests {
@@ -46,7 +46,7 @@ public class DaosServiceIntegrationTests {
     private AuthorizationDao authorizationDao;
 
     @Autowired
-    private DataService dataService;
+    private DatabaseSeederService dataService;
 
     @Autowired
     private VoucherDao voucherDao;
