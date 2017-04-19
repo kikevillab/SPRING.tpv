@@ -20,7 +20,7 @@ public class TicketDaoIT {
 
     @Test
     public void testCreate() {
-        assertEquals(3, ticketDao.count());
+        assertEquals(5, ticketDao.count());
     }
 
 }

@@ -37,18 +37,15 @@ public class User {
     private boolean active;
 
     public User() {
+        this.registrationDate = Calendar.getInstance();
     }
 
     public User(long mobile, String username, String password) {
+        this();
         this.mobile = mobile;
         this.username = username;
-        this.password = new BCryptPasswordEncoder().encode(password);
-        this.registrationDate = Calendar.getInstance();
+        setPassword(password);
         this.active = true;
-    }
-
-    public void changePassword(String password) {
-        this.password = new BCryptPasswordEncoder().encode(password);
     }
 
     public int getId() {
@@ -57,6 +54,10 @@ public class User {
 
     public long getMobile() {
         return mobile;
+    }
+
+    public void setMobile(long mobile) {
+        this.mobile = mobile;
     }
 
     public String getUsername() {
@@ -93,6 +94,10 @@ public class User {
 
     public String getPassword() {
         return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = new BCryptPasswordEncoder().encode(password);
     }
 
     public Calendar getRegistrationDate() {

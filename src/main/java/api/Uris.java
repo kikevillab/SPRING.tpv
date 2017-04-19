@@ -18,4 +18,5 @@ public class Uris {
 
     public static final String ACTIVE = "/active";
 
+    public static final String DATABASE_SEED = "/db_seed";
 }

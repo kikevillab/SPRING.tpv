@@ -3,20 +3,20 @@ package controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import services.DataService;
+import services.DatabaseSeederService;
 
 @Controller
 public class AdminController {
 
-    private DataService dataService;
+    private DatabaseSeederService databaseSeederService;
 
     @Autowired
-    public void setDataService(DataService dataService) {
-        this.dataService = dataService;
+    public void setDatabaseSeederService(DatabaseSeederService databaseSeederService) {
+        this.databaseSeederService = databaseSeederService;
     }
 
     public void deleteAllExceptAdmin() {
-        dataService.deleteAllExceptAdmin();
+        databaseSeederService.deleteAllExceptAdmin();
     }
 
 }

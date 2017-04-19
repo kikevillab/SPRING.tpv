@@ -1,0 +1,86 @@
+userList:
+  - &user777000000
+    mobile: 777000000
+    username: customer0_seed_test
+    password: pass
+
+authorizationList:
+  - user: *user777000000
+    role: CUSTOMER
+    
+tokenList:
+  - user: *user777000000
+
+voucherList:
+  - value: 40.00
+  - value: 60.00
+  - value: 80
+    dateOfUse: 2017-08-14 11:00:00.00 +1
+
+providerList:
+  - &provider777100000
+    company: company0
+    address: address0
+    mobile: 777100000
+    phone: 917771000
+    paymentConditions: No
+    note: No
+    
+articleList:
+  - &article74000001111
+    id: 74000001111
+    reference: article0_seed_test
+    retailPrice: 20
+    description: article0_seed_test
+    wholesalePrice: 10
+    provider: *provider777100000
+    
+embroideryList:
+  - id: 74000002222
+    reference: embroidery0_seed_test
+    retailPrice: 20
+    description: embroidery0_seed_test
+    stitches: 0
+    colors: 0
+    squareMillimeters: 0
+    
+textilePrintingList:
+  - id: 74000003333
+    reference: textilePrinting0_seed_test
+    retailPrice: 20
+    description: textilePrinting0_seed_test
+    type: ploter
+
+ticketList:
+  - &ticket71
+    id: 71
+    ticketState: CLOSED
+    shoppingList:
+      - amount: 1
+        discount: 0
+        productId: 74000001111
+        description: article0_seed_test
+        retailPrice: 20
+      - amount: 2
+        discount: 15
+        productId: 74000002222
+        description: embroidery0_seed_test
+        retailPrice: 21
+  - &ticket72
+    id: 72
+    ticketState: OPENED
+    shoppingList:
+      - amount: 5
+        discount: 20
+        productId: 74000003333
+        description: textilePrinting0_seed_test
+        retailPrice: 20
+      - amount: 1
+        discount: 15
+        productId: 74000002222
+        description: embroidery0_seed_test
+        retailPrice: 21
+
+invoiceList:
+  - id: 720170001
+    ticket: *ticket71

@@ -9,13 +9,13 @@ import static org.junit.Assert.assertFalse;
 public class AdminControllerTest {
     private AdminController adminController;
 
-    private DataServiceMock dataServiceMock;
+    private DatabaseSeederServiceMock dataServiceMock;
 
     @Before
     public void before() {
         adminController = new AdminController();
-        dataServiceMock = new DataServiceMock();
-        adminController.setDataService(dataServiceMock);
+        dataServiceMock = new DatabaseSeederServiceMock();
+        adminController.setDatabaseSeederService(dataServiceMock);
     }
 
     @Test

@@ -27,13 +27,13 @@ public class Voucher {
     private Calendar dateOfUse;
 
     public Voucher() {
+        created = Calendar.getInstance();
+        dateOfUse = null;
     }
 
     public Voucher(BigDecimal value) {
-        reference = new Encrypting().encryptInBase64UrlSafe("" + value + Long.toString(new Date().getTime()));
-        this.value = value;
-        created = Calendar.getInstance();
-        dateOfUse = null;
+        this();
+        setValue(value);
     }
 
     public int getId() {
@@ -46,6 +46,15 @@ public class Voucher {
 
     public BigDecimal getValue() {
         return value;
+    }
+
+    public void setValue(BigDecimal value) {
+        this.value = value;
+        updateReference();
+    }
+    
+    private void updateReference() {
+        reference = new Encrypting().encryptInBase64UrlSafe("" + value + Long.toString(new Date().getTime()));
     }
 
     public Calendar getCreated() {
