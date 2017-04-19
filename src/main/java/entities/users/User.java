@@ -56,6 +56,10 @@ public class User {
         return mobile;
     }
 
+    public void setMobile(long mobile) {
+        this.mobile = mobile;
+    }
+
     public String getUsername() {
         return username;
     }
