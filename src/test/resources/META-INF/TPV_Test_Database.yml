@@ -29,7 +29,7 @@ providerList:
 articleList:
   - &article74000001111
     id: 74000001111
-    reference: article0_seed_test
+    code: article0_seed_test
     retailPrice: 20
     description: article0_seed_test
     wholesalePrice: 10
@@ -37,7 +37,7 @@ articleList:
     
 embroideryList:
   - id: 74000002222
-    reference: embroidery0_seed_test
+    code: embroidery0_seed_test
     retailPrice: 20
     description: embroidery0_seed_test
     stitches: 0
@@ -46,7 +46,7 @@ embroideryList:
     
 textilePrintingList:
   - id: 74000003333
-    reference: textilePrinting0_seed_test
+    code: textilePrinting0_seed_test
     retailPrice: 20
     description: textilePrinting0_seed_test
     type: ploter
