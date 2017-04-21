@@ -11,7 +11,8 @@ tokenList:
   - user: *user777000001
     
 embroideryList:
-  - id: 74000002223
+  - &embroidery74000002223
+    id: 74000002223
     code: embroidery1_seed_test
     retailPrice: 20
     description: embroidery1_seed_test
@@ -20,7 +21,8 @@ embroideryList:
     squareMillimeters: 0
     
 textilePrintingList:
-  - id: 74000003334
+  - &textilePrinting74000003334
+    id: 74000003334
     code: textilePrinting1_seed_test
     retailPrice: 20
     description: textilePrinting1_seed_test
@@ -36,13 +38,13 @@ ticketList:
     shoppingList:
       - amount: 5
         discount: 20
-        productId: 74000003334
+        product: *textilePrinting74000003334
         description: textilePrinting1_seed_test
         retailPrice: 20
         shoppingState: CLOSED
       - amount: 1
         discount: 15
-        productId: 74000002223
+        product: *embroidery74000002223
         description: embroidery1_seed_test
         retailPrice: 21
         shoppingState: CLOSED

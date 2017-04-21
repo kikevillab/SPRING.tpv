@@ -7,6 +7,8 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Shopping {
@@ -18,7 +20,9 @@ public class Shopping {
 
     private int discount;
 
-    private long productId;
+    @ManyToOne
+    @JoinColumn
+    private Product product;
 
     private String description;
 
@@ -30,10 +34,10 @@ public class Shopping {
     public Shopping() {
     }
 
-    public Shopping(int amount, int discount, long productId, String description, BigDecimal retailPrice, ShoppingState shoppingState) {
+    public Shopping(int amount, int discount, Product product, String description, BigDecimal retailPrice, ShoppingState shoppingState) {
         this.amount = amount;
         this.discount = discount;
-        this.productId = productId;
+        this.product = product;
         this.description = description;
         this.retailPrice = retailPrice;
         this.shoppingState = shoppingState;
@@ -59,12 +63,12 @@ public class Shopping {
         this.discount = discount;
     }
 
-    public long getProductId() {
-        return productId;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setProductId(long productId) {
-        this.productId = productId;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public String getDescription() {
@@ -112,7 +116,7 @@ public class Shopping {
 
     @Override
     public String toString() {
-        return "Shopping[" + id + ": amount=" + amount + ", discount=" + discount + ", productId=" + productId + ", description="
+        return "Shopping[" + id + ": amount=" + amount + ", discount=" + discount + ", productId=" + product + ", description="
                 + description + ", retailPrice=" + retailPrice + ", shoppingState=" + shoppingState + "]";
     }
 
