@@ -14,20 +14,23 @@ public abstract class Product {
     @Id
     private long id;
 
-    private String reference;
+    private String code;
+
+    private String description;
 
     private BigDecimal retailPrice;
 
-    private String description;
+    private boolean discontinued;
 
     public Product() {
     }
 
-    public Product(long id, String reference, BigDecimal retailPrice, String description) {
+    public Product(long id, String code, BigDecimal retailPrice, String description) {
         this.id = id;
-        this.reference = reference;
+        this.code = code;
         this.retailPrice = retailPrice;
         this.description = description;
+        discontinued = false;
     }
 
     public long getId() {
@@ -38,12 +41,20 @@ public abstract class Product {
         this.id = id;
     }
 
-    public String getReference() {
-        return reference;
+    public String getCode() {
+        return code;
     }
 
-    public void setReference(String reference) {
-        this.reference = reference;
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public BigDecimal getRetailPrice() {
@@ -54,12 +65,12 @@ public abstract class Product {
         this.retailPrice = retailPrice;
     }
 
-    public String getDescription() {
-        return description;
+    public boolean isDiscontinued() {
+        return discontinued;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDiscontinued(boolean discontinued) {
+        this.discontinued = discontinued;
     }
 
     @Override
@@ -80,10 +91,11 @@ public abstract class Product {
         }
         return id == ((Product) obj).id;
     }
-
+    
     @Override
     public String toString() {
-        return id + ": reference=" + reference + ", retailPrice=" + retailPrice + ", description=" + description;
+        return id + ": code=" + code + ", description=" + description + ", retailPrice=" + retailPrice + ", discontinued="
+                + discontinued + "]";
     }
 
 }

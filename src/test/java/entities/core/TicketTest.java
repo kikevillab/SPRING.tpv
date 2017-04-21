@@ -8,7 +8,7 @@ public class TicketTest {
 
     @Test
     public void testTicketLongTicketState() {
-        Ticket ticket = new Ticket(666, TicketState.OPENED);
+        Ticket ticket = new Ticket(666);
         assertTrue(ticket.getReference().length() > 20);
     }
 
