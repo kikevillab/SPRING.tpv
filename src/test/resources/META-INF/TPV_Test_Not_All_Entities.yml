@@ -33,15 +33,16 @@ textilePrintingList:
 
 ticketList:
   - id: 73
-    ticketState: CLOSED
     shoppingList:
       - amount: 5
         discount: 20
         productId: 74000003334
         description: textilePrinting1_seed_test
         retailPrice: 20
+        shoppingState: CLOSED
       - amount: 1
         discount: 15
         productId: 74000002223
         description: embroidery1_seed_test
         retailPrice: 21
+        shoppingState: CLOSED

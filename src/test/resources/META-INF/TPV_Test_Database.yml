@@ -54,32 +54,34 @@ textilePrintingList:
 ticketList:
   - &ticket71
     id: 71
-    ticketState: CLOSED
     shoppingList:
       - amount: 1
         discount: 0
         productId: 74000001111
         description: article0_seed_test
         retailPrice: 20
+        shoppingState: CLOSED
       - amount: 2
         discount: 15
         productId: 74000002222
         description: embroidery0_seed_test
         retailPrice: 21
+        shoppingState: STARTED
   - &ticket72
     id: 72
-    ticketState: OPENED
     shoppingList:
       - amount: 5
         discount: 20
         productId: 74000003333
         description: textilePrinting0_seed_test
         retailPrice: 20
+        shoppingState: COMMITTED
       - amount: 1
         discount: 15
         productId: 74000002222
         description: embroidery0_seed_test
         retailPrice: 21
+        shoppingState: CLOSED
 
 invoiceList:
   - id: 720170001

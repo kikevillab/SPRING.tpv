@@ -9,8 +9,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -30,9 +28,6 @@ public class Ticket {
     @Column(unique = true, nullable = false)
     private String reference;
 
-    @Enumerated(EnumType.STRING)
-    private TicketState ticketState;
-
     @OneToMany(cascade = CascadeType.ALL)
     private List<Shopping> shoppingList;
 
@@ -45,10 +40,9 @@ public class Ticket {
         shoppingList = new ArrayList<>();
     }
 
-    public Ticket(long id, TicketState ticketState) {
+    public Ticket(long id) {
         this();
         setId(id);
-        this.ticketState = ticketState;
     }
 
     public long getId() {
@@ -62,14 +56,6 @@ public class Ticket {
     
     private void updateReference() {
         reference = new Encrypting().encryptInBase64UrlSafe("" + this.getId() + Long.toString(new Date().getTime()));
-    }
-
-    public TicketState getTicketState() {
-        return ticketState;
-    }
-
-    public void setTicketState(TicketState ticketState) {
-        this.ticketState = ticketState;
     }
 
     public void addShopping(Shopping shopping) {
@@ -121,8 +107,8 @@ public class Ticket {
 
     @Override
     public String toString() {
-        String createTime = new SimpleDateFormat("HH:00 dd-MMM-yyyy ").format(created.getTime());
-        return "Ticket[" + id + ": created=" + createTime + ", ticketState=" + ticketState + ", shoppingList=" + shoppingList + ", userId="
+        String createTime = new SimpleDateFormat("HH:mm dd-MMM-yyyy ").format(created.getTime());
+        return "Ticket[" + id + ": created=" + createTime + ", shoppingList=" + shoppingList + ", userId="
                 + user.getId() + "]";
     }
 

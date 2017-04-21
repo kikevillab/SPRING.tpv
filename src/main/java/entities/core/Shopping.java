@@ -3,6 +3,8 @@ package entities.core;
 import java.math.BigDecimal;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
@@ -22,15 +24,19 @@ public class Shopping {
 
     private BigDecimal retailPrice;
 
+    @Enumerated(EnumType.STRING)
+    private ShoppingState shoppingState;
+
     public Shopping() {
     }
 
-    public Shopping(int amount, int discount, long productId, String description, BigDecimal retailPrice) {
+    public Shopping(int amount, int discount, long productId, String description, BigDecimal retailPrice, ShoppingState shoppingState) {
         this.amount = amount;
         this.discount = discount;
         this.productId = productId;
         this.description = description;
         this.retailPrice = retailPrice;
+        this.shoppingState = shoppingState;
     }
 
     public int getId() {
@@ -77,6 +83,14 @@ public class Shopping {
         this.retailPrice = retailPrice;
     }
 
+    public ShoppingState getShoppingState() {
+        return shoppingState;
+    }
+
+    public void setShoppingState(ShoppingState shoppingState) {
+        this.shoppingState = shoppingState;
+    }
+
     @Override
     public int hashCode() {
         return id;
@@ -99,7 +113,7 @@ public class Shopping {
     @Override
     public String toString() {
         return "Shopping[" + id + ": amount=" + amount + ", discount=" + discount + ", productId=" + productId + ", description="
-                + description + ", retailPrice=" + retailPrice + "]";
+                + description + ", retailPrice=" + retailPrice + ", shoppingState=" + shoppingState + "]";
     }
 
 }
