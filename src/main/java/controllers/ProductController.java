@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 
 import daos.core.ProductDao;
 import entities.core.Product;
+import wrappers.ProductWrapper;
 
 @Controller
 public class ProductController {
@@ -16,7 +17,12 @@ public class ProductController {
         this.productDao = productDao;
     }
 
-    public Product getProductByCode(String code) {
-        return productDao.findFirstByCode(code);
+    public ProductWrapper getProductByCode(String code) {
+        ProductWrapper productWrapper = null;
+        Product product = productDao.findFirstByCode(code);
+        if (product != null) {
+            productWrapper = new ProductWrapper(product);
+        }
+        return productWrapper;
     }
 }

@@ -13,7 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import config.PersistenceConfig;
 import config.TestsControllerConfig;
 import config.TestsPersistenceConfig;
-import entities.core.Product;
+import wrappers.ProductWrapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {PersistenceConfig.class, TestsPersistenceConfig.class, TestsControllerConfig.class})
@@ -25,7 +25,7 @@ public class ProductControllerIT {
     @Test
     public void testGetProductByCode() {
         String productCode = "article0";
-        Product product = productController.getProductByCode(productCode);
+        ProductWrapper product = productController.getProductByCode(productCode);
         assertNotNull(product);
         assertEquals(productCode, product.getCode());
     }
@@ -33,7 +33,7 @@ public class ProductControllerIT {
     @Test
     public void testGetNonexistentProductByCode() {
         String productCode = "justTesting-123";
-        Product product = productController.getProductByCode(productCode);
+        ProductWrapper product = productController.getProductByCode(productCode);
         assertNull(product);
     }
 }
