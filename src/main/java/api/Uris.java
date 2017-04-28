@@ -7,6 +7,8 @@ public class Uris {
     public static final String VERSION = "/v0";
 
     public static final String ID = "/{id}";
+    
+    public static final String CODE = "/{code}";
 
     public static final String ADMINS = "/admins";
 
@@ -19,4 +21,6 @@ public class Uris {
     public static final String ACTIVE = "/active";
 
     public static final String DATABASE_SEED = "/db_seed";
+    
+    public static final String PRODUCTS = "/products";
 }
