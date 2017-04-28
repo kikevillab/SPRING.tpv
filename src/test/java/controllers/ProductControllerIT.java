@@ -23,17 +23,17 @@ public class ProductControllerIT {
     private ProductController productController;
 
     @Test
-    public void testGetProduct() {
-        long productId = 84000001111L;
-        Product product = productController.getProduct(productId);
+    public void testGetProductByCode() {
+        String productCode = "article0";
+        Product product = productController.getProductByCode(productCode);
         assertNotNull(product);
-        assertEquals(productId, product.getId());
+        assertEquals(productCode, product.getCode());
     }
 
     @Test
-    public void testGetNonexistentProduct() {
-        long productId = 3548455548455484L;
-        Product product = productController.getProduct(productId);
+    public void testGetNonexistentProductByCode() {
+        String productCode = "justTesting-123";
+        Product product = productController.getProductByCode(productCode);
         assertNull(product);
     }
 }

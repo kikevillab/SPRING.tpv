@@ -16,7 +16,7 @@ public class ProductController {
         this.productDao = productDao;
     }
 
-    public Product getProduct(long id) {
-        return productDao.findOne(id);
+    public Product getProductByCode(String code) {
+        return productDao.findFirstByCode(code);
     }
 }

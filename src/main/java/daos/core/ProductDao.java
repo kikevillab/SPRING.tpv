@@ -6,4 +6,5 @@ import entities.core.Product;
 
 public interface ProductDao extends JpaRepository<Product, Long> {
 
+    Product findFirstByCode(String code);
 }
