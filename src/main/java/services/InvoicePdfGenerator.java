@@ -1,5 +1,8 @@
 package services;
 
+import static config.ResourceNames.INVOICES_PDFS_ROOT;
+import static config.ResourceNames.INVOICE_PDF_FILENAME_ROOT;
+
 import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
 
@@ -12,16 +15,16 @@ import entities.core.Shopping;
 import entities.core.Ticket;
 
 public class InvoicePdfGenerator extends PdfGenerator<Invoice> {
-	private final static String INVOICE_PATH = "invoice";
-
-	private final static float[] SHOPPING_LIST_COLUMNS_WIDTHS = new float[] { 10.0f, 30.0f, 30.0f, 10.0f, 40.0f,
-			30.0f };
-
-	private final static String FILENAME_ROOT = "invoice_";
+    private final static float[] SHOPPING_LIST_COLUMNS_WIDTHS = new float[] { 10.0f, 30.0f, 30.0f, 10.0f, 40.0f,
+            30.0f };	
+    
+    public InvoicePdfGenerator(Invoice entity) {
+        super(entity);
+    }
 
 	@Override
 	protected String ownPath() {
-		return INVOICE_PATH;
+		return INVOICES_PDFS_ROOT + INVOICE_PDF_FILENAME_ROOT + entity.getId();
 	}
 
 	@Override
@@ -30,10 +33,10 @@ public class InvoicePdfGenerator extends PdfGenerator<Invoice> {
 	}
 
 	@Override
-	protected void generatePdf(Invoice invoice) throws FileNotFoundException {
-		super.generatePdf(invoice);
-		pdfDocument.add(new Paragraph(FILENAME_ROOT + invoice.getId()));
-		Ticket ticket = invoice.getTicket();
+	protected void generatePdf() throws FileNotFoundException {
+		super.generatePdf();
+		pdfDocument.add(new Paragraph(INVOICE_PDF_FILENAME_ROOT + entity.getId()));
+		Ticket ticket = entity.getTicket();
 		pdfDocument.add(new Paragraph("====================== Ticket ======================"));
 		pdfDocument.add(new Paragraph("Reference: " + ticket.getReference()));
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");

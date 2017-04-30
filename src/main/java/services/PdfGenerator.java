@@ -13,6 +13,11 @@ import com.itextpdf.layout.Document;
 public abstract class PdfGenerator<T> {
 
     protected Document pdfDocument;
+    protected T entity;
+    
+    public PdfGenerator(T entity){
+        this.entity = entity;
+    }
 
     private void makeDirectories(String path) {
         File file = new File(createPath(path));
@@ -41,7 +46,7 @@ public abstract class PdfGenerator<T> {
         return new Document(pdfDocument, pageSize);
     }
 
-    protected void generatePdf(T entity) throws FileNotFoundException {
+    protected void generatePdf() throws FileNotFoundException {
         String path = ownPath();
         makeDirectories(path);
         pdfDocument = getPdfDocument(path, ownPageSize());

@@ -28,7 +28,12 @@ public class ResourceNames {
 
 	public static final String ADMIN_FILE = "admin.yml";
 	
-	public final static String PDFS_ROOT = System.getProperty("user.home") + "/tpv/pdfs/";
+	public final static String PDFS_ROOT = System.getProperty("user.home") + "\\tpv\\pdfs";
 	
 	public final static String PDF_FILE_EXT = ".pdf";
+	
+	public final static String INVOICES_PDFS_ROOT = "\\invoice";
+	
+	public final static String INVOICE_PDF_FILENAME_ROOT = "\\INVOICE_";
+	
 }
