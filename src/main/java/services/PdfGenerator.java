@@ -50,6 +50,11 @@ public abstract class PdfGenerator<T> {
         String path = ownPath();
         makeDirectories(path);
         pdfDocument = getPdfDocument(path, ownPageSize());
+        buildPdf();
+        pdfDocument.close();
     }
 
+    protected abstract void buildPdf();
+    
+    
 }
