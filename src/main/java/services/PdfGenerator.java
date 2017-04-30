@@ -46,7 +46,7 @@ public abstract class PdfGenerator<T> {
         return new Document(pdfDocument, pageSize);
     }
 
-    protected void generatePdf() throws FileNotFoundException {
+    public void generatePdf() throws FileNotFoundException {
         String path = ownPath();
         makeDirectories(path);
         pdfDocument = getPdfDocument(path, ownPageSize());

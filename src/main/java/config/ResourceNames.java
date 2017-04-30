@@ -36,8 +36,8 @@ public class ResourceNames {
 	
 	public final static String INVOICE_PDF_FILENAME_ROOT = "\\INVOICE_";
 	
-	public final static String TICKET_PDFS_ROOT = "\\ticket";
+	public final static String TICKETS_PDFS_ROOT = "\\ticket";
 	
-	public final static String TICKET_PDF_FILENAME_ROOT = "\\INVOICE_";
+	public final static String TICKET_PDF_FILENAME_ROOT = "\\TICKET_";
 	
 }

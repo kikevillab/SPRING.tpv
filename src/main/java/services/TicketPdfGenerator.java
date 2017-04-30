@@ -1,6 +1,6 @@
 package services;
 
-import static config.ResourceNames.TICKET_PDFS_ROOT;
+import static config.ResourceNames.TICKETS_PDFS_ROOT;
 import static config.ResourceNames.TICKET_PDF_FILENAME_ROOT;
 
 import java.text.SimpleDateFormat;
@@ -21,7 +21,7 @@ public class TicketPdfGenerator extends PdfGenerator<Ticket>{
 
     @Override
     protected String ownPath() {
-        return TICKET_PDFS_ROOT + TICKET_PDF_FILENAME_ROOT + entity.getId();
+        return TICKETS_PDFS_ROOT + TICKET_PDF_FILENAME_ROOT + entity.getId();
     }
 
     @Override
@@ -51,9 +51,6 @@ public class TicketPdfGenerator extends PdfGenerator<Ticket>{
             shoppingListTable.addCell(String.valueOf(shopping.getDescription()));
             shoppingListTable.addCell(String.valueOf(shopping.getRetailPrice() + "€"));
         }
-        pdfDocument.add(shoppingListTable);
-        
-    }
-    
-    
+        pdfDocument.add(shoppingListTable);       
+    }    
 }
