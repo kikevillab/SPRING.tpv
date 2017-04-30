@@ -8,7 +8,11 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +44,14 @@ public class PdfGeneratorServiceIT {
 		assertTrue(pdfFile.canRead());
 		assertTrue(pdfFile.canWrite());
 		assertTrue(pdfFile.canExecute());
+	}
+	
+	@After
+	public void tearDown() throws IOException{
+	    String path = PDFS_ROOT + INVOICES_PDFS_ROOT + INVOICE_PDF_FILENAME_ROOT + 20170001 + PDF_FILE_EXT;
+	    new File(path).delete();
+	    Files.delete(new File(System.getProperty("user.home") + "\\tpv\\pdfs\\invoice").toPath());
+	    Files.delete(new File(System.getProperty("user.home") + "\\tpv\\pdfs").toPath());
 	}
 
 }
