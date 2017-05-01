@@ -31,7 +31,7 @@ import entities.core.Ticket;
 public class PdfGeneratorServiceIT {
 
     @Autowired
-    private PdfGeneratorService pdfGenService;
+    private PdfGenerationService pdfGenService;
 
     @Autowired
     private InvoiceDao invoiceDao;

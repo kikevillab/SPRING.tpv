@@ -8,7 +8,7 @@ import entities.core.Invoice;
 import entities.core.Ticket;
 
 @Service
-public class PdfGeneratorService {
+public class PdfGenerationService {
 	public void generateInvoicePdf(Invoice invoice) throws FileNotFoundException {
 		new InvoicePdfGenerator(invoice).generatePdf();
 	}
