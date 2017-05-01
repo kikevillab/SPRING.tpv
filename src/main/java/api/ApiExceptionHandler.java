@@ -1,5 +1,7 @@
 package api;
 
+import java.io.FileNotFoundException;
+
 import org.apache.logging.log4j.LogManager;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -20,7 +22,7 @@ import api.exceptions.UnauthorizedException;
 public class ApiExceptionHandler {
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler({NotFoundUserIdException.class, NotFoundYamlFileException.class})
+    @ExceptionHandler({NotFoundUserIdException.class, NotFoundYamlFileException.class, FileNotFoundException.class})
     @ResponseBody
     public ErrorMessage notFoundRequest(ApiException exception) {
         ErrorMessage apiErrorMessage = new ErrorMessage(exception);

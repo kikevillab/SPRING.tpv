@@ -1,5 +1,7 @@
 package api;
 
+import java.io.FileNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,12 +24,14 @@ public class PdfGenerationResource {
     }
     
     @RequestMapping(method = RequestMethod.POST)
-    public void generateInvoicePdf(@RequestBody InvoiceIdWrapper invoiceIdWrapper){
-        
+    public void generateInvoicePdf(@RequestBody InvoiceIdWrapper invoiceIdWrapper) throws FileNotFoundException{
+        int invoiceId = invoiceIdWrapper.getId();
+        pdfGenController.generateInvoicePdf(invoiceId);
     }
     
     @RequestMapping(method = RequestMethod.POST)
-    public void generateTicketPdf(@RequestBody TicketIdWrapper ticketIdWrapper){
-        
+    public void generateTicketPdf(@RequestBody TicketIdWrapper ticketIdWrapper) throws FileNotFoundException{
+        long ticketId = ticketIdWrapper.getId();
+        pdfGenController.generateTicketPdf(ticketId);
     }
 }

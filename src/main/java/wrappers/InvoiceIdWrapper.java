@@ -8,7 +8,7 @@ public class InvoiceIdWrapper {
         this.id = id;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
