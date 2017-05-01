@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import controllers.PdfGenerationController;
+import wrappers.InvoiceIdWrapper;
 import wrappers.TicketIdWrapper;
 
 @RestController
@@ -21,7 +22,7 @@ public class PdfGenerationResource {
     }
     
     @RequestMapping(method = RequestMethod.POST)
-    public void generateInvoicePdf(){
+    public void generateInvoicePdf(@RequestBody InvoiceIdWrapper invoiceIdWrapper){
         
     }
     
