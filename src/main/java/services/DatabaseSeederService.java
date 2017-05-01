@@ -2,6 +2,7 @@ package services;
 
 import static config.ResourceNames.ADMIN_FILE;
 import static config.ResourceNames.YAML_FILES_ROOT;
+import static config.ResourceNames.DEFAULT_SEED_FILE;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -136,5 +137,9 @@ public class DatabaseSeederService {
         providerDao.deleteAll();
 
         createDefaultAdmin();
+    }
+    
+    public void seed(){
+        seedDatabase(DEFAULT_SEED_FILE);
     }
 }

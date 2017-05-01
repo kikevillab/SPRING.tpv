@@ -3,6 +3,8 @@ package wrappers;
 public class TicketIdWrapper {
     long id;
 
+    public TicketIdWrapper(){}
+    
     public TicketIdWrapper(long id) {
         super();
         this.id = id;

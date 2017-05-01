@@ -3,6 +3,8 @@ package wrappers;
 public class InvoiceIdWrapper {
     int id;
 
+    public InvoiceIdWrapper(){}
+    
     public InvoiceIdWrapper(int id) {
         super();
         this.id = id;
