@@ -5,7 +5,8 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({UserResourceFunctionalTesting.class, TokenResourceFunctionalTesting.class, DatabaseSeedResourceFunctionalTesting.class})
+@SuiteClasses({UserResourceFunctionalTesting.class, TokenResourceFunctionalTesting.class, DatabaseSeedResourceFunctionalTesting.class,
+        PdfGenerationResourceFunctionalTesting.class})
 public class AllFunctionalTesting {
 
 }
