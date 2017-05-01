@@ -1,7 +1,5 @@
 package api;
 
-import static config.ResourceNames.DEFAULT_SEED_FILE;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -9,7 +7,6 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.springframework.http.HttpStatus;
 
-import wrappers.FileNameWrapper;
 import wrappers.InvoiceIdWrapper;
 import wrappers.TicketIdWrapper;
 

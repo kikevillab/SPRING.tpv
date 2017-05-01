@@ -45,5 +45,12 @@ public class PdfGenerationController {
         pdfGenService.generateTicketPdf(ticket);
     }
     
+    public boolean ticketExists(long ticketId){
+        return ticketDao.findOne(ticketId) != null;
+    }
+    
+    public boolean invoiceExists(int invoiceId){
+        return invoiceDao.findOne(invoiceId) != null;
+    }
 
 }

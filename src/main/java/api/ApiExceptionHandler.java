@@ -13,16 +13,18 @@ import api.exceptions.AlreadyExistUserFieldException;
 import api.exceptions.ApiException;
 import api.exceptions.ErrorMessage;
 import api.exceptions.InvalidUserFieldException;
+import api.exceptions.InvoiceNotFoundException;
 import api.exceptions.MalformedHeaderException;
 import api.exceptions.NotFoundUserIdException;
 import api.exceptions.NotFoundYamlFileException;
+import api.exceptions.TicketNotFoundException;
 import api.exceptions.UnauthorizedException;
 
 @ControllerAdvice
 public class ApiExceptionHandler {
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler({NotFoundUserIdException.class, NotFoundYamlFileException.class, FileNotFoundException.class})
+    @ExceptionHandler({NotFoundUserIdException.class, NotFoundYamlFileException.class, FileNotFoundException.class, TicketNotFoundException.class, InvoiceNotFoundException.class})
     @ResponseBody
     public ErrorMessage notFoundRequest(ApiException exception) {
         ErrorMessage apiErrorMessage = new ErrorMessage(exception);

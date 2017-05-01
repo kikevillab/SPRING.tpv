@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import api.exceptions.InvoiceNotFoundException;
+import api.exceptions.TicketNotFoundException;
 import controllers.PdfGenerationController;
 import wrappers.InvoiceIdWrapper;
 import wrappers.TicketIdWrapper;
@@ -24,14 +26,22 @@ public class PdfGenerationResource {
     }
     
     @RequestMapping(value = Uris.INVOICES, method = RequestMethod.POST)
-    public void generateInvoicePdf(@RequestBody InvoiceIdWrapper invoiceIdWrapper) throws FileNotFoundException{
+    public void generateInvoicePdf(@RequestBody InvoiceIdWrapper invoiceIdWrapper) throws FileNotFoundException, InvoiceNotFoundException{
         int invoiceId = invoiceIdWrapper.getId();
-        pdfGenController.generateInvoicePdf(invoiceId);
+        if(pdfGenController.invoiceExists(invoiceId)){
+            pdfGenController.generateInvoicePdf(invoiceId);
+        } else {
+            throw new InvoiceNotFoundException("Invoice: " + invoiceId);
+        }   
     }
     
     @RequestMapping(value = Uris.TICKETS, method = RequestMethod.POST)
-    public void generateTicketPdf(@RequestBody TicketIdWrapper ticketIdWrapper) throws FileNotFoundException{
+    public void generateTicketPdf(@RequestBody TicketIdWrapper ticketIdWrapper) throws FileNotFoundException, TicketNotFoundException{
         long ticketId = ticketIdWrapper.getId();
-        pdfGenController.generateTicketPdf(ticketId);
+        if(pdfGenController.ticketExists(ticketId)){
+            pdfGenController.generateTicketPdf(ticketId);
+        } else {
+            throw new TicketNotFoundException("Ticket: " + ticketId);
+        }
     }
 }
