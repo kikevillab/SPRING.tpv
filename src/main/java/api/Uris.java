@@ -19,4 +19,10 @@ public class Uris {
     public static final String ACTIVE = "/active";
 
     public static final String DATABASE_SEED = "/db_seed";
+    
+    public static final String PDF_GENERATION = "/pdfs";
+    
+    public static final String TICKETS = "/tickets";
+    
+    public static final String INVOICES = "/invoices";
 }
