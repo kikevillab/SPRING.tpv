@@ -18,5 +18,9 @@ public class AdminController {
     public void deleteAllExceptAdmin() {
         databaseSeederService.deleteAllExceptAdmin();
     }
+    
+    public void seedDatabase(){
+        databaseSeederService.seed();
+    }
 
 }
