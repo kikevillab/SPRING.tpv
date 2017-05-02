@@ -25,11 +25,21 @@ public class TicketController {
 
     private UserDao userDao;
 
-    private ProductDao ProductDao;
+    private ProductDao productDao;
 
     @Autowired
-    public void setProductDao(TicketDao productDao) {
-        this.ticketDao = productDao;
+    public void setTicketDao(TicketDao ticketDao) {
+        this.ticketDao = ticketDao;
+    }
+
+    @Autowired
+    public void setUserDao(UserDao userDao) {
+        this.userDao = userDao;
+    }
+
+    @Autowired
+    public void setProductDao(ProductDao productDao) {
+        this.productDao = productDao;
     }
 
     public Ticket createTicket(TicketCreationWrapper ticketCreationWrapper) {
@@ -43,16 +53,16 @@ public class TicketController {
         List<Shopping> shoppingList = new ArrayList<>();
         for (ShoppingCreationWrapper shoppingCreationWrapper : ticketCreationWrapper.getShoppingList()) {
             long productId = shoppingCreationWrapper.getProductId();
-            Product product = ProductDao.findOne(productId);
+            Product product = productDao.findOne(productId);
             ShoppingState shoppingState = shoppingCreationWrapper.isDelivered() ? ShoppingState.COMMITTED : ShoppingState.OPENED;
             Shopping shopping = new Shopping(shoppingCreationWrapper.getAmount(), shoppingCreationWrapper.getDiscount(), product,
                     product.getDescription(), product.getRetailPrice(), shoppingState);
             shoppingList.add(shopping);
         }
-        
+
         ticket.setShoppingList(shoppingList);
         ticketDao.save(ticket);
-        
+
         return ticket;
     }
 
