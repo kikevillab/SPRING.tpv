@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import config.PersistenceConfig;
 import config.TestsPersistenceConfig;
+import entities.core.Ticket;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {PersistenceConfig.class, TestsPersistenceConfig.class})
@@ -21,6 +22,11 @@ public class TicketDaoIT {
     @Test
     public void testCreate() {
         assertEquals(5, ticketDao.count());
+    }
+    
+    public void testFindFirstByOrderByCreatedDescIdDesc() {
+        Ticket ticket = ticketDao.findFirstByOrderByCreatedDescIdDesc();
+        assertEquals(5, ticket.getId());
     }
 
 }
