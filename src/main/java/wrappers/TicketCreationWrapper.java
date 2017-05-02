@@ -4,7 +4,7 @@ import java.util.List;
 
 public class TicketCreationWrapper {
 
-    private int userId;
+    private Integer userId;
 
     private List<ShoppingCreationWrapper> shoppingList;
 
@@ -12,11 +12,11 @@ public class TicketCreationWrapper {
         super();
     }
 
-    public int getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
