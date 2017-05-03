@@ -19,6 +19,7 @@ import api.exceptions.MalformedHeaderException;
 import api.exceptions.NotFoundProductCodeException;
 import api.exceptions.NotFoundProductIdException;
 import api.exceptions.NotFoundUserIdException;
+import api.exceptions.NotFoundUserMobileException;
 import api.exceptions.NotFoundYamlFileException;
 import api.exceptions.TicketNotFoundException;
 import api.exceptions.UnauthorizedException;
@@ -28,7 +29,8 @@ public class ApiExceptionHandler {
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler({NotFoundUserIdException.class, NotFoundYamlFileException.class, NotFoundProductCodeException.class,
-            FileNotFoundException.class, TicketNotFoundException.class, InvoiceNotFoundException.class, NotFoundProductIdException.class})
+            FileNotFoundException.class, TicketNotFoundException.class, InvoiceNotFoundException.class, NotFoundProductIdException.class,
+            NotFoundUserMobileException.class})
     @ResponseBody
     public ErrorMessage notFoundRequest(ApiException exception) {
         ErrorMessage apiErrorMessage = new ErrorMessage(exception);

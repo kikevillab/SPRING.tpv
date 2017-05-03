@@ -17,11 +17,9 @@ import config.PersistenceConfig;
 import config.TestsControllerConfig;
 import config.TestsPersistenceConfig;
 import daos.core.TicketDao;
-import daos.users.UserDao;
 import entities.core.Shopping;
 import entities.core.ShoppingState;
 import entities.core.Ticket;
-import entities.users.User;
 import wrappers.ShoppingCreationWrapper;
 import wrappers.TicketCreationWrapper;
 
@@ -31,9 +29,6 @@ public class TicketControllerIT {
 
     @Autowired
     private TicketController ticketController;
-
-    @Autowired
-    private UserDao userDao;
 
     @Autowired
     private TicketDao ticketDao;
@@ -64,17 +59,16 @@ public class TicketControllerIT {
         assertEquals(shoppingCreationWrapper.getAmount(), shopping.getAmount());
         assertEquals(shoppingCreationWrapper.getDiscount(), shopping.getDiscount());
         assertEquals(ShoppingState.COMMITTED, shopping.getShoppingState());
-        
+
         ticketDao.delete(ticket);
     }
 
     @Test
     public void testCreateTicketWithUser() {
         TicketCreationWrapper ticketCreationWrapper = new TicketCreationWrapper();
-        String username = "customer0";
-        User user = userDao.findByUsername(username);
-        ticketCreationWrapper.setUserId(user.getId());
-        
+        Long userMobile = 666000000L;
+        ticketCreationWrapper.setUserMobile(userMobile);
+
         List<ShoppingCreationWrapper> shoppingCreationWrapperList = new ArrayList<>();
         ShoppingCreationWrapper shoppingCreationWrapper = new ShoppingCreationWrapper();
         shoppingCreationWrapper.setProductId(84000002222L);
@@ -97,7 +91,7 @@ public class TicketControllerIT {
         assertEquals(shoppingCreationWrapper.getAmount(), shopping.getAmount());
         assertEquals(shoppingCreationWrapper.getDiscount(), shopping.getDiscount());
         assertEquals(ShoppingState.OPENED, shopping.getShoppingState());
-        
+
         ticketDao.delete(ticket);
     }
 

@@ -38,8 +38,8 @@ public class UserController {
         }
     }
     
-    public boolean userExists(int userId) {
-        User user = userDao.findOne(userId);
+    public boolean userMobileExists(long userMobile) {
+        User user = userDao.findByMobile(userMobile);
         return user != null;
     }
 }

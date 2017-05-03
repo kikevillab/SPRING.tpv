@@ -44,9 +44,9 @@ public class TicketController {
 
     public Ticket createTicket(TicketCreationWrapper ticketCreationWrapper) {
         Ticket ticket = new Ticket(getNextId());
-        Integer userId = ticketCreationWrapper.getUserId();
-        if (userId != null) {
-            User user = userDao.findOne(userId);
+        Long userMobile = ticketCreationWrapper.getUserMobile();
+        if (userMobile != null) {
+            User user = userDao.findByMobile(userMobile);
             ticket.setUser(user);
         }
 

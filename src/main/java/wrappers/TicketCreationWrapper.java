@@ -5,7 +5,7 @@ import java.util.List;
 
 public class TicketCreationWrapper {
 
-    private Integer userId;
+    private Long userMobile;
 
     private List<ShoppingCreationWrapper> shoppingList;
 
@@ -14,12 +14,12 @@ public class TicketCreationWrapper {
         shoppingList = new ArrayList<>();
     }
 
-    public Integer getUserId() {
-        return userId;
+    public Long getUserMobile() {
+        return userMobile;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUserMobile(Long userMobile) {
+        this.userMobile = userMobile;
     }
 
     public List<ShoppingCreationWrapper> getShoppingList() {
