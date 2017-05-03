@@ -1,7 +1,7 @@
 package wrappers;
 
 public class TicketReferenceWrapper {
-    
+
     private String ticketReference;
 
     public TicketReferenceWrapper() {
@@ -20,5 +20,9 @@ public class TicketReferenceWrapper {
     public void setTicketReference(String ticketReference) {
         this.ticketReference = ticketReference;
     }
-    
+
+    @Override
+    public String toString() {
+        return "TicketReferenceWrapper [ticketReference=" + ticketReference + "]";
+    }
 }

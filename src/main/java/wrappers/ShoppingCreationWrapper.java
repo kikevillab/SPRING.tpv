@@ -45,4 +45,10 @@ public class ShoppingCreationWrapper {
     public void setDelivered(boolean delivered) {
         this.delivered = delivered;
     }
+
+    @Override
+    public String toString() {
+        return "ShoppingCreationWrapper [productCode=" + productCode + ", amount=" + amount + ", discount=" + discount + ", delivered="
+                + delivered + "]";
+    }
 }
