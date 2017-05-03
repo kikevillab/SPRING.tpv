@@ -2,6 +2,7 @@ package controllers;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import entities.core.ShoppingState;
 import entities.core.Ticket;
 import entities.users.User;
 import wrappers.ShoppingCreationWrapper;
+import wrappers.ShoppingTrackingWrapper;
 import wrappers.TicketCreationWrapper;
 
 @Controller
@@ -82,5 +84,21 @@ public class TicketController {
             }
         }
         return nextId;
+    }
+    
+    public List<ShoppingTrackingWrapper> getTicketTracking(String reference) {
+        Ticket ticket = ticketDao.findFirstByReference(reference);
+        
+        List<ShoppingTrackingWrapper> shoppingTrackingWrapperList = new LinkedList<>();
+        for (Shopping shopping : ticket.getShoppingList()) {
+            shoppingTrackingWrapperList.add(new ShoppingTrackingWrapper(shopping));
+        }
+        
+        return shoppingTrackingWrapperList;
+    }
+    
+    public boolean ticketReferenceExists(String reference) {
+        Ticket ticket = ticketDao.findFirstByReference(reference);
+        return ticket != null;
     }
 }

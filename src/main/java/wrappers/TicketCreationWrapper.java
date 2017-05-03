@@ -1,6 +1,7 @@
 package wrappers;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class TicketCreationWrapper {
@@ -30,4 +31,8 @@ public class TicketCreationWrapper {
         this.shoppingList = shoppingList;
     }
 
+    @Override
+    public String toString() {
+        return "TicketCreationWrapper [userMobile=" + userMobile + ", shoppingList=" + Arrays.toString(shoppingList.toArray()) + "]";
+    }
 }
