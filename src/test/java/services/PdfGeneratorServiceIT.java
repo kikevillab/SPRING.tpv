@@ -48,7 +48,6 @@ public class PdfGeneratorServiceIT {
         assertTrue(pdfFile.exists());
         assertTrue(pdfFile.canRead());
         assertTrue(pdfFile.canWrite());
-        assertTrue(pdfFile.canExecute());
     }
 
     @Test
@@ -60,7 +59,6 @@ public class PdfGeneratorServiceIT {
         assertTrue(pdfFile.exists());
         assertTrue(pdfFile.canRead());
         assertTrue(pdfFile.canWrite());
-        assertTrue(pdfFile.canExecute());
     }
 
     @After
