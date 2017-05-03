@@ -1,11 +1,13 @@
 package controllers;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,6 +23,7 @@ import entities.core.Shopping;
 import entities.core.ShoppingState;
 import entities.core.Ticket;
 import wrappers.ShoppingCreationWrapper;
+import wrappers.ShoppingTrackingWrapper;
 import wrappers.TicketCreationWrapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -93,6 +96,24 @@ public class TicketControllerIT {
         assertEquals(ShoppingState.OPENED, shopping.getShoppingState());
 
         ticketDao.delete(ticket);
+    }
+
+    @Test
+    public void testGetTicketTracking() {
+        List<Ticket> ticketList = ticketDao.findAll();
+        Ticket ticket = ticketList.get(new Random().nextInt(ticketList.size()));
+
+        List<ShoppingTrackingWrapper> shoppingTrackingWrapperList = ticketController.getTicketTracking(ticket.getReference());
+
+        assertNotNull(shoppingTrackingWrapperList);
+        assertFalse(shoppingTrackingWrapperList.isEmpty());
+        for (int i = 0; i < shoppingTrackingWrapperList.size(); i++) {
+            ShoppingTrackingWrapper shoppingTrackingWrapper = shoppingTrackingWrapperList.get(i);
+            Shopping shopping = ticket.getShoppingList().get(i);
+            assertEquals(shopping.getProduct().getCode(), shoppingTrackingWrapper.getProductCode());
+            assertEquals(shopping.getDescription(), shoppingTrackingWrapper.getDescription());
+            assertEquals(shopping.getShoppingState(), shoppingTrackingWrapper.getShoppingState());
+        }
     }
 
 }
