@@ -7,4 +7,6 @@ import entities.core.Ticket;
 public interface TicketDao extends JpaRepository<Ticket, Long> {
 
     public Ticket findFirstByOrderByCreatedDescIdDesc();
+    
+    public Ticket findFirstByReference(String reference);
 }

@@ -28,5 +28,10 @@ public class TicketDaoIT {
         Ticket ticket = ticketDao.findFirstByOrderByCreatedDescIdDesc();
         assertEquals(5, ticket.getId());
     }
+    
+    public void testFindFirstByReference() {
+        Ticket ticket = ticketDao.findAll().get(0);
+        assertEquals(ticket, ticketDao.findFirstByReference(ticket.getReference()));
+    }
 
 }
