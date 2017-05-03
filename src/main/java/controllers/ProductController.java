@@ -26,8 +26,8 @@ public class ProductController {
         return productWrapper;
     }
     
-    public boolean productExists(long productId) {
-        Product product = productDao.findOne(productId);
+    public boolean productCodeExists(String productCode) {
+        Product product = productDao.findFirstByCode(productCode);
         return product != null;
     }
 }

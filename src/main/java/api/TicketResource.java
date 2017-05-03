@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import api.exceptions.EmptyShoppingListException;
-import api.exceptions.NotFoundProductIdException;
+import api.exceptions.NotFoundProductCodeException;
 import api.exceptions.NotFoundUserMobileException;
 import controllers.ProductController;
 import controllers.TicketController;
@@ -47,7 +47,7 @@ public class TicketResource {
     // @PreAuthorize("hasRole('ADMIN')or hasRole('MANAGER') or hasRole('OPERATOR')")
     @RequestMapping(method = RequestMethod.POST)
     public TicketReferenceWrapper createTicket(@RequestBody TicketCreationWrapper ticketCreationWrapper)
-            throws EmptyShoppingListException, NotFoundProductIdException, NotFoundUserMobileException {
+            throws EmptyShoppingListException, NotFoundProductCodeException, NotFoundUserMobileException {
         Long userMobile = ticketCreationWrapper.getUserMobile();
         if (userMobile != null && !userController.userMobileExists(userMobile)) {
             throw new NotFoundUserMobileException();
@@ -59,8 +59,8 @@ public class TicketResource {
         }
 
         for (ShoppingCreationWrapper shoppingCreationWrapper : shoppingCreationWrapperList) {
-            if (!productController.productExists(shoppingCreationWrapper.getProductId())) {
-                throw new NotFoundProductIdException("Product id: " + shoppingCreationWrapper.getProductId());
+            if (!productController.productCodeExists(shoppingCreationWrapper.getProductCode())) {
+                throw new NotFoundProductCodeException("Product id: " + shoppingCreationWrapper.getProductCode());
             }
         }
 

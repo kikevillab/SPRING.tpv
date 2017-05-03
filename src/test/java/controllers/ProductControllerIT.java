@@ -41,13 +41,13 @@ public class ProductControllerIT {
     
     @Test
     public void testExistentProductId() {
-        long productId = 84000001111L;
-        assertTrue(productController.productExists(productId));
+        String productCode = "article0";
+        assertTrue(productController.productCodeExists(productCode));
     }
     
     @Test
     public void testNonexistentProductId() {
-        long productId = 99999999999L;
-        assertFalse(productController.productExists(productId));
+        String productCode = "justTesting-123";
+        assertFalse(productController.productCodeExists(productCode));
     }
 }

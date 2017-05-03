@@ -6,7 +6,7 @@ public class NotFoundUserMobileException extends ApiException {
 
     public static final String DESCRIPTION = "No se encuentra el móvil de usuario utilizado";
 
-    public static final int CODE = 10;
+    public static final int CODE = 9;
 
     public NotFoundUserMobileException() {
         this("");

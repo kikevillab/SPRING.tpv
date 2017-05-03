@@ -39,7 +39,7 @@ public class TicketControllerIT {
 
         List<ShoppingCreationWrapper> shoppingCreationWrapperList = new ArrayList<>();
         ShoppingCreationWrapper shoppingCreationWrapper = new ShoppingCreationWrapper();
-        shoppingCreationWrapper.setProductId(84000001111L);
+        shoppingCreationWrapper.setProductCode("embroidery0");
         shoppingCreationWrapper.setAmount(2);
         shoppingCreationWrapper.setDiscount(0);
         shoppingCreationWrapper.setDelivered(true);
@@ -55,7 +55,7 @@ public class TicketControllerIT {
         assertEquals(lastTicketId + 1, ticket.getId());
         assertNull(ticket.getUser());
         assertNotNull(shoppingList);
-        assertEquals(shoppingCreationWrapper.getProductId(), shopping.getProduct().getId());
+        assertEquals(shoppingCreationWrapper.getProductCode(), shopping.getProduct().getCode());
         assertEquals(shoppingCreationWrapper.getAmount(), shopping.getAmount());
         assertEquals(shoppingCreationWrapper.getDiscount(), shopping.getDiscount());
         assertEquals(ShoppingState.COMMITTED, shopping.getShoppingState());
@@ -71,7 +71,7 @@ public class TicketControllerIT {
 
         List<ShoppingCreationWrapper> shoppingCreationWrapperList = new ArrayList<>();
         ShoppingCreationWrapper shoppingCreationWrapper = new ShoppingCreationWrapper();
-        shoppingCreationWrapper.setProductId(84000002222L);
+        shoppingCreationWrapper.setProductCode("embroidery0");
         shoppingCreationWrapper.setAmount(1);
         shoppingCreationWrapper.setDiscount(5);
         shoppingCreationWrapper.setDelivered(false);
@@ -87,7 +87,7 @@ public class TicketControllerIT {
         assertEquals(lastTicketId + 1, ticket.getId());
         assertNotNull(ticket.getUser());
         assertNotNull(shoppingList);
-        assertEquals(shoppingCreationWrapper.getProductId(), shopping.getProduct().getId());
+        assertEquals(shoppingCreationWrapper.getProductCode(), shopping.getProduct().getCode());
         assertEquals(shoppingCreationWrapper.getAmount(), shopping.getAmount());
         assertEquals(shoppingCreationWrapper.getDiscount(), shopping.getDiscount());
         assertEquals(ShoppingState.OPENED, shopping.getShoppingState());
