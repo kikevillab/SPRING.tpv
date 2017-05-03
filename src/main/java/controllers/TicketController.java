@@ -96,4 +96,9 @@ public class TicketController {
         
         return shoppingTrackingWrapperList;
     }
+    
+    public boolean ticketReferenceExists(String reference) {
+        Ticket ticket = ticketDao.findFirstByReference(reference);
+        return ticket != null;
+    }
 }

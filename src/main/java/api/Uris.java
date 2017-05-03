@@ -29,4 +29,8 @@ public class Uris {
     public static final String TICKETS = "/tickets";
 
     public static final String INVOICES = "/invoices";
+
+    public static final String TRACKING = "/tracking";
+
+    public static final String REFERENCE = "/{reference}";
 }
