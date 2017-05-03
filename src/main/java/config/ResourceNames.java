@@ -28,16 +28,16 @@ public class ResourceNames {
 
 	public static final String ADMIN_FILE = "admin.yml";
 	
-	public final static String PDFS_ROOT = System.getProperty("user.home") + "\\tpv\\pdfs";
+	public final static String PDFS_ROOT = System.getProperty("user.home") + "/tpv/pdfs";
 	
 	public final static String PDF_FILE_EXT = ".pdf";
 	
-	public final static String INVOICES_PDFS_ROOT = "\\invoice";
+	public final static String INVOICES_PDFS_ROOT = "/invoice";
 	
-	public final static String INVOICE_PDF_FILENAME_ROOT = "\\INVOICE_";
+	public final static String INVOICE_PDF_FILENAME_ROOT = "/INVOICE_";
 	
-	public final static String TICKETS_PDFS_ROOT = "\\ticket";
+	public final static String TICKETS_PDFS_ROOT = "/ticket";
 	
-	public final static String TICKET_PDF_FILENAME_ROOT = "\\TICKET_";
+	public final static String TICKET_PDF_FILENAME_ROOT = "/TICKET_";
 	
 }
