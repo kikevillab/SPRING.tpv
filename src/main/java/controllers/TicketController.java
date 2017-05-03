@@ -52,8 +52,8 @@ public class TicketController {
 
         List<Shopping> shoppingList = new ArrayList<>();
         for (ShoppingCreationWrapper shoppingCreationWrapper : ticketCreationWrapper.getShoppingList()) {
-            long productId = shoppingCreationWrapper.getProductId();
-            Product product = productDao.findOne(productId);
+            String productCode = shoppingCreationWrapper.getProductCode();
+            Product product = productDao.findFirstByCode(productCode);
             ShoppingState shoppingState = shoppingCreationWrapper.isDelivered() ? ShoppingState.COMMITTED : ShoppingState.OPENED;
             Shopping shopping = new Shopping(shoppingCreationWrapper.getAmount(), shoppingCreationWrapper.getDiscount(), product,
                     product.getDescription(), product.getRetailPrice(), shoppingState);

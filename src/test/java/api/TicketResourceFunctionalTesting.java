@@ -39,7 +39,7 @@ public class TicketResourceFunctionalTesting {
 
         List<ShoppingCreationWrapper> shoppingCreationWrapperList = new ArrayList<>();
         ShoppingCreationWrapper shoppingCreationWrapper = new ShoppingCreationWrapper();
-        shoppingCreationWrapper.setProductId(84000001111L);
+        shoppingCreationWrapper.setProductCode("article0");
         shoppingCreationWrapper.setAmount(2);
         shoppingCreationWrapper.setDiscount(0);
         shoppingCreationWrapper.setDelivered(true);
@@ -73,7 +73,7 @@ public class TicketResourceFunctionalTesting {
 
         List<ShoppingCreationWrapper> shoppingCreationWrapperList = new ArrayList<>();
         ShoppingCreationWrapper shoppingCreationWrapper = new ShoppingCreationWrapper();
-        shoppingCreationWrapper.setProductId(84000001111L);
+        shoppingCreationWrapper.setProductCode("article0");
         shoppingCreationWrapper.setAmount(2);
         shoppingCreationWrapper.setDiscount(0);
         shoppingCreationWrapper.setDelivered(true);

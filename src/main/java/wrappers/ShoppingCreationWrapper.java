@@ -2,7 +2,7 @@ package wrappers;
 
 public class ShoppingCreationWrapper {
 
-    private long productId;
+    private String productCode;
 
     private int amount;
 
@@ -14,12 +14,12 @@ public class ShoppingCreationWrapper {
         super();
     }
 
-    public long getProductId() {
-        return productId;
+    public String getProductCode() {
+        return productCode;
     }
 
-    public void setProductId(long productId) {
-        this.productId = productId;
+    public void setProductCode(String productCode) {
+        this.productCode = productCode;
     }
 
     public int getAmount() {
