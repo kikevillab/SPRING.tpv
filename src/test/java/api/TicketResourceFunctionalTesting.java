@@ -64,12 +64,34 @@ public class TicketResourceFunctionalTesting {
     }
 
     @Test
-    public void testCreateTicket() {
+    public void testCreateTicketWithUser() {
         String token = new RestService().loginAdmin();
 
         long userMobile = 666000000L;
         TicketCreationWrapper ticketCreationWrapper = new TicketCreationWrapper();
         ticketCreationWrapper.setUserMobile(userMobile);
+
+        List<ShoppingCreationWrapper> shoppingCreationWrapperList = new ArrayList<>();
+        ShoppingCreationWrapper shoppingCreationWrapper = new ShoppingCreationWrapper();
+        shoppingCreationWrapper.setProductCode("article0");
+        shoppingCreationWrapper.setAmount(2);
+        shoppingCreationWrapper.setDiscount(0);
+        shoppingCreationWrapper.setDelivered(true);
+        shoppingCreationWrapperList.add(shoppingCreationWrapper);
+        ticketCreationWrapper.setShoppingList(shoppingCreationWrapperList);
+
+        TicketReferenceWrapper ticketReference = new RestBuilder<TicketReferenceWrapper>(RestService.URL).path(Uris.TICKETS)
+                .body(ticketCreationWrapper).basicAuth(token, "").clazz(TicketReferenceWrapper.class).post().build();
+
+        assertNotNull(ticketReference);
+        assertFalse(ticketReference.getTicketReference().isEmpty());
+    }
+    
+    @Test
+    public void testCreateTicketWithoutUser() {
+        String token = new RestService().loginAdmin();
+
+        TicketCreationWrapper ticketCreationWrapper = new TicketCreationWrapper();
 
         List<ShoppingCreationWrapper> shoppingCreationWrapperList = new ArrayList<>();
         ShoppingCreationWrapper shoppingCreationWrapper = new ShoppingCreationWrapper();
