@@ -1,5 +1,6 @@
 package wrappers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TicketCreationWrapper {
@@ -10,6 +11,7 @@ public class TicketCreationWrapper {
 
     public TicketCreationWrapper() {
         super();
+        shoppingList = new ArrayList<>();
     }
 
     public Integer getUserId() {

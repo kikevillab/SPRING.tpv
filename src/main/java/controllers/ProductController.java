@@ -25,4 +25,9 @@ public class ProductController {
         }
         return productWrapper;
     }
+    
+    public boolean productExists(long productId) {
+        Product product = productDao.findOne(productId);
+        return product != null;
+    }
 }

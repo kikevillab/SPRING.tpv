@@ -37,4 +37,9 @@ public class UserController {
             return false;
         }
     }
+    
+    public boolean userExists(int userId) {
+        User user = userDao.findOne(userId);
+        return user != null;
+    }
 }

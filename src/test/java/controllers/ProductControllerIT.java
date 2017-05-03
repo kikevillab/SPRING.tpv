@@ -1,8 +1,10 @@
 package controllers;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,5 +37,17 @@ public class ProductControllerIT {
         String productCode = "justTesting-123";
         ProductWrapper product = productController.getProductByCode(productCode);
         assertNull(product);
+    }
+    
+    @Test
+    public void testExistentProductId() {
+        long productId = 84000001111L;
+        assertTrue(productController.productExists(productId));
+    }
+    
+    @Test
+    public void testNonexistentProductId() {
+        long productId = 99999999999L;
+        assertFalse(productController.productExists(productId));
     }
 }

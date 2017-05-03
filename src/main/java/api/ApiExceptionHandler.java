@@ -11,11 +11,13 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import api.exceptions.AlreadyExistUserFieldException;
 import api.exceptions.ApiException;
+import api.exceptions.EmptyShoppingListException;
 import api.exceptions.ErrorMessage;
 import api.exceptions.InvalidUserFieldException;
 import api.exceptions.InvoiceNotFoundException;
 import api.exceptions.MalformedHeaderException;
 import api.exceptions.NotFoundProductCodeException;
+import api.exceptions.NotFoundProductIdException;
 import api.exceptions.NotFoundUserIdException;
 import api.exceptions.NotFoundYamlFileException;
 import api.exceptions.TicketNotFoundException;
@@ -26,7 +28,7 @@ public class ApiExceptionHandler {
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler({NotFoundUserIdException.class, NotFoundYamlFileException.class, NotFoundProductCodeException.class,
-            FileNotFoundException.class, TicketNotFoundException.class, InvoiceNotFoundException.class})
+            FileNotFoundException.class, TicketNotFoundException.class, InvoiceNotFoundException.class, NotFoundProductIdException.class})
     @ResponseBody
     public ErrorMessage notFoundRequest(ApiException exception) {
         ErrorMessage apiErrorMessage = new ErrorMessage(exception);
@@ -41,7 +43,7 @@ public class ApiExceptionHandler {
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler({MalformedHeaderException.class, InvalidUserFieldException.class})
+    @ExceptionHandler({MalformedHeaderException.class, InvalidUserFieldException.class, EmptyShoppingListException.class})
     @ResponseBody
     public ErrorMessage badRequest(ApiException exception) {
         ErrorMessage apiErrorMessage = new ErrorMessage(exception);
