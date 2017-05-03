@@ -14,6 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import entities.users.Encrypting;
 import entities.users.User;
@@ -24,6 +26,7 @@ public class Ticket {
     @Id
     private long id;
 
+    @Temporal(TemporalType.DATE)
     private Calendar created;
 
     @Column(unique = true, nullable = false)
@@ -54,7 +57,7 @@ public class Ticket {
         this.id = id;
         updateReference();
     }
-    
+
     private void updateReference() {
         reference = new Encrypting().encryptInBase64UrlSafe("" + this.getId() + Long.toString(new Date().getTime()));
     }
@@ -109,8 +112,7 @@ public class Ticket {
     @Override
     public String toString() {
         String createTime = new SimpleDateFormat("HH:mm dd-MMM-yyyy ").format(created.getTime());
-        return "Ticket[" + id + ": created=" + createTime + ", shoppingList=" + shoppingList + ", userId="
-                + user.getId() + "]";
+        return "Ticket[" + id + ": created=" + createTime + ", shoppingList=" + shoppingList + ", userId=" + user.getId() + "]";
     }
 
 }
