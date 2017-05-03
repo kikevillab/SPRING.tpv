@@ -1,6 +1,5 @@
 package api;
 
-import static config.ResourceNames.DEFAULT_SEED_FILE;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.AfterClass;
@@ -10,7 +9,6 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.springframework.http.HttpStatus;
 
-import wrappers.FileNameWrapper;
 import wrappers.ProductWrapper;
 
 public class ProductResourceFunctionalTesting {
@@ -20,9 +18,7 @@ public class ProductResourceFunctionalTesting {
 
     @BeforeClass
     public static void setUpOnce() {
-        String token = new RestService().loginAdmin();
-        new RestBuilder<Object>(RestService.URL).path(Uris.DATABASE_SEED).body(new FileNameWrapper(DEFAULT_SEED_FILE)).basicAuth(token, "")
-                .post().build();
+        new RestService().seedDatabase();
     }
 
     @Test
@@ -43,13 +39,13 @@ public class ProductResourceFunctionalTesting {
         assertEquals(productCode, product.getCode());
     }
 
-//      Waiting for front-end to implement login and add roles.
-//    @Test
-//    public void testGetProductByCodeUnauthorized() {
-//        String productCode = "article0";
-//        thrown.expect(new HttpMatcher(HttpStatus.UNAUTHORIZED));
-//        new RestBuilder<ProductWrapper>(RestService.URL).path(Uris.PRODUCTS).pathId(productCode).clazz(ProductWrapper.class).get().build();
-//    }
+    // Waiting for front-end to implement login and add roles.
+    // @Test
+    // public void testGetProductByCodeUnauthorized() {
+    // String productCode = "article0";
+    // thrown.expect(new HttpMatcher(HttpStatus.UNAUTHORIZED));
+    // new RestBuilder<ProductWrapper>(RestService.URL).path(Uris.PRODUCTS).pathId(productCode).clazz(ProductWrapper.class).get().build();
+    // }
 
     @AfterClass
     public static void tearDownOnce() {
