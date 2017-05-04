@@ -1,12 +1,8 @@
 export class CartProduct {
-	productCode: string;
-	description: string;
-	retailPrice: number;
 	discount: number;
 	amount: number;
 	delivered: boolean;
-	constructor(productCode: string, description: string, retailPrice: number) {
-		this.productCode = productCode;
+	constructor(public productCode: string, public description: string, public retailPrice: number) {
 		this.description = description;
 		this.retailPrice = retailPrice;
 		this.discount = 0;
