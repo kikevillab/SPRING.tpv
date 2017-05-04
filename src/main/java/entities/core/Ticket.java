@@ -112,7 +112,13 @@ public class Ticket {
     @Override
     public String toString() {
         String createTime = new SimpleDateFormat("HH:mm dd-MMM-yyyy ").format(created.getTime());
-        return "Ticket[" + id + ": created=" + createTime + ", shoppingList=" + shoppingList + ", userId=" + user.getId() + "]";
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Ticket[" + id + ": created=" + createTime + ", shoppingList=" + shoppingList);
+        if(user != null){
+            stringBuilder.append(", userId=" + user.getId());
+        }
+        stringBuilder.append("]");
+        return stringBuilder.toString();      
     }
 
 }

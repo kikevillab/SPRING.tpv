@@ -34,7 +34,7 @@ public class InvoiceController {
         if(thereAreNoInvoices){
             nextInvoiceId = 20170001;
         } else {
-            nextInvoiceId = invoiceDao.findFirstByOrderByIdDesc().getId();
+            nextInvoiceId = invoiceDao.findFirstByOrderByIdDesc().getId() + 1;
         }
         return nextInvoiceId;
     }

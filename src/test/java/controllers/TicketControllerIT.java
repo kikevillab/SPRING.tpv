@@ -25,6 +25,7 @@ import entities.core.Ticket;
 import wrappers.ShoppingCreationWrapper;
 import wrappers.ShoppingTrackingWrapper;
 import wrappers.TicketCreationWrapper;
+import wrappers.TicketIdWrapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {PersistenceConfig.class, TestsPersistenceConfig.class, TestsControllerConfig.class})
@@ -114,6 +115,11 @@ public class TicketControllerIT {
             assertEquals(shopping.getDescription(), shoppingTrackingWrapper.getDescription());
             assertEquals(shopping.getShoppingState(), shoppingTrackingWrapper.getShoppingState());
         }
+    }
+    
+    @Test
+    public void testFindOneTicket(){
+        assertNotNull(ticketController.findOneTicket(new TicketIdWrapper(1L)));
     }
 
 }
