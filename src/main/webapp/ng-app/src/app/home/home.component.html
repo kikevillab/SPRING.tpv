@@ -1,0 +1,35 @@
+<md-sidenav-container fullscreen>
+	<md-toolbar color="primary">
+		<span id="pageTitle">Home</span>
+		<span class="toolbar-spacer"></span>
+		<date format="medium"></date>
+		<button md-icon-button [mdMenuTriggerFor]="toolbarMenu">
+			<md-icon>more_vert</md-icon>
+		</button>
+		<md-menu #toolbarMenu="mdMenu">
+			<button md-menu-item (click)="logout()">
+				<md-icon>exit_to_app</md-icon>
+				<span>Logout</span>
+			</button>
+		</md-menu>
+	</md-toolbar>
+	<div class="content">
+		<md-card>
+			<div [fxLayout]="row">
+				<div fxFlex="50">
+					<h1>Products</h1>
+				</div>
+				<div fxFlex="50" class="align-right">
+					<button md-raised-button color="primary" (click)="cart.open()" id="cartButton">
+						Cart
+						<md-icon class="md-24">shopping_cart</md-icon>
+					</button>
+				</div>
+			</div>
+		</md-card>
+	</div>
+
+	<md-sidenav #cart align="end" class="sidenav">
+		<cart-view></cart-view>
+	</md-sidenav>
+</md-sidenav-container>

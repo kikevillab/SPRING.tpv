@@ -1,0 +1,1 @@
+export let TPV_API_URL:string = 'http://localhost:8080/SPRING.tpv.1.2.0-SNAPSHOT/api/v0';
