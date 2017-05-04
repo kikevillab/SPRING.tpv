@@ -71,7 +71,7 @@ export class CartComponent implements OnDestroy {
   checkout():void {
     let newTicket = new TicketCheckout(this.cartProducts);
     this.tpvService.requestPost('/tickets', newTicket).subscribe(ticketCreated => {
-      this.toastService.success('Checkout done', `Ticket created with reference ${ticketCreated.reference}`);
+      this.toastService.success('Checkout done', `Ticket created with reference ${ticketCreated.ticketReference}`);
       this.clearCart();
     }, error => this.toastService.error('Error in checkout', 'Error creating ticket'));
   }
