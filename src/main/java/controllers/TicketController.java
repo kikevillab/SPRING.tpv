@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import daos.core.InvoiceDao;
 import daos.core.ProductDao;
 import daos.core.TicketDao;
 import daos.users.UserDao;
@@ -30,6 +31,8 @@ public class TicketController {
 
     private ProductDao productDao;
 
+    private InvoiceDao invoiceDao;
+    
     @Autowired
     public void setTicketDao(TicketDao ticketDao) {
         this.ticketDao = ticketDao;
@@ -106,4 +109,19 @@ public class TicketController {
     public Ticket findOneTicket(TicketIdWrapper ticketIdWrapper){
         return ticketDao.findOne(ticketIdWrapper.getId());
     }
+
+    public boolean ticketIsAssignedToInvoice(Ticket ticket) {
+        return invoiceDao.findByTicket(ticket) != null;
+    }
+
+    public boolean ticketIsClosed(Ticket ticket) {
+        boolean closed = true;
+        for(Shopping shopping : ticket.getShoppingList()){
+            if(shopping.getShoppingState() != ShoppingState.CLOSED){
+                closed = false;
+            }
+        }
+        return closed;
+    }
+   
 }

@@ -37,9 +37,21 @@ public class UserController {
             return false;
         }
     }
-    
+
     public boolean userMobileExists(long userMobile) {
         User user = userDao.findByMobile(userMobile);
         return user != null;
+    }
+
+    public boolean userIsValid(User user) {
+        boolean valid = true;
+        if (user == null) {
+            valid = false;
+        } else {
+            if (user.getAddress() == null || user.getDni() == null || user.getEmail() == null) {
+                valid = false;
+            } 
+        }
+        return valid;
     }
 }

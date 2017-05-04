@@ -1,6 +1,7 @@
 package daos.core;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,6 +20,9 @@ public class InvoiceDaoIT {
     @Autowired
     private InvoiceDao invoiceDao;
 
+    @Autowired
+    private TicketDao ticketDao;
+    
     @Test
     public void testCreate() {
         assertEquals(2, invoiceDao.count());
@@ -27,6 +31,11 @@ public class InvoiceDaoIT {
     @Test
     public void testFindFirstByOrderByIdDesc(){
         assertEquals(20170002, invoiceDao.findFirstByOrderByIdDesc().getId());
+    }
+    
+    @Test
+    public void testFindByTicket(){       
+        assertNotNull(invoiceDao.findByTicket(ticketDao.findOne(3L)));
     }
 
 }

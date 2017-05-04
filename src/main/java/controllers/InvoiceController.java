@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import daos.core.InvoiceDao;
 import entities.core.Invoice;
 import entities.core.Ticket;
+import wrappers.InvoiceIdWrapper;
 
 @Controller
 public class InvoiceController {
@@ -21,6 +22,10 @@ public class InvoiceController {
     
     public List<Invoice> findAllInvoices(){
         return invoiceDao.findAll();
+    }
+    
+    public Invoice findOneInvoice(InvoiceIdWrapper invoiceIdWrapper){
+        return invoiceDao.findOne(invoiceIdWrapper.getId());
     }
     
     public Invoice createInvoice(Ticket ticket){
