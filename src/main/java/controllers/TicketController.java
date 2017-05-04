@@ -19,6 +19,7 @@ import entities.users.User;
 import wrappers.ShoppingCreationWrapper;
 import wrappers.ShoppingTrackingWrapper;
 import wrappers.TicketCreationWrapper;
+import wrappers.TicketIdWrapper;
 
 @Controller
 public class TicketController {
@@ -100,5 +101,9 @@ public class TicketController {
     public boolean ticketReferenceExists(String reference) {
         Ticket ticket = ticketDao.findFirstByReference(reference);
         return ticket != null;
+    }
+    
+    public Ticket findOneTicket(TicketIdWrapper ticketIdWrapper){
+        return ticketDao.findOne(ticketIdWrapper.getId());
     }
 }
