@@ -115,11 +115,11 @@ public class TicketController {
         return ticketDao.findOne(ticketIdWrapper.getId());
     }
 
-    public boolean ticketIsAssignedToInvoice(Ticket ticket) {
+    public boolean ticketIsAlreadyAssignedToInvoice(Ticket ticket) {
         return invoiceDao.findByTicket(ticket) != null;
     }
 
-    public boolean ticketIsClosed(Ticket ticket) {
+    public boolean isTicketClosed(Ticket ticket) {
         boolean closed = true;
         for (Shopping shopping : ticket.getShoppingList()) {
             if (shopping.getShoppingState() != ShoppingState.CLOSED) {

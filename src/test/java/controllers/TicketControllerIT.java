@@ -130,7 +130,7 @@ public class TicketControllerIT {
         shoppingClosed.setShoppingState(ShoppingState.CLOSED);
         ticketWithAllShoppingsClosed.addShopping(shoppingClosed);
         ticketWithAllShoppingsClosed.addShopping(shoppingClosed);
-        assertTrue(ticketController.ticketIsClosed(ticketWithAllShoppingsClosed));
+        assertTrue(ticketController.isTicketClosed(ticketWithAllShoppingsClosed));
      }
     
     @Test
@@ -142,19 +142,19 @@ public class TicketControllerIT {
         shoppingClosed.setShoppingState(ShoppingState.CLOSED);
         ticketWithAtLeastOneShoppingNotClosed.addShopping(shoppingClosed);
         ticketWithAtLeastOneShoppingNotClosed.addShopping(shoppingOpened);
-        assertFalse(ticketController.ticketIsClosed(ticketWithAtLeastOneShoppingNotClosed));
+        assertFalse(ticketController.isTicketClosed(ticketWithAtLeastOneShoppingNotClosed));
     }
     
     @Test
     public void testTicketIsAssignedToInvoice(){
         Ticket ticketAssignedToAnInvoice = ticketDao.findOne(3L);     
-        assertTrue(ticketController.ticketIsAssignedToInvoice(ticketAssignedToAnInvoice));
+        assertTrue(ticketController.ticketIsAlreadyAssignedToInvoice(ticketAssignedToAnInvoice));
     }
     
     @Test
     public void testTicketIsNotAssignedToInvoice(){
         Ticket ticketNotAssignedToAnInvoice = ticketDao.findOne(1L);     
-        assertFalse(ticketController.ticketIsAssignedToInvoice(ticketNotAssignedToAnInvoice));
+        assertFalse(ticketController.ticketIsAlreadyAssignedToInvoice(ticketNotAssignedToAnInvoice));
     }
 
 }

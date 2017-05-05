@@ -16,6 +16,7 @@ import daos.core.InvoiceDao;
 import daos.core.TicketDao;
 import entities.core.Invoice;
 import entities.core.Ticket;
+import wrappers.InvoiceWrapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {PersistenceConfig.class, TestsPersistenceConfig.class, TestsControllerConfig.class})
@@ -39,9 +40,9 @@ public class InvoiceControllerIT {
     public void testCreateInvoice() {
         Ticket ticket = ticketDao.findOne(2L);
         Invoice latestInvoice = invoiceDao.findFirstByOrderByIdDesc();
-        Invoice invoice = invoiceController.createInvoice(ticket);
+        InvoiceWrapper invoice = invoiceController.createInvoice(ticket);
         assertNotNull(invoice);
         assertEquals(latestInvoice.getId() + 1, invoice.getId());      
-        invoiceDao.delete(invoice);
+        invoiceDao.delete(invoice.getId());
     }
 }

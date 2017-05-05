@@ -1,5 +1,6 @@
 package controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import daos.core.InvoiceDao;
 import entities.core.Invoice;
 import entities.core.Ticket;
 import wrappers.InvoiceIdWrapper;
+import wrappers.InvoiceWrapper;
+import wrappers.TicketWrapper;
 
 @Controller
 public class InvoiceController {
@@ -20,17 +23,22 @@ public class InvoiceController {
         this.invoiceDao = invoiceDao;
     }
     
-    public List<Invoice> findAllInvoices(){
-        return invoiceDao.findAll();
+    public List<InvoiceWrapper> findAllInvoices(){
+        List<InvoiceWrapper> invoiceWrappers = new ArrayList<>();
+        for(Invoice invoice : invoiceDao.findAll()){
+            invoiceWrappers.add(new InvoiceWrapper(invoice.getId(), new TicketWrapper(invoice.getTicket().getId())));
+        }
+        return invoiceWrappers;
     }
     
     public Invoice findOneInvoice(InvoiceIdWrapper invoiceIdWrapper){
         return invoiceDao.findOne(invoiceIdWrapper.getId());
     }
     
-    public Invoice createInvoice(Ticket ticket){
+    public InvoiceWrapper createInvoice(Ticket ticket){
         Invoice invoice = new Invoice(getNextInvoiceId(), ticket);
-        return invoiceDao.save(invoice);      
+        Invoice invoiceCreated = invoiceDao.save(invoice);
+        return new InvoiceWrapper(invoiceCreated.getId(), new TicketWrapper(invoiceCreated.getTicket().getId()));      
     }
     
     private int getNextInvoiceId(){

@@ -14,8 +14,8 @@ import api.exceptions.TicketIsAlreadyAssignedToInvoiceException;
 import controllers.InvoiceController;
 import controllers.TicketController;
 import controllers.UserController;
-import entities.core.Invoice;
 import entities.core.Ticket;
+import wrappers.InvoiceWrapper;
 import wrappers.TicketIdWrapper;
 
 @RestController
@@ -44,22 +44,22 @@ public class InvoiceResource {
     }
     
     @RequestMapping(method = RequestMethod.POST)
-    public void createInvoice(@RequestBody TicketIdWrapper ticketIdWrapper) throws TicketHasInvalidUserException, InvoiceDoesNotAllowNotClosedTicketsException, TicketIsAlreadyAssignedToInvoiceException{
+    public InvoiceWrapper createInvoice(@RequestBody TicketIdWrapper ticketIdWrapper) throws TicketHasInvalidUserException, InvoiceDoesNotAllowNotClosedTicketsException, TicketIsAlreadyAssignedToInvoiceException{
         Ticket ticket = ticketController.findOneTicket(ticketIdWrapper);
         if(!userController.userIsValid(ticket.getUser())){
             throw new TicketHasInvalidUserException("User: " + ticket.getUser());
         }
-        if(ticketController.ticketIsAssignedToInvoice(ticket)){
-            throw new TicketIsAlreadyAssignedToInvoiceException();
+        if(ticketController.ticketIsAlreadyAssignedToInvoice(ticket)){
+            throw new TicketIsAlreadyAssignedToInvoiceException("Ticket: " + ticket);
         }
-        if(!ticketController.ticketIsClosed(ticket)){
+        if(!ticketController.isTicketClosed(ticket)){
             throw new InvoiceDoesNotAllowNotClosedTicketsException();
         }
-        invoiceController.createInvoice(ticket);
+        return invoiceController.createInvoice(ticket);
     }
     
     @RequestMapping(method = RequestMethod.GET)
-    public List<Invoice> findAllInvoices(){
+    public List<InvoiceWrapper> findAllInvoices(){
         return invoiceController.findAllInvoices();
     }
 
