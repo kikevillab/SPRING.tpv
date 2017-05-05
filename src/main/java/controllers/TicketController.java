@@ -69,7 +69,7 @@ public class TicketController {
     }
 
     private long getNextId() {
-        long nextId = 0;
+        long nextId = 1;
         Ticket ticket = ticketDao.findFirstByOrderByCreatedDescIdDesc();
 
         if (ticket != null) {
