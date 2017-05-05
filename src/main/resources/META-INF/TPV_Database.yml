@@ -77,6 +77,7 @@ articleList:
     retailPrice: 20
     description: article0
     wholesalePrice: 10
+    stock: 5
     provider: *provider666100000
   - &article84000001112
     id: 84000001112
@@ -84,6 +85,7 @@ articleList:
     retailPrice: 21
     description: article1
     wholesalePrice: 11
+    stock: 8
     provider: *provider666100000
   - &article84000001113
     id: 84000001113
@@ -91,6 +93,7 @@ articleList:
     retailPrice: 22
     description: article2
     wholesalePrice: 12
+    stock: 0
     provider: *provider666100000
   - &article84000001114
     id: 84000001114
@@ -98,30 +101,35 @@ articleList:
     retailPrice: 23
     description: article3
     wholesalePrice: 13
+    stock: 15
     provider: *provider666100000
   - id: 84000001115
     code: article4
     retailPrice: 24
     description: article4
     wholesalePrice: 14
+    stock: 26
     provider: *provider666100001
   - id: 84000001116
     code: article5
     retailPrice: 25
     description: article5
     wholesalePrice: 15
+    stock: 3
     provider: *provider666100001
   - id: 84000001117
     code: article6
     retailPrice: 26
     description: article6
     wholesalePrice: 16
+    stock: 125
     provider: *provider666100001
   - id: 84000001118
     code: article7
     retailPrice: 27
     description: article7
     wholesalePrice: 17
+    stock: 67
     provider: *provider666100001
 
 embroideryList:
