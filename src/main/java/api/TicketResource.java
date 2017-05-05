@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import api.exceptions.EmptyShoppingListException;
+import api.exceptions.NotEnoughStockException;
 import api.exceptions.NotFoundProductCodeException;
 import api.exceptions.NotFoundTicketReferenceException;
 import api.exceptions.NotFoundUserMobileException;
+import controllers.ArticleController;
 import controllers.ProductController;
 import controllers.TicketController;
 import controllers.UserController;
@@ -31,6 +33,8 @@ public class TicketResource {
     private UserController userController;
 
     private ProductController productController;
+    
+    private ArticleController articleController;
 
     @Autowired
     public void setTicketController(TicketController ticketController) {
@@ -46,11 +50,16 @@ public class TicketResource {
     public void setProductController(ProductController productController) {
         this.productController = productController;
     }
+    
+    @Autowired
+    public void setArticleController(ArticleController articleController) {
+        this.articleController = articleController;
+    }
 
     // @PreAuthorize("hasRole('ADMIN')or hasRole('MANAGER') or hasRole('OPERATOR')")
     @RequestMapping(method = RequestMethod.POST)
     public TicketReferenceWrapper createTicket(@RequestBody TicketCreationWrapper ticketCreationWrapper)
-            throws EmptyShoppingListException, NotFoundProductCodeException, NotFoundUserMobileException {
+            throws EmptyShoppingListException, NotFoundProductCodeException, NotFoundUserMobileException, NotEnoughStockException {
         Long userMobile = ticketCreationWrapper.getUserMobile();
         if (userMobile != null && !userController.userMobileExists(userMobile)) {
             throw new NotFoundUserMobileException();
@@ -62,8 +71,12 @@ public class TicketResource {
         }
 
         for (ShoppingCreationWrapper shoppingCreationWrapper : shoppingCreationWrapperList) {
-            if (!productController.productCodeExists(shoppingCreationWrapper.getProductCode())) {
-                throw new NotFoundProductCodeException("Product id: " + shoppingCreationWrapper.getProductCode());
+            String productCode = shoppingCreationWrapper.getProductCode();
+            if (!productController.productCodeExists(productCode)) {
+                throw new NotFoundProductCodeException("Product code: " + productCode);
+            }
+            if (articleController.articleCodeExists(productCode) && !articleController.consumeArticle(productCode, shoppingCreationWrapper.getAmount())) {
+                throw new NotEnoughStockException("Article code: " + productCode);
             }
         }
 

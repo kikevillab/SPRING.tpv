@@ -1,8 +1,8 @@
 package api;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -68,6 +68,28 @@ public class TicketResourceFunctionalTesting {
     }
 
     @Test
+    public void testCreateTicketNotEnoughStock() {
+        thrown.expect(new HttpMatcher(HttpStatus.CONFLICT));
+        String token = new RestService().loginAdmin();
+
+        long userMobile = 666000000L;
+        TicketCreationWrapper ticketCreationWrapper = new TicketCreationWrapper();
+        ticketCreationWrapper.setUserMobile(userMobile);
+
+        List<ShoppingCreationWrapper> shoppingCreationWrapperList = new ArrayList<>();
+        ShoppingCreationWrapper shoppingCreationWrapper = new ShoppingCreationWrapper();
+        shoppingCreationWrapper.setProductCode("article2");
+        shoppingCreationWrapper.setAmount(2);
+        shoppingCreationWrapper.setDiscount(0);
+        shoppingCreationWrapper.setDelivered(true);
+        shoppingCreationWrapperList.add(shoppingCreationWrapper);
+        ticketCreationWrapper.setShoppingList(shoppingCreationWrapperList);
+
+        new RestBuilder<TicketReferenceWrapper>(RestService.URL).path(Uris.TICKETS)
+                .body(ticketCreationWrapper).basicAuth(token, "").clazz(TicketReferenceWrapper.class).post().build();
+    }
+
+    @Test
     public void testCreateTicketWithUser() {
         String token = new RestService().loginAdmin();
 
@@ -77,7 +99,7 @@ public class TicketResourceFunctionalTesting {
 
         List<ShoppingCreationWrapper> shoppingCreationWrapperList = new ArrayList<>();
         ShoppingCreationWrapper shoppingCreationWrapper = new ShoppingCreationWrapper();
-        shoppingCreationWrapper.setProductCode("article0");
+        shoppingCreationWrapper.setProductCode("article1");
         shoppingCreationWrapper.setAmount(2);
         shoppingCreationWrapper.setDiscount(0);
         shoppingCreationWrapper.setDelivered(true);
@@ -142,13 +164,14 @@ public class TicketResourceFunctionalTesting {
 
         List<ShoppingTrackingWrapper> shoppingTrackingWrapperList = Arrays
                 .asList(new RestBuilder<ShoppingTrackingWrapper[]>(RestService.URL).path(Uris.TICKETS).path(Uris.TRACKING)
-                        .pathId(ticketReference.getTicketReference()).basicAuth(token, "").clazz(ShoppingTrackingWrapper[].class).get().build());
+                        .pathId(ticketReference.getTicketReference()).basicAuth(token, "").clazz(ShoppingTrackingWrapper[].class).get()
+                        .build());
 
         assertNotNull(shoppingTrackingWrapperList);
         assertFalse(shoppingCreationWrapperList.isEmpty());
-        
+
         ShoppingTrackingWrapper shoppingTrackingWrapper = shoppingTrackingWrapperList.get(0);
-        
+
         assertEquals(shoppingCreationWrapper.getProductCode(), shoppingTrackingWrapper.getProductCode());
         assertEquals(ShoppingState.COMMITTED, shoppingTrackingWrapper.getShoppingState());
     }

@@ -16,6 +16,7 @@ import api.exceptions.ErrorMessage;
 import api.exceptions.InvalidUserFieldException;
 import api.exceptions.InvoiceNotFoundException;
 import api.exceptions.MalformedHeaderException;
+import api.exceptions.NotEnoughStockException;
 import api.exceptions.NotFoundProductCodeException;
 import api.exceptions.NotFoundTicketReferenceException;
 import api.exceptions.NotFoundUserIdException;
@@ -52,7 +53,7 @@ public class ApiExceptionHandler {
     }
 
     @ResponseStatus(HttpStatus.CONFLICT)
-    @ExceptionHandler({AlreadyExistUserFieldException.class, AlreadyExistUserFieldException.class})
+    @ExceptionHandler({AlreadyExistUserFieldException.class, AlreadyExistUserFieldException.class, NotEnoughStockException.class})
     @ResponseBody
     public ErrorMessage conflictRequest(ApiException exception) {
         ErrorMessage apiErrorMessage = new ErrorMessage(exception);
