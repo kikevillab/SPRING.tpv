@@ -3,6 +3,7 @@ package entities.core;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -12,7 +13,10 @@ public class Invoice {
     private int id;
 
     @OneToOne
-    @JoinColumn
+    @JoinColumns({
+        @JoinColumn(name = "ticket_id", referencedColumnName = "id"),
+        @JoinColumn(name = "ticket_created", referencedColumnName = "created")
+      })
     private Ticket ticket;
 
     public Invoice() {
