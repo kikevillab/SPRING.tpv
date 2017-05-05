@@ -32,7 +32,7 @@ public class TicketController {
     private ProductDao productDao;
 
     private InvoiceDao invoiceDao;
-    
+
     @Autowired
     public void setTicketDao(TicketDao ticketDao) {
         this.ticketDao = ticketDao;
@@ -46,6 +46,11 @@ public class TicketController {
     @Autowired
     public void setProductDao(ProductDao productDao) {
         this.productDao = productDao;
+    }
+
+    @Autowired
+    public void setInvoiceDao(InvoiceDao invoiceDao) {
+        this.invoiceDao = invoiceDao;
     }
 
     public Ticket createTicket(TicketCreationWrapper ticketCreationWrapper) {
@@ -89,24 +94,24 @@ public class TicketController {
         }
         return nextId;
     }
-    
+
     public List<ShoppingTrackingWrapper> getTicketTracking(String reference) {
         Ticket ticket = ticketDao.findFirstByReference(reference);
-        
+
         List<ShoppingTrackingWrapper> shoppingTrackingWrapperList = new LinkedList<>();
         for (Shopping shopping : ticket.getShoppingList()) {
             shoppingTrackingWrapperList.add(new ShoppingTrackingWrapper(shopping));
         }
-        
+
         return shoppingTrackingWrapperList;
     }
-    
+
     public boolean ticketReferenceExists(String reference) {
         Ticket ticket = ticketDao.findFirstByReference(reference);
         return ticket != null;
     }
-    
-    public Ticket findOneTicket(TicketIdWrapper ticketIdWrapper){
+
+    public Ticket findOneTicket(TicketIdWrapper ticketIdWrapper) {
         return ticketDao.findOne(ticketIdWrapper.getId());
     }
 
@@ -116,12 +121,12 @@ public class TicketController {
 
     public boolean ticketIsClosed(Ticket ticket) {
         boolean closed = true;
-        for(Shopping shopping : ticket.getShoppingList()){
-            if(shopping.getShoppingState() != ShoppingState.CLOSED){
+        for (Shopping shopping : ticket.getShoppingList()) {
+            if (shopping.getShoppingState() != ShoppingState.CLOSED) {
                 closed = false;
             }
         }
         return closed;
     }
-   
+
 }

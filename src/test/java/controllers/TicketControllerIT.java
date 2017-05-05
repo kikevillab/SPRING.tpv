@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -120,6 +121,40 @@ public class TicketControllerIT {
     @Test
     public void testFindOneTicket(){
         assertNotNull(ticketController.findOneTicket(new TicketIdWrapper(1L)));
+    }
+    
+    @Test
+    public void testTicketIsClosedWithATicketWithAllShoppingsClosed(){
+        Ticket ticketWithAllShoppingsClosed = new Ticket();
+        Shopping shoppingClosed = new Shopping();
+        shoppingClosed.setShoppingState(ShoppingState.CLOSED);
+        ticketWithAllShoppingsClosed.addShopping(shoppingClosed);
+        ticketWithAllShoppingsClosed.addShopping(shoppingClosed);
+        assertTrue(ticketController.ticketIsClosed(ticketWithAllShoppingsClosed));
+     }
+    
+    @Test
+    public void testTicketIsClosedWithATicketWithAtLeastOneShoppingNotClosed(){
+        Ticket ticketWithAtLeastOneShoppingNotClosed = new Ticket();
+        Shopping shoppingOpened = new Shopping();
+        shoppingOpened.setShoppingState(ShoppingState.OPENED);
+        Shopping shoppingClosed = new Shopping();
+        shoppingClosed.setShoppingState(ShoppingState.CLOSED);
+        ticketWithAtLeastOneShoppingNotClosed.addShopping(shoppingClosed);
+        ticketWithAtLeastOneShoppingNotClosed.addShopping(shoppingOpened);
+        assertFalse(ticketController.ticketIsClosed(ticketWithAtLeastOneShoppingNotClosed));
+    }
+    
+    @Test
+    public void testTicketIsAssignedToInvoice(){
+        Ticket ticketAssignedToAnInvoice = ticketDao.findOne(3L);     
+        assertTrue(ticketController.ticketIsAssignedToInvoice(ticketAssignedToAnInvoice));
+    }
+    
+    @Test
+    public void testTicketIsNotAssignedToInvoice(){
+        Ticket ticketNotAssignedToAnInvoice = ticketDao.findOne(1L);     
+        assertFalse(ticketController.ticketIsAssignedToInvoice(ticketNotAssignedToAnInvoice));
     }
 
 }
