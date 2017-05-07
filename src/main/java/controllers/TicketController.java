@@ -19,6 +19,7 @@ import entities.users.User;
 import wrappers.ShoppingCreationWrapper;
 import wrappers.ShoppingTrackingWrapper;
 import wrappers.TicketCreationWrapper;
+import wrappers.TicketWrapper;
 
 @Controller
 public class TicketController {
@@ -84,6 +85,12 @@ public class TicketController {
             }
         }
         return nextId;
+    }
+    
+    public TicketWrapper getTicket(String reference) {
+        Ticket ticket = ticketDao.findFirstByReference(reference);
+        TicketWrapper ticketWrapper = new TicketWrapper(ticket);
+        return ticketWrapper;
     }
     
     public List<ShoppingTrackingWrapper> getTicketTracking(String reference) {
