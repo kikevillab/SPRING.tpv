@@ -18,7 +18,7 @@ public class TicketWrapper {
 
     private List<ShoppingWrapper> shoppingList;
 
-    private Integer userId;
+    private Long userMobile;
 
     public TicketWrapper() {
         
@@ -35,7 +35,7 @@ public class TicketWrapper {
             }
         }
         if (ticket.getUser() != null) {
-            this.userId = ticket.getUser().getId();
+            this.userMobile = ticket.getUser().getMobile();
         }
     }
 
@@ -55,13 +55,18 @@ public class TicketWrapper {
         return shoppingList;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public Long getUserMobile() {
+        return userMobile;
     }
 
     @Override
     public String toString() {
-        return "TicketWrapper [id=" + id + ", created=" + created + ", reference=" + reference + ", shoppingList=" + Arrays.toString(shoppingList.toArray())
-                + ", userId=" + userId + "]";
+        String string = "TicketWrapper [id=" + id + ", created=" + created + ", reference=" + reference + ", shoppingList=" + Arrays.toString(shoppingList.toArray());
+        if (userMobile != null) {
+            string += ", userMobile=" + userMobile;
+        }
+        string += "]";
+        return string;
+                
     }
 }

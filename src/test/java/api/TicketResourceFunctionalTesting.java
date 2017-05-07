@@ -171,7 +171,7 @@ public class TicketResourceFunctionalTesting {
 
         assertNotNull(ticketWrapper);
         assertEquals(ticketReference.getTicketReference(), ticketWrapper.getReference());
-        assertNull(ticketWrapper.getUserId());
+        assertNull(ticketWrapper.getUserMobile());
 
         ShoppingWrapper shoppingWrapper = ticketWrapper.getShoppingList().get(0);
 
