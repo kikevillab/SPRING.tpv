@@ -45,7 +45,8 @@ public class ArticleControllerIT {
         
         Article article = articleDao.findFirstByCode(articleCode);
         int previousStock = article.getStock();
-        assertTrue(articleController.consumeArticle(articleCode, amount));
+        assertTrue(articleController.hasEnoughStock(articleCode, amount));
+        articleController.consumeArticle(articleCode, amount);
         article = articleDao.findFirstByCode(articleCode);
         assertEquals(amount, previousStock - article.getStock());
         
@@ -55,9 +56,9 @@ public class ArticleControllerIT {
     }
     
     @Test
-    public void testConsumeArticleNotEnoughStock() {
+    public void testArticleHasNotEnoughStock() {
         String articleCode = "article0";
         int amount = 100;
-        assertFalse(articleController.consumeArticle(articleCode, amount));
+        assertFalse(articleController.hasEnoughStock(articleCode, amount));
     }
 }

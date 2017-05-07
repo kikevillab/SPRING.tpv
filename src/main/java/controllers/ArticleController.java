@@ -21,17 +21,23 @@ public class ArticleController {
         return article != null;
     }
 
-    public boolean consumeArticle(String articleCode, int amount) {
+    public boolean hasEnoughStock(String articleCode, int amount) {
         Article article = articleDao.findFirstByCode(articleCode);
-        boolean consumed = false;
+        boolean enoughStock = false;
         if (article != null) {
-            int stock = article.getStock();
-            if(stock >= amount) {
-                article.setStock(stock - amount);
-                articleDao.save(article);
-                consumed = true;
+            if (amount > 0 && article.getStock() >= amount) {
+                enoughStock = true;
             }
         }
-        return consumed;
+        return enoughStock;
+    }
+
+    public void consumeArticle(String articleCode, int amount) {
+        Article article = articleDao.findFirstByCode(articleCode);
+        if (article != null) {
+            int stock = article.getStock();
+            article.setStock(stock - amount);
+            articleDao.save(article);
+        }
     }
 }

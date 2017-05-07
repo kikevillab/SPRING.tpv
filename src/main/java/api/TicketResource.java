@@ -34,7 +34,7 @@ public class TicketResource {
     private UserController userController;
 
     private ProductController productController;
-    
+
     private ArticleController articleController;
 
     @Autowired
@@ -51,7 +51,7 @@ public class TicketResource {
     public void setProductController(ProductController productController) {
         this.productController = productController;
     }
-    
+
     @Autowired
     public void setArticleController(ArticleController articleController) {
         this.articleController = articleController;
@@ -76,15 +76,19 @@ public class TicketResource {
             if (!productController.productCodeExists(productCode)) {
                 throw new NotFoundProductCodeException("Product code: " + productCode);
             }
-            if (articleController.articleCodeExists(productCode) && !articleController.consumeArticle(productCode, shoppingCreationWrapper.getAmount())) {
-                throw new NotEnoughStockException("Article code: " + productCode);
+            if (articleController.articleCodeExists(productCode)) {
+                if (articleController.hasEnoughStock(productCode, shoppingCreationWrapper.getAmount())) {
+                    articleController.consumeArticle(productCode, shoppingCreationWrapper.getAmount());
+                } else {
+                    throw new NotEnoughStockException("Article code: " + productCode);
+                }
             }
         }
 
         Ticket ticket = ticketController.createTicket(ticketCreationWrapper);
         return new TicketReferenceWrapper(ticket.getReference());
     }
-    
+
     @RequestMapping(value = Uris.REFERENCE, method = RequestMethod.GET)
     public TicketWrapper getTicket(@PathVariable String reference) throws NotFoundTicketReferenceException {
         if (!ticketController.ticketReferenceExists(reference)) {
