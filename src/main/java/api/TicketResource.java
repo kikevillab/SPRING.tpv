@@ -23,6 +23,7 @@ import wrappers.ShoppingCreationWrapper;
 import wrappers.ShoppingTrackingWrapper;
 import wrappers.TicketCreationWrapper;
 import wrappers.TicketReferenceWrapper;
+import wrappers.TicketWrapper;
 
 @RestController
 @RequestMapping(Uris.VERSION + Uris.TICKETS)
@@ -82,6 +83,14 @@ public class TicketResource {
 
         Ticket ticket = ticketController.createTicket(ticketCreationWrapper);
         return new TicketReferenceWrapper(ticket.getReference());
+    }
+    
+    @RequestMapping(value = Uris.REFERENCE, method = RequestMethod.GET)
+    public TicketWrapper getTicket(@PathVariable String reference) throws NotFoundTicketReferenceException {
+        if (!ticketController.ticketReferenceExists(reference)) {
+            throw new NotFoundTicketReferenceException("Ticket reference: " + reference);
+        }
+        return ticketController.getTicket(reference);
     }
 
     @RequestMapping(value = Uris.TRACKING + Uris.REFERENCE, method = RequestMethod.GET)

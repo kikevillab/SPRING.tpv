@@ -3,6 +3,7 @@ package api;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,8 +20,10 @@ import entities.core.ShoppingState;
 import entities.core.Ticket;
 import wrappers.ShoppingCreationWrapper;
 import wrappers.ShoppingTrackingWrapper;
+import wrappers.ShoppingWrapper;
 import wrappers.TicketCreationWrapper;
 import wrappers.TicketReferenceWrapper;
+import wrappers.TicketWrapper;
 
 public class TicketResourceFunctionalTesting {
 
@@ -143,6 +146,38 @@ public class TicketResourceFunctionalTesting {
         new RestBuilder<ShoppingTrackingWrapper[]>(RestService.URL).path(Uris.TICKETS).path(Uris.TRACKING).pathId(ticketReference)
                 .basicAuth(token, "").clazz(ShoppingTrackingWrapper[].class).get().build();
     }
+    
+    @Test
+    public void testGetTicket() {
+        String token = new RestService().loginAdmin();
+
+        TicketCreationWrapper ticketCreationWrapper = new TicketCreationWrapper();
+
+        List<ShoppingCreationWrapper> shoppingCreationWrapperList = new ArrayList<>();
+        ShoppingCreationWrapper shoppingCreationWrapper = new ShoppingCreationWrapper();
+        shoppingCreationWrapper.setProductCode("embroidery0");
+        shoppingCreationWrapper.setAmount(6);
+        shoppingCreationWrapper.setDiscount(10);
+        shoppingCreationWrapper.setDelivered(false);
+        shoppingCreationWrapperList.add(shoppingCreationWrapper);
+        ticketCreationWrapper.setShoppingList(shoppingCreationWrapperList);
+
+        TicketReferenceWrapper ticketReference = new RestBuilder<TicketReferenceWrapper>(RestService.URL).path(Uris.TICKETS)
+                .body(ticketCreationWrapper).basicAuth(token, "").clazz(TicketReferenceWrapper.class).post().build();
+
+        TicketWrapper ticketWrapper = new RestBuilder<TicketWrapper>(RestService.URL).path(Uris.TICKETS)
+                        .pathId(ticketReference.getTicketReference()).basicAuth(token, "").clazz(TicketWrapper.class).get()
+                        .build();
+
+        assertNotNull(ticketWrapper);
+        assertEquals(ticketReference.getTicketReference(), ticketWrapper.getReference());
+        assertNull(ticketWrapper.getUserId());
+
+        ShoppingWrapper shoppingWrapper = ticketWrapper.getShoppingList().get(0);
+
+        assertEquals(shoppingCreationWrapper.getProductCode(), shoppingWrapper.getProductCode());
+        assertEquals(ShoppingState.OPENED, shoppingWrapper.getShoppingState());
+    }
 
     @Test
     public void testGetTicketTracking() {
@@ -168,7 +203,7 @@ public class TicketResourceFunctionalTesting {
                         .build());
 
         assertNotNull(shoppingTrackingWrapperList);
-        assertFalse(shoppingCreationWrapperList.isEmpty());
+        assertFalse(shoppingTrackingWrapperList.isEmpty());
 
         ShoppingTrackingWrapper shoppingTrackingWrapper = shoppingTrackingWrapperList.get(0);
 
