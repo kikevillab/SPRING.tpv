@@ -15,6 +15,7 @@ import config.TestsPersistenceConfig;
 import daos.core.InvoiceDao;
 import daos.core.TicketDao;
 import entities.core.Invoice;
+import entities.core.InvoicePK;
 import entities.core.Ticket;
 import wrappers.InvoiceWrapper;
 
@@ -43,6 +44,6 @@ public class InvoiceControllerIT {
         InvoiceWrapper invoice = invoiceController.createInvoice(ticket);
         assertNotNull(invoice);
         assertEquals(latestInvoice.getId() + 1, invoice.getId());      
-        invoiceDao.delete(invoice.getId());
+        invoiceDao.delete(new InvoicePK(invoice.getId()));
     }
 }

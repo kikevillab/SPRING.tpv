@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import daos.core.InvoiceDao;
 import daos.core.TicketDao;
 import entities.core.Invoice;
+import entities.core.InvoicePK;
 import entities.core.Ticket;
 import services.PdfGenerationService;
 
@@ -36,7 +37,7 @@ public class PdfGenerationController {
     }
 
     public void generateInvoicePdf(int invoiceId) throws FileNotFoundException {
-        Invoice invoice = invoiceDao.findOne(invoiceId);
+        Invoice invoice = invoiceDao.findOne(new InvoicePK(invoiceId));
         pdfGenService.generateInvoicePdf(invoice);
     }
     
@@ -50,7 +51,7 @@ public class PdfGenerationController {
     }
     
     public boolean invoiceExists(int invoiceId){
-        return invoiceDao.findOne(invoiceId) != null;
+        return invoiceDao.findOne(new InvoicePK(invoiceId)) != null;
     }
 
 }
