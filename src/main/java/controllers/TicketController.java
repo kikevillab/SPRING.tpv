@@ -66,6 +66,7 @@ public class TicketController {
 
         ticket.setShoppingList(shoppingList);
         ticketDao.save(ticket);
+        ticket = ticketDao.findFirstByReference(ticket.getReference());
 
         return ticket;
     }

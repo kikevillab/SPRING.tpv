@@ -44,6 +44,10 @@ public class Ticket {
 
     public Ticket() {
         created = Calendar.getInstance();
+        created.set(Calendar.HOUR_OF_DAY, 0);
+        created.set(Calendar.MINUTE, 0);
+        created.set(Calendar.SECOND, 0);
+        created.set(Calendar.MILLISECOND, 0);
         shoppingList = new ArrayList<>();
     }
 

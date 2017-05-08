@@ -13,6 +13,15 @@ public class ShoppingUpdateWrapper {
     public ShoppingUpdateWrapper() {
     }
 
+    public ShoppingUpdateWrapper(String productCode, int amount, ShoppingState shoppingState) {
+        super();
+        this.productCode = productCode;
+        this.amount = amount;
+        this.shoppingState = shoppingState;
+    }
+
+
+
     public String getProductCode() {
         return productCode;
     }

@@ -18,12 +18,15 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import config.PersistenceConfig;
 import config.TestsControllerConfig;
 import config.TestsPersistenceConfig;
+import daos.core.ArticleDao;
 import daos.core.TicketDao;
+import entities.core.Article;
 import entities.core.Shopping;
 import entities.core.ShoppingState;
 import entities.core.Ticket;
 import wrappers.ShoppingCreationWrapper;
 import wrappers.ShoppingTrackingWrapper;
+import wrappers.ShoppingUpdateWrapper;
 import wrappers.TicketCreationWrapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -35,6 +38,9 @@ public class TicketControllerIT {
 
     @Autowired
     private TicketDao ticketDao;
+    
+    @Autowired
+    private ArticleDao articleDao;
 
     @Test
     public void testCreateTicketWithoutUser() {
@@ -42,7 +48,7 @@ public class TicketControllerIT {
 
         List<ShoppingCreationWrapper> shoppingCreationWrapperList = new ArrayList<>();
         ShoppingCreationWrapper shoppingCreationWrapper = new ShoppingCreationWrapper();
-        shoppingCreationWrapper.setProductCode("embroidery0");
+        shoppingCreationWrapper.setProductCode("article0");
         shoppingCreationWrapper.setAmount(2);
         shoppingCreationWrapper.setDiscount(0);
         shoppingCreationWrapper.setDelivered(true);
@@ -54,6 +60,7 @@ public class TicketControllerIT {
         Ticket ticket = ticketController.createTicket(ticketCreationWrapper);
         List<Shopping> shoppingList = ticket.getShoppingList();
         Shopping shopping = shoppingList.get(0);
+        Article article = articleDao.findFirstByCode(shoppingCreationWrapper.getProductCode());
 
         assertEquals(lastTicketId + 1, ticket.getId());
         assertNull(ticket.getUser());
@@ -64,6 +71,8 @@ public class TicketControllerIT {
         assertEquals(ShoppingState.COMMITTED, shopping.getShoppingState());
 
         ticketDao.delete(ticket);
+        article.setStock(article.getStock() + shoppingCreationWrapper.getAmount());
+        articleDao.save(article);
     }
 
     @Test
@@ -96,6 +105,45 @@ public class TicketControllerIT {
         assertEquals(ShoppingState.OPENED, shopping.getShoppingState());
 
         ticketDao.delete(ticket);
+    }
+    
+    @Test
+    public void testUpdateTicket() {
+        String productCode = "textilePrinting0";
+        TicketCreationWrapper ticketCreationWrapper = new TicketCreationWrapper();
+        List<ShoppingCreationWrapper> shoppingCreationWrapperList = new ArrayList<>();
+        ShoppingCreationWrapper shoppingCreationWrapper = new ShoppingCreationWrapper();
+        shoppingCreationWrapper.setProductCode(productCode);
+        shoppingCreationWrapper.setAmount(3);
+        shoppingCreationWrapper.setDiscount(15);
+        shoppingCreationWrapper.setDelivered(false);
+        shoppingCreationWrapperList.add(shoppingCreationWrapper);
+        ticketCreationWrapper.setShoppingList(shoppingCreationWrapperList);
+        Ticket createdTicket = ticketController.createTicket(ticketCreationWrapper);
+        Shopping createdShopping = createdTicket.getShoppingList().get(0);
+        
+        List<ShoppingUpdateWrapper> shoppingUpdateWrapperList = new ArrayList<>();
+        ShoppingUpdateWrapper shoppingUpdateWrapper = new ShoppingUpdateWrapper(productCode, 2, ShoppingState.COMMITTED);
+        shoppingUpdateWrapperList.add(shoppingUpdateWrapper);
+        Ticket updatedTicket = ticketController.updateTicket(createdTicket.getReference(), shoppingUpdateWrapperList);
+        Shopping updatedShopping = updatedTicket.getShoppingList().get(0);
+
+        assertEquals(createdTicket.getId(), updatedTicket.getId());
+        assertEquals(createdTicket.getReference(), updatedTicket.getReference());
+        assertEquals(createdTicket.getCreated(), updatedTicket.getCreated());
+        assertNotNull(updatedShopping);
+        assertEquals(createdShopping.getId(), updatedShopping.getId());
+        assertEquals(createdShopping.getProduct(), updatedShopping.getProduct());
+        assertEquals(createdShopping.getDescription(), updatedShopping.getDescription());
+        assertEquals(createdShopping.getDiscount(), updatedShopping.getDiscount());
+        assertEquals(createdShopping.getRetailPrice(), updatedShopping.getRetailPrice());
+        assertFalse(createdShopping.getAmount() == updatedShopping.getAmount());
+        assertFalse(createdShopping.getShoppingState() == updatedShopping.getShoppingState());
+        
+        assertEquals(shoppingUpdateWrapper.getAmount(), updatedShopping.getAmount());
+        assertEquals(shoppingUpdateWrapper.getShoppingState(), updatedShopping.getShoppingState());
+
+        ticketDao.delete(createdTicket);
     }
 
     @Test
