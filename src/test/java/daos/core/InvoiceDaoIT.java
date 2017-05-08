@@ -30,7 +30,7 @@ public class InvoiceDaoIT {
     
     @Test
     public void testFindFirstByOrderByIdDesc(){
-        assertEquals(20170002, invoiceDao.findFirstByOrderByIdDesc().getId());
+        assertEquals(20170002, invoiceDao.findFirstByOrderByCreatedDescIdDesc().getId());
     }
     
     @Test

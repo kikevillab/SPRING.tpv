@@ -7,6 +7,6 @@ import entities.core.InvoicePK;
 import entities.core.Ticket;
 
 public interface InvoiceDao extends JpaRepository<Invoice, InvoicePK> {
-    Invoice findFirstByOrderByIdDesc();
+    Invoice findFirstByOrderByCreatedDescIdDesc();
     Invoice findByTicket(Ticket ticket);
 }

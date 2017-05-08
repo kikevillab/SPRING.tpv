@@ -63,10 +63,5 @@ public class InvoicePK implements Serializable {
             return false;
         return true;
     }
-
-    @Override
-    public String toString() {
-        return "InvoicePK [id=" + id + ", created=" + created + "]";
-    }
     
 }

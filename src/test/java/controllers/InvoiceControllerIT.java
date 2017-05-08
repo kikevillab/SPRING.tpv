@@ -38,9 +38,9 @@ public class InvoiceControllerIT {
     }
     
     @Test
-    public void testCreateInvoice() {
+    public void testCreateInvoiceWithAtLeastOneInvoiceThisYear() {
         Ticket ticket = ticketDao.findOne(2L);
-        Invoice latestInvoice = invoiceDao.findFirstByOrderByIdDesc();
+        Invoice latestInvoice = invoiceDao.findFirstByOrderByCreatedDescIdDesc();
         InvoiceWrapper invoice = invoiceController.createInvoice(ticket);
         assertNotNull(invoice);
         assertEquals(latestInvoice.getId() + 1, invoice.getId());      
