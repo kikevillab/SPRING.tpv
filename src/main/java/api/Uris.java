@@ -33,4 +33,6 @@ public class Uris {
     public static final String TRACKING = "/tracking";
 
     public static final String REFERENCE = "/{reference}";
+    
+    public static final String PHONE = "/{mobilePhone}";
 }
