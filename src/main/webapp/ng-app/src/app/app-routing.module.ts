@@ -1,16 +1,17 @@
-import { WelcomeComponent } from './welcome/welcome.component';
+import {NgModule} from '@angular/core';
+import {Routes, RouterModule} from '@angular/router';
 
-export const AppRoutes = [
-    { 
-        name: "Welcome",
-        description: "Welcome to TPV Online",
-        path: 'welcome', 
-        showInNav: true,
-        component: WelcomeComponent 
-    },
+const routes: Routes = [
     {
-      path: '',
-      redirectTo: 'welcome',
-      pathMatch: 'full'
+        path: '',
+        redirectTo: 'welcome',
+        pathMatch: 'full'
     }
-]
+];
+
+@NgModule({
+    imports: [RouterModule.forRoot(routes)],
+    exports: [RouterModule]
+})
+export class AppRoutingModule {
+}
