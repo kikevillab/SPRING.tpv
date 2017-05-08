@@ -12,7 +12,7 @@ public class ArticleController {
     private ArticleDao articleDao;
 
     @Autowired
-    public void setProductDao(ArticleDao productDao) {
+    public void setArticleDao(ArticleDao productDao) {
         this.articleDao = productDao;
     }
 
