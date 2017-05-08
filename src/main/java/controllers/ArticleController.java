@@ -25,7 +25,7 @@ public class ArticleController {
         Article article = articleDao.findFirstByCode(articleCode);
         boolean enoughStock = false;
         if (article != null) {
-            if (amount > 0 && article.getStock() >= amount) {
+            if (article.getStock() >= amount) {
                 enoughStock = true;
             }
         }

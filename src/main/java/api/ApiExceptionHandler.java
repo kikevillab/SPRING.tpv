@@ -13,6 +13,7 @@ import api.exceptions.AlreadyExistUserFieldException;
 import api.exceptions.ApiException;
 import api.exceptions.EmptyShoppingListException;
 import api.exceptions.ErrorMessage;
+import api.exceptions.InvalidProductAmountInTicketException;
 import api.exceptions.InvalidUserFieldException;
 import api.exceptions.InvoiceNotFoundException;
 import api.exceptions.MalformedHeaderException;
@@ -53,7 +54,7 @@ public class ApiExceptionHandler {
     }
 
     @ResponseStatus(HttpStatus.CONFLICT)
-    @ExceptionHandler({AlreadyExistUserFieldException.class, AlreadyExistUserFieldException.class, NotEnoughStockException.class})
+    @ExceptionHandler({AlreadyExistUserFieldException.class, AlreadyExistUserFieldException.class, NotEnoughStockException.class, InvalidProductAmountInTicketException.class})
     @ResponseBody
     public ErrorMessage conflictRequest(ApiException exception) {
         ErrorMessage apiErrorMessage = new ErrorMessage(exception);

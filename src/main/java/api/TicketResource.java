@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import api.exceptions.EmptyShoppingListException;
+import api.exceptions.InvalidProductAmountInTicketException;
 import api.exceptions.NotEnoughStockException;
 import api.exceptions.NotFoundProductCodeException;
 import api.exceptions.NotFoundTicketReferenceException;
@@ -60,7 +61,7 @@ public class TicketResource {
     // @PreAuthorize("hasRole('ADMIN')or hasRole('MANAGER') or hasRole('OPERATOR')")
     @RequestMapping(method = RequestMethod.POST)
     public TicketReferenceWrapper createTicket(@RequestBody TicketCreationWrapper ticketCreationWrapper)
-            throws EmptyShoppingListException, NotFoundProductCodeException, NotFoundUserMobileException, NotEnoughStockException {
+            throws EmptyShoppingListException, NotFoundProductCodeException, NotFoundUserMobileException, NotEnoughStockException, InvalidProductAmountInTicketException {
         Long userMobile = ticketCreationWrapper.getUserMobile();
         if (userMobile != null && !userController.userMobileExists(userMobile)) {
             throw new NotFoundUserMobileException();
@@ -76,12 +77,14 @@ public class TicketResource {
             if (!productController.productCodeExists(productCode)) {
                 throw new NotFoundProductCodeException("Product code: " + productCode);
             }
+            if (shoppingCreationWrapper.getAmount() <= 0) {
+                throw new InvalidProductAmountInTicketException("Product code: " + productCode);
+            }
             if (articleController.articleCodeExists(productCode)) {
-                if (articleController.hasEnoughStock(productCode, shoppingCreationWrapper.getAmount())) {
-                    articleController.consumeArticle(productCode, shoppingCreationWrapper.getAmount());
-                } else {
+                if (!articleController.hasEnoughStock(productCode, shoppingCreationWrapper.getAmount())) {
                     throw new NotEnoughStockException("Article code: " + productCode);
                 }
+                articleController.consumeArticle(productCode, shoppingCreationWrapper.getAmount());
             }
         }
 
@@ -94,7 +97,7 @@ public class TicketResource {
         if (!ticketController.ticketReferenceExists(reference)) {
             throw new NotFoundTicketReferenceException("Ticket reference: " + reference);
         }
-        return ticketController.getTicket(reference);
+        return new TicketWrapper(ticketController.getTicket(reference));
     }
 
     @RequestMapping(value = Uris.TRACKING + Uris.REFERENCE, method = RequestMethod.GET)

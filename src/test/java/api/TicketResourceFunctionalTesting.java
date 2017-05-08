@@ -91,6 +91,28 @@ public class TicketResourceFunctionalTesting {
         new RestBuilder<TicketReferenceWrapper>(RestService.URL).path(Uris.TICKETS)
                 .body(ticketCreationWrapper).basicAuth(token, "").clazz(TicketReferenceWrapper.class).post().build();
     }
+    
+    @Test
+    public void testCreateTicketInvalidProductStock() {
+        thrown.expect(new HttpMatcher(HttpStatus.CONFLICT));
+        String token = new RestService().loginAdmin();
+
+        long userMobile = 666000000L;
+        TicketCreationWrapper ticketCreationWrapper = new TicketCreationWrapper();
+        ticketCreationWrapper.setUserMobile(userMobile);
+
+        List<ShoppingCreationWrapper> shoppingCreationWrapperList = new ArrayList<>();
+        ShoppingCreationWrapper shoppingCreationWrapper = new ShoppingCreationWrapper();
+        shoppingCreationWrapper.setProductCode("embroidery2");
+        shoppingCreationWrapper.setAmount(0);
+        shoppingCreationWrapper.setDiscount(0);
+        shoppingCreationWrapper.setDelivered(true);
+        shoppingCreationWrapperList.add(shoppingCreationWrapper);
+        ticketCreationWrapper.setShoppingList(shoppingCreationWrapperList);
+
+        new RestBuilder<TicketReferenceWrapper>(RestService.URL).path(Uris.TICKETS)
+                .body(ticketCreationWrapper).basicAuth(token, "").clazz(TicketReferenceWrapper.class).post().build();
+    }
 
     @Test
     public void testCreateTicketWithUser() {
