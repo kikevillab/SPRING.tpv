@@ -2,6 +2,7 @@ package controllers;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -18,8 +19,8 @@ import entities.core.Ticket;
 import entities.users.User;
 import wrappers.ShoppingCreationWrapper;
 import wrappers.ShoppingTrackingWrapper;
+import wrappers.ShoppingUpdateWrapper;
 import wrappers.TicketCreationWrapper;
-import wrappers.TicketWrapper;
 
 @Controller
 public class TicketController {
@@ -86,24 +87,41 @@ public class TicketController {
         }
         return nextId;
     }
-    
-    public TicketWrapper getTicket(String reference) {
-        Ticket ticket = ticketDao.findFirstByReference(reference);
-        TicketWrapper ticketWrapper = new TicketWrapper(ticket);
-        return ticketWrapper;
+
+    public Ticket getTicket(String reference) {
+        return ticketDao.findFirstByReference(reference);
     }
-    
+
+    public Ticket updateTicket(String reference, List<ShoppingUpdateWrapper> updatedShoppings) {
+        Ticket ticket = getTicket(reference);
+        Iterator<Shopping> shoppingList = ticket.getShoppingList().iterator();
+        for (ShoppingUpdateWrapper shoppingUpdateWrapper : updatedShoppings) {
+            String productCode = shoppingUpdateWrapper.getProductCode();
+            boolean foundProductCode = false;
+            while (shoppingList.hasNext() && !foundProductCode) {
+                Shopping shopping = shoppingList.next();
+                if (shopping.getProduct().getCode().equals(productCode)) {
+                    foundProductCode = true;
+                    shopping.setAmount(shoppingUpdateWrapper.getAmount());
+                    shopping.setShoppingState(shoppingUpdateWrapper.getShoppingState());
+                }
+            }
+        }
+        ticketDao.save(ticket);
+        return ticket;
+    }
+
     public List<ShoppingTrackingWrapper> getTicketTracking(String reference) {
         Ticket ticket = ticketDao.findFirstByReference(reference);
-        
+
         List<ShoppingTrackingWrapper> shoppingTrackingWrapperList = new LinkedList<>();
         for (Shopping shopping : ticket.getShoppingList()) {
             shoppingTrackingWrapperList.add(new ShoppingTrackingWrapper(shopping));
         }
-        
+
         return shoppingTrackingWrapperList;
     }
-    
+
     public boolean ticketReferenceExists(String reference) {
         Ticket ticket = ticketDao.findFirstByReference(reference);
         return ticket != null;

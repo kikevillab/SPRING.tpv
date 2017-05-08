@@ -94,7 +94,7 @@ public class TicketResourceFunctionalTesting {
     
     @Test
     public void testCreateTicketInvalidProductStock() {
-        thrown.expect(new HttpMatcher(HttpStatus.CONFLICT));
+        thrown.expect(new HttpMatcher(HttpStatus.BAD_REQUEST));
         String token = new RestService().loginAdmin();
 
         long userMobile = 666000000L;

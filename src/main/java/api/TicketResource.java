@@ -1,5 +1,6 @@
 package api;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,18 +11,22 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import api.exceptions.EmptyShoppingListException;
-import api.exceptions.InvalidProductAmountInTicketException;
+import api.exceptions.InvalidProductAmountInNewTicketException;
+import api.exceptions.InvalidProductAmountInUpdateTicketException;
 import api.exceptions.NotEnoughStockException;
 import api.exceptions.NotFoundProductCodeException;
+import api.exceptions.NotFoundProductCodeInTicketException;
 import api.exceptions.NotFoundTicketReferenceException;
 import api.exceptions.NotFoundUserMobileException;
 import controllers.ArticleController;
 import controllers.ProductController;
 import controllers.TicketController;
 import controllers.UserController;
+import entities.core.Shopping;
 import entities.core.Ticket;
 import wrappers.ShoppingCreationWrapper;
 import wrappers.ShoppingTrackingWrapper;
+import wrappers.ShoppingUpdateWrapper;
 import wrappers.TicketCreationWrapper;
 import wrappers.TicketReferenceWrapper;
 import wrappers.TicketWrapper;
@@ -60,8 +65,8 @@ public class TicketResource {
 
     // @PreAuthorize("hasRole('ADMIN')or hasRole('MANAGER') or hasRole('OPERATOR')")
     @RequestMapping(method = RequestMethod.POST)
-    public TicketReferenceWrapper createTicket(@RequestBody TicketCreationWrapper ticketCreationWrapper)
-            throws EmptyShoppingListException, NotFoundProductCodeException, NotFoundUserMobileException, NotEnoughStockException, InvalidProductAmountInTicketException {
+    public TicketReferenceWrapper createTicket(@RequestBody TicketCreationWrapper ticketCreationWrapper) throws EmptyShoppingListException,
+            NotFoundProductCodeException, NotFoundUserMobileException, NotEnoughStockException, InvalidProductAmountInNewTicketException {
         Long userMobile = ticketCreationWrapper.getUserMobile();
         if (userMobile != null && !userController.userMobileExists(userMobile)) {
             throw new NotFoundUserMobileException();
@@ -78,8 +83,9 @@ public class TicketResource {
                 throw new NotFoundProductCodeException("Product code: " + productCode);
             }
             if (shoppingCreationWrapper.getAmount() <= 0) {
-                throw new InvalidProductAmountInTicketException("Product code: " + productCode);
+                throw new InvalidProductAmountInNewTicketException("Product code: " + productCode);
             }
+            // If the product is an article, check if there is enough stock and update it
             if (articleController.articleCodeExists(productCode)) {
                 if (!articleController.hasEnoughStock(productCode, shoppingCreationWrapper.getAmount())) {
                     throw new NotEnoughStockException("Article code: " + productCode);
@@ -89,6 +95,46 @@ public class TicketResource {
         }
 
         Ticket ticket = ticketController.createTicket(ticketCreationWrapper);
+        return new TicketReferenceWrapper(ticket.getReference());
+    }
+
+    @RequestMapping(value = Uris.REFERENCE, method = RequestMethod.PUT)
+    public TicketReferenceWrapper updateTicket(@PathVariable String reference,
+            @RequestBody List<ShoppingUpdateWrapper> shoppingUpdateWrapperList) throws NotFoundTicketReferenceException,
+            NotFoundProductCodeInTicketException, InvalidProductAmountInUpdateTicketException, NotEnoughStockException {
+        if (!ticketController.ticketReferenceExists(reference)) {
+            throw new NotFoundTicketReferenceException("Ticket reference: " + reference);
+        }
+
+        Iterator<Shopping> shoppingList = ticketController.getTicket(reference).getShoppingList().iterator();
+        for (ShoppingUpdateWrapper shoppingUpdateWrapper : shoppingUpdateWrapperList) {
+            String productCode = shoppingUpdateWrapper.getProductCode();
+            Shopping shoppingInTicket = null;
+            while (shoppingList.hasNext() && (shoppingInTicket == null)) {
+                Shopping shopping = shoppingList.next();
+                if (shopping.getProduct().getCode().equals(productCode)) {
+                    shoppingInTicket = shopping;
+                }
+            }
+            if (shoppingInTicket == null) {
+                throw new NotFoundProductCodeInTicketException("Product code: " + productCode);
+            }
+
+            if (shoppingUpdateWrapper.getAmount() < 0) {
+                throw new InvalidProductAmountInUpdateTicketException("Product code: " + productCode);
+            }
+
+            // If the product is an article, check if there is enough stock and update it
+            if (articleController.articleCodeExists(productCode)) {
+                int stockDifference = shoppingUpdateWrapper.getAmount() - shoppingInTicket.getAmount();
+                if (!articleController.hasEnoughStock(productCode, stockDifference)) {
+                    throw new NotEnoughStockException("Article code: " + productCode);
+                }
+                articleController.consumeArticle(productCode, stockDifference);
+            }
+        }
+
+        Ticket ticket = ticketController.updateTicket(reference, shoppingUpdateWrapperList);
         return new TicketReferenceWrapper(ticket.getReference());
     }
 

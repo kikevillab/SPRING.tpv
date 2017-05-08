@@ -24,9 +24,7 @@ import entities.core.ShoppingState;
 import entities.core.Ticket;
 import wrappers.ShoppingCreationWrapper;
 import wrappers.ShoppingTrackingWrapper;
-import wrappers.ShoppingWrapper;
 import wrappers.TicketCreationWrapper;
-import wrappers.TicketWrapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {PersistenceConfig.class, TestsPersistenceConfig.class, TestsControllerConfig.class})
@@ -99,28 +97,28 @@ public class TicketControllerIT {
 
         ticketDao.delete(ticket);
     }
-    
+
     @Test
     public void testGetTicket() {
         List<Ticket> ticketList = ticketDao.findAll();
         Ticket ticket = ticketList.get(new Random().nextInt(ticketList.size()));
 
-        TicketWrapper ticketWrapper = ticketController.getTicket(ticket.getReference());
+        Ticket ticketObtained = ticketController.getTicket(ticket.getReference());
 
-        assertNotNull(ticketWrapper);
-        assertEquals(ticket.getId(), ticketWrapper.getId());
-        assertEquals(ticket.getCreated(), ticketWrapper.getCreated());
-        assertEquals(ticket.getReference(), ticketWrapper.getReference());
-        for (int i = 0; i < ticketWrapper.getShoppingList().size(); i++) {
-            ShoppingWrapper shoppingWrapper = ticketWrapper.getShoppingList().get(i);
+        assertNotNull(ticketObtained);
+        assertEquals(ticket.getId(), ticketObtained.getId());
+        assertEquals(ticket.getCreated(), ticketObtained.getCreated());
+        assertEquals(ticket.getReference(), ticketObtained.getReference());
+        for (int i = 0; i < ticketObtained.getShoppingList().size(); i++) {
+            Shopping shoppingObtained = ticketObtained.getShoppingList().get(i);
             Shopping shopping = ticket.getShoppingList().get(i);
-            assertEquals(shopping.getAmount(), shoppingWrapper.getAmount());
-            assertEquals(shopping.getDiscount(), shoppingWrapper.getDiscount());
-            assertEquals(shopping.getId(), shoppingWrapper.getId());
-            assertEquals(shopping.getRetailPrice(), shoppingWrapper.getRetailPrice());
-            assertEquals(shopping.getProduct().getCode(), shoppingWrapper.getProductCode());
-            assertEquals(shopping.getDescription(), shoppingWrapper.getDescription());
-            assertEquals(shopping.getShoppingState(), shoppingWrapper.getShoppingState());
+            assertEquals(shopping.getAmount(), shoppingObtained.getAmount());
+            assertEquals(shopping.getDiscount(), shoppingObtained.getDiscount());
+            assertEquals(shopping.getId(), shoppingObtained.getId());
+            assertEquals(shopping.getRetailPrice(), shoppingObtained.getRetailPrice());
+            assertEquals(shopping.getProduct().getCode(), shoppingObtained.getProduct().getCode());
+            assertEquals(shopping.getDescription(), shoppingObtained.getDescription());
+            assertEquals(shopping.getShoppingState(), shoppingObtained.getShoppingState());
         }
     }
 
