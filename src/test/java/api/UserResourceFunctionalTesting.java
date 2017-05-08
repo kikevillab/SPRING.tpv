@@ -1,18 +1,24 @@
 package api;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
 import org.apache.logging.log4j.LogManager;
 import org.junit.After;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.HttpClientErrorException;
 
-import api.Uris;
+import wrappers.UserDetailsWrapper;
 import wrappers.UserWrapper;
 
 public class UserResourceFunctionalTesting {
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     @Test
     public void testCreateManager() {
@@ -83,6 +89,23 @@ public class UserResourceFunctionalTesting {
             LogManager.getLogger(this.getClass())
                     .info("testCreateCustomerForbidden (" + httpError.getMessage() + "):\n " + httpError.getResponseBodyAsString());
         }
+    }
+
+    @Test
+    public void testFindUserByMobilePhoneWithNonExistentPhone() {
+        thrown.expect(new HttpMatcher(HttpStatus.NOT_FOUND));
+        String token = new RestService().loginAdmin();
+        String mobilePhone = "555000000";
+        new RestBuilder<UserDetailsWrapper>(RestService.URL).path(Uris.USERS).pathId(mobilePhone).basicAuth(token, "").clazz(UserDetailsWrapper.class).get().build();
+    }
+    
+    @Test
+    public void testFindUserByMobilePhoneWithExistentPhone() {
+        String token = new RestService().loginAdmin();
+        String mobilePhone = String.valueOf(123456789L);
+        System.out.println(mobilePhone);
+        UserDetailsWrapper user = new RestBuilder<UserDetailsWrapper>(RestService.URL).path(Uris.USERS).pathId(mobilePhone).basicAuth(token, "").clazz(UserDetailsWrapper.class).get().build();
+        assertNotNull(user);
     }
 
     @After
