@@ -39,4 +39,11 @@ public class UserDaoIT {
         assertEquals(user, userDao.findByTokenValue(token.getValue()));
         assertNull(userDao.findByTokenValue("kk"));
     }
+    
+    @Test
+    public void testFindAll() {
+        String prueba="";
+        prueba="adios";
+        userDao.findAllCustomerSin();
+    }
 }
