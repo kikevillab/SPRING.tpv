@@ -20,6 +20,7 @@ import entities.core.ShoppingState;
 import entities.core.Ticket;
 import wrappers.ShoppingCreationWrapper;
 import wrappers.ShoppingTrackingWrapper;
+import wrappers.ShoppingUpdateWrapper;
 import wrappers.ShoppingWrapper;
 import wrappers.TicketCreationWrapper;
 import wrappers.TicketReferenceWrapper;
@@ -88,10 +89,10 @@ public class TicketResourceFunctionalTesting {
         shoppingCreationWrapperList.add(shoppingCreationWrapper);
         ticketCreationWrapper.setShoppingList(shoppingCreationWrapperList);
 
-        new RestBuilder<TicketReferenceWrapper>(RestService.URL).path(Uris.TICKETS)
-                .body(ticketCreationWrapper).basicAuth(token, "").clazz(TicketReferenceWrapper.class).post().build();
+        new RestBuilder<TicketReferenceWrapper>(RestService.URL).path(Uris.TICKETS).body(ticketCreationWrapper).basicAuth(token, "")
+                .clazz(TicketReferenceWrapper.class).post().build();
     }
-    
+
     @Test
     public void testCreateTicketInvalidProductStock() {
         thrown.expect(new HttpMatcher(HttpStatus.BAD_REQUEST));
@@ -110,8 +111,8 @@ public class TicketResourceFunctionalTesting {
         shoppingCreationWrapperList.add(shoppingCreationWrapper);
         ticketCreationWrapper.setShoppingList(shoppingCreationWrapperList);
 
-        new RestBuilder<TicketReferenceWrapper>(RestService.URL).path(Uris.TICKETS)
-                .body(ticketCreationWrapper).basicAuth(token, "").clazz(TicketReferenceWrapper.class).post().build();
+        new RestBuilder<TicketReferenceWrapper>(RestService.URL).path(Uris.TICKETS).body(ticketCreationWrapper).basicAuth(token, "")
+                .clazz(TicketReferenceWrapper.class).post().build();
     }
 
     @Test
@@ -161,6 +162,120 @@ public class TicketResourceFunctionalTesting {
     }
 
     @Test
+    public void testUpdateTicketNonexistentReference() {
+        thrown.expect(new HttpMatcher(HttpStatus.NOT_FOUND));
+        String ticketReference = "justTesting-123";
+        String token = new RestService().loginAdmin();
+
+        List<ShoppingUpdateWrapper> shoppingUpdateWrapperList = new ArrayList<>();
+        ShoppingUpdateWrapper shoppingUpdateWrapper = new ShoppingUpdateWrapper("article0", 2, ShoppingState.COMMITTED);
+        shoppingUpdateWrapperList.add(shoppingUpdateWrapper);
+        new RestBuilder<TicketReferenceWrapper>(RestService.URL).path(Uris.TICKETS).pathId(ticketReference).body(shoppingUpdateWrapperList)
+                .basicAuth(token, "").clazz(TicketReferenceWrapper.class).put().build();
+    }
+
+    @Test
+    public void testUpdateTicket() {
+        String productCode = "textilePrinting0";
+        String token = new RestService().loginAdmin();
+        TicketCreationWrapper ticketCreationWrapper = new TicketCreationWrapper();
+        List<ShoppingCreationWrapper> shoppingCreationWrapperList = new ArrayList<>();
+        ShoppingCreationWrapper shoppingCreationWrapper = new ShoppingCreationWrapper();
+        shoppingCreationWrapper.setProductCode(productCode);
+        shoppingCreationWrapper.setAmount(3);
+        shoppingCreationWrapper.setDiscount(15);
+        shoppingCreationWrapper.setDelivered(false);
+        shoppingCreationWrapperList.add(shoppingCreationWrapper);
+        ticketCreationWrapper.setShoppingList(shoppingCreationWrapperList);
+
+        TicketReferenceWrapper ticketReference = new RestBuilder<TicketReferenceWrapper>(RestService.URL).path(Uris.TICKETS)
+                .body(ticketCreationWrapper).basicAuth(token, "").clazz(TicketReferenceWrapper.class).post().build();
+
+        List<ShoppingUpdateWrapper> shoppingUpdateWrapperList = new ArrayList<>();
+        ShoppingUpdateWrapper shoppingUpdateWrapper = new ShoppingUpdateWrapper(productCode, 2, ShoppingState.COMMITTED);
+        shoppingUpdateWrapperList.add(shoppingUpdateWrapper);
+        TicketReferenceWrapper ticketUpdatedReference = new RestBuilder<TicketReferenceWrapper>(RestService.URL).path(Uris.TICKETS)
+                .pathId(ticketReference.getTicketReference()).body(shoppingUpdateWrapperList).basicAuth(token, "")
+                .clazz(TicketReferenceWrapper.class).put().build();
+
+        assertEquals(ticketReference.getTicketReference(), ticketUpdatedReference.getTicketReference());
+    }
+
+    @Test
+    public void testUpdateTicketNonexistentProductCodeInTicket() {
+        thrown.expect(new HttpMatcher(HttpStatus.NOT_FOUND));
+        String token = new RestService().loginAdmin();
+        TicketCreationWrapper ticketCreationWrapper = new TicketCreationWrapper();
+        List<ShoppingCreationWrapper> shoppingCreationWrapperList = new ArrayList<>();
+        ShoppingCreationWrapper shoppingCreationWrapper = new ShoppingCreationWrapper();
+        shoppingCreationWrapper.setProductCode("textilePrinting0");
+        shoppingCreationWrapper.setAmount(3);
+        shoppingCreationWrapper.setDiscount(15);
+        shoppingCreationWrapper.setDelivered(false);
+        shoppingCreationWrapperList.add(shoppingCreationWrapper);
+        ticketCreationWrapper.setShoppingList(shoppingCreationWrapperList);
+
+        TicketReferenceWrapper ticketReference = new RestBuilder<TicketReferenceWrapper>(RestService.URL).path(Uris.TICKETS)
+                .body(ticketCreationWrapper).basicAuth(token, "").clazz(TicketReferenceWrapper.class).post().build();
+
+        List<ShoppingUpdateWrapper> shoppingUpdateWrapperList = new ArrayList<>();
+        ShoppingUpdateWrapper shoppingUpdateWrapper = new ShoppingUpdateWrapper("textilePrinting1", 2, ShoppingState.COMMITTED);
+        shoppingUpdateWrapperList.add(shoppingUpdateWrapper);
+        new RestBuilder<TicketReferenceWrapper>(RestService.URL).path(Uris.TICKETS).pathId(ticketReference.getTicketReference())
+                .body(shoppingUpdateWrapperList).basicAuth(token, "").clazz(TicketReferenceWrapper.class).put().build();
+    }
+
+    @Test
+    public void testUpdateTicketInvalidProductAmount() {
+        thrown.expect(new HttpMatcher(HttpStatus.BAD_REQUEST));
+        String productCode = "textilePrinting0";
+        String token = new RestService().loginAdmin();
+        TicketCreationWrapper ticketCreationWrapper = new TicketCreationWrapper();
+        List<ShoppingCreationWrapper> shoppingCreationWrapperList = new ArrayList<>();
+        ShoppingCreationWrapper shoppingCreationWrapper = new ShoppingCreationWrapper();
+        shoppingCreationWrapper.setProductCode(productCode);
+        shoppingCreationWrapper.setAmount(3);
+        shoppingCreationWrapper.setDiscount(15);
+        shoppingCreationWrapper.setDelivered(false);
+        shoppingCreationWrapperList.add(shoppingCreationWrapper);
+        ticketCreationWrapper.setShoppingList(shoppingCreationWrapperList);
+
+        TicketReferenceWrapper ticketReference = new RestBuilder<TicketReferenceWrapper>(RestService.URL).path(Uris.TICKETS)
+                .body(ticketCreationWrapper).basicAuth(token, "").clazz(TicketReferenceWrapper.class).post().build();
+
+        List<ShoppingUpdateWrapper> shoppingUpdateWrapperList = new ArrayList<>();
+        ShoppingUpdateWrapper shoppingUpdateWrapper = new ShoppingUpdateWrapper(productCode, -2, ShoppingState.COMMITTED);
+        shoppingUpdateWrapperList.add(shoppingUpdateWrapper);
+        new RestBuilder<TicketReferenceWrapper>(RestService.URL).path(Uris.TICKETS).pathId(ticketReference.getTicketReference())
+                .body(shoppingUpdateWrapperList).basicAuth(token, "").clazz(TicketReferenceWrapper.class).put().build();
+    }
+
+    @Test
+    public void testUpdateTicketNotEnoughProductStock() {
+        thrown.expect(new HttpMatcher(HttpStatus.CONFLICT));
+        String productCode = "article4";
+        String token = new RestService().loginAdmin();
+        TicketCreationWrapper ticketCreationWrapper = new TicketCreationWrapper();
+        List<ShoppingCreationWrapper> shoppingCreationWrapperList = new ArrayList<>();
+        ShoppingCreationWrapper shoppingCreationWrapper = new ShoppingCreationWrapper();
+        shoppingCreationWrapper.setProductCode(productCode);
+        shoppingCreationWrapper.setAmount(3);
+        shoppingCreationWrapper.setDiscount(15);
+        shoppingCreationWrapper.setDelivered(false);
+        shoppingCreationWrapperList.add(shoppingCreationWrapper);
+        ticketCreationWrapper.setShoppingList(shoppingCreationWrapperList);
+
+        TicketReferenceWrapper ticketReference = new RestBuilder<TicketReferenceWrapper>(RestService.URL).path(Uris.TICKETS)
+                .body(ticketCreationWrapper).basicAuth(token, "").clazz(TicketReferenceWrapper.class).post().build();
+
+        List<ShoppingUpdateWrapper> shoppingUpdateWrapperList = new ArrayList<>();
+        ShoppingUpdateWrapper shoppingUpdateWrapper = new ShoppingUpdateWrapper(productCode, 50, ShoppingState.COMMITTED);
+        shoppingUpdateWrapperList.add(shoppingUpdateWrapper);
+        new RestBuilder<TicketReferenceWrapper>(RestService.URL).path(Uris.TICKETS).pathId(ticketReference.getTicketReference())
+                .body(shoppingUpdateWrapperList).basicAuth(token, "").clazz(TicketReferenceWrapper.class).put().build();
+    }
+
+    @Test
     public void testGetTicketTrackingNonexistentReference() {
         thrown.expect(new HttpMatcher(HttpStatus.NOT_FOUND));
         String ticketReference = "justTesting-123";
@@ -168,7 +283,7 @@ public class TicketResourceFunctionalTesting {
         new RestBuilder<ShoppingTrackingWrapper[]>(RestService.URL).path(Uris.TICKETS).path(Uris.TRACKING).pathId(ticketReference)
                 .basicAuth(token, "").clazz(ShoppingTrackingWrapper[].class).get().build();
     }
-    
+
     @Test
     public void testGetTicket() {
         String token = new RestService().loginAdmin();
@@ -188,8 +303,7 @@ public class TicketResourceFunctionalTesting {
                 .body(ticketCreationWrapper).basicAuth(token, "").clazz(TicketReferenceWrapper.class).post().build();
 
         TicketWrapper ticketWrapper = new RestBuilder<TicketWrapper>(RestService.URL).path(Uris.TICKETS)
-                        .pathId(ticketReference.getTicketReference()).basicAuth(token, "").clazz(TicketWrapper.class).get()
-                        .build();
+                .pathId(ticketReference.getTicketReference()).basicAuth(token, "").clazz(TicketWrapper.class).get().build();
 
         assertNotNull(ticketWrapper);
         assertEquals(ticketReference.getTicketReference(), ticketWrapper.getReference());
