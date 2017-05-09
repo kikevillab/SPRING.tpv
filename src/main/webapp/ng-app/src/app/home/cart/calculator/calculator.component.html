@@ -11,6 +11,7 @@
     <div fxFlex>
       <button id="number7Button" md-raised-button color="primary"  (click)="setValue(7)">7</button>
     </div> 
+    <div fxFlex></div>
     <div fxFlex>
       <button id="multiplicationButton" md-raised-button color="accent" (click)="setOperator('*')" [disabled]="firstValue==''">X</button>
     </div>
@@ -26,6 +27,9 @@
       <button id="number8Button" md-raised-button color="primary"  (click)="setValue(8)">8</button>
     </div>
     <div fxFlex>
+      <button id="number8Button" md-raised-button color="primary"  (click)="setValue(0)">0</button>
+    </div>
+    <div fxFlex>
       <button id="divisionButton" md-raised-button color="accent" (click)="setOperator('/')" [disabled]="firstValue==''">/</button>
     </div>
   </div>
@@ -39,21 +43,23 @@
     <div>
       <button id="number9Button" md-raised-button color="primary"  (click)="setValue(9)">9</button>
     </div>
+    <div fxFlex></div>
     <div>
       <button id="calculateButton" md-raised-button color="accent" (click)="calculate()" [disabled]="secondValue==''">=</button>
     </div>
   </div>
   <div fxFlex fxLayout="column">
-    <div>
+    <div fxFlex>
       <button id="decimalsButton" md-raised-button color="accent" (click)="setDecimals()" [disabled]="firstValue==''">.</button>
     </div>
-    <div>
+    <div fxFlex>
       <button id="sumButton" md-raised-button color="accent" (click)="setOperator('+')" [disabled]="firstValue==''">+</button>
     </div>
-    <div>
+    <div fxFlex>
       <button id="diffButton" md-raised-button color="accent" (click)="setOperator('-')" [disabled]="firstValue==''">-</button>
     </div>
-    <div >
+    <div fxFlex></div>
+    <div fxFlex>
       <button id="resetButton" md-raised-button color="warn" (click)="reset()">AC</button>
     </div>
   </div>

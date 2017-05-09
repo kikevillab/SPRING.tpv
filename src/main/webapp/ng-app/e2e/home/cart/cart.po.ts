@@ -14,6 +14,10 @@ export class CartView {
     return element(by.id('openCalculatorButton')).click();
   }
 
+  clickCheckoutButton() {
+    return element(by.id('checkoutButton')).click();
+  }
+
   submitProductCode(code:string) {
   	let codeInput = element(by.id('codeInput'));
   	codeInput.sendKeys(code);

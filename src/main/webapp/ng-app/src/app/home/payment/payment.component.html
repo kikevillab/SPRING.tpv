@@ -1,0 +1,66 @@
+<h1 id="pageTitle">Payment</h1>
+<div fxLayoutAlign="space-around center">
+	<div fxLayout="column" fxLayoutAlign="space-around ">
+		<md-card *ngIf="userAssociated==null">
+			<md-card-title>Client</md-card-title>
+			<md-card-content fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center">
+				<form (ngSubmit)="associateUser($event)" #mobileNumberForm="ngForm">
+					<div class="form-group">
+						<p>Associate a client with order by entering his mobile number: </p>
+						<md-input-container >
+							<input mdInput type="number" step="1" min="13" max="111" max="9999999999999" class="form-control" id="mobileNumberInput" required
+							[(ngModel)]="mobileNumberInput" name="mobileNumberInput" #name="ngModel">
+						</md-input-container>
+						<button md-raised-button color="primary" type="submit" [disabled]="!mobileNumberForm.form.valid" id="submitMobileNumberInputButton">OK</button>
+					</div>
+				</form>
+			</md-card-content>
+		</md-card>
+		<md-card *ngIf="userAssociated!=null">
+			<button md-mini-fab color="warn" mdTooltip="Disassociate client" mdTooltipPosition="below" (click)="disassociateUser()" id="disassociateUser">
+				<md-icon>clear</md-icon>
+			</button>
+			<md-card-title>Client data</md-card-title>
+			<md-card-content>
+				<p>
+					<b>Name</b>: {{userAssociated.username}}
+				</p>
+				<p>
+					<b>Mobile</b>: {{userAssociated.mobile}}
+				</p>
+				<p>
+					<b>Email</b>: {{userAssociated.email}}
+				</p>
+				<p>
+					<b>Address</b>: {{userAssociated.address}}
+				</p>
+			</md-card-content>
+		</md-card>
+		<md-card>
+			<md-card-title>Payment</md-card-title>
+			<md-card-content fxLayout="column" fxLayoutAlign="space-around center">
+				<div fxFlex="40">
+					<h2>Total: {{totalPrice | currency:'EUR':true}}</h2>
+				</div>
+				<div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-around center">
+					<md-card>
+						<h3>Method of payment</h3>
+						<md-card-content fxLayout="column">
+							<button md-raised-button color="primary" (click)="openCashPaymentDialog()" [disabled]="isShoppingCartEmpty()" id="cashPaymentButton">Cash payment</button>
+							<button md-raised-button color="primary" disabled>Credit card</button>
+						</md-card-content>
+					</md-card>
+					<md-card>
+						<h3>Proceed</h3>
+						<md-card-content fxLayout="column">
+							<p>
+								<button md-raised-button color="primary" (click)="submitOrder()" [disabled]="paidOut == false">Submit order</button>
+							</p>
+							<button  md-raised-button color="warn" (click)="cancel()">Cancel</button>
+						</md-card-content>
+					</md-card>
+				</div>
+			</md-card-content>
+		</md-card>
+	</div>
+</div>
