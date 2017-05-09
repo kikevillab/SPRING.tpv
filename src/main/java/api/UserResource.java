@@ -1,5 +1,7 @@
 package api;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -9,10 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import api.exceptions.AlreadyExistUserFieldException;
 import api.exceptions.InvalidUserFieldException;
+import api.exceptions.NotFoundUserIdException;
 import api.exceptions.NotFoundUserMobileException;
 import controllers.UserController;
 import entities.users.Role;
 import wrappers.UserDetailsWrapper;
+import wrappers.UserUpdateWrapper;
 import wrappers.UserWrapper;
 
 @RestController
@@ -51,10 +55,23 @@ public class UserResource {
     
     @RequestMapping(value = Uris.USERS + Uris.PHONE, method = RequestMethod.GET)
     public UserDetailsWrapper findUserByMobilePhone(@PathVariable long mobilePhone) throws NotFoundUserMobileException{
-        if(!userController.userMobileExists(mobilePhone)){
+        if(!userController.userExists(mobilePhone)){
             throw new NotFoundUserMobileException();
         }
         return userController.findUserByMobilePhone(mobilePhone);
+    }
+    
+    @RequestMapping(value = Uris.USERS, method = RequestMethod.GET)
+    public List<UserDetailsWrapper> findAllUsers(){
+        return userController.findAllUsers();
+    }
+    
+    @RequestMapping(value = Uris.USERS, method = RequestMethod.PUT)
+    public void updateUser(@RequestBody UserUpdateWrapper userUpdateWrapper) throws NotFoundUserIdException{
+        if(!userController.userExists(userUpdateWrapper.getId())){
+            throw new NotFoundUserIdException("User id: " + userUpdateWrapper.getId());
+        }
+        userController.updateUser(userUpdateWrapper);
     }
 
 }

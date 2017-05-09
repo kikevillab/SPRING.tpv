@@ -1,5 +1,8 @@
 package controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -9,6 +12,7 @@ import entities.users.Authorization;
 import entities.users.Role;
 import entities.users.User;
 import wrappers.UserDetailsWrapper;
+import wrappers.UserUpdateWrapper;
 import wrappers.UserWrapper;
 
 @Controller
@@ -38,14 +42,45 @@ public class UserController {
             return false;
         }
     }
+
+    public boolean userExists(long userMobile) {
+        return userExists(userDao.findByMobile(userMobile));
+    }
     
-    public boolean userMobileExists(long userMobile) {
-        User user = userDao.findByMobile(userMobile);
+    public boolean userExists(int id){
+        return userExists(userDao.findOne(id));
+    }
+    
+    private boolean userExists(User user){
         return user != null;
     }
 
+    public boolean userIsValid(User user) {
+        boolean valid = true;
+        if (!userExists(user)) {
+            valid = false;
+        } else {
+            if (user.getAddress() == null || user.getDni() == null || user.getEmail() == null) {
+                valid = false;
+            } 
+        }
+        return valid;
+    }
+    
     public UserDetailsWrapper findUserByMobilePhone(long mobilePhone) {
         User user = userDao.findByMobile(mobilePhone);
+        return entityToWrapper(user);
+    }
+
+    public List<UserDetailsWrapper> findAllUsers() {
+        List<UserDetailsWrapper> userDetailsWrappers = new ArrayList<>();
+        for(User user : userDao.findAll()){
+            userDetailsWrappers.add(entityToWrapper(user));
+        }
+        return userDetailsWrappers;
+    }
+    
+    private UserDetailsWrapper entityToWrapper(User user){
         UserDetailsWrapper userDetailsWrapper = new UserDetailsWrapper();
         userDetailsWrapper.setUsername(user.getUsername());
         userDetailsWrapper.setDni(user.getDni());
@@ -54,4 +89,15 @@ public class UserController {
         userDetailsWrapper.setAddress(user.getAddress());
         return userDetailsWrapper;
     }
+
+    public void updateUser(UserUpdateWrapper userUpdateWrapper) {
+        User user = userDao.findOne(userUpdateWrapper.getId());
+        user.setAddress(userUpdateWrapper.getAddress());
+        user.setDni(userUpdateWrapper.getDni());
+        user.setEmail(userUpdateWrapper.getEmail());
+        user.setUsername(userUpdateWrapper.getUsername());
+        user.setMobile(userUpdateWrapper.getMobile());
+        userDao.save(user);
+    }
+    
 }

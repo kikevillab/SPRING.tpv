@@ -5,8 +5,6 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({TokenControllerIT.class, ProductControllerIT.class, UserControllerIT.class})
-
+@SuiteClasses({TokenControllerIT.class, ProductControllerIT.class, InvoiceControllerIT.class, UserControllerIT.class})
 public class AllControllersIntegrationTests {
-
 }

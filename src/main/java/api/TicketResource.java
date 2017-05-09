@@ -52,7 +52,7 @@ public class TicketResource {
     public TicketReferenceWrapper createTicket(@RequestBody TicketCreationWrapper ticketCreationWrapper)
             throws EmptyShoppingListException, NotFoundProductCodeException, NotFoundUserMobileException {
         Long userMobile = ticketCreationWrapper.getUserMobile();
-        if (userMobile != null && !userController.userMobileExists(userMobile)) {
+        if (userMobile != null && !userController.userExists(userMobile)) {
             throw new NotFoundUserMobileException();
         }
 

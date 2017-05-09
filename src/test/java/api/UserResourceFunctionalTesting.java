@@ -1,8 +1,12 @@
 package api;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
+
+import java.util.Arrays;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.junit.After;
@@ -13,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.client.HttpClientErrorException;
 
 import wrappers.UserDetailsWrapper;
+import wrappers.UserUpdateWrapper;
 import wrappers.UserWrapper;
 
 public class UserResourceFunctionalTesting {
@@ -103,11 +108,34 @@ public class UserResourceFunctionalTesting {
     public void testFindUserByMobilePhoneWithExistentPhone() {
         String token = new RestService().loginAdmin();
         String mobilePhone = String.valueOf(123456789L);
-        System.out.println(mobilePhone);
         UserDetailsWrapper user = new RestBuilder<UserDetailsWrapper>(RestService.URL).path(Uris.USERS).pathId(mobilePhone).basicAuth(token, "").clazz(UserDetailsWrapper.class).get().build();
         assertNotNull(user);
     }
 
+    @Test
+    public void testFindAllUsers(){
+        String token = new RestService().loginAdmin();
+        List<UserDetailsWrapper> users = Arrays.asList(new RestBuilder<UserDetailsWrapper[]>(RestService.URL).path(Uris.USERS).basicAuth(token, "").clazz(UserDetailsWrapper[].class).get().build());
+        assertFalse(users.isEmpty());
+    }
+    
+    @Test
+    public void testUpdateUserWithNonExistentUser(){
+        thrown.expect(new HttpMatcher(HttpStatus.NOT_FOUND));
+        String token = new RestService().loginAdmin();
+        UserUpdateWrapper userWrapper = new UserUpdateWrapper();
+        userWrapper.setId(0);
+        userWrapper.setAddress("address");
+        userWrapper.setDni("123456789");
+        userWrapper.setEmail("test@test.com");
+        userWrapper.setMobile(123456789);
+        userWrapper.setUsername("username");
+        userWrapper.setPassword("pass");
+        new RestBuilder<Object>(RestService.URL)
+        .path(Uris.USERS).body(userWrapper).basicAuth(token, "").clazz(Object.class)
+        .put().build();
+    }
+    
     @After
     public void deleteAll() {
         new RestService().deleteAll();
