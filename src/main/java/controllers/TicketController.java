@@ -139,7 +139,7 @@ public class TicketController {
         return ticket != null;
     }
 
-    public List<DayTicketWrapper> getAllDayTickets(Calendar dayToGetTickets) {
+    public List<DayTicketWrapper> getWholeDayTickets(Calendar dayToGetTickets) {
         List<DayTicketWrapper> dayTicketsList = new ArrayList<>();
         List<Ticket> ticketList = ticketDao.findByCreated(dayToGetTickets);
         for (Ticket ticket : ticketList) {

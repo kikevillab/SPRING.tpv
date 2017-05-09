@@ -5,12 +5,14 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -18,6 +20,7 @@ import org.springframework.http.HttpStatus;
 
 import entities.core.ShoppingState;
 import entities.core.Ticket;
+import wrappers.DayTicketWrapper;
 import wrappers.ShoppingCreationWrapper;
 import wrappers.ShoppingTrackingWrapper;
 import wrappers.ShoppingUpdateWrapper;
@@ -31,8 +34,8 @@ public class TicketResourceFunctionalTesting {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    @BeforeClass
-    public static void setUpOnce() {
+    @Before
+    public void setUp() {
         new RestService().seedDatabase();
     }
 
@@ -114,7 +117,7 @@ public class TicketResourceFunctionalTesting {
         new RestBuilder<TicketReferenceWrapper>(RestService.URL).path(Uris.TICKETS).body(ticketCreationWrapper).basicAuth(token, "")
                 .clazz(TicketReferenceWrapper.class).post().build();
     }
-    
+
     @Test
     public void testCreateTicketInvalidProductDiscount() {
         thrown.expect(new HttpMatcher(HttpStatus.BAD_REQUEST));
@@ -338,6 +341,36 @@ public class TicketResourceFunctionalTesting {
     }
 
     @Test
+    public void testWholeDayTicketsMalformedDate() {
+        thrown.expect(new HttpMatcher(HttpStatus.BAD_REQUEST));
+        String date = "09-05-2017";
+        String token = new RestService().loginAdmin();
+        new RestBuilder<DayTicketWrapper[]>(RestService.URL).path(Uris.TICKETS).path(Uris.DAY_TICKETS).pathId(date).basicAuth(token, "")
+                .clazz(DayTicketWrapper[].class).get().build();
+    }
+
+    @Test
+    public void testWholeDayTickets() {
+        int totalNumTickets = 6;
+        double totalTicketsPrice = 1294.09;
+
+        SimpleDateFormat dateFormatter = new SimpleDateFormat(Constants.US_DATE_FORMAT);
+        Calendar today = Calendar.getInstance();
+        String date = dateFormatter.format(today.getTime());
+        String token = new RestService().loginAdmin();
+        List<DayTicketWrapper> wholeDayTickets = Arrays.asList(new RestBuilder<DayTicketWrapper[]>(RestService.URL).path(Uris.TICKETS)
+                .path(Uris.DAY_TICKETS).pathId(date).basicAuth(token, "").clazz(DayTicketWrapper[].class).get().build());
+
+        double total = 0;
+        for (DayTicketWrapper dayTicketWrapper : wholeDayTickets) {
+            total += dayTicketWrapper.getTotal();
+        }
+
+        assertEquals(totalNumTickets, wholeDayTickets.size());
+        assertEquals(totalTicketsPrice, total, 0.01);
+    }
+
+    @Test
     public void testGetTicketTracking() {
         String token = new RestService().loginAdmin();
 
@@ -369,8 +402,8 @@ public class TicketResourceFunctionalTesting {
         assertEquals(ShoppingState.COMMITTED, shoppingTrackingWrapper.getShoppingState());
     }
 
-    @AfterClass
-    public static void tearDownOnce() {
+    @After
+    public void tearDown() {
         new RestService().deleteAll();
     }
 

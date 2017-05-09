@@ -233,12 +233,12 @@ public class TicketControllerIT {
     }
 
     @Test
-    public void testGetAllDayTickets() {
-        int totalNumTickets = 5;
-        double totalTicketsPrice = 1075.4;
+    public void testGetWholeDayTickets() {
+        int totalNumTickets = 6;
+        double totalTicketsPrice = 1294.09;
 
         Calendar today = Calendar.getInstance();
-        List<DayTicketWrapper> dayTicketsList = ticketController.getAllDayTickets(today);
+        List<DayTicketWrapper> dayTicketsList = ticketController.getWholeDayTickets(today);
         double total = 0;
         for (DayTicketWrapper dayTicketWrapper : dayTicketsList) {
             total += dayTicketWrapper.getTotal();

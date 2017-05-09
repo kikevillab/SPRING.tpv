@@ -8,6 +8,12 @@ public class DayTicketWrapper {
     private String reference;
 
     private double total;
+    
+    
+
+    public DayTicketWrapper() {
+        super();
+    }
 
     public DayTicketWrapper(Ticket ticket) {
         this.reference = ticket.getReference();

@@ -161,17 +161,20 @@ public class TicketResource {
         return new TicketWrapper(ticketController.getTicket(reference));
     }
     
-    @RequestMapping(value = Uris.TRACKING + Uris.DAY_TICKETS + Uris.DATE, method = RequestMethod.GET)
-    public List<DayTicketWrapper> getAllDayTickets(@PathVariable String date) throws MalformedDateException {
+    @RequestMapping(value = Uris.DAY_TICKETS + Uris.DATE, method = RequestMethod.GET)
+    public List<DayTicketWrapper> getWholeDayTickets(@PathVariable String date) throws MalformedDateException {
         String dateFormat = Constants.US_DATE_FORMAT;
         SimpleDateFormat dateFormatter = new SimpleDateFormat(dateFormat);
+        if (!date.matches(Constants.US_DATE_REGEX)) {
+            throw new MalformedDateException(dateFormat, "Date sent: " + date);
+        }
         Calendar dayToGetTickets = Calendar.getInstance();
         try {
             dayToGetTickets.setTime(dateFormatter.parse(date));
         } catch (ParseException e) {
-            throw new MalformedDateException(dateFormat, "Date sent: " + date);
+            e.printStackTrace();
         }
-        return ticketController.getAllDayTickets(dayToGetTickets);
+        return ticketController.getWholeDayTickets(dayToGetTickets);
     }
 
     @RequestMapping(value = Uris.TRACKING + Uris.REFERENCE, method = RequestMethod.GET)

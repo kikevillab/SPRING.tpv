@@ -30,7 +30,7 @@ public class TicketDaoIT {
     @Test
     public void testFindFirstByOrderByCreatedDescIdDesc() {
         Ticket ticket = ticketDao.findFirstByOrderByCreatedDescIdDesc();
-        assertEquals(5, ticket.getId());
+        assertEquals(6, ticket.getId());
     }
 
     @Test
@@ -40,9 +40,9 @@ public class TicketDaoIT {
     }
 
     @Test
-    public void testFindFirstByCreated() {
+    public void testFirstByCreated() {
         Calendar today = Calendar.getInstance();
-        assertEquals(5, ticketDao.findByCreated(today).size());
+        assertEquals(6, ticketDao.findByCreated(today).size());
     }
 
 }
