@@ -1,21 +1,17 @@
   <md-card>
   	<div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center">
-  		<div fxFlex="30">
-		  	Money to collect: 
+  		<div fxFlex="15">
 		  	<md-input-container>
-		  		<input mdInput disabled [value]="totalPrice | currency:'EUR':true" >
+		  		<input placeholder="Money to collect" mdInput disabled [value]="totalPrice | currency:'EUR':true" >
 		  	</md-input-container>
   		</div>
-  		<div fxFlex="30">
-		  	Counted money:
-		  	€
-		  	<md-input-container>
-		  		<input mdInput type="number" id="moneyCharged" [(ngModel)]="moneyCharged" step="0.01" min="0.00">
+  		<div fxFlex="40">
+		  	
+		  	<md-input-container style="width:100%">
+		  		<input mdInput placeholder="Counted money (€)" type="number" id="moneyCharged" [(ngModel)]="moneyCharged" step="0.01" min="0.00">
 		  	</md-input-container>
   		</div>
-	  	<div fxFlex="10">
-	  		<button md-raised-button color="primary" (click)="finishPayment()" [disabled]="moneyCharged<totalPrice">OK</button>
-	  	</div>
+	  		<button fxFlex="20" md-raised-button color="primary" (click)="finishPayment()" [disabled]="moneyCharged<totalPrice">OK</button>
   	</div>
   </md-card>
   <md-card fxHide.xs fxHide.sm> 

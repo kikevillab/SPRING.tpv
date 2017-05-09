@@ -13,9 +13,22 @@ import { ToastService } from '../../shared/toast.service';
   selector: 'cart-view',
   templateUrl: './cart.component.html',
   styles: [`
+    #paddingContainer {
+      padding:10em;
+      padding-top:0em;
+    }
     #clearCartButton, #openCalculatorButton {
       margin-left:0.4em;
       float:right;
+    }
+    md-input-container {
+      width: 100%;
+    }
+    md-card {
+      margin-bottom:1em;
+    }
+    .center {
+      text-align:center;
     }
   `]
 })
