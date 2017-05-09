@@ -22,6 +22,8 @@ import { LocalStorageService } from '../shared/local-storage.service';
 import { ToastService } from '../shared/toast.service';
 
 import { CartModule } from './cart/cart.module';
+import { SearchModule } from './search/search.module';
+import { PaymentModule } from './payment/payment.module';
 
 @NgModule({
   imports: [
@@ -35,6 +37,8 @@ import { CartModule } from './cart/cart.module';
     MaterialModule,
     ToastyModule,
     CartModule,
+    SearchModule,
+    PaymentModule,
     NgxDatatableModule
   ],
   declarations: [

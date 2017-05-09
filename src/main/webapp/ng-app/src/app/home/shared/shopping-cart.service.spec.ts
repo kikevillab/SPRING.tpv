@@ -6,7 +6,7 @@ import 'rxjs/add/observable/of';
 
 import { CartProduct } from './cart-product';
 
-import { CartProductService } from './cart-product.service';
+import { ShoppingCartService } from './shopping-cart.service';
 import { LocalStorageService } from '../../shared/local-storage.service';
 import { TPVService } from '../../shared/tpv.service';
 
@@ -37,15 +37,15 @@ export class TPVServiceMock {
   }
 }
 
-describe('Service: CartProductService', () => {
+describe('Service: ShoppingCartService', () => {
 
   let product_code:string = 'article0';
-
+  let shoppingCartService:ShoppingCartService;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [HttpModule],
       providers: [ 
-      CartProductService,
+      ShoppingCartService,
       LocalStorageService,
       MockBackend,
       BaseRequestOptions,
@@ -57,59 +57,69 @@ describe('Service: CartProductService', () => {
       }
       ]
     });
-    let cartProductService:CartProductService = TestBed.get(CartProductService);
+    shoppingCartService = TestBed.get(ShoppingCartService);
   }));
 
-  afterEach(inject([CartProductService], (cartProductService: CartProductService) => {
-    cartProductService.clear();
-  }));
+  afterEach(() => {
+    shoppingCartService.clear();
+  });
 
-  it(`Should add product to cart when 'addProduct()' is called`, inject([CartProductService, MockBackend], (cartProductService: CartProductService, mockBackend:MockBackend) => {
+  it(`Should add product to cart when 'addProduct()' is called`, inject([MockBackend], (mockBackend:MockBackend) => {
     let found:boolean = false;
     mockBackend.connections.subscribe(conn => {
       conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(MockProduct) })));
     });
-    cartProductService.addProduct(product_code);
+    shoppingCartService.addProduct(product_code);
 
-    cartProductService.getCartProducts().forEach(cartProduct => {
+    shoppingCartService.getCartProducts().forEach(cartProduct => {
       if (cartProduct.productCode == product_code) found = true;
     });
     expect(found).toBe(true);
   }));
 
-  it(`Should remove product with code '${product_code}' of cart`, inject([CartProductService], (cartProductService: CartProductService) => {
-    cartProductService.addProduct(product_code);
-    cartProductService.removeProduct(new CartProduct(product_code, 'DESCRIPTION1', 12.21));
+  it(`Should remove product with code '${product_code}' of cart`, () => {
+    shoppingCartService.addProduct(product_code);
+    shoppingCartService.removeProduct(new CartProduct(product_code, 'DESCRIPTION1', 12.21));
     let found:boolean = false;
-    cartProductService.getCartProducts().forEach(cartProduct => {
+    shoppingCartService.getCartProducts().forEach(cartProduct => {
       if (cartProduct.productCode === product_code) found = true;
     });
     expect(found).toBe(false);
-  }));
+  });
 
-  it(`Should update the product data when 'updateProduct()' method is called`, inject([CartProductService], (cartProductService: CartProductService) => {
-    let added = cartProductService.addProduct(product_code);
+  it(`Should update the product data when 'updateProduct()' method is called`, () => {
+    let added = shoppingCartService.addProduct(product_code);
     added.then(added=>{
       let cartProduct:CartProduct = new CartProduct(product_code, 'DESCRIPTION1', 12.21);
       cartProduct.delivered = false;
-      cartProductService.updateProduct(cartProduct);
-      expect(cartProductService.getCartProducts()[0].delivered).toBe(false);
+      shoppingCartService.updateProduct(cartProduct);
+      expect(shoppingCartService.getCartProducts()[0].delivered).toBe(false);
     });
-    
-  }));
+  });
 
-  it(`Should clear the cart when 'clear()' method is called`, inject([CartProductService], (cartProductService: CartProductService) => {
-    cartProductService.addProduct(product_code);
-    cartProductService.clear();
-    expect(cartProductService.getCartProducts().length).toBe(0);
-  }));
+  it(`Should clear the cart when 'clear()' method is called`,() => {
+    shoppingCartService.addProduct(product_code);
+    shoppingCartService.clear();
+    expect(shoppingCartService.getCartProducts().length).toBe(0);
+  });
 
-  it(`Should obtain the total price when 'getTotalPrice()' method is called`, inject([CartProductService], (cartProductService: CartProductService) => {
-    let added = cartProductService.addProduct(product_code);
+  it(`Should obtain the total price when 'getTotalPrice()' method is called`, () => {
+    let added = shoppingCartService.addProduct(product_code);
     added.then(added => {
-      let totalPrice:number = cartProductService.getTotalPrice();
+      let totalPrice:number = shoppingCartService.getTotalPrice();
       expect(totalPrice).toBe(20);
     }); 
-  }));
+  });
+
+  it(`Should associate an user when 'associateUser()' method is called`, () => {
+    shoppingCartService.associateUser().then(userAssociated=>{
+      expect(userAssociated.mobile).toBe(666000002);
+    });
+  });
+
+  it(`Should disassociate an user when 'disassociateUser()' method is called`, () => {
+    shoppingCartService.disassociateUser();
+     expect(shoppingCartService.userMobile).toBeNull();
+  });
 
 });
