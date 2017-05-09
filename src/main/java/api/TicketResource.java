@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import api.exceptions.EmptyShoppingListException;
 import api.exceptions.InvalidProductAmountInNewTicketException;
 import api.exceptions.InvalidProductAmountInUpdateTicketException;
+import api.exceptions.InvalidProductDiscountException;
 import api.exceptions.NotEnoughStockException;
 import api.exceptions.NotFoundProductCodeException;
 import api.exceptions.NotFoundProductCodeInTicketException;
@@ -34,6 +35,10 @@ import wrappers.TicketWrapper;
 @RestController
 @RequestMapping(Uris.VERSION + Uris.TICKETS)
 public class TicketResource {
+
+    private static final int MIN_PRODUCT_DISCOUNT = 0;
+
+    private static final int MAX_PRODUCT_DISCOUNT = 100;
 
     private TicketController ticketController;
 
@@ -65,8 +70,9 @@ public class TicketResource {
 
     // @PreAuthorize("hasRole('ADMIN')or hasRole('MANAGER') or hasRole('OPERATOR')")
     @RequestMapping(method = RequestMethod.POST)
-    public TicketReferenceWrapper createTicket(@RequestBody TicketCreationWrapper ticketCreationWrapper) throws EmptyShoppingListException,
-            NotFoundProductCodeException, NotFoundUserMobileException, NotEnoughStockException, InvalidProductAmountInNewTicketException {
+    public TicketReferenceWrapper createTicket(@RequestBody TicketCreationWrapper ticketCreationWrapper)
+            throws EmptyShoppingListException, NotFoundProductCodeException, NotFoundUserMobileException, NotEnoughStockException,
+            InvalidProductAmountInNewTicketException, InvalidProductDiscountException {
         Long userMobile = ticketCreationWrapper.getUserMobile();
         if (userMobile != null && !userController.userMobileExists(userMobile)) {
             throw new NotFoundUserMobileException();
@@ -84,6 +90,10 @@ public class TicketResource {
             }
             if (shoppingCreationWrapper.getAmount() <= 0) {
                 throw new InvalidProductAmountInNewTicketException("Product code: " + productCode);
+            }
+            if (shoppingCreationWrapper.getDiscount() < MIN_PRODUCT_DISCOUNT
+                    || shoppingCreationWrapper.getDiscount() > MAX_PRODUCT_DISCOUNT) {
+                throw new InvalidProductDiscountException("Product code: " + productCode);
             }
             // If the product is an article, check if there is enough stock and update it
             if (articleController.articleCodeExists(productCode)) {
