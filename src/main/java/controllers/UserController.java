@@ -1,5 +1,8 @@
 package controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -58,6 +61,18 @@ public class UserController {
     
     public UserDetailsWrapper findUserByMobilePhone(long mobilePhone) {
         User user = userDao.findByMobile(mobilePhone);
+        return entityToWrapper(user);
+    }
+
+    public List<UserDetailsWrapper> findAllUsers() {
+        List<UserDetailsWrapper> userDetailsWrappers = new ArrayList<>();
+        for(User user : userDao.findAll()){
+            userDetailsWrappers.add(entityToWrapper(user));
+        }
+        return userDetailsWrappers;
+    }
+    
+    private UserDetailsWrapper entityToWrapper(User user){
         UserDetailsWrapper userDetailsWrapper = new UserDetailsWrapper();
         userDetailsWrapper.setUsername(user.getUsername());
         userDetailsWrapper.setDni(user.getDni());
