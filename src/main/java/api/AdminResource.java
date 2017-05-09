@@ -28,4 +28,9 @@ public class AdminResource {
         adminController.deleteAllExceptAdmin();
     }
 
+    @RequestMapping(method = RequestMethod.POST)
+    public void seedDatabase() {
+        adminController.seedDatabase();
+    }
+
 }

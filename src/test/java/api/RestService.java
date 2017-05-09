@@ -25,5 +25,9 @@ public class RestService {
                 .basicAuth(Long.toString(manager.getMobile()), manager.getPassword()).clazz(TokenWrapper.class).post().build();
         return token.getToken();
     }
+    
+    public void seedDatabase() {
+        new RestBuilder<TokenWrapper>(RestService.URL).path(Uris.ADMINS).basicAuth(this.loginAdmin(), "").post().build();
+    }
 
 }

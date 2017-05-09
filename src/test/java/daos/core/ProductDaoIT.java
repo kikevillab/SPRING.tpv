@@ -1,6 +1,7 @@
 package daos.core;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,23 +11,27 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import config.PersistenceConfig;
 import config.TestsPersistenceConfig;
+import entities.core.Product;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {PersistenceConfig.class, TestsPersistenceConfig.class})
 public class ProductDaoIT {
 
     @Autowired
-    private ArticleDao articlerDao;
+    private ArticleDao articleDao;
 
     @Autowired
     private EmbroideryDao embroideryDao;
 
     @Autowired
     private TextilePrintingDao textilePrintingDao;
+    
+    @Autowired
+    private ProductDao productDao;
 
     @Test
     public void testCreateArticle() {
-        assertEquals(8, articlerDao.count());
+        assertEquals(8, articleDao.count());
     }
 
     @Test
@@ -37,6 +42,14 @@ public class ProductDaoIT {
     @Test
     public void testCreateTextilePrinting() {
         assertEquals(4, textilePrintingDao.count());
+    }
+    
+    @Test
+    public void testFindProductByCode() {
+        String code = "embroidery2";
+        Product product = productDao.findFirstByCode(code);
+        assertNotNull(product);
+        assertEquals(code, product.getCode());
     }
 
 }
