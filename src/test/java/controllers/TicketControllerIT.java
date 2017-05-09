@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
@@ -24,6 +25,7 @@ import entities.core.Article;
 import entities.core.Shopping;
 import entities.core.ShoppingState;
 import entities.core.Ticket;
+import wrappers.DayTicketWrapper;
 import wrappers.ShoppingCreationWrapper;
 import wrappers.ShoppingTrackingWrapper;
 import wrappers.ShoppingUpdateWrapper;
@@ -38,7 +40,7 @@ public class TicketControllerIT {
 
     @Autowired
     private TicketDao ticketDao;
-    
+
     @Autowired
     private ArticleDao articleDao;
 
@@ -106,7 +108,7 @@ public class TicketControllerIT {
 
         ticketDao.delete(ticket);
     }
-    
+
     @Test
     public void testUpdateTicket() {
         String productCode = "textilePrinting0";
@@ -121,7 +123,7 @@ public class TicketControllerIT {
         ticketCreationWrapper.setShoppingList(shoppingCreationWrapperList);
         Ticket createdTicket = ticketController.createTicket(ticketCreationWrapper);
         Shopping createdShopping = createdTicket.getShoppingList().get(0);
-        
+
         List<ShoppingUpdateWrapper> shoppingUpdateWrapperList = new ArrayList<>();
         ShoppingUpdateWrapper shoppingUpdateWrapper = new ShoppingUpdateWrapper(productCode, 2, ShoppingState.COMMITTED);
         shoppingUpdateWrapperList.add(shoppingUpdateWrapper);
@@ -139,7 +141,7 @@ public class TicketControllerIT {
         assertEquals(createdShopping.getRetailPrice(), updatedShopping.getRetailPrice());
         assertFalse(createdShopping.getAmount() == updatedShopping.getAmount());
         assertFalse(createdShopping.getShoppingState() == updatedShopping.getShoppingState());
-        
+
         assertEquals(shoppingUpdateWrapper.getAmount(), updatedShopping.getAmount());
         assertEquals(shoppingUpdateWrapper.getShoppingState(), updatedShopping.getShoppingState());
 
@@ -186,6 +188,22 @@ public class TicketControllerIT {
             assertEquals(shopping.getDescription(), shoppingTrackingWrapper.getDescription());
             assertEquals(shopping.getShoppingState(), shoppingTrackingWrapper.getShoppingState());
         }
+    }
+
+    @Test
+    public void testGetAllDayTickets() {
+        int totalNumTickets = 5;
+        double totalTicketsPrice = 1075.4;
+
+        Calendar today = Calendar.getInstance();
+        List<DayTicketWrapper> dayTicketsList = ticketController.getAllDayTickets(today);
+        double total = 0;
+        for (DayTicketWrapper dayTicketWrapper : dayTicketsList) {
+            total += dayTicketWrapper.getTotal();
+        }
+
+        assertEquals(totalNumTickets, dayTicketsList.size());
+        assertEquals(totalTicketsPrice, total, 0.01);
     }
 
 }
