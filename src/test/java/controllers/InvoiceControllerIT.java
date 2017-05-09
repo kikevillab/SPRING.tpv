@@ -47,4 +47,14 @@ public class InvoiceControllerIT {
         assertEquals(latestInvoice.getId() + 1, invoice.getId());      
         invoiceDao.delete(new InvoicePK(invoice.getId()));
     }
+    
+    @Test
+    public void testCreateInvoiceWithNoInvoicesThisYear() {
+        invoiceDao.deleteAll();
+        Ticket ticket = ticketDao.findOne(new TicketPK(2L));
+        InvoiceWrapper invoice = invoiceController.createInvoice(ticket);
+        assertNotNull(invoice);
+        assertEquals(1, invoice.getId());      
+        invoiceDao.delete(new InvoicePK(invoice.getId()));
+    }
 }
