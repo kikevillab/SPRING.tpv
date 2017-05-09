@@ -1,0 +1,57 @@
+<md-toolbar color="primary">
+	<span (click)="goToPreviousPage()" id="backButton">	
+		<button md-icon-button>
+			<md-icon>keyboard_backspace</md-icon>
+		</button>
+		Back
+	</span>
+</md-toolbar>
+<div class="content">
+	<h1>Order tracking</h1>
+	<md-card >
+		<md-card-content *ngIf="!loading; else spinner">
+			<div *ngIf="products; else notFound">
+				<b>Reference</b>: {{ticketReference}}
+				<p>Number of products: {{products.length}}</p>
+				<ngx-datatable
+				class="material"
+				[messages]="{emptyMessage: 'No products in the ticket'}"
+				[rowHeight]="'auto'"
+				[columnMode]="'force'"
+				[rows]="products"
+				[reorderable]="false"
+				[columns]="columns">
+					<ngx-datatable-column name="Code" prop="productCode" >
+						<ng-template let-value="value" ngx-datatable-cell-template>
+							{{value}}
+						</ng-template>
+					</ngx-datatable-column>
+					<ngx-datatable-column name="Description">
+						<ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+							{{value}}
+						</ng-template>
+					</ngx-datatable-column>
+					<ngx-datatable-column name="State" prop="shoppingState">
+						<ng-template ngx-datatable-cell-template let-value="value" let-row="row">
+							<b *ngIf="value=='CLOSED'; else notClosed" class="green">{{value}}</b>
+							<ng-template #notClosed>
+								<b>{{value}}</b>
+							</ng-template>									
+						</ng-template>
+					</ngx-datatable-column>
+				</ngx-datatable>
+			</div>
+			<ng-template #notFound>
+				<h3 class="red">
+					<button md-icon-button>
+						<md-icon>warning</md-icon>
+					</button>
+					We're sorry, there is no ticket with the reference '{{ticketReference}}'
+				</h3>
+			</ng-template>
+		</md-card-content>
+		<ng-template #spinner>
+			<md-spinner></md-spinner>
+		</ng-template>
+	</md-card>
+</div>

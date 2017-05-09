@@ -28,6 +28,9 @@ import { ToastService } from '../../shared/toast.service';
   md-card-content > button {
     margin-bottom:1em;
   }
+  md-input-container {
+    width:100%;
+  }
   `]
 })
 
