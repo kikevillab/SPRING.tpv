@@ -17,6 +17,7 @@ import entities.core.Shopping;
 import entities.core.ShoppingState;
 import entities.core.Ticket;
 import entities.users.User;
+import wrappers.DayTicketWrapper;
 import wrappers.ShoppingCreationWrapper;
 import wrappers.ShoppingTrackingWrapper;
 import wrappers.ShoppingUpdateWrapper;
@@ -126,5 +127,14 @@ public class TicketController {
     public boolean ticketReferenceExists(String reference) {
         Ticket ticket = ticketDao.findFirstByReference(reference);
         return ticket != null;
+    }
+
+    public List<DayTicketWrapper> getAllDayTickets(Calendar dayToGetTickets) {
+        List<DayTicketWrapper> dayTicketsList = new ArrayList<>();
+        List<Ticket> ticketList = ticketDao.findByCreated(dayToGetTickets);
+        for (Ticket ticket : ticketList) {
+            dayTicketsList.add(new DayTicketWrapper(ticket));
+        }
+        return dayTicketsList;
     }
 }

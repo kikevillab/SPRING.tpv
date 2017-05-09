@@ -31,6 +31,11 @@ public class Uris {
     public static final String INVOICES = "/invoices";
 
     public static final String TRACKING = "/tracking";
+    
+    public static final String DAY_TICKETS = "/day_tickets";
+    
+    //Date, in format YYYYMMDD
+    public static final String DATE = "/{date}";
 
     public static final String REFERENCE = "/{reference}";
     

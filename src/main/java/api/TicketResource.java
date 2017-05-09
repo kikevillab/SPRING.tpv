@@ -1,5 +1,8 @@
 package api;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
@@ -14,6 +17,7 @@ import api.exceptions.EmptyShoppingListException;
 import api.exceptions.InvalidProductAmountInNewTicketException;
 import api.exceptions.InvalidProductAmountInUpdateTicketException;
 import api.exceptions.InvalidProductDiscountException;
+import api.exceptions.MalformedDateException;
 import api.exceptions.NotEnoughStockException;
 import api.exceptions.NotFoundProductCodeException;
 import api.exceptions.NotFoundProductCodeInTicketException;
@@ -25,6 +29,7 @@ import controllers.TicketController;
 import controllers.UserController;
 import entities.core.Shopping;
 import entities.core.Ticket;
+import wrappers.DayTicketWrapper;
 import wrappers.ShoppingCreationWrapper;
 import wrappers.ShoppingTrackingWrapper;
 import wrappers.ShoppingUpdateWrapper;
@@ -154,6 +159,19 @@ public class TicketResource {
             throw new NotFoundTicketReferenceException("Ticket reference: " + reference);
         }
         return new TicketWrapper(ticketController.getTicket(reference));
+    }
+    
+    @RequestMapping(value = Uris.TRACKING + Uris.DAY_TICKETS + Uris.DATE, method = RequestMethod.GET)
+    public List<DayTicketWrapper> getAllDayTickets(@PathVariable String date) throws MalformedDateException {
+        String dateFormat = Constants.US_DATE_FORMAT;
+        SimpleDateFormat dateFormatter = new SimpleDateFormat(dateFormat);
+        Calendar dayToGetTickets = Calendar.getInstance();
+        try {
+            dayToGetTickets.setTime(dateFormatter.parse(date));
+        } catch (ParseException e) {
+            throw new MalformedDateException(dateFormat, "Date sent: " + date);
+        }
+        return ticketController.getAllDayTickets(dayToGetTickets);
     }
 
     @RequestMapping(value = Uris.TRACKING + Uris.REFERENCE, method = RequestMethod.GET)
