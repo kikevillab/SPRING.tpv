@@ -3,7 +3,7 @@ import 'hammerjs';
 
 import { Router } from '@angular/router';
 
-import { CartProduct } from './cart/cart-product';
+import { CartProduct } from './shared/cart-product';
 
 import { DateComponent } from '../shared/date.component';
 import { CartComponent } from './cart/cart.component';
@@ -17,7 +17,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 import { ToastService } from '../shared/toast.service';
-import { CartProductService } from './cart/cart-product.service';
+import { ShoppingCartService } from './shared/shopping-cart.service';
 import { LocalStorageService } from '../shared/local-storage.service';
 import { TPVService } from '../shared/tpv.service';
 import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
@@ -34,7 +34,7 @@ describe('Component: HomeComponent', () => {
       providers: [
       {provide: Router},
       ToastService,
-      CartProductService,
+      ShoppingCartService,
       LocalStorageService,
       TPVService,
       ToastyService, ToastyConfig, ToastOptions, ToastData

@@ -3,13 +3,16 @@ import { Observable } from 'rxjs';
 import { Subject } from 'rxjs/Subject';
 
 import { CartProduct } from './cart-product';
-import { Product } from '../product';
+import { Product } from './product';
 
 import { TPVService } from '../../shared/tpv.service';
 import { LocalStorageService } from '../../shared/local-storage.service';
 
+import { TicketCheckout } from '../payment/ticket-checkout';
+
+
 @Injectable()
-export class CartProductService {
+export class SidenavService {
 
   private subject:Subject<CartProduct[]> = new Subject<CartProduct[]>();
   private storage_key:string = 'tpv-shopping_cart';
@@ -31,8 +34,8 @@ export class CartProductService {
         }
         this.updateCart();
         this.storageService.setItem(this.storage_key, this.cartProducts);
-        resolve(true);
-      }, error => resolve(false));
+        resolve();
+      }, error => reject(error));
     });
   }
 
@@ -71,6 +74,15 @@ export class CartProductService {
     this.storageService.removeItem(this.storage_key);
     this.cartProducts = [];
     this.updateCart();
+  }
+
+  submitOrder():Promise<any>{
+    return new Promise((resolve,reject) => {
+        let newTicket = new TicketCheckout(this.cartProducts);
+        this.tpvService.requestPost('/tickets', newTicket).subscribe(ticketCreated => {
+          resolve(ticketCreated);
+        }, error => reject(error));
+    });
   }
 
   private updateCart():void{
