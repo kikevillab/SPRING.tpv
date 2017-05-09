@@ -1,6 +1,7 @@
 package daos.core;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Calendar;
 
@@ -22,8 +23,8 @@ public class TicketDaoIT {
     private TicketDao ticketDao;
 
     @Test
-    public void testCreate() {
-        assertEquals(5, ticketDao.count());
+    public void testCount() {
+        assertTrue(ticketDao.count() >= 5);
     }
 
     @Test

@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -26,10 +27,12 @@ import entities.core.Shopping;
 import entities.core.ShoppingState;
 import entities.core.Ticket;
 import wrappers.DayTicketWrapper;
+import entities.core.TicketPK;
 import wrappers.ShoppingCreationWrapper;
 import wrappers.ShoppingTrackingWrapper;
 import wrappers.ShoppingUpdateWrapper;
 import wrappers.TicketCreationWrapper;
+import wrappers.TicketIdWrapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {PersistenceConfig.class, TestsPersistenceConfig.class, TestsControllerConfig.class})
@@ -188,6 +191,45 @@ public class TicketControllerIT {
             assertEquals(shopping.getDescription(), shoppingTrackingWrapper.getDescription());
             assertEquals(shopping.getShoppingState(), shoppingTrackingWrapper.getShoppingState());
         }
+    }
+    
+    @Test
+    public void testFindOneTicket(){
+        assertNotNull(ticketController.findOneTicket(new TicketIdWrapper(1L)));
+    }
+    
+    @Test
+    public void testTicketIsClosedWithATicketWithAllShoppingsClosed(){
+        Ticket ticketWithAllShoppingsClosed = new Ticket();
+        Shopping shoppingClosed = new Shopping();
+        shoppingClosed.setShoppingState(ShoppingState.CLOSED);
+        ticketWithAllShoppingsClosed.addShopping(shoppingClosed);
+        ticketWithAllShoppingsClosed.addShopping(shoppingClosed);
+        assertTrue(ticketController.isTicketClosed(ticketWithAllShoppingsClosed));
+     }
+    
+    @Test
+    public void testTicketIsClosedWithATicketWithAtLeastOneShoppingNotClosed(){
+        Ticket ticketWithAtLeastOneShoppingNotClosed = new Ticket();
+        Shopping shoppingOpened = new Shopping();
+        shoppingOpened.setShoppingState(ShoppingState.OPENED);
+        Shopping shoppingClosed = new Shopping();
+        shoppingClosed.setShoppingState(ShoppingState.CLOSED);
+        ticketWithAtLeastOneShoppingNotClosed.addShopping(shoppingClosed);
+        ticketWithAtLeastOneShoppingNotClosed.addShopping(shoppingOpened);
+        assertFalse(ticketController.isTicketClosed(ticketWithAtLeastOneShoppingNotClosed));
+    }
+    
+    @Test
+    public void testTicketIsAssignedToInvoice(){
+        Ticket ticketAssignedToAnInvoice = ticketDao.findOne(new TicketPK(3L));     
+        assertTrue(ticketController.ticketIsAlreadyAssignedToInvoice(ticketAssignedToAnInvoice));
+    }
+    
+    @Test
+    public void testTicketIsNotAssignedToInvoice(){
+        Ticket ticketNotAssignedToAnInvoice = ticketDao.findOne(new TicketPK(1L));     
+        assertFalse(ticketController.ticketIsAlreadyAssignedToInvoice(ticketNotAssignedToAnInvoice));
     }
 
     @Test

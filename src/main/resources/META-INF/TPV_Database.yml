@@ -329,6 +329,33 @@ ticketList:
         retailPrice: 23
         shoppingState: STARTED
     user: *user666000002
+  - id: 6
+    shoppingList:
+      - amount: 1
+        discount: 10
+        product: *textilePrinting84000003333
+        description: textilePrinting0
+        retailPrice: 20
+        shoppingState: CLOSED
+      - amount: 2
+        discount: 10
+        product: *textilePrinting84000003334
+        description: textilePrinting1
+        retailPrice: 21
+        shoppingState: CLOSED
+      - amount: 3
+        discount: 10
+        product: *textilePrinting84000003335
+        description: textilePrinting2
+        retailPrice: 22
+        shoppingState: CLOSED
+      - amount: 5
+        discount: 10
+        product: *textilePrinting84000003336
+        description: textilePrinting3
+        retailPrice: 23
+        shoppingState: CLOSED
+    user: *user666000002
 
 invoiceList:
   - id: 20170001
