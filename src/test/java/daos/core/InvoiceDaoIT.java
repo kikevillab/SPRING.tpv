@@ -26,23 +26,21 @@ public class InvoiceDaoIT {
 
     @Autowired
     private TicketDao ticketDao;
-    
+
     @Test
     public void testCount() {
         assertTrue(invoiceDao.count() >= 2);
     }
-    
+
     @Test
-    public void testFindFirstByOrderByIdDesc(){
+    public void testFindFirstByOrderByIdDesc() {
         assertEquals(20170002, invoiceDao.findFirstByOrderByCreatedDescIdDesc().getId());
     }
-    
+
     @Test
-    public void testFindByTicket(){       
-        Ticket ticket =  ticketDao.findOne(new TicketPK(3L));
-        System.out.println("TICKET: " + ticket);
-        Invoice invoice = invoiceDao.findByTicket(ticket);
-        System.out.println("INVOICE: " +invoice);
+    public void testFindByTicket() {
+        Ticket ticket = ticketDao.findOne(new TicketPK(3L));
+        Invoice invoice = invoiceDao.findByTicketReference(ticket.getReference());
         assertNotNull(invoice);
     }
 

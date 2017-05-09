@@ -117,7 +117,7 @@ public class TicketController {
     }
 
     public boolean ticketIsAlreadyAssignedToInvoice(Ticket ticket) {
-        return invoiceDao.findByTicket(ticket) != null;
+        return invoiceDao.findByTicketReference(ticket.getReference()) != null;
     }
 
     public boolean isTicketClosed(Ticket ticket) {
