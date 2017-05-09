@@ -24,28 +24,29 @@ class="material"
     {{value}}
   </ng-template>
 </ngx-datatable-column>
-<ngx-datatable-column name="Retail price" [flexGrow]="2">
+<ngx-datatable-column name="Price" prop="retailPrice" [flexGrow]="2">
  <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
   {{row.retailPrice}}
 </ng-template>
 </ngx-datatable-column>
-<ngx-datatable-column name="Amount" [flexGrow]="2">
+<ngx-datatable-column name="Nº" prop="amount" [flexGrow]="2">
   <ng-template ngx-datatable-cell-template let-value="value" let-row="row">
     <input mdInput type="number" step="1" min="1" (blur)="updateProduct(row, $event, 'amount')" [value]="value"/>
   </ng-template>
 </ngx-datatable-column>
-<ngx-datatable-column name="Discount" [flexGrow]="2">
+<ngx-datatable-column name="%" prop="discount" [flexGrow]="2">
   <ng-template ngx-datatable-cell-template let-value="value" let-row="row">
-    <input mdInput type="number" step="0.01" min="0.00" max="100.00" (blur)="updateProduct(row, $event, 'discount')" [value]="value"/>
+    <input mdInput type="number" step="0.01" min="0.00" max="100.00" (blur)="updateProduct(row, $event, 'discount')" [value]="value.toFixed(2)"/>
   </ng-template>
 </ngx-datatable-column>
-<ngx-datatable-column name="Delivered" [flexGrow]="2">
-  <ng-template ngx-datatable-cell-template let-value="value" let-row="row" >
-    <md-checkbox (change)="updateProduct(row, $event, 'delivered')" [checked]="value" ></md-checkbox>
+<ngx-datatable-column name="Total" prop="totalPrice" [flexGrow]="2">
+  <ng-template ngx-datatable-cell-template let-row="row" >
+      <input mdInput type="number" step="0.01" min="0.00" max="100.00" (blur)="updateTotalPrice(row, $event)" [value]="row.retailPrice * row.amount * (1 - (row.discount/100)).toFixed(2)"/>
   </ng-template>
 </ngx-datatable-column>
-<ngx-datatable-column name="Delete" [flexGrow]="2">
-  <ng-template ngx-datatable-cell-template let-row="row">
+<ngx-datatable-column name=" " prop="delivered" [flexGrow]="2">
+  <ng-template ngx-datatable-cell-template let-row="row" let-value="value">
+    <md-checkbox (change)="updateProduct(row, $event, 'delivered')" [checked]="value" mdTooltip="Delivered" mdTooltipPosition="left"></md-checkbox>
     <button md-icon-button (click)="removeFromCart(row)" mdTooltip="Delete from cart" mdTooltipPosition="left">
       <md-icon class="md-24" color="warn">delete</md-icon>
     </button>
@@ -69,6 +70,6 @@ class="material"
     </div>
   </form>
   <div fxFlex>
-    <button md-raised-button color="accent" (click)="checkout()" [disabled]="cartProducts.length==0">Check out</button>
+    <button md-raised-button color="accent" (click)="checkout()" [disabled]="cartProducts.length==0" id="checkoutButton">Check out</button>
   </div>
 </div>

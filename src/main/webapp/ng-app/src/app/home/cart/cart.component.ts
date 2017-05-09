@@ -1,11 +1,11 @@
-import { Component, OnDestroy, NgModule } from '@angular/core';
+import { Component, OnDestroy, NgModule, Input, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
-import { MdDialog } from '@angular/material';
+import { MdDialog, MdSidenav } from '@angular/material';
 
-import { CartProduct } from './cart-product';
-import { TicketCheckout } from './ticket-checkout';
+import { CartProduct } from '../shared/cart-product';
 
-import { CartProductService } from './cart-product.service';
+import { ShoppingCartService } from '../shared/shopping-cart.service';
 import { TPVService } from '../../shared/tpv.service';
 import { ToastService } from '../../shared/toast.service';
 
@@ -22,9 +22,11 @@ import { ToastService } from '../../shared/toast.service';
 
 export class CartComponent implements OnDestroy {
 
+  @Output() closeSidenavEvent:EventEmitter<boolean>=new EventEmitter();
+
   codeInput:string = '';
-  totalPrice:string = this.cartProductService.getTotalPrice().toFixed(2);
-  cartProducts: CartProduct[] = this.cartProductService.getCartProducts();
+  totalPrice:string = this.shoppingCartService.getTotalPrice().toFixed(2);
+  cartProducts: CartProduct[] = this.shoppingCartService.getCartProducts();
   subscription: Subscription;
   columns = [
   { name: 'description' },
@@ -32,20 +34,22 @@ export class CartComponent implements OnDestroy {
   { name: 'amount' },
   { name: 'discount' },
   { name: 'delivered' },
-  { name: 'delete' }
+  { name: 'totalPrice'}
   ];
 
-  constructor (private cartProductService: CartProductService, private toastService: ToastService, private tpvService: TPVService, public dialog: MdDialog){
-    this.subscription = this.cartProductService.getCartProductsObservable().subscribe((cartProducts:CartProduct[]) => {
+  constructor (private shoppingCartService: ShoppingCartService, private toastService: ToastService, private router: Router, public dialog: MdDialog){
+    this.subscription = this.shoppingCartService.getCartProductsObservable().subscribe((cartProducts:CartProduct[]) => {
       this.cartProducts = cartProducts;
-      this.totalPrice = this.cartProductService.getTotalPrice().toFixed(2);
+      this.totalPrice = this.shoppingCartService.getTotalPrice().toFixed(2);
     });
   }
 
   async onSubmit(cartForm:any, event:Event){ 
   	event.preventDefault();
-  	this.cartProductService.addProduct(this.codeInput).then((added:boolean)=>{
-      !added && this.toastService.error('Invalid code', 'The given product code is invalid');
+  	this.shoppingCartService.addProduct(this.codeInput).then(()=>{
+     
+    }).catch(error =>{
+      this.toastService.error('Invalid code', 'The given product code is invalid');
     });
     this.codeInput = '';
   }
@@ -57,23 +61,27 @@ export class CartComponent implements OnDestroy {
     } else {
       cartProduct.delivered = !cartProduct.delivered;
     }
-    this.cartProductService.updateProduct(cartProduct);
+    this.shoppingCartService.updateProduct(cartProduct);
+  }
+
+  updateTotalPrice(row:any, event:any):void {
+    let cartProduct:any = this.cartProducts[row.$$index];
+    let total:number = event.target.value;
+    cartProduct.discount = 100*(1-(total/(cartProduct.retailPrice*cartProduct.amount)));
+    this.shoppingCartService.updateProduct(cartProduct);
   }
 
   removeFromCart(cartProduct:CartProduct):void {
-    this.cartProductService.removeProduct(cartProduct);
+    this.shoppingCartService.removeProduct(cartProduct);
   }
 
   clearCart():void {
-  	this.cartProductService.clear();
+  	this.shoppingCartService.clear();
   }
 
   checkout():void {
-    let newTicket = new TicketCheckout(this.cartProducts);
-    this.tpvService.requestPost('/tickets', newTicket).subscribe(ticketCreated => {
-      this.toastService.success('Checkout done', `Ticket created with reference ${ticketCreated.ticketReference}`);
-      this.clearCart();
-    }, error => this.toastService.error('Error in checkout', 'Error creating ticket'));
+    this.router.navigate(['/home/payment']);
+    this.closeSidenavEvent.emit(true);
   }
 
   ngOnDestroy(){

@@ -8,6 +8,7 @@ import daos.users.UserDao;
 import entities.users.Authorization;
 import entities.users.Role;
 import entities.users.User;
+import wrappers.UserDetailsWrapper;
 import wrappers.UserWrapper;
 
 @Controller
@@ -41,5 +42,16 @@ public class UserController {
     public boolean userMobileExists(long userMobile) {
         User user = userDao.findByMobile(userMobile);
         return user != null;
+    }
+
+    public UserDetailsWrapper findUserByMobilePhone(long mobilePhone) {
+        User user = userDao.findByMobile(mobilePhone);
+        UserDetailsWrapper userDetailsWrapper = new UserDetailsWrapper();
+        userDetailsWrapper.setUsername(user.getUsername());
+        userDetailsWrapper.setDni(user.getDni());
+        userDetailsWrapper.setEmail(user.getEmail());
+        userDetailsWrapper.setMobile(user.getMobile());
+        userDetailsWrapper.setAddress(user.getAddress());
+        return userDetailsWrapper;
     }
 }

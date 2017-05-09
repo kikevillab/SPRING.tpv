@@ -15,7 +15,7 @@ import { CalculatorComponent } from './calculator/calculator.component';
 import { TPVService } from '../../shared/tpv.service';
 import { LocalStorageService } from '../../shared/local-storage.service';
 import { ToastService } from '../../shared/toast.service';
-import { CartProductService } from './cart-product.service';
+import { ShoppingCartService } from '../shared/shopping-cart.service';
 
 @NgModule({
   imports: [
@@ -30,7 +30,7 @@ import { CartProductService } from './cart-product.service';
   ToastyModule
   ],
   declarations: [ CalculatorComponent, CalculatorDialog ],
-  providers: [TPVService, LocalStorageService, ToastService, CartProductService],
+  providers: [TPVService, LocalStorageService, ToastService, ShoppingCartService],
   entryComponents: [CalculatorDialog]
 })
 export class CartModule { }

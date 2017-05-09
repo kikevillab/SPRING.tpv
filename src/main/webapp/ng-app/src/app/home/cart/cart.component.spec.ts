@@ -12,12 +12,12 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
 
-import { CartProduct } from './cart-product';
+import { CartProduct } from '../shared/cart-product';
 import { CartComponent } from './cart.component';
 import { DateComponent } from '../../shared/date.component';
 
 import { ToastService } from '../../shared/toast.service';
-import { CartProductService } from './cart-product.service';
+import { ShoppingCartService } from '../shared/shopping-cart.service';
 import { LocalStorageService } from '../../shared/local-storage.service';
 import { TPVService } from '../../shared/tpv.service';
 
@@ -46,7 +46,7 @@ describe('Component: CartComponent', () => {
       providers: [
       {provide: Router},
       ToastService,
-      CartProductService,
+      ShoppingCartService,
       LocalStorageService,
       TPVService, 
       MockBackend,
@@ -109,15 +109,6 @@ describe('Component: CartComponent', () => {
     cart.onSubmit('form', new Event('testEvent'));
     cart.clearCart();
     expect(cart.cartProducts.length).toBe(0);
-  }));
-
-  it(`Should clear the cart when 'checkout()' method is called`, inject([MockBackend], (mockBackend: MockBackend) => {
-    mockBackend.connections.subscribe(conn => {
-      conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(MockProduct) })));
-    });
-    cart.onSubmit('form', new Event('testEvent'));
-    cart.checkout();
-    setTimeout(() => expect(cart.cartProducts.length).toBe(0), 3000);
   }));
 
 });
