@@ -46,13 +46,13 @@ public class InvoiceController {
     private int getNextInvoiceId() {
         Invoice latestInvoice = invoiceDao.findFirstByOrderByCreatedDescIdDesc();
         boolean thereAreInvoices = latestInvoice != null;
-        int nextInvoiceId = 1;
+        int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+        int nextInvoiceId = currentYear + 1;
         if (thereAreInvoices) {
-            int currentYear = Calendar.getInstance().get(Calendar.YEAR);
             int latestInvoiceYear = latestInvoice.getCreated().get(Calendar.YEAR);
             boolean latestInvoiceWasCreatedThisYear = latestInvoiceYear == currentYear;
             if (latestInvoiceWasCreatedThisYear) {
-                nextInvoiceId = latestInvoice.getId() + 1;
+                nextInvoiceId = currentYear + latestInvoice.getId() + 1;
             }
         }
         return nextInvoiceId;
