@@ -1,8 +1,12 @@
 package api;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
+
+import java.util.Arrays;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.junit.After;
@@ -103,11 +107,17 @@ public class UserResourceFunctionalTesting {
     public void testFindUserByMobilePhoneWithExistentPhone() {
         String token = new RestService().loginAdmin();
         String mobilePhone = String.valueOf(123456789L);
-        System.out.println(mobilePhone);
         UserDetailsWrapper user = new RestBuilder<UserDetailsWrapper>(RestService.URL).path(Uris.USERS).pathId(mobilePhone).basicAuth(token, "").clazz(UserDetailsWrapper.class).get().build();
         assertNotNull(user);
     }
 
+    @Test
+    public void testFindAllUsers(){
+        String token = new RestService().loginAdmin();
+        List<UserDetailsWrapper> users = Arrays.asList(new RestBuilder<UserDetailsWrapper[]>(RestService.URL).path(Uris.USERS).basicAuth(token, "").clazz(UserDetailsWrapper[].class).get().build());
+        assertFalse(users.isEmpty());
+    }
+    
     @After
     public void deleteAll() {
         new RestService().deleteAll();

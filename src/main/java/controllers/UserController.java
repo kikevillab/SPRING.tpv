@@ -12,6 +12,7 @@ import entities.users.Authorization;
 import entities.users.Role;
 import entities.users.User;
 import wrappers.UserDetailsWrapper;
+import wrappers.UserUpdateWrapper;
 import wrappers.UserWrapper;
 
 @Controller
@@ -45,6 +46,10 @@ public class UserController {
     public boolean userMobileExists(long userMobile) {
         User user = userDao.findByMobile(userMobile);
         return user != null;
+    }
+    
+    public boolean userExists(int id){
+        return userDao.findOne(id) != null;
     }
 
     public boolean userIsValid(User user) {
@@ -81,4 +86,15 @@ public class UserController {
         userDetailsWrapper.setAddress(user.getAddress());
         return userDetailsWrapper;
     }
+
+    public void updateUser(UserUpdateWrapper userUpdateWrapper) {
+        User user = userDao.findOne(userUpdateWrapper.getId());
+        user.setAddress(userUpdateWrapper.getAddress());
+        user.setDni(userUpdateWrapper.getDni());
+        user.setEmail(userUpdateWrapper.getEmail());
+        user.setUsername(userUpdateWrapper.getUsername());
+        user.setMobile(userUpdateWrapper.getMobile());
+        userDao.save(user);
+    }
+    
 }

@@ -1,6 +1,9 @@
 package controllers;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+
+import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,5 +31,11 @@ public class UserControllerIT {
     public void testFindUserByMobilePhone(){
         UserDetailsWrapper user = userController.findUserByMobilePhone(666000000L);
         assertNotNull(user);
+    }
+    
+    @Test
+    public void testFindAllUsers(){
+        List<UserDetailsWrapper> users = userController.findAllUsers();
+        assertFalse(users.isEmpty());
     }
 }
