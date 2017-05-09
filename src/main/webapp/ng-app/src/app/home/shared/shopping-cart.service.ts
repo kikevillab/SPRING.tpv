@@ -75,16 +75,17 @@ export class ShoppingCartService {
   clear():void {
     this.storageService.removeItem(this.storage_key);
     this.cartProducts = [];
+    this.userMobile = null;
     this.updateCart();
   }
 
   submitOrder():Promise<any>{
     return new Promise((resolve,reject) => {
-        let newTicket = new TicketCheckout(this.cartProducts, this.userMobile);
-        this.tpvService.requestPost('/tickets', newTicket).subscribe(ticketCreated => {
-          this.clear();
-          resolve(ticketCreated);
-        }, error => reject(error));
+      let newTicket = new TicketCheckout(this.cartProducts, this.userMobile);
+      this.tpvService.requestPost('/tickets', newTicket).subscribe(ticketCreated => {
+        this.clear();
+        resolve(ticketCreated);
+      }, error => reject(error));
     });
   }
 
@@ -92,16 +93,17 @@ export class ShoppingCartService {
     return this.cartProducts.length == 0;
   }
 
-  associateUser():Promise<User> {
-      return new Promise((resolve,reject) => {
-        let user:User = new User(666000002, 'name0', '1235678Z', 'user2@user2.com', 'Calle Goya, 102. Madrid' );
-        this.userMobile = user.mobile;
-        resolve(user);
+  associateUser(userMobile:number):Promise<User> {
+    return new Promise((resolve,reject) => {
+      this.tpvService.requestGet(`/users/${userMobile}`).subscribe((associatedUser:User) => {
+        this.userMobile = associatedUser.mobile;
+        resolve(associatedUser);
+      }, error => reject(error));
     });
   }
 
   disassociateUser():void {
-      this.userMobile = null;
+    this.userMobile = null;
   }
 
   private updateCart():void{

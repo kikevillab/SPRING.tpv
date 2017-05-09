@@ -9,7 +9,6 @@ import { TicketCheckout } from './ticket-checkout';
 import { CashPaymentComponent } from './cash-payment.component';
 
 import { ShoppingCartService } from '../shared/shopping-cart.service';
-import { TPVService } from '../../shared/tpv.service';
 import { ToastService } from '../../shared/toast.service';
 
 @Component({
@@ -74,7 +73,7 @@ export class PaymentComponent {
 
   associateUser(event:Event):void {
     event.preventDefault();
-    this.shoppingCartService.associateUser().then(userAssociated =>{
+    this.shoppingCartService.associateUser(this.mobileNumberInput).then(userAssociated =>{
       this.mobileNumberInput = null;
       this.userAssociated = userAssociated;
       this.toastService.success('Client asociated', `The client with the mobile ${userAssociated.mobile} has been associated`);
