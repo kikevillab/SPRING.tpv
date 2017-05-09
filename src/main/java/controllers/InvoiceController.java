@@ -13,7 +13,7 @@ import entities.core.InvoicePK;
 import entities.core.Ticket;
 import wrappers.InvoiceIdWrapper;
 import wrappers.InvoiceWrapper;
-import wrappers.TicketWrapper;
+import wrappers.TicketIdWrapper;
 
 @Controller
 public class InvoiceController {
@@ -28,7 +28,7 @@ public class InvoiceController {
     public List<InvoiceWrapper> findAllInvoices() {
         List<InvoiceWrapper> invoiceWrappers = new ArrayList<>();
         for (Invoice invoice : invoiceDao.findAll()) {
-            invoiceWrappers.add(new InvoiceWrapper(invoice.getId(), new TicketWrapper(invoice.getTicket().getId())));
+            invoiceWrappers.add(new InvoiceWrapper(invoice.getId(), new TicketIdWrapper(invoice.getTicket().getId())));
         }
         return invoiceWrappers;
     }
@@ -40,7 +40,7 @@ public class InvoiceController {
     public InvoiceWrapper createInvoice(Ticket ticket) {
         Invoice invoice = new Invoice(getNextInvoiceId(), ticket);
         Invoice invoiceCreated = invoiceDao.save(invoice);
-        return new InvoiceWrapper(invoiceCreated.getId(), new TicketWrapper(invoiceCreated.getTicket().getId()));
+        return new InvoiceWrapper(invoiceCreated.getId(), new TicketIdWrapper(invoiceCreated.getTicket().getId()));
     }
 
     private int getNextInvoiceId() {

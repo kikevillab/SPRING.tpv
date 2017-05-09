@@ -95,6 +95,12 @@ public class Shopping {
         this.shoppingState = shoppingState;
     }
 
+    public double getShoppingTotal() {
+        double retailPriceDouble = retailPrice.doubleValue();
+        float discountDecimal = (float) discount / 100;
+        return amount * (retailPriceDouble - (retailPriceDouble * discountDecimal));
+    }
+
     @Override
     public int hashCode() {
         return id;

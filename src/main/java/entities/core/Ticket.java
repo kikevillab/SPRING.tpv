@@ -44,6 +44,10 @@ public class Ticket {
 
     public Ticket() {
         created = Calendar.getInstance();
+        created.set(Calendar.HOUR_OF_DAY, 0);
+        created.set(Calendar.MINUTE, 0);
+        created.set(Calendar.SECOND, 0);
+        created.set(Calendar.MILLISECOND, 0);
         shoppingList = new ArrayList<>();
     }
 
@@ -95,21 +99,30 @@ public class Ticket {
 
     @Override
     public int hashCode() {
-        return (int) id;
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((created == null) ? 0 : created.hashCode());
+        result = prime * result + (int) (id ^ (id >>> 32));
+        return result;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
+        if (this == obj)
             return true;
-        }
-        if (obj == null) {
+        if (obj == null)
             return false;
-        }
-        if (getClass() != obj.getClass()) {
+        if (getClass() != obj.getClass())
             return false;
-        }
-        return id == ((Ticket) obj).id;
+        Ticket other = (Ticket) obj;
+        if (created == null) {
+            if (other.created != null)
+                return false;
+        } else if (!created.equals(other.created))
+            return false;
+        if (id != other.id)
+            return false;
+        return true;
     }
 
     @Override

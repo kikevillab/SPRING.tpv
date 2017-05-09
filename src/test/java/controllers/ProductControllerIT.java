@@ -26,7 +26,7 @@ public class ProductControllerIT {
 
     @Test
     public void testGetProductByCode() {
-        String productCode = "article0";
+        String productCode = "embroidery0";
         ProductWrapper product = productController.getProductByCode(productCode);
         assertNotNull(product);
         assertEquals(productCode, product.getCode());
@@ -40,13 +40,13 @@ public class ProductControllerIT {
     }
     
     @Test
-    public void testExistentProductId() {
-        String productCode = "article0";
+    public void testExistentProductCode() {
+        String productCode = "embroidery0";
         assertTrue(productController.productCodeExists(productCode));
     }
     
     @Test
-    public void testNonexistentProductId() {
+    public void testNonexistentProductCode() {
         String productCode = "justTesting-123";
         assertFalse(productController.productCodeExists(productCode));
     }

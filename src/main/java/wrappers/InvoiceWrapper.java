@@ -3,15 +3,15 @@ package wrappers;
 public class InvoiceWrapper {
     private int id;
     
-    private TicketWrapper ticket;
+    private TicketIdWrapper ticket;
 
     public InvoiceWrapper(){
     }
     
-    public InvoiceWrapper(int id, TicketWrapper ticketWrapper) {
+    public InvoiceWrapper(int id, TicketIdWrapper ticketIdWrapper) {
         super();
         this.id = id;
-        this.ticket = ticketWrapper;
+        this.ticket = ticketIdWrapper;
     }
 
     public int getId() {
@@ -22,11 +22,11 @@ public class InvoiceWrapper {
         this.id = id;
     }
 
-    public TicketWrapper getTicket() {
+    public TicketIdWrapper getTicket() {
         return ticket;
     }
 
-    public void setTicket(TicketWrapper ticket) {
+    public void setTicket(TicketIdWrapper ticket) {
         this.ticket = ticket;
     }
 

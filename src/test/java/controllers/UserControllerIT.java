@@ -26,24 +26,24 @@ public class UserControllerIT {
 
     @Autowired
     UserController userController;
-    
+
     @Autowired
     UserDao userDao;
-    
+
     @Test
-    public void testFindUserByMobilePhone(){
+    public void testFindUserByMobilePhone() {
         UserDetailsWrapper user = userController.findUserByMobilePhone(666000000L);
         assertNotNull(user);
     }
-    
+
     @Test
-    public void testFindAllUsers(){
+    public void testFindAllUsers() {
         List<UserDetailsWrapper> users = userController.findAllUsers();
         assertFalse(users.isEmpty());
     }
-    
+
     @Test
-    public void testUpdateUser(){   
+    public void testUpdateUser() {
         User user = userDao.findOne(1);
         UserUpdateWrapper userWrapper = new UserUpdateWrapper();
         userWrapper.setId(user.getId());
