@@ -12,7 +12,7 @@ import { ToastyModule } from 'ng2-toasty';
 
 import { HomeRoutingModule } from './home-routing.module';
 
-import { HomeComponent } from './home.component';
+import { HomeComponent, OrderTrackingDialog } from './home.component';
 import { CartComponent } from './cart/cart.component';
 import { CalculatorComponent } from './cart/calculator/calculator.component';
 import { DateComponent } from '../shared/date.component';
@@ -44,8 +44,10 @@ import { PaymentModule } from './payment/payment.module';
   declarations: [
     HomeComponent,
     DateComponent,
-    CartComponent
+    CartComponent,
+    OrderTrackingDialog
   ],
-  providers: [TPVService, LocalStorageService, ToastService]
+  providers: [TPVService, LocalStorageService, ToastService],
+  entryComponents: [OrderTrackingDialog]
 })
 export class HomeModule { }

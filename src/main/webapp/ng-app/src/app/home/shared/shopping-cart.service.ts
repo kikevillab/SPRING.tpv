@@ -19,7 +19,7 @@ export class ShoppingCartService {
   private storage_key:string = 'tpv-shopping_cart';
   private cartProducts:CartProduct[] = JSON.parse(this.storageService.getItem(this.storage_key)) || [];
   private totalPrice:number;
-  userMobile:number;
+  private userMobile:number;
 
   constructor (private storageService: LocalStorageService, private tpvService: TPVService) {
     this.updateCart();
@@ -70,6 +70,10 @@ export class ShoppingCartService {
 
   getTotalPrice():number {
     return this.totalPrice;
+  }
+
+  getUserMobile():number {
+    return this.userMobile;
   }
 
   clear():void {
