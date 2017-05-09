@@ -53,23 +53,23 @@ class="material"
   </ng-template>
 </ngx-datatable-column>
 </ngx-datatable>
-<div >
-  <p>Total: <b id="totalPrice">{{totalPrice | currency}}</b></p>
-</div>
-<div fxLayout="row" fxLayout.xs="column">
-  <form (ngSubmit)="onSubmit('cartForm', $event)" #cartForm="ngForm" fxFlex="90" >
-    <div class="form-group">
-      Add by code: 
-      <md-input-container >
-        <input mdInput type="text" class="form-control" id="codeInput"
-        required
-        [(ngModel)]="codeInput" name="codeInput"
-        #name="ngModel">
-      </md-input-container>
+<p>Total: <b id="totalPrice">{{totalPrice | currency:'EUR':true}}</b></p>
+<div fxLayout="column space-around center" id="paddingContainer">
+  <md-card >
+    <form fxLayout="column" (ngSubmit)="onSubmit('cartForm', $event)" #cartForm="ngForm" class="center">
+      <div class="form-group">
+        Add product by code: 
+        <md-input-container>
+          <input mdInput type="text" placeholder="Product code" class="form-control" id="codeInput" required maxLength="255" 
+          [(ngModel)]="codeInput" name="codeInput" #name="ngModel">
+        </md-input-container>
+      </div>
       <button md-raised-button color="primary" type="submit" [disabled]="!cartForm.form.valid" id="submitCodeInputButton">Submit</button>
-    </div>
-  </form>
-  <div fxFlex>
+    </form>
+  </md-card>
+  <md-card >
+    <div class="form-group center" fxLayout="column" >
     <button md-raised-button color="accent" (click)="checkout()" [disabled]="cartProducts.length==0" id="checkoutButton">Check out</button>
-  </div>
+    </div>
+  </md-card>
 </div>

@@ -112,14 +112,14 @@ describe('Service: ShoppingCartService', () => {
   });
 
   it(`Should associate an user when 'associateUser()' method is called`, () => {
-    shoppingCartService.associateUser().then(userAssociated=>{
+    shoppingCartService.associateUser(666000002).then(userAssociated=>{
       expect(userAssociated.mobile).toBe(666000002);
     });
   });
 
   it(`Should disassociate an user when 'disassociateUser()' method is called`, () => {
     shoppingCartService.disassociateUser();
-     expect(shoppingCartService.userMobile).toBeNull();
+     expect(shoppingCartService.getUserMobile()).toBeNull();
   });
 
 });

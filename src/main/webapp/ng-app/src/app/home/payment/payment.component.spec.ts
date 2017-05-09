@@ -21,18 +21,13 @@ import { LocalStorageService } from '../../shared/local-storage.service';
 import { TPVService } from '../../shared/tpv.service';
 
 
-export const MockProduct = {
-  id: 0,
-  code: 'article0',
-  description: 'article0',
-  retailPrice: 20.00,
-  discontinued: false
+export const UserMock = {
+  mobile: 666000002,
+  username: 'customer2',
+  dni: '1235678Z',
+  email: 'user2@user2.com',
+  address: 'Calle Goya, 102. Madrid'
 }
-
-export const MockTicket = {
-  ticketReference: '12341234'
-}
-
 describe('Component: PaymentComponent', () => {
 
   let fixture, payment, element, de;
@@ -46,9 +41,9 @@ describe('Component: PaymentComponent', () => {
       ToastService,
       ShoppingCartService,
       LocalStorageService,
-      TPVService, 
       MockBackend,
       BaseRequestOptions,
+      TPVService, 
       {
         provide: Http,
         useFactory: (backend, options) => new Http(backend, options),
@@ -62,12 +57,15 @@ describe('Component: PaymentComponent', () => {
     element = fixture.nativeElement;
     de = fixture.debugElement;
     payment.mobileNumberInput = 666000002;
-    payment.associateUser(new Event('testEvent'));
   }));
 
-  it(`Should associate an User when 'associateUser()' method is called`, () => {
-    expect(payment.userAssociated.mobile).toBe(666000002);
-  });
+  it(`Should associate an User when 'associateUser()' method is called`, inject([MockBackend, ShoppingCartService], (mockBackend: MockBackend, shoppingCartService: ShoppingCartService) => {
+    mockBackend.connections.subscribe(conn => {
+      conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(UserMock) })));
+    });
+    payment.associateUser(new Event('testEvent'));
+    expect(shoppingCartService.getUserMobile()).toBe(666000002);
+  }));
 
   it(`Should disassociate an User when 'disassociateUser()' method is called`, inject([MockBackend, ShoppingCartService], (mockBackend: MockBackend, shoppingCartService: ShoppingCartService) => {
     payment.disassociateUser();
