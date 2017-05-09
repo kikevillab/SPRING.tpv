@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.client.HttpClientErrorException;
 
 import wrappers.UserDetailsWrapper;
+import wrappers.UserUpdateWrapper;
 import wrappers.UserWrapper;
 
 public class UserResourceFunctionalTesting {
@@ -116,6 +117,23 @@ public class UserResourceFunctionalTesting {
         String token = new RestService().loginAdmin();
         List<UserDetailsWrapper> users = Arrays.asList(new RestBuilder<UserDetailsWrapper[]>(RestService.URL).path(Uris.USERS).basicAuth(token, "").clazz(UserDetailsWrapper[].class).get().build());
         assertFalse(users.isEmpty());
+    }
+    
+    @Test
+    public void testUpdateUserWithNonExistentUser(){
+        thrown.expect(new HttpMatcher(HttpStatus.NOT_FOUND));
+        String token = new RestService().loginAdmin();
+        UserUpdateWrapper userWrapper = new UserUpdateWrapper();
+        userWrapper.setId(0);
+        userWrapper.setAddress("address");
+        userWrapper.setDni("123456789");
+        userWrapper.setEmail("test@test.com");
+        userWrapper.setMobile(123456789);
+        userWrapper.setUsername("username");
+        userWrapper.setPassword("pass");
+        new RestBuilder<Object>(RestService.URL)
+        .path(Uris.USERS).body(userWrapper).basicAuth(token, "").clazz(Object.class)
+        .put().build();
     }
     
     @After

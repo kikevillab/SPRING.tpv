@@ -43,18 +43,21 @@ public class UserController {
         }
     }
 
-    public boolean userMobileExists(long userMobile) {
-        User user = userDao.findByMobile(userMobile);
-        return user != null;
+    public boolean userExists(long userMobile) {
+        return userExists(userDao.findByMobile(userMobile));
     }
     
     public boolean userExists(int id){
-        return userDao.findOne(id) != null;
+        return userExists(userDao.findOne(id));
+    }
+    
+    private boolean userExists(User user){
+        return user != null;
     }
 
     public boolean userIsValid(User user) {
         boolean valid = true;
-        if (user == null) {
+        if (!userExists(user)) {
             valid = false;
         } else {
             if (user.getAddress() == null || user.getDni() == null || user.getEmail() == null) {

@@ -55,7 +55,7 @@ public class UserResource {
     
     @RequestMapping(value = Uris.USERS + Uris.PHONE, method = RequestMethod.GET)
     public UserDetailsWrapper findUserByMobilePhone(@PathVariable long mobilePhone) throws NotFoundUserMobileException{
-        if(!userController.userMobileExists(mobilePhone)){
+        if(!userController.userExists(mobilePhone)){
             throw new NotFoundUserMobileException();
         }
         return userController.findUserByMobilePhone(mobilePhone);
