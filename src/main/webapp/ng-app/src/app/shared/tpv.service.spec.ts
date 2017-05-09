@@ -3,7 +3,7 @@ import { HttpModule, Http, Response, ResponseOptions, XHRBackend } from '@angula
 import { MockBackend } from '@angular/http/testing';
 
 import { TPVService } from './tpv.service';
-import { TPV_API_URL } from '../app.config';
+import { API_GENERIC_URI } from '../app.config';
 
 describe('Service: TPVService', () => {
 
@@ -11,7 +11,7 @@ describe('Service: TPVService', () => {
 		TestBed.configureTestingModule({
 			imports: [HttpModule],
 			providers: [
-			{ provide: TPV_API_URL, useValue: 'http://fakeurl.com' },
+			{ provide: API_GENERIC_URI, useValue: 'http://fakeurl.com' },
 			TPVService,
 			{ provide: XHRBackend, useClass: MockBackend },
 			MockBackend

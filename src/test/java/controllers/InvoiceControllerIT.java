@@ -17,6 +17,7 @@ import daos.core.TicketDao;
 import entities.core.Invoice;
 import entities.core.InvoicePK;
 import entities.core.Ticket;
+import entities.core.TicketPK;
 import wrappers.InvoiceWrapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -39,7 +40,7 @@ public class InvoiceControllerIT {
     
     @Test
     public void testCreateInvoiceWithAtLeastOneInvoiceThisYear() {
-        Ticket ticket = ticketDao.findOne(2L);
+        Ticket ticket = ticketDao.findOne(new TicketPK(2L));
         Invoice latestInvoice = invoiceDao.findFirstByOrderByCreatedDescIdDesc();
         InvoiceWrapper invoice = invoiceController.createInvoice(ticket);
         assertNotNull(invoice);

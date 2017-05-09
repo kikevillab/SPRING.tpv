@@ -2,6 +2,7 @@ package daos.core;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,6 +12,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import config.PersistenceConfig;
 import config.TestsPersistenceConfig;
+import entities.core.Invoice;
+import entities.core.Ticket;
+import entities.core.TicketPK;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {PersistenceConfig.class, TestsPersistenceConfig.class})
@@ -24,8 +28,8 @@ public class InvoiceDaoIT {
     private TicketDao ticketDao;
     
     @Test
-    public void testCreate() {
-        assertEquals(2, invoiceDao.count());
+    public void testCount() {
+        assertTrue(invoiceDao.count() >= 2);
     }
     
     @Test
@@ -35,7 +39,11 @@ public class InvoiceDaoIT {
     
     @Test
     public void testFindByTicket(){       
-        assertNotNull(invoiceDao.findByTicket(ticketDao.findOne(3L)));
+        Ticket ticket =  ticketDao.findOne(new TicketPK(3L));
+        System.out.println("TICKET: " + ticket);
+        Invoice invoice = invoiceDao.findByTicket(ticket);
+        System.out.println("INVOICE: " +invoice);
+        assertNotNull(invoice);
     }
 
 }

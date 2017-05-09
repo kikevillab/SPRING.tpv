@@ -23,6 +23,7 @@ import daos.core.TicketDao;
 import entities.core.Shopping;
 import entities.core.ShoppingState;
 import entities.core.Ticket;
+import entities.core.TicketPK;
 import wrappers.ShoppingCreationWrapper;
 import wrappers.ShoppingTrackingWrapper;
 import wrappers.TicketCreationWrapper;
@@ -147,13 +148,13 @@ public class TicketControllerIT {
     
     @Test
     public void testTicketIsAssignedToInvoice(){
-        Ticket ticketAssignedToAnInvoice = ticketDao.findOne(3L);     
+        Ticket ticketAssignedToAnInvoice = ticketDao.findOne(new TicketPK(3L));     
         assertTrue(ticketController.ticketIsAlreadyAssignedToInvoice(ticketAssignedToAnInvoice));
     }
     
     @Test
     public void testTicketIsNotAssignedToInvoice(){
-        Ticket ticketNotAssignedToAnInvoice = ticketDao.findOne(1L);     
+        Ticket ticketNotAssignedToAnInvoice = ticketDao.findOne(new TicketPK(1L));     
         assertFalse(ticketController.ticketIsAlreadyAssignedToInvoice(ticketNotAssignedToAnInvoice));
     }
 

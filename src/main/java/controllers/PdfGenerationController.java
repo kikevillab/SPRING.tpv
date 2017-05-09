@@ -10,6 +10,7 @@ import daos.core.TicketDao;
 import entities.core.Invoice;
 import entities.core.InvoicePK;
 import entities.core.Ticket;
+import entities.core.TicketPK;
 import services.PdfGenerationService;
 
 @Controller
@@ -42,12 +43,12 @@ public class PdfGenerationController {
     }
     
     public void generateTicketPdf(long ticketId) throws FileNotFoundException {
-        Ticket ticket = ticketDao.findOne(ticketId);
+        Ticket ticket = ticketDao.findOne(new TicketPK(ticketId));
         pdfGenService.generateTicketPdf(ticket);
     }
     
     public boolean ticketExists(long ticketId){
-        return ticketDao.findOne(ticketId) != null;
+        return ticketDao.findOne(new TicketPK(ticketId)) != null;
     }
     
     public boolean invoiceExists(int invoiceId){

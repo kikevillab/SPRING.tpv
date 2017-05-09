@@ -11,6 +11,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -21,11 +22,13 @@ import entities.users.Encrypting;
 import entities.users.User;
 
 @Entity
+@IdClass(TicketPK.class)
 public class Ticket {
 
     @Id
     private long id;
 
+    @Id
     @Temporal(TemporalType.DATE)
     private Calendar created;
 

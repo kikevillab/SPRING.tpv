@@ -16,6 +16,7 @@ import entities.core.Product;
 import entities.core.Shopping;
 import entities.core.ShoppingState;
 import entities.core.Ticket;
+import entities.core.TicketPK;
 import entities.users.User;
 import wrappers.ShoppingCreationWrapper;
 import wrappers.ShoppingTrackingWrapper;
@@ -78,7 +79,7 @@ public class TicketController {
     }
 
     private long getNextId() {
-        long nextId = 0;
+        long nextId = 1;
         Ticket ticket = ticketDao.findFirstByOrderByCreatedDescIdDesc();
 
         if (ticket != null) {
@@ -112,7 +113,7 @@ public class TicketController {
     }
 
     public Ticket findOneTicket(TicketIdWrapper ticketIdWrapper) {
-        return ticketDao.findOne(ticketIdWrapper.getId());
+        return ticketDao.findOne(new TicketPK(ticketIdWrapper.getId()));
     }
 
     public boolean ticketIsAlreadyAssignedToInvoice(Ticket ticket) {

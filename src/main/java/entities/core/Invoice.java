@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -23,7 +24,10 @@ public class Invoice {
     private Calendar created;
 
     @OneToOne
-    @JoinColumn
+    @JoinColumns({
+        @JoinColumn(name = "ticket_id", referencedColumnName = "id"),
+        @JoinColumn(name = "ticket_created", referencedColumnName = "created")
+      })
     private Ticket ticket;
 
     public Invoice() {
