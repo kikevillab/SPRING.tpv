@@ -1,6 +1,7 @@
 package api;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -8,8 +9,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import api.exceptions.AlreadyExistUserFieldException;
 import api.exceptions.InvalidUserFieldException;
+import api.exceptions.NotFoundUserMobileException;
 import controllers.UserController;
 import entities.users.Role;
+import wrappers.UserDetailsWrapper;
 import wrappers.UserWrapper;
 
 @RestController
@@ -44,6 +47,14 @@ public class UserResource {
         if (field == null || field.isEmpty()) {
             throw new InvalidUserFieldException(msg);
         }
+    }
+    
+    @RequestMapping(value = Uris.USERS + Uris.PHONE, method = RequestMethod.GET)
+    public UserDetailsWrapper findUserByMobilePhone(@PathVariable long mobilePhone) throws NotFoundUserMobileException{
+        if(!userController.userMobileExists(mobilePhone)){
+            throw new NotFoundUserMobileException();
+        }
+        return userController.findUserByMobilePhone(mobilePhone);
     }
 
 }
