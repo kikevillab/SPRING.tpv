@@ -77,6 +77,10 @@ public class Voucher {
         assert dateOfUse == null;
         dateOfUse = Calendar.getInstance();
     }
+    
+    public boolean isConsumed(){
+        return dateOfUse != null;
+    }
 
     @Override
     public int hashCode() {

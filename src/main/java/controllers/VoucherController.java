@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 
 import daos.core.VoucherDao;
 import entities.core.Voucher;
+import wrappers.VoucherConsumptionWrapper;
 import wrappers.VoucherCreationWrapper;
 
 @Controller
@@ -28,4 +29,20 @@ public class VoucherController {
         return voucherDao.findAll();
     }
 
+    public boolean voucherExists(int id) {     
+        return voucherDao.exists(id);
+    }
+    
+    public boolean isVoucherConsumed(int id){
+        Voucher voucher = voucherDao.findOne(id);
+        return voucher.isConsumed();
+    }
+
+    public void consumeVoucher(VoucherConsumptionWrapper voucherConsumptionWrapper) {
+        Voucher voucher = voucherDao.findOne(voucherConsumptionWrapper.getId());
+        voucher.consume();
+        voucherDao.save(voucher);
+    }
+
+    
 }

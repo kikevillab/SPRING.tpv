@@ -8,8 +8,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import api.exceptions.VoucherAlreadyConsumedException;
+import api.exceptions.VoucherNotFoundException;
 import controllers.VoucherController;
 import entities.core.Voucher;
+import wrappers.VoucherConsumptionWrapper;
 import wrappers.VoucherCreationWrapper;
 
 @RestController
@@ -31,5 +34,16 @@ public class VoucherResource {
     @RequestMapping(method = RequestMethod.GET)
     public List<Voucher> findAllVouchers(){
         return voucherController.findAllVouchers();
+    }
+    
+    @RequestMapping(method = RequestMethod.PUT)
+    public void consumeVoucher(@RequestBody VoucherConsumptionWrapper voucherConsumptionWrapper) throws VoucherNotFoundException, VoucherAlreadyConsumedException{
+        if(!voucherController.voucherExists(voucherConsumptionWrapper.getId())){
+            throw new VoucherNotFoundException("Id: " + voucherConsumptionWrapper.getId());
+        }
+        if(voucherController.isVoucherConsumed(voucherConsumptionWrapper.getId())){
+            throw new VoucherAlreadyConsumedException("Id: " + voucherConsumptionWrapper.getId());
+        }
+        voucherController.consumeVoucher(voucherConsumptionWrapper);
     }
 }
