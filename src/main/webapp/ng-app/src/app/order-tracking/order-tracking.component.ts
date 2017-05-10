@@ -5,6 +5,8 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ProductState } from './product-state';
 import { OrderTrackingService } from './order-tracking.service';
 
+import { TPVHTTPError } from '../shared/tpv-http-error';
+
 @Component({
     selector: 'order-tracking-view',
     templateUrl: './order-tracking.component.html',
@@ -46,7 +48,7 @@ export class OrderTrackingComponent {
        this.orderTrackingService.getTicket(this.ticketReference).then((products:ProductState[]) => {
            this.products = products;
            this.loading = false;
-       }).catch(error => {
+       }).catch((error:TPVHTTPError) => {
            this.error = true;
            this.loading = false;
        }); 

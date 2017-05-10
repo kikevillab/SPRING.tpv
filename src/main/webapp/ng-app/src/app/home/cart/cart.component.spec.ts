@@ -19,7 +19,7 @@ import { DateComponent } from '../../shared/date.component';
 import { ToastService } from '../../shared/toast.service';
 import { ShoppingCartService } from '../shared/shopping-cart.service';
 import { LocalStorageService } from '../../shared/local-storage.service';
-import { TPVService } from '../../shared/tpv.service';
+import { HTTPService } from '../../shared/http.service';
 
 
 export const MockProduct = {
@@ -48,7 +48,7 @@ describe('Component: CartComponent', () => {
       ToastService,
       ShoppingCartService,
       LocalStorageService,
-      TPVService, 
+      HTTPService, 
       MockBackend,
       BaseRequestOptions,
       {

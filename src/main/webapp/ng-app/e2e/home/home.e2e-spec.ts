@@ -22,7 +22,7 @@ describe('Page: Home', () => {
 		expect(page.getPageTitleText()).toEqual('Products');
 	});
 
-	it('should display the product with CODE1 when submitted', () => {
+	it(`should display the product with code 'article0' when submitted`, () => {
 		page.clickCartButton();
 		let totalPriceBefore = cartView.getTotalValueText();
 		cartView.submitProductCode('article0');
