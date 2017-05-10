@@ -9,6 +9,7 @@ import java.util.List;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.springframework.http.HttpStatus;
 
 import entities.core.Voucher;
 import wrappers.VoucherCreationWrapper;
@@ -31,5 +32,12 @@ public class VoucherResourceFunctionalTesting {
         List<Voucher> vouchers = Arrays.asList(
                 new RestBuilder<Voucher[]>(RestService.URL).path(Uris.VOUCHERS).basicAuth(token, "").clazz(Voucher[].class).get().build());
         assertNotNull(vouchers);
+    }
+    
+    @Test
+    public void consumeVoucherWithNonExistentVoucher(){
+        thrown.expect(new HttpMatcher(HttpStatus.NOT_FOUND));
+        String token = new RestService().loginAdmin();
+        new RestBuilder<Object>(RestService.URL).path(Uris.VOUCHERS).basicAuth(token, "").clazz(Object.class).put().build();
     }
 }
