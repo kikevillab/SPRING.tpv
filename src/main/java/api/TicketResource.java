@@ -113,7 +113,7 @@ public class TicketResource {
         return new TicketReferenceWrapper(ticket.getReference());
     }
 
-    @RequestMapping(value = Uris.REFERENCE, method = RequestMethod.PUT)
+    @RequestMapping(value = Uris.REFERENCE, method = RequestMethod.PATCH)
     public TicketReferenceWrapper updateTicket(@PathVariable String reference,
             @RequestBody List<ShoppingUpdateWrapper> shoppingUpdateWrapperList) throws NotFoundTicketReferenceException,
             NotFoundProductCodeInTicketException, InvalidProductAmountInUpdateTicketException, NotEnoughStockException {
