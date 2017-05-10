@@ -30,7 +30,7 @@ public class VoucherControllerIT {
     public void testCreateVoucher(){
         long previousCount = voucherDao.count();
         VoucherCreationWrapper voucherCreationWrapper = new VoucherCreationWrapper();
-        voucherCreationWrapper.setValue(new BigDecimal(25.6));
+        voucherCreationWrapper.setValue(new BigDecimal(25.7));
         voucherController.createVoucher(voucherCreationWrapper);
         assertEquals(previousCount + 1, voucherDao.count());
     }
