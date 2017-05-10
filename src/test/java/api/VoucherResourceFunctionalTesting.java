@@ -43,4 +43,9 @@ public class VoucherResourceFunctionalTesting {
         voucher.setId(0);
         new RestBuilder<Object>(RestService.URL).path(Uris.VOUCHERS).body(voucher).basicAuth(token, "").clazz(Object.class).put().build();
     }
+    
+    @Test
+    public void consumeVoucherWithNonActiveVoucher(){
+        
+    }
 }
