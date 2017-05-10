@@ -2,7 +2,7 @@ import { Component, OnDestroy, NgModule } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { MdDialog } from '@angular/material';
 
-import { TPVService } from '../../shared/tpv.service';
+import { HTTPService } from '../../shared/http.service';
 import { ToastService } from '../../shared/toast.service';
 
 @Component({
@@ -16,7 +16,7 @@ import { ToastService } from '../../shared/toast.service';
 export class SearchComponent {
 
 
-  constructor (private toastService: ToastService, private tpvService: TPVService){
+  constructor (private toastService: ToastService, private httpService: HTTPService){
 
   }
 

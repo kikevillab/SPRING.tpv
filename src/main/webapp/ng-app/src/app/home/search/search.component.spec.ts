@@ -17,7 +17,7 @@ import { SearchComponent } from './search.component';
 import { ToastService } from '../../shared/toast.service';
 import { ShoppingCartService } from '../shared/shopping-cart.service';
 import { LocalStorageService } from '../../shared/local-storage.service';
-import { TPVService } from '../../shared/tpv.service';
+import { HTTPService } from '../../shared/http.service';
 
 
 describe('Component: SearchComponent', () => {
@@ -33,7 +33,7 @@ describe('Component: SearchComponent', () => {
       ToastService,
       ShoppingCartService,
       LocalStorageService,
-      TPVService, 
+      HTTPService, 
       MockBackend,
       BaseRequestOptions,
       {

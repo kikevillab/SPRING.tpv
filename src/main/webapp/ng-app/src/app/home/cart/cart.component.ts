@@ -6,8 +6,9 @@ import { MdDialog, MdSidenav } from '@angular/material';
 import { CartProduct } from '../shared/cart-product';
 
 import { ShoppingCartService } from '../shared/shopping-cart.service';
-import { TPVService } from '../../shared/tpv.service';
 import { ToastService } from '../../shared/toast.service';
+
+import { TPVHTTPError } from '../../shared/tpv-http-error';
 
 @Component({
   selector: 'cart-view',
@@ -61,8 +62,8 @@ export class CartComponent implements OnDestroy {
   	event.preventDefault();
   	this.shoppingCartService.addProduct(this.codeInput).then(()=>{
      
-    }).catch(error =>{
-      this.toastService.error('Invalid code', 'The given product code is invalid');
+    }).catch((error:TPVHTTPError) =>{
+      this.toastService.error('Invalid code', error.description);
     });
     this.codeInput = '';
   }

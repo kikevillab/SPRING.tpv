@@ -12,7 +12,7 @@ import { ToastyModule } from 'ng2-toasty';
 import { PaymentComponent } from './payment.component';
 import { CashPaymentComponent, ChangeDialog } from './cash-payment.component';
 
-import { TPVService } from '../../shared/tpv.service';
+import { HTTPService } from '../../shared/http.service';
 import { LocalStorageService } from '../../shared/local-storage.service';
 import { ToastService } from '../../shared/toast.service';
 import { ShoppingCartService } from '../shared/shopping-cart.service';
@@ -30,7 +30,7 @@ import { ShoppingCartService } from '../shared/shopping-cart.service';
   ToastyModule
   ],
   declarations: [ PaymentComponent, CashPaymentComponent, ChangeDialog ],
-  providers: [TPVService, LocalStorageService, ToastService, ShoppingCartService],
+  providers: [HTTPService, LocalStorageService, ToastService, ShoppingCartService],
   entryComponents: [CashPaymentComponent, ChangeDialog]
 })
 export class PaymentModule { }

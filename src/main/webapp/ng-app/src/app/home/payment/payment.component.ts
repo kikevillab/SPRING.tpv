@@ -10,6 +10,7 @@ import { CashPaymentComponent } from './cash-payment.component';
 
 import { ShoppingCartService } from '../shared/shopping-cart.service';
 import { ToastService } from '../../shared/toast.service';
+import { TPVHTTPError } from '../../shared/tpv-http-error';
 
 @Component({
   selector: 'payment-view',
@@ -60,8 +61,8 @@ export class PaymentComponent {
     this.shoppingCartService.submitOrder().then(ticketCreated =>{
       this.router.navigate(['/home']);
       this.toastService.success('Checkout done', `Ticket created with reference ${ticketCreated.ticketReference}`);
-    }).catch(error =>{
-      this.toastService.error('Error in checkout', 'Error creating ticket');
+    }).catch((error:TPVHTTPError) =>{
+      this.toastService.error('Error in checkout', error.description);
     });
   }
 
@@ -80,8 +81,8 @@ export class PaymentComponent {
       this.mobileNumberInput = null;
       this.userAssociated = userAssociated;
       this.toastService.success('Client asociated', `The client with the mobile ${userAssociated.mobile} has been associated`);
-    }).catch(error =>{
-      this.toastService.error('Error', 'Error associating the client');
+    }).catch((error:TPVHTTPError) =>{
+      this.toastService.error('Error', error.description);
     });
   }
 

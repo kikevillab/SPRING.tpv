@@ -18,7 +18,7 @@ import { User } from '../shared/user';
 import { ToastService } from '../../shared/toast.service';
 import { ShoppingCartService } from '../shared/shopping-cart.service';
 import { LocalStorageService } from '../../shared/local-storage.service';
-import { TPVService } from '../../shared/tpv.service';
+import { HTTPService } from '../../shared/http.service';
 
 
 export const UserMock = {
@@ -43,7 +43,7 @@ describe('Component: PaymentComponent', () => {
       LocalStorageService,
       MockBackend,
       BaseRequestOptions,
-      TPVService, 
+      HTTPService, 
       {
         provide: Http,
         useFactory: (backend, options) => new Http(backend, options),

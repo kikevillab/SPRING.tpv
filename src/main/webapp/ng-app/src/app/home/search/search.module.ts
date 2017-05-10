@@ -11,7 +11,7 @@ import { ToastyModule } from 'ng2-toasty';
 
 import { SearchComponent } from './search.component';
 
-import { TPVService } from '../../shared/tpv.service';
+import { HTTPService } from '../../shared/http.service';
 import { LocalStorageService } from '../../shared/local-storage.service';
 import { ToastService } from '../../shared/toast.service';
 import { ShoppingCartService } from '../shared/shopping-cart.service';
@@ -29,6 +29,6 @@ import { ShoppingCartService } from '../shared/shopping-cart.service';
   ToastyModule
   ],
   declarations: [ SearchComponent ],
-  providers: [TPVService, LocalStorageService, ToastService, ShoppingCartService]
+  providers: [HTTPService, LocalStorageService, ToastService, ShoppingCartService]
 })
 export class SearchModule { }

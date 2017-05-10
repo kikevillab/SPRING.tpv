@@ -8,7 +8,7 @@ import { CartProduct } from './cart-product';
 
 import { ShoppingCartService } from './shopping-cart.service';
 import { LocalStorageService } from '../../shared/local-storage.service';
-import { TPVService } from '../../shared/tpv.service';
+import { HTTPService } from '../../shared/http.service';
 
 export const MockProduct = {
   id: 0,
@@ -49,7 +49,7 @@ describe('Service: ShoppingCartService', () => {
       LocalStorageService,
       MockBackend,
       BaseRequestOptions,
-      TPVService,
+      HTTPService,
       {
         provide: Http,
         useFactory: (backend, options) => new Http(backend, options),
