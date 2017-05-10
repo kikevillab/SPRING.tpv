@@ -1,5 +1,7 @@
 package controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -20,6 +22,10 @@ public class VoucherController {
     public void createVoucher(VoucherCreationWrapper voucherCreationWrapper) {
         Voucher voucher = new Voucher(voucherCreationWrapper.getValue());
         voucherDao.save(voucher);
+    }
+
+    public List<Voucher> findAllVouchers() {
+        return voucherDao.findAll();
     }
 
 }
