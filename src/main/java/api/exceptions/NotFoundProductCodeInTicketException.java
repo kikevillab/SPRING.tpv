@@ -4,7 +4,7 @@ public class NotFoundProductCodeInTicketException extends ApiException {
 
     private static final long serialVersionUID = 8019654584133930287L;
 
-    public static final String DESCRIPTION = "El código de producto no se ha encontrado en el ticket";
+    public static final String DESCRIPTION = "Product code not found in ticket";
 
     public static final int CODE = 14;
 
