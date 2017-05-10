@@ -3,7 +3,7 @@ package api.exceptions;
 public class MalformedDateException extends ApiException {
     private static final long serialVersionUID = 5296507526454478261L;
 
-    public static final String DESCRIPTION = "Fecha enviada en formato incorrecto";
+    public static final String DESCRIPTION = "Wrong format in sent date";
 
     public static final int CODE = 16;
 
