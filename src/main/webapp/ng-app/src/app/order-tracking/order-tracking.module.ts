@@ -3,6 +3,7 @@ import {HttpModule} from '@angular/http';
 import {CommonModule} from '@angular/common';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { MaterialModule } from '@angular/material';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
@@ -21,6 +22,7 @@ import {HTTPService} from '../shared/http.service';
         OrderTrackingRoutingModule,
         HttpModule,
         MaterialModule,
+        FlexLayoutModule,
         BrowserAnimationsModule,
         NgxDatatableModule
     ],

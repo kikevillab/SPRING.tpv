@@ -116,6 +116,7 @@ export class ShoppingCartService {
     this.totalPrice = 0.00;
     this.cartProducts.forEach(cartProduct =>{
       this.totalPrice += (cartProduct.amount*cartProduct.retailPrice)-(cartProduct.amount*cartProduct.retailPrice*cartProduct.discount/100);
+      this.totalPrice = Math.round(this.totalPrice*100)/100;
     });
     this.cartProductsSubject.next(this.cartProducts);
   }

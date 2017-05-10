@@ -48,12 +48,14 @@ export class CashPaymentComponent {
 
   addQuantity(quantity:number):void {
     this.moneyQuantitiesCharged[quantity.toString()]++;
-    this.moneyCharged=Number((this.moneyCharged+quantity).toFixed(2));
+    let total = this.moneyCharged + quantity;
+    this.moneyCharged=Math.round(total*100)/100;
   }
 
   removeQuantity(quantity:number):void {
     this.moneyQuantitiesCharged[quantity.toString()]--;
-    this.moneyCharged=Number((this.moneyCharged-quantity).toFixed(2));
+    let total = this.moneyCharged - quantity;
+    this.moneyCharged=Math.round(total*100)/100;
   }
 
   finishPayment():void {

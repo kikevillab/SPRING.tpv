@@ -14,6 +14,7 @@
 				<b>Reference</b>: {{ticketReference}}
 				<p>Number of products: {{products.length}}</p>
 				<ngx-datatable
+				fxHide.xs
 				class="material"
 				[messages]="{emptyMessage: 'No products in the ticket'}"
 				[rowHeight]="'auto'"
@@ -40,15 +41,32 @@
 						</ng-template>
 					</ngx-datatable-column>
 				</ngx-datatable>
+				<div fxHide fxShow.xs *ngIf="products.length>0; else notFound">
+					<md-list *ngFor="let product of products">
+					    <md-list-item>
+					    <md-icon md-list-icon>shopping_basket</md-icon>
+					      <h4 md-line> 
+					        {{product.description}}
+					      </h4>
+					      <p md-line>
+					        <b *ngIf="product.shoppingState=='CLOSED'; else notClosedMobile" class="green">{{product.shoppingState}}</b>
+							<ng-template #notClosedMobile>
+								<b>{{product.shoppingState}}</b>
+							</ng-template>
+					      </p>
+					      </md-list-item>
+					      <md-divider></md-divider>
+					</md-list>
+				</div>
+				<ng-template #notFound>
+					<h3 class="red">
+						<button md-icon-button>
+							<md-icon>warning</md-icon>
+						</button>
+						We're sorry, there is no ticket with the reference '{{ticketReference}}'
+					</h3>
+				</ng-template>
 			</div>
-			<ng-template #notFound>
-				<h3 class="red">
-					<button md-icon-button>
-						<md-icon>warning</md-icon>
-					</button>
-					We're sorry, there is no ticket with the reference '{{ticketReference}}'
-				</h3>
-			</ng-template>
 		</md-card-content>
 		<ng-template #spinner>
 			<md-spinner></md-spinner>

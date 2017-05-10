@@ -1,8 +1,9 @@
-import { Component, OnDestroy, NgModule, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { MdDialog, MdSidenav } from '@angular/material';
 
+import { CalculatorComponent } from './calculator/calculator.component';
 import { CartProduct } from '../shared/cart-product';
 
 import { ShoppingCartService } from '../shared/shopping-cart.service';
@@ -14,10 +15,17 @@ import { TPVHTTPError } from '../../shared/tpv-http-error';
   selector: 'cart-view',
   templateUrl: './cart.component.html',
   styles: [`
+  #mobileMenuButton {
+    position:absolute;
+    top:0px;
+    left:0px;
+  }
+  @media only screen and (min-width: 480px) {
     #paddingContainer {
       padding:10em;
       padding-top:0em;
     }
+   }
     #clearCartButton, #openCalculatorButton {
       margin-left:0.4em;
       float:right;
@@ -39,7 +47,7 @@ export class CartComponent implements OnDestroy {
   @Output() closeSidenavEvent:EventEmitter<boolean>=new EventEmitter();
 
   codeInput:string = '';
-  totalPrice:string = this.shoppingCartService.getTotalPrice().toFixed(2);
+  totalPrice:number = this.shoppingCartService.getTotalPrice();
   cartProducts: CartProduct[] = this.shoppingCartService.getCartProducts();
   subscription: Subscription;
   columns = [
@@ -54,7 +62,7 @@ export class CartComponent implements OnDestroy {
   constructor (private shoppingCartService: ShoppingCartService, private toastService: ToastService, private router: Router, public dialog: MdDialog){
     this.subscription = this.shoppingCartService.getCartProductsObservable().subscribe((cartProducts:CartProduct[]) => {
       this.cartProducts = cartProducts;
-      this.totalPrice = this.shoppingCartService.getTotalPrice().toFixed(2);
+      this.totalPrice = this.shoppingCartService.getTotalPrice();
     });
   }
 
@@ -103,13 +111,20 @@ export class CartComponent implements OnDestroy {
   }
 
   openCalculator(){
-    this.dialog.open(CalculatorDialog);
+    this.dialog.open(CalculatorComponent);
+  }
+
+  calculateProductTotal(cartProduct:CartProduct){
+    let total = cartProduct.retailPrice * cartProduct.amount * (1 - (cartProduct.discount/100));
+    return Math.round(total*100)/100;
+  }
+
+  roundDiscount(discount:number){
+    return Math.round(discount*100)/100;
+  }
+
+  close(){
+    this.closeSidenavEvent.emit(true);
   }
 
 }
-
-@Component({
-  selector: 'calculator-dialog',
-  template: `<calculator-view></calculator-view>`
-})
-export class CalculatorDialog {}

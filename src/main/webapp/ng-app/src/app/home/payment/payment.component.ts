@@ -45,7 +45,7 @@ export class PaymentComponent {
   
   constructor (private shoppingCartService: ShoppingCartService, private toastService: ToastService, public dialog: MdDialog, private router:Router){
     this.subscription = this.shoppingCartService.getCartProductsObservable().subscribe((cartProducts:CartProduct[]) => {
-      this.totalPrice = Number(this.shoppingCartService.getTotalPrice().toFixed(2));
+      this.totalPrice = this.shoppingCartService.getTotalPrice();
     });
   }
 

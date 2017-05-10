@@ -9,7 +9,6 @@ import { MaterialModule } from '@angular/material';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ToastyModule } from 'ng2-toasty';
 
-import { CalculatorDialog } from './cart.component';
 import { CalculatorComponent } from './calculator/calculator.component';
 
 import { HTTPService } from '../../shared/http.service';
@@ -29,8 +28,8 @@ import { ShoppingCartService } from '../shared/shopping-cart.service';
   NgxDatatableModule,
   ToastyModule
   ],
-  declarations: [ CalculatorComponent, CalculatorDialog ],
+  declarations: [ CalculatorComponent ],
   providers: [HTTPService, LocalStorageService, ToastService, ShoppingCartService],
-  entryComponents: [CalculatorDialog]
+  entryComponents: [CalculatorComponent]
 })
 export class CartModule { }

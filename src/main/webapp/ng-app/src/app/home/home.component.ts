@@ -12,8 +12,16 @@ import { ToastService } from '../shared/toast.service';
 	selector: 'home-view',
 	templateUrl: './home.component.html',
 	styles: [`
-		md-sidenav {
-			width: 50em;
+		@media only screen and (min-width: 768px) {
+			md-sidenav {
+				width: 45em;
+			}
+		}
+
+		@media only screen and (min-width: 1024px) {
+			md-sidenav {
+				width: 50em;
+			}
 		}
 	`]
 })
