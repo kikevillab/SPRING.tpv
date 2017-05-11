@@ -24,6 +24,8 @@ public class Voucher {
 
     private Calendar created;
 
+    private Calendar expiration;
+
     private Calendar dateOfUse;
 
     public Voucher() {
@@ -31,9 +33,14 @@ public class Voucher {
         dateOfUse = null;
     }
 
-    public Voucher(BigDecimal value) {
+    public Voucher(BigDecimal value, Calendar expiration) {
         this();
         setValue(value);
+        setExpiration(expiration);
+    }
+
+    private void setExpiration(Calendar expiration) {
+        this.expiration = expiration;
     }
 
     public int getId() {
@@ -52,7 +59,7 @@ public class Voucher {
         this.value = value;
         updateReference();
     }
-    
+
     private void updateReference() {
         reference = new Encrypting().encryptInBase64UrlSafe("" + value + Long.toString(new Date().getTime()));
     }
@@ -63,6 +70,10 @@ public class Voucher {
 
     public Calendar getDateOfUse() {
         return dateOfUse;
+    }
+
+    public Calendar getExpiration() {
+        return expiration;
     }
 
     public void setDateOfUse(Calendar dateOfUse) {
@@ -77,8 +88,8 @@ public class Voucher {
         assert dateOfUse == null;
         dateOfUse = Calendar.getInstance();
     }
-    
-    public boolean isConsumed(){
+
+    public boolean isConsumed() {
         return dateOfUse != null;
     }
 
