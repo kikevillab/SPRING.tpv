@@ -20,6 +20,10 @@ public class ArticleController {
         Article article = articleDao.findFirstByCode(articleCode);
         return article != null;
     }
+    
+    public Article getArticleByCode(String articleCode) {
+        return articleDao.findFirstByCode(articleCode);
+    }
 
     public boolean hasEnoughStock(String articleCode, int amount) {
         Article article = articleDao.findFirstByCode(articleCode);

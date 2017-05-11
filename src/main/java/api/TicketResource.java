@@ -27,6 +27,8 @@ import controllers.ArticleController;
 import controllers.ProductController;
 import controllers.TicketController;
 import controllers.UserController;
+import entities.core.Article;
+import entities.core.Product;
 import entities.core.Shopping;
 import entities.core.Ticket;
 import wrappers.DayTicketWrapper;
@@ -94,16 +96,21 @@ public class TicketResource {
                 throw new NotFoundProductCodeException("Product code: " + productCode);
             }
             if (shoppingCreationWrapper.getAmount() <= 0) {
-                throw new InvalidProductAmountInNewTicketException("Product code: " + productCode);
+                Product product = productController.getProductByCode(productCode);
+                throw new InvalidProductAmountInNewTicketException(
+                        "Product: '" + product.getDescription() + "'. Product code: " + productCode);
             }
             if (shoppingCreationWrapper.getDiscount() < MIN_PRODUCT_DISCOUNT
                     || shoppingCreationWrapper.getDiscount() > MAX_PRODUCT_DISCOUNT) {
-                throw new InvalidProductDiscountException("Product code: " + productCode);
+                Product product = productController.getProductByCode(productCode);
+                throw new InvalidProductDiscountException("Product: '" + product.getDescription() + "'. Product code: " + productCode);
             }
             // If the product is an article, check if there is enough stock and update it
             if (articleController.articleCodeExists(productCode)) {
                 if (!articleController.hasEnoughStock(productCode, shoppingCreationWrapper.getAmount())) {
-                    throw new NotEnoughStockException("Article code: " + productCode);
+                    Article article = articleController.getArticleByCode(productCode);
+                    throw new NotEnoughStockException("Article: '" + article.getDescription() + "'. Current stock: " + article.getStock()
+                            + ". Article code: " + productCode);
                 }
                 articleController.consumeArticle(productCode, shoppingCreationWrapper.getAmount());
             }
@@ -136,14 +143,18 @@ public class TicketResource {
             }
 
             if (shoppingUpdateWrapper.getAmount() < 0) {
-                throw new InvalidProductAmountInUpdateTicketException("Product code: " + productCode);
+                Product product = productController.getProductByCode(productCode);
+                throw new InvalidProductAmountInUpdateTicketException(
+                        "Product: '" + product.getDescription() + "'. Product code: " + productCode);
             }
 
             // If the product is an article, check if there is enough stock and update it
             if (articleController.articleCodeExists(productCode)) {
                 int stockDifference = shoppingUpdateWrapper.getAmount() - shoppingInTicket.getAmount();
                 if (!articleController.hasEnoughStock(productCode, stockDifference)) {
-                    throw new NotEnoughStockException("Article code: " + productCode);
+                    Article article = articleController.getArticleByCode(productCode);
+                    throw new NotEnoughStockException("Article: '" + article.getDescription() + "'. Current stock: " + article.getStock()
+                            + ". Article code: " + productCode);
                 }
                 articleController.consumeArticle(productCode, stockDifference);
             }
@@ -160,7 +171,7 @@ public class TicketResource {
         }
         return new TicketWrapper(ticketController.getTicket(reference));
     }
-    
+
     @RequestMapping(value = Uris.DAY_TICKETS + Uris.DATE, method = RequestMethod.GET)
     public List<DayTicketWrapper> getWholeDayTickets(@PathVariable String date) throws MalformedDateException {
         String dateFormat = Constants.US_DATE_FORMAT;
