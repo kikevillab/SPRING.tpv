@@ -43,7 +43,7 @@ public class VoucherResource {
         if (!voucherController.voucherExists(voucherConsumptionWrapper.getId())) {
             throw new VoucherNotFoundException("Id: " + voucherConsumptionWrapper.getId());
         }
-        if (voucherController.voucherExpired(voucherConsumptionWrapper.getId())) {
+        if (voucherController.voucherHasExpired(voucherConsumptionWrapper.getId())) {
             throw new VoucherHasExpiredException("Id: " + voucherConsumptionWrapper.getId());
         }
         if (voucherController.isVoucherConsumed(voucherConsumptionWrapper.getId())) {

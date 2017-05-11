@@ -44,8 +44,8 @@ public class VoucherController {
         voucherDao.save(voucher);
     }
 
-    public boolean voucherExpired(int id) {
-        Voucher voucher = voucherDao.findOne(id);
+    public boolean voucherHasExpired(int id) {
+        //Voucher voucher = voucherDao.findOne(id);
         boolean hasExpired = true; 
         return hasExpired;
     }
