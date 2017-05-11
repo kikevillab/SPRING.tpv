@@ -39,10 +39,6 @@ public class Voucher {
         setExpiration(expiration);
     }
 
-    private void setExpiration(Calendar expiration) {
-        this.expiration = expiration;
-    }
-
     public int getId() {
         return id;
     }
@@ -70,6 +66,10 @@ public class Voucher {
 
     public Calendar getDateOfUse() {
         return dateOfUse;
+    }
+
+    public void setExpiration(Calendar expiration) {
+        this.expiration = expiration;
     }
 
     public Calendar getExpiration() {
