@@ -15,7 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import config.PersistenceConfig;
 import config.TestsControllerConfig;
 import config.TestsPersistenceConfig;
-import wrappers.ProductWrapper;
+import entities.core.Product;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {PersistenceConfig.class, TestsPersistenceConfig.class, TestsControllerConfig.class})
@@ -27,7 +27,7 @@ public class ProductControllerIT {
     @Test
     public void testGetProductByCode() {
         String productCode = "embroidery0";
-        ProductWrapper product = productController.getProductByCode(productCode);
+        Product product = productController.getProductByCode(productCode);
         assertNotNull(product);
         assertEquals(productCode, product.getCode());
     }
@@ -35,16 +35,16 @@ public class ProductControllerIT {
     @Test
     public void testGetNonexistentProductByCode() {
         String productCode = "justTesting-123";
-        ProductWrapper product = productController.getProductByCode(productCode);
+        Product product = productController.getProductByCode(productCode);
         assertNull(product);
     }
-    
+
     @Test
     public void testExistentProductCode() {
         String productCode = "embroidery0";
         assertTrue(productController.productCodeExists(productCode));
     }
-    
+
     @Test
     public void testNonexistentProductCode() {
         String productCode = "justTesting-123";
