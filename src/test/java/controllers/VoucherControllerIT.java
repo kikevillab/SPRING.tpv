@@ -3,6 +3,8 @@ package controllers;
 import static org.junit.Assert.assertEquals;
 
 import java.math.BigDecimal;
+import java.util.Calendar;
+import java.util.Random;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,17 +23,22 @@ import wrappers.VoucherCreationWrapper;
 public class VoucherControllerIT {
 
     @Autowired
-    VoucherController voucherController;
+    private VoucherController voucherController;
     
     @Autowired
-    VoucherDao voucherDao;
-    
+    private VoucherDao voucherDao;
+         
     @Test
     public void testCreateVoucher(){
         long previousCount = voucherDao.count();
         VoucherCreationWrapper voucherCreationWrapper = new VoucherCreationWrapper();
-        voucherCreationWrapper.setValue(new BigDecimal(25.7));
-        voucherController.createVoucher(voucherCreationWrapper);
+        voucherCreationWrapper.setValue(new BigDecimal(new Random().nextDouble()));
+        Calendar dayAfter = Calendar.getInstance();
+        dayAfter.add(Calendar.DAY_OF_MONTH, 1);
+        voucherCreationWrapper.setExpiration(dayAfter);
+        voucherController.createVoucher(voucherCreationWrapper);    
         assertEquals(previousCount + 1, voucherDao.count());
+        System.out.println(voucherDao.findAll());
+        voucherDao.deleteAll();
     }
 }

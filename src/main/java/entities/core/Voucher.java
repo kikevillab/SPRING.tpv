@@ -115,6 +115,7 @@ public class Voucher {
     @Override
     public String toString() {
         String createTime = new SimpleDateFormat("HH:00 dd-MMM-yyyy ").format(created.getTime());
+        String expirationTime = new SimpleDateFormat("HH:00 dd-MMM-yyyy ").format(expiration.getTime());
         String useTime;
         if (this.used()) {
             useTime = new SimpleDateFormat("HH:00 dd-MMM-yyyy ").format(dateOfUse.getTime());
@@ -122,7 +123,7 @@ public class Voucher {
             useTime = "---";
         }
         return "Voucher[" + id + ": reference=" + reference + ", value=" + value + ", created=" + createTime + ", dateOfUse=" + useTime
-                + "]";
+                + ", expiration=" + expirationTime + "]";
     }
 
 }

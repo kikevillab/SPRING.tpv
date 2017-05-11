@@ -1,5 +1,6 @@
 package controllers;
 
+import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class VoucherController {
     }
     
     public void createVoucher(VoucherCreationWrapper voucherCreationWrapper) {
-        Voucher voucher = new Voucher(voucherCreationWrapper.getValue());
+        Voucher voucher = new Voucher(voucherCreationWrapper.getValue(), voucherCreationWrapper.getExpiration());
         voucherDao.save(voucher);
     }
 
@@ -45,10 +46,9 @@ public class VoucherController {
     }
 
     public boolean voucherHasExpired(int id) {
-        //Voucher voucher = voucherDao.findOne(id);
-        boolean hasExpired = true; 
-        return hasExpired;
+        Voucher voucher = voucherDao.findOne(id);
+        Calendar today = Calendar.getInstance();
+        boolean todaysDateExceedsVouchersDate = today.after(voucher.getExpiration());
+        return todaysDateExceedsVouchersDate;
     }
-
-    
 }
