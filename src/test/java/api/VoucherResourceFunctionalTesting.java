@@ -4,7 +4,9 @@ import static org.junit.Assert.assertNotNull;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Random;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -23,7 +25,11 @@ public class VoucherResourceFunctionalTesting {
     public void testCreateVoucher() {
         String token = new RestService().loginAdmin();
         VoucherCreationWrapper voucherCreationWrapper = new VoucherCreationWrapper();
-        voucherCreationWrapper.setValue(new BigDecimal(25.6));
+        voucherCreationWrapper.setValue(new BigDecimal(new Random().nextDouble()));
+        Calendar monthAfter = Calendar.getInstance();
+        monthAfter.add(Calendar.MONTH, 1);
+        voucherCreationWrapper.setExpiration(monthAfter);
+        
         new RestBuilder<Object>(RestService.URL).path(Uris.VOUCHERS).body(voucherCreationWrapper).basicAuth(token, "").post().build();
     }
 
@@ -42,10 +48,5 @@ public class VoucherResourceFunctionalTesting {
         VoucherConsumptionWrapper voucher = new VoucherConsumptionWrapper();
         voucher.setId(0);
         new RestBuilder<Object>(RestService.URL).path(Uris.VOUCHERS).body(voucher).basicAuth(token, "").clazz(Object.class).put().build();
-    }
-    
-    @Test
-    public void consumeVoucherWithNonActiveVoucher(){
-        
     }
 }
