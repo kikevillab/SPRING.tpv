@@ -40,6 +40,22 @@ public class User {
         this.registrationDate = Calendar.getInstance();
     }
 
+    
+    
+    public User(long mobile, String username, String dni, String address, String email, String password, boolean active) {
+        super();
+        this.mobile = mobile;
+        this.username = username;
+        this.dni = dni;
+        this.address = address;
+        this.email = email;
+        this.password = password;
+        this.registrationDate = Calendar.getInstance();
+        this.active = active;
+    }
+
+
+
     public User(long mobile, String username, String password) {
         this();
         this.mobile = mobile;

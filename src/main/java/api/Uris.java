@@ -33,4 +33,20 @@ public class Uris {
     public static final String TRACKING = "/tracking";
 
     public static final String REFERENCE = "/{reference}";
+
+    public static final String MOBILE = "/mobile";
+
+    public static final String IDENTIFICATION = "/identification";
+
+    public static final String EMAIL = "/email";
+
+    public static final String USER_MOBILE = "/{mobile}";
+
+    public static final String USER_IDENTIFICATION = "/{identification}";
+
+    public static final String USER_EMAIL = "/{email}";
+    
+    public static final String OPERATORS="/operators";
+    
+    public static final String MANAGERS="/managers";
 }

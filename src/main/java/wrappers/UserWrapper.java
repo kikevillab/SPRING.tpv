@@ -1,5 +1,7 @@
 package wrappers;
 
+import entities.users.User;
+
 public class UserWrapper {
 
     private long mobile;
@@ -9,6 +11,12 @@ public class UserWrapper {
     private String password;
 
     public UserWrapper() {
+    }
+
+    public UserWrapper(User user) {
+        this.mobile = user.getMobile();
+        this.username = user.getUsername();
+        this.password = user.getPassword();
     }
 
     public UserWrapper(long mobile, String username, String password) {

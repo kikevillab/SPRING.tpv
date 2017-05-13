@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 
 import api.exceptions.AlreadyExistUserFieldException;
 import api.exceptions.InvalidUserFieldException;
@@ -17,10 +16,8 @@ import entities.users.Role;
 import wrappers.UserRegistrationWrapper;
 import wrappers.UserWrapper;
 
-@RestController
-@RequestMapping(Uris.VERSION + Uris.CUSTOMERS)
-public class CustomersResource {
-
+@RequestMapping(Uris.VERSION + Uris.MANAGERS)
+public class ManagersResource {
     private UserController userController;
 
     @Autowired
@@ -31,33 +28,32 @@ public class CustomersResource {
     @RequestMapping(method = RequestMethod.GET)
     @PreAuthorize("hasRole('ADMIN')")
     public Page<UserWrapper> userList(Pageable pageable) {
-        return userController.getAll(pageable,Role.CUSTOMER);
+        return userController.getAll(pageable,Role.MANAGER);
     }
 
     @RequestMapping(value = Uris.MOBILE + Uris.USER_MOBILE, method = RequestMethod.GET)
     @PreAuthorize("hasRole('ADMIN')")
     public UserWrapper userMobile(@PathVariable(value = "mobile") long userMobile) {
-        return userController.getByMobileAndRole(userMobile,Role.CUSTOMER);
+        return userController.getByMobileAndRole(userMobile,Role.MANAGER);
     }
 
     @RequestMapping(value = Uris.IDENTIFICATION + Uris.USER_IDENTIFICATION, method = RequestMethod.GET)
     @PreAuthorize("hasRole('ADMIN')")
     public UserWrapper userIdentificacion(@PathVariable(value = "identification") String identification) {
-        return userController.getByDniAndRole(identification,Role.CUSTOMER);
+        return userController.getByDniAndRole(identification,Role.MANAGER);
     }
 
     @RequestMapping(value = Uris.EMAIL + Uris.USER_EMAIL, method = RequestMethod.GET)
     @PreAuthorize("hasRole('ADMIN')")
     public UserWrapper userEmail(@PathVariable(value = "email") String email) {
-        return userController.getByEmailAndRole(email,Role.CUSTOMER);
+        return userController.getByEmailAndRole(email,Role.MANAGER);
     }
     
     @RequestMapping(value = Uris.CUSTOMERS, method = RequestMethod.POST)
     public void customerRegistration(@RequestBody UserRegistrationWrapper userRegistrationWrapper)
             throws InvalidUserFieldException, AlreadyExistUserFieldException {
-        if (!this.userController.registration(userRegistrationWrapper, Role.CUSTOMER)) {
+        if (!this.userController.registration(userRegistrationWrapper, Role.MANAGER)) {
             throw new AlreadyExistUserFieldException();
         }
     }
-
 }
