@@ -23,10 +23,21 @@ public class CashierClosures {
     @Column
     private String comment;
 
+    public CashierClosures() {
+    }
+
     public CashierClosures(long id, int amount, Calendar openingDate) {
         this.id = id;
         this.amount = amount;
         this.openingDate = openingDate;
+    }
+
+    public CashierClosures(long id, int amount, Calendar openingDate, Calendar closureDate, String comment) {
+        this.id = id;
+        this.amount = amount;
+        this.openingDate = openingDate;
+        this.closureDate = closureDate;
+        this.comment = comment;
     }
 
     public long getId() {
