@@ -12,16 +12,18 @@ import { ToastyModule } from 'ng2-toasty';
 
 import { HomeRoutingModule } from './home-routing.module';
 
-import { HomeComponent } from './home.component';
+import { HomeComponent, OrderTrackingDialog } from './home.component';
 import { CartComponent } from './cart/cart.component';
 import { CalculatorComponent } from './cart/calculator/calculator.component';
 import { DateComponent } from '../shared/date.component';
 
-import { TPVService } from '../shared/tpv.service';
+import { HTTPService } from '../shared/http.service';
 import { LocalStorageService } from '../shared/local-storage.service';
 import { ToastService } from '../shared/toast.service';
 
 import { CartModule } from './cart/cart.module';
+import { SearchModule } from './search/search.module';
+import { PaymentModule } from './payment/payment.module';
 
 @NgModule({
   imports: [
@@ -35,13 +37,17 @@ import { CartModule } from './cart/cart.module';
     MaterialModule,
     ToastyModule,
     CartModule,
+    SearchModule,
+    PaymentModule,
     NgxDatatableModule
   ],
   declarations: [
     HomeComponent,
     DateComponent,
-    CartComponent
+    CartComponent,
+    OrderTrackingDialog
   ],
-  providers: [TPVService, LocalStorageService, ToastService]
+  providers: [HTTPService, LocalStorageService, ToastService],
+  entryComponents: [OrderTrackingDialog]
 })
 export class HomeModule { }

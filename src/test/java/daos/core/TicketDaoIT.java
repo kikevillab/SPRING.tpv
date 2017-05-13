@@ -1,6 +1,9 @@
 package daos.core;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.util.Calendar;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,18 +23,26 @@ public class TicketDaoIT {
     private TicketDao ticketDao;
 
     @Test
-    public void testCreate() {
-        assertEquals(5, ticketDao.count());
+    public void testCount() {
+        assertTrue(ticketDao.count() >= 5);
     }
-    
+
+    @Test
     public void testFindFirstByOrderByCreatedDescIdDesc() {
         Ticket ticket = ticketDao.findFirstByOrderByCreatedDescIdDesc();
-        assertEquals(5, ticket.getId());
+        assertEquals(6, ticket.getId());
     }
-    
+
+    @Test
     public void testFindFirstByReference() {
         Ticket ticket = ticketDao.findAll().get(0);
         assertEquals(ticket, ticketDao.findFirstByReference(ticket.getReference()));
+    }
+
+    @Test
+    public void testFirstByCreated() {
+        Calendar today = Calendar.getInstance();
+        assertEquals(6, ticketDao.findByCreated(today).size());
     }
 
 }

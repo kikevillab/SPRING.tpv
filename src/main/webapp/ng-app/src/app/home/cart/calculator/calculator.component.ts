@@ -1,19 +1,19 @@
-import { Component, OnDestroy, NgModule } from '@angular/core';
+import { Component, OnDestroy, NgModule, HostListener } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'calculator-view',
   templateUrl: './calculator.component.html',
   styles: [`
-    b {
-      font-size:200%;
-    }
-    #currentOperator {
-      float:right;
-    }
-    div > div > div {
-      padding:0.5em;
-    }
+  b {
+    font-size:200%;
+  }
+  #currentOperator {
+    float:right;
+  }
+  div > div > div {
+    padding:0.5em;
+  }
   `]
 })
 
@@ -38,6 +38,7 @@ export class CalculatorComponent {
   }
 
   setValue(number) {
+    this.currentOperator == '=' && this.reset();
     if (this.currentOperator == null){
       this.firstValue = this.firstValue + number;
       this.result = this.firstValue;
@@ -48,9 +49,7 @@ export class CalculatorComponent {
   }
 
   setOperator(operator) {
-  	if (this.currentOperator != null){
-  		this.calculate();
-  	}
+  	this.currentOperator != null && this.calculate();
   	this.currentOperator = operator;
   }
 
@@ -67,24 +66,35 @@ export class CalculatorComponent {
   calculate(){
   	switch(this.currentOperator){
   		case '+':
-      this.firstValue = (Number(this.firstValue) + Number(this.secondValue)).toString();
-      break;
+        this.firstValue = (Number(this.firstValue) + Number(this.secondValue)).toString();
+        break;
       case '-':
-      this.firstValue = (Number(this.firstValue) - Number(this.secondValue)).toString();;
-      break;
+        this.firstValue = (Number(this.firstValue) - Number(this.secondValue)).toString();;
+        break;
       case '*':
-      this.firstValue = (Number(this.firstValue) * Number(this.secondValue)).toString();;
-      break;
+        this.firstValue = (Number(this.firstValue) * Number(this.secondValue)).toString();;
+        break;
       case '/':
-      this.firstValue = (Number(this.firstValue) / Number(this.secondValue)).toString();;
-      break;
+        this.firstValue = (Number(this.firstValue) / Number(this.secondValue)).toString();;
+        break;
       default:
-      break;
+        break;
     }
     this.secondValue = '';
     this.result = this.firstValue;
     this.decimalsActivated = false;
     this.currentOperator = '=';
+  }
+
+  @HostListener('document:keypress', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) { 
+    event.preventDefault();
+    let key:string = event.key;
+    key == "Enter" && this.calculate();
+    key == 'a' && this.reset();
+    key == '.' && this.setDecimals();
+    (Number(key) > -1 && Number(key) < 10) && this.setValue(Number(key));
+    (key == '+' || key == '-' || key == '*' || key == '/') && this.setOperator(key);
   }
 
 }

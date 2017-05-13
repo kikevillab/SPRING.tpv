@@ -31,6 +31,10 @@ public class Uris {
     public static final String INVOICES = "/invoices";
 
     public static final String TRACKING = "/tracking";
+    
+    public static final String DAY_TICKETS = "/day_tickets";
+    
+    public static final String DATE = "/{date}";
 
     public static final String REFERENCE = "/{reference}";
 
@@ -49,4 +53,7 @@ public class Uris {
     public static final String OPERATORS="/operators";
     
     public static final String MANAGERS="/managers";
+
+    public static final String PHONE = "/{mobilePhone}";
+
 }

@@ -3,26 +3,32 @@ import { Observable } from 'rxjs';
 import { Subject } from 'rxjs/Subject';
 
 import { CartProduct } from './cart-product';
-import { Product } from '../product';
+import { Product } from './product';
+import { User } from './user';
 
-import { TPVService } from '../../shared/tpv.service';
+import { HTTPService } from '../../shared/http.service';
 import { LocalStorageService } from '../../shared/local-storage.service';
 
-@Injectable()
-export class CartProductService {
+import { TicketCheckout } from '../payment/ticket-checkout';
 
-  private subject:Subject<CartProduct[]> = new Subject<CartProduct[]>();
+import { API_GENERIC_URI } from '../../app.config';
+
+@Injectable()
+export class ShoppingCartService {
+
+  private cartProductsSubject:Subject<CartProduct[]> = new Subject<CartProduct[]>();
   private storage_key:string = 'tpv-shopping_cart';
   private cartProducts:CartProduct[] = JSON.parse(this.storageService.getItem(this.storage_key)) || [];
   private totalPrice:number;
+  private userMobile:number;
 
-  constructor (private storageService: LocalStorageService, private tpvService: TPVService) {
+  constructor (private storageService: LocalStorageService, private httpService: HTTPService) {
     this.updateCart();
   }
 
   addProduct(productCode:string) {
     return new Promise((resolve,reject) => {
-      this.tpvService.requestGet(`/products/${productCode}`).subscribe(productDetails => {
+      this.httpService.get(`${API_GENERIC_URI}/products/${productCode}`).subscribe(productDetails => {
         let index:number = this.cartProducts.findIndex(cp => cp.productCode == productCode);
         if (index > -1){
           this.cartProducts[index].amount++;
@@ -31,8 +37,8 @@ export class CartProductService {
         }
         this.updateCart();
         this.storageService.setItem(this.storage_key, this.cartProducts);
-        resolve(true);
-      }, error => resolve(false));
+        resolve();
+      }, error => reject(error));
     });
   }
 
@@ -60,26 +66,58 @@ export class CartProductService {
   }
 
   getCartProductsObservable():Observable<CartProduct[]> {
-    return this.subject.asObservable();
+    return this.cartProductsSubject.asObservable();
   }
 
   getTotalPrice():number {
     return this.totalPrice;
   }
 
+  getUserMobile():number {
+    return this.userMobile;
+  }
+
   clear():void {
     this.storageService.removeItem(this.storage_key);
     this.cartProducts = [];
+    this.userMobile = null;
     this.updateCart();
+  }
+
+  submitOrder():Promise<any>{
+    return new Promise((resolve,reject) => {
+      let newTicket = new TicketCheckout(this.cartProducts, this.userMobile);
+      this.httpService.post(`${API_GENERIC_URI}/tickets`, newTicket).subscribe(ticketCreated => {
+        this.clear();
+        resolve(ticketCreated);
+      }, error => reject(error));
+    });
+  }
+
+  isShoppingCartEmpty():boolean {
+    return this.cartProducts.length == 0;
+  }
+
+  associateUser(userMobile:number):Promise<User> {
+    return new Promise((resolve,reject) => {
+      this.httpService.get(`${API_GENERIC_URI}/users/${userMobile}`).subscribe((associatedUser:User) => {
+        this.userMobile = associatedUser.mobile;
+        resolve(associatedUser);
+      }, error => reject(error));
+    });
+  }
+
+  disassociateUser():void {
+    this.userMobile = null;
   }
 
   private updateCart():void{
     this.storageService.setItem(this.storage_key, this.cartProducts);
-    this.totalPrice = 0.0;
+    this.totalPrice = 0.00;
     this.cartProducts.forEach(cartProduct =>{
       this.totalPrice += (cartProduct.amount*cartProduct.retailPrice)-(cartProduct.amount*cartProduct.retailPrice*cartProduct.discount/100);
     });
-    this.subject.next(this.cartProducts);
+    this.cartProductsSubject.next(this.cartProducts);
   }
 
 }

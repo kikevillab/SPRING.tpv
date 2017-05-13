@@ -24,51 +24,52 @@ class="material"
     {{value}}
   </ng-template>
 </ngx-datatable-column>
-<ngx-datatable-column name="Retail price" [flexGrow]="2">
+<ngx-datatable-column name="Price" prop="retailPrice" [flexGrow]="2">
  <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
   {{row.retailPrice}}
 </ng-template>
 </ngx-datatable-column>
-<ngx-datatable-column name="Amount" [flexGrow]="2">
+<ngx-datatable-column name="Nº" prop="amount" [flexGrow]="2">
   <ng-template ngx-datatable-cell-template let-value="value" let-row="row">
     <input mdInput type="number" step="1" min="1" (blur)="updateProduct(row, $event, 'amount')" [value]="value"/>
   </ng-template>
 </ngx-datatable-column>
-<ngx-datatable-column name="Discount" [flexGrow]="2">
+<ngx-datatable-column name="%" prop="discount" [flexGrow]="2">
   <ng-template ngx-datatable-cell-template let-value="value" let-row="row">
-    <input mdInput type="number" step="0.01" min="0.00" max="100.00" (blur)="updateProduct(row, $event, 'discount')" [value]="value"/>
+    <input mdInput type="number" step="0.01" min="0.00" max="100.00" (blur)="updateProduct(row, $event, 'discount')" [value]="value.toFixed(2)"/>
   </ng-template>
 </ngx-datatable-column>
-<ngx-datatable-column name="Delivered" [flexGrow]="2">
-  <ng-template ngx-datatable-cell-template let-value="value" let-row="row" >
-    <md-checkbox (change)="updateProduct(row, $event, 'delivered')" [checked]="value" ></md-checkbox>
+<ngx-datatable-column name="Total" prop="totalPrice" [flexGrow]="2">
+  <ng-template ngx-datatable-cell-template let-row="row" >
+      <input mdInput type="number" step="0.01" min="0.00" max="100.00" (blur)="updateTotalPrice(row, $event)" [value]="row.retailPrice * row.amount * (1 - (row.discount/100)).toFixed(2)"/>
   </ng-template>
 </ngx-datatable-column>
-<ngx-datatable-column name="Delete" [flexGrow]="2">
-  <ng-template ngx-datatable-cell-template let-row="row">
+<ngx-datatable-column name=" " prop="delivered" [flexGrow]="2">
+  <ng-template ngx-datatable-cell-template let-row="row" let-value="value">
+    <md-checkbox (change)="updateProduct(row, $event, 'delivered')" [checked]="value" mdTooltip="Delivered" mdTooltipPosition="left"></md-checkbox>
     <button md-icon-button (click)="removeFromCart(row)" mdTooltip="Delete from cart" mdTooltipPosition="left">
       <md-icon class="md-24" color="warn">delete</md-icon>
     </button>
   </ng-template>
 </ngx-datatable-column>
 </ngx-datatable>
-<div >
-  <p>Total: <b id="totalPrice">{{totalPrice | currency}}</b></p>
-</div>
-<div fxLayout="row" fxLayout.xs="column">
-  <form (ngSubmit)="onSubmit('cartForm', $event)" #cartForm="ngForm" fxFlex="90" >
-    <div class="form-group">
-      Add by code: 
-      <md-input-container >
-        <input mdInput type="text" class="form-control" id="codeInput"
-        required
-        [(ngModel)]="codeInput" name="codeInput"
-        #name="ngModel">
-      </md-input-container>
+<p>Total: <b id="totalPrice">{{totalPrice | currency:'EUR':true}}</b></p>
+<div fxLayout="column space-around center" id="paddingContainer">
+  <md-card >
+    <form fxLayout="column" (ngSubmit)="onSubmit('cartForm', $event)" #cartForm="ngForm" class="center">
+      <div class="form-group">
+        Add product by code: 
+        <md-input-container>
+          <input mdInput type="text" placeholder="Product code" class="form-control" id="codeInput" required maxLength="255" 
+          [(ngModel)]="codeInput" name="codeInput" #name="ngModel">
+        </md-input-container>
+      </div>
       <button md-raised-button color="primary" type="submit" [disabled]="!cartForm.form.valid" id="submitCodeInputButton">Submit</button>
+    </form>
+  </md-card>
+  <md-card >
+    <div class="form-group center" fxLayout="column" >
+    <button md-raised-button color="accent" (click)="checkout()" [disabled]="cartProducts.length==0" id="checkoutButton">Check out</button>
     </div>
-  </form>
-  <div fxFlex>
-    <button md-raised-button color="accent" (click)="checkout()" [disabled]="cartProducts.length==0">Check out</button>
-  </div>
+  </md-card>
 </div>

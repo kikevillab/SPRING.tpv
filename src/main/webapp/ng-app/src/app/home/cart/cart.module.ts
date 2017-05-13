@@ -12,10 +12,10 @@ import { ToastyModule } from 'ng2-toasty';
 import { CalculatorDialog } from './cart.component';
 import { CalculatorComponent } from './calculator/calculator.component';
 
-import { TPVService } from '../../shared/tpv.service';
+import { HTTPService } from '../../shared/http.service';
 import { LocalStorageService } from '../../shared/local-storage.service';
 import { ToastService } from '../../shared/toast.service';
-import { CartProductService } from './cart-product.service';
+import { ShoppingCartService } from '../shared/shopping-cart.service';
 
 @NgModule({
   imports: [
@@ -30,7 +30,7 @@ import { CartProductService } from './cart-product.service';
   ToastyModule
   ],
   declarations: [ CalculatorComponent, CalculatorDialog ],
-  providers: [TPVService, LocalStorageService, ToastService, CartProductService],
+  providers: [HTTPService, LocalStorageService, ToastService, ShoppingCartService],
   entryComponents: [CalculatorDialog]
 })
 export class CartModule { }

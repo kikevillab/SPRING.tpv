@@ -7,8 +7,6 @@
 
 @import '/node_modules/ng2-toasty/style-default.css';
 
-
-
 body{
 	background-color: #f1f1f1;
 	margin:0;
@@ -51,5 +49,13 @@ input:-webkit-autofill {
 }
 
 .sidenav {
-	padding: 20px;
+	padding: 1em;
+}
+
+a {
+    text-decoration: none;
+}
+
+a, a:visited {
+    color: inherit;
 }

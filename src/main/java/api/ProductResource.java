@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import api.exceptions.NotFoundProductCodeException;
 import controllers.ProductController;
+import entities.core.Product;
 import wrappers.ProductWrapper;
 
 @RestController
@@ -24,11 +25,11 @@ public class ProductResource {
     // @PreAuthorize("hasRole('ADMIN')or hasRole('MANAGER') or hasRole('OPERATOR')")
     @RequestMapping(value = Uris.CODE, method = RequestMethod.GET)
     public ProductWrapper getProductByCode(@PathVariable(value = "code") String code) throws NotFoundProductCodeException {
-        ProductWrapper productWrapper = productController.getProductByCode(code);
-        if (productWrapper == null) {
-            throw new NotFoundProductCodeException("Código de producto: " + code);
+        Product product = productController.getProductByCode(code);
+        if (product == null) {
+            throw new NotFoundProductCodeException("Product code: " + code);
         }
-        return productWrapper;
+        return new ProductWrapper(product);
     }
 
 }
