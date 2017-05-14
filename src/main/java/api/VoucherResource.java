@@ -2,6 +2,7 @@ package api;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,6 +41,8 @@ public class VoucherResource {
     @RequestMapping(method = RequestMethod.PUT)
     public void consumeVoucher(@RequestBody VoucherConsumptionWrapper voucherConsumptionWrapper)
             throws VoucherNotFoundException, VoucherAlreadyConsumedException, VoucherHasExpiredException {
+        LogManager.getLogger(this.getClass())
+        .info(voucherController.findAllVouchers());
         if (!voucherController.voucherExists(voucherConsumptionWrapper.getId())) {
             throw new VoucherNotFoundException("Id: " + voucherConsumptionWrapper.getId());
         }

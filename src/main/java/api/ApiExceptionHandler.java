@@ -33,6 +33,7 @@ import api.exceptions.TicketIsAlreadyAssignedToInvoiceException;
 import api.exceptions.TicketNotFoundException;
 import api.exceptions.UnauthorizedException;
 import api.exceptions.VoucherAlreadyConsumedException;
+import api.exceptions.VoucherHasExpiredException;
 import api.exceptions.VoucherNotFoundException;
 
 @ControllerAdvice
@@ -67,7 +68,8 @@ public class ApiExceptionHandler {
     }
 
     @ResponseStatus(HttpStatus.CONFLICT)
-    @ExceptionHandler({AlreadyExistUserFieldException.class, AlreadyExistUserFieldException.class, NotEnoughStockException.class, VoucherAlreadyConsumedException.class})
+    @ExceptionHandler({AlreadyExistUserFieldException.class, AlreadyExistUserFieldException.class, NotEnoughStockException.class,
+            VoucherAlreadyConsumedException.class, VoucherHasExpiredException.class})
     @ResponseBody
     public ErrorMessage conflictRequest(ApiException exception) {
         ErrorMessage apiErrorMessage = new ErrorMessage(exception);
