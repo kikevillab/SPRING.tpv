@@ -39,4 +39,6 @@ public class Uris {
     public static final String REFERENCE = "/{reference}";
     
     public static final String PHONE = "/{mobilePhone}";
+    
+    public static final String EMBROIDERIES = "/embroideries";
 }
