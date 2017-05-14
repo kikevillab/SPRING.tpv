@@ -28,7 +28,7 @@ public class ManagersResource {
     @RequestMapping(method = RequestMethod.GET)
     @PreAuthorize("hasRole('ADMIN')")
     public Page<UserWrapper> userList(Pageable pageable) {
-        return userController.getAll(pageable,Role.MANAGER);
+        return userController.getAllAndRole(pageable,Role.MANAGER);
     }
 
     @RequestMapping(value = Uris.MOBILE + Uris.USER_MOBILE, method = RequestMethod.GET)

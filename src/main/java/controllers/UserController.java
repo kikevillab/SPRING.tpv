@@ -40,8 +40,11 @@ public class UserController {
     }
 
     public boolean registration(UserWrapper userWrapper, Role role) {
+        if ((userWrapper==null)||(role==null))
+            return false;
         if (null == userDao.findByMobile(userWrapper.getMobile())) {
-            User user = new User(userWrapper.getMobile(), userWrapper.getUsername(), userWrapper.getPassword());
+            User user = new User(userWrapper.getMobile(), userWrapper.getUsername(),userWrapper.getDni(),userWrapper.getAddress(),
+                    userWrapper.getEmail(), userWrapper.getPassword(),userWrapper.isActive());
             userDao.save(user);
             authorizationDao.save(new Authorization(user, role));
             return true;
@@ -69,11 +72,10 @@ public class UserController {
     }
 
 
-    public Page<UserWrapper> getAll(Pageable pageable,Role role) {
+    public Page<UserWrapper> getAllAndRole(Pageable pageable,Role role) {
         Page<User> page = userDao.findAllAndRole(pageable,role);
         List<UserWrapper> userWrappers = new ArrayList<>();
         for (User user : page.getContent()) {
-
             userWrappers.add(new UserWrapper(user));
         }
 

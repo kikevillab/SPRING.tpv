@@ -49,7 +49,7 @@ public class User {
         this.dni = dni;
         this.address = address;
         this.email = email;
-        this.password = password;
+        setPassword(password);
         this.registrationDate = Calendar.getInstance();
         this.active = active;
     }

@@ -31,7 +31,7 @@ public class CustomersResource {
     @RequestMapping(method = RequestMethod.GET)
     @PreAuthorize("hasRole('ADMIN')")
     public Page<UserWrapper> userList(Pageable pageable) {
-        return userController.getAll(pageable,Role.CUSTOMER);
+        return userController.getAllAndRole(pageable,Role.CUSTOMER);
     }
 
     @RequestMapping(value = Uris.MOBILE + Uris.USER_MOBILE, method = RequestMethod.GET)
@@ -53,9 +53,9 @@ public class CustomersResource {
     }
     
     @RequestMapping(value = Uris.CUSTOMERS, method = RequestMethod.POST)
-    public void customerRegistration(@RequestBody UserRegistrationWrapper userRegistrationWrapper)
+    public void customerRegistration(@RequestBody UserWrapper userWrapper)
             throws InvalidUserFieldException, AlreadyExistUserFieldException {
-        if (!this.userController.registration(userRegistrationWrapper, Role.CUSTOMER)) {
+        if (!this.userController.registration(userWrapper, Role.CUSTOMER)) {
             throw new AlreadyExistUserFieldException();
         }
     }
