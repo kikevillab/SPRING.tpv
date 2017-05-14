@@ -27,7 +27,7 @@ public class InvoiceResource {
     private UserController userController;
     
     private TicketController ticketController;
-    
+
     @Autowired
     public void setInvoiceController(InvoiceController invoiceController){
         this.invoiceController = invoiceController;
@@ -42,7 +42,7 @@ public class InvoiceResource {
     public void setTicketController(TicketController ticketController){
         this.ticketController = ticketController;
     }
-    
+
     @RequestMapping(method = RequestMethod.POST)
     public InvoiceWrapper createInvoice(@RequestBody TicketIdWrapper ticketIdWrapper) throws TicketHasInvalidUserException, InvoiceDoesNotAllowNotClosedTicketsException, TicketIsAlreadyAssignedToInvoiceException{
         Ticket ticket = ticketController.findOneTicket(ticketIdWrapper);
