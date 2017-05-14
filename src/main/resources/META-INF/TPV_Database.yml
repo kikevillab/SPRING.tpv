@@ -190,24 +190,28 @@ textilePrintingList:
     code: textilePrinting0
     retailPrice: 20
     description: textilePrinting0
+    image: /assets/img/products/img-product-4.png
     type: ploter
   - &textilePrinting84000003334
     id: 84000003334
     code: textilePrinting1
     retailPrice: 21
     description: textilePrinting1
+    image: /assets/img/products/img-product-1.png
     type: ploter
   - &textilePrinting84000003335
     id: 84000003335
     code: textilePrinting2
     retailPrice: 22
     description: textilePrinting2
+    image: /assets/img/products/img-product-2.png
     type: ploter
   - &textilePrinting84000003336
     id: 84000003336
     code: textilePrinting3
     retailPrice: 23
     description: textilePrinting3
+    image: /assets/img/products/img-product-3.png
     type: ploter
 
 ticketList:
