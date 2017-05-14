@@ -10,7 +10,7 @@ import com.itextpdf.layout.element.Paragraph;
 
 import entities.core.Voucher;
 
-public class VoucherPdfGenerator extends PdfGenerator<Voucher>{
+public class VoucherPdfGenerator extends PdfGenerator<Voucher> {
 
     public VoucherPdfGenerator(Voucher voucher) {
         super(voucher);
@@ -32,7 +32,11 @@ public class VoucherPdfGenerator extends PdfGenerator<Voucher>{
         pdfDocument.add(new Paragraph(entity.getReference()));
         pdfDocument.add(new Paragraph(entity.getValue().toPlainString()));
         pdfDocument.add(new Paragraph(formatter.format(entity.getCreated().getTime())));
-        pdfDocument.add(new Paragraph(formatter.format(entity.getDateOfUse().getTime())));
+        if (entity.getDateOfUse() != null) {
+            pdfDocument.add(new Paragraph(formatter.format(entity.getDateOfUse().getTime())));
+        } else {
+            pdfDocument.add(new Paragraph("NO CANJEADO"));
+        }
     }
 
 }
