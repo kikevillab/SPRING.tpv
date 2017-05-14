@@ -12,7 +12,7 @@ import {WelcomeComponent} from './welcome.component';
 import {LoginComponent} from './login/login.component';
 import {TicketComponent} from './ticket/ticket.component';
 import {WelcomeRoutingModule} from './welcome.routes';
-import {RequestService} from '../shared/request.service';
+import {HTTPService} from '../shared/http.service';
 import {LoginService} from './login/login.service';
 import {TokenService} from './login/token.service';
 import {AngularMaterialModule} from '../shared/angular-material.module';
@@ -33,7 +33,7 @@ import {AngularMaterialModule} from '../shared/angular-material.module';
         AngularMaterialModule
     ],
     providers: [
-        RequestService,
+        HTTPService,
         LoginService,
         TokenService
     ],

@@ -196,7 +196,7 @@ public class TicketResourceFunctionalTesting {
         ShoppingUpdateWrapper shoppingUpdateWrapper = new ShoppingUpdateWrapper("article0", 2, ShoppingState.COMMITTED);
         shoppingUpdateWrapperList.add(shoppingUpdateWrapper);
         new RestBuilder<TicketReferenceWrapper>(RestService.URL).path(Uris.TICKETS).pathId(ticketReference).body(shoppingUpdateWrapperList)
-                .basicAuth(token, "").clazz(TicketReferenceWrapper.class).put().build();
+                .basicAuth(token, "").clazz(TicketReferenceWrapper.class).patch().build();
     }
 
     @Test
@@ -221,7 +221,7 @@ public class TicketResourceFunctionalTesting {
         shoppingUpdateWrapperList.add(shoppingUpdateWrapper);
         TicketReferenceWrapper ticketUpdatedReference = new RestBuilder<TicketReferenceWrapper>(RestService.URL).path(Uris.TICKETS)
                 .pathId(ticketReference.getTicketReference()).body(shoppingUpdateWrapperList).basicAuth(token, "")
-                .clazz(TicketReferenceWrapper.class).put().build();
+                .clazz(TicketReferenceWrapper.class).patch().build();
 
         assertEquals(ticketReference.getTicketReference(), ticketUpdatedReference.getTicketReference());
     }
@@ -247,7 +247,7 @@ public class TicketResourceFunctionalTesting {
         ShoppingUpdateWrapper shoppingUpdateWrapper = new ShoppingUpdateWrapper("textilePrinting1", 2, ShoppingState.COMMITTED);
         shoppingUpdateWrapperList.add(shoppingUpdateWrapper);
         new RestBuilder<TicketReferenceWrapper>(RestService.URL).path(Uris.TICKETS).pathId(ticketReference.getTicketReference())
-                .body(shoppingUpdateWrapperList).basicAuth(token, "").clazz(TicketReferenceWrapper.class).put().build();
+                .body(shoppingUpdateWrapperList).basicAuth(token, "").clazz(TicketReferenceWrapper.class).patch().build();
     }
 
     @Test
@@ -272,7 +272,7 @@ public class TicketResourceFunctionalTesting {
         ShoppingUpdateWrapper shoppingUpdateWrapper = new ShoppingUpdateWrapper(productCode, -2, ShoppingState.COMMITTED);
         shoppingUpdateWrapperList.add(shoppingUpdateWrapper);
         new RestBuilder<TicketReferenceWrapper>(RestService.URL).path(Uris.TICKETS).pathId(ticketReference.getTicketReference())
-                .body(shoppingUpdateWrapperList).basicAuth(token, "").clazz(TicketReferenceWrapper.class).put().build();
+                .body(shoppingUpdateWrapperList).basicAuth(token, "").clazz(TicketReferenceWrapper.class).patch().build();
     }
 
     @Test
@@ -297,7 +297,7 @@ public class TicketResourceFunctionalTesting {
         ShoppingUpdateWrapper shoppingUpdateWrapper = new ShoppingUpdateWrapper(productCode, 50, ShoppingState.COMMITTED);
         shoppingUpdateWrapperList.add(shoppingUpdateWrapper);
         new RestBuilder<TicketReferenceWrapper>(RestService.URL).path(Uris.TICKETS).pathId(ticketReference.getTicketReference())
-                .body(shoppingUpdateWrapperList).basicAuth(token, "").clazz(TicketReferenceWrapper.class).put().build();
+                .body(shoppingUpdateWrapperList).basicAuth(token, "").clazz(TicketReferenceWrapper.class).patch().build();
     }
 
     @Test

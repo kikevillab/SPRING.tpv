@@ -19,7 +19,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ToastService } from '../shared/toast.service';
 import { ShoppingCartService } from './shared/shopping-cart.service';
 import { LocalStorageService } from '../shared/local-storage.service';
-import { TPVService } from '../shared/tpv.service';
+import { HTTPService } from '../shared/http.service';
 import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
 
 
@@ -36,7 +36,7 @@ describe('Component: HomeComponent', () => {
       ToastService,
       ShoppingCartService,
       LocalStorageService,
-      TPVService,
+      HTTPService,
       ToastyService, ToastyConfig, ToastOptions, ToastData
       ]
     });

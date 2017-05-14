@@ -10,7 +10,7 @@ import {OrderTrackingComponent} from './order-tracking.component';
 import {OrderTrackingRoutingModule} from './order-tracking-routing.module';
 import {OrderTrackingService} from './order-tracking.service';
 
-import {TPVService} from '../shared/tpv.service';
+import {HTTPService} from '../shared/http.service';
 
 @NgModule({
     declarations: [
@@ -25,7 +25,7 @@ import {TPVService} from '../shared/tpv.service';
         NgxDatatableModule
     ],
     providers: [
-        TPVService, OrderTrackingService
+        HTTPService, OrderTrackingService
     ],
 })
 export class OrderTrackingModule {

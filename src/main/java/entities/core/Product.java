@@ -23,6 +23,8 @@ public abstract class Product {
     private BigDecimal retailPrice;
 
     private boolean discontinued;
+    
+    private String image;
 
     public Product() {
     }
@@ -73,6 +75,14 @@ public abstract class Product {
 
     public void setDiscontinued(boolean discontinued) {
         this.discontinued = discontinued;
+    }
+    
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     @Override

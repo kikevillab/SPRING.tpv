@@ -8,13 +8,13 @@ import {Token} from './token.model';
 import {API_GENERIC_URI} from '../../app.config';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
-import {RequestService} from '../../shared/request.service';
+import {HTTPService} from '../../shared/http.service';
 
 @Injectable()
 export class LoginService {
     private endpoint: string = API_GENERIC_URI + '/tokens';
 
-    constructor(private requestService: RequestService) {
+    constructor(private httpService: HTTPService) {
     }
 
     login(mobile: number, password: string): Observable<Token> {
@@ -22,6 +22,6 @@ export class LoginService {
             'Authorization': 'Basic ' + btoa(mobile + ':' + password)
         });
 
-        return this.requestService.post(this.endpoint, null, headers);
+        return this.httpService.post(this.endpoint, null, headers);
     }
 }

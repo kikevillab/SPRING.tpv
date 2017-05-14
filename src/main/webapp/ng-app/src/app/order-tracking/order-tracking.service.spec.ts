@@ -7,7 +7,7 @@ import 'rxjs/add/observable/of';
 
 import { ProductState }  from './product-state';
 import { OrderTrackingService } from './order-tracking.service';
-import { TPVService } from '../shared/tpv.service';
+import { HTTPService } from '../shared/http.service';
 
 
 let productStateMock = [];
@@ -24,7 +24,7 @@ describe('Service: OrderTrackingService', () => {
       OrderTrackingService,
       MockBackend,
       BaseRequestOptions,
-      TPVService,
+      HTTPService,
       {
         provide: Http,
         useFactory: (backend, options) => new Http(backend, options),

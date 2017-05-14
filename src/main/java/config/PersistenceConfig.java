@@ -48,7 +48,7 @@ public class PersistenceConfig {
         properties.put("hibernate.show_sql", "false");
         properties.put("hibernate.format_sql", "true");
         // create-drop, create, update, validate
-        properties.put("hibernate.hbm2ddl.auto", environment.getProperty("hibernate.hbm2ddl.auto"));
+        properties.put("hibernate.hbm2ddl.auto", environment.getProperty("hibernate.hbm2ddl"));
         properties.put("hibernate.dialect", "org.hibernate.dialect.MySQL5InnoDBDialect");
         entityManagerFactoryBean.setJpaProperties(properties);
         entityManagerFactoryBean.setPackagesToScan(ResourceNames.ENTITIES_USERS, ResourceNames.ENTITIES_CORE);

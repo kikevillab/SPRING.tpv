@@ -6,11 +6,12 @@ import { CartProduct } from './cart-product';
 import { Product } from './product';
 import { User } from './user';
 
-import { TPVService } from '../../shared/tpv.service';
+import { HTTPService } from '../../shared/http.service';
 import { LocalStorageService } from '../../shared/local-storage.service';
 
 import { TicketCheckout } from '../payment/ticket-checkout';
 
+import { API_GENERIC_URI } from '../../app.config';
 
 @Injectable()
 export class ShoppingCartService {
@@ -21,13 +22,13 @@ export class ShoppingCartService {
   private totalPrice:number;
   private userMobile:number;
 
-  constructor (private storageService: LocalStorageService, private tpvService: TPVService) {
+  constructor (private storageService: LocalStorageService, private httpService: HTTPService) {
     this.updateCart();
   }
 
   addProduct(productCode:string) {
     return new Promise((resolve,reject) => {
-      this.tpvService.requestGet(`/products/${productCode}`).subscribe(productDetails => {
+      this.httpService.get(`${API_GENERIC_URI}/products/${productCode}`).subscribe(productDetails => {
         let index:number = this.cartProducts.findIndex(cp => cp.productCode == productCode);
         if (index > -1){
           this.cartProducts[index].amount++;
@@ -86,7 +87,7 @@ export class ShoppingCartService {
   submitOrder():Promise<any>{
     return new Promise((resolve,reject) => {
       let newTicket = new TicketCheckout(this.cartProducts, this.userMobile);
-      this.tpvService.requestPost('/tickets', newTicket).subscribe(ticketCreated => {
+      this.httpService.post(`${API_GENERIC_URI}/tickets`, newTicket).subscribe(ticketCreated => {
         this.clear();
         resolve(ticketCreated);
       }, error => reject(error));
@@ -99,7 +100,7 @@ export class ShoppingCartService {
 
   associateUser(userMobile:number):Promise<User> {
     return new Promise((resolve,reject) => {
-      this.tpvService.requestGet(`/users/${userMobile}`).subscribe((associatedUser:User) => {
+      this.httpService.get(`${API_GENERIC_URI}/users/${userMobile}`).subscribe((associatedUser:User) => {
         this.userMobile = associatedUser.mobile;
         resolve(associatedUser);
       }, error => reject(error));
