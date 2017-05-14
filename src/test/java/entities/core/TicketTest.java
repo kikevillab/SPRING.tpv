@@ -11,5 +11,4 @@ public class TicketTest {
         Ticket ticket = new Ticket(666);
         assertTrue(ticket.getReference().length() > 20);
     }
-
 }
