@@ -25,7 +25,7 @@ public class CashierClosuresDaoIT {
     @Test
     public void testCashierClosuresPersistence() {
         CashierClosures cashierClosures = new CashierClosures(0, 5, new GregorianCalendar());
-        cashierClosuresDao.saveAndFlush(cashierClosures);
+        cashierClosures = cashierClosuresDao.saveAndFlush(cashierClosures);
 
         assertNotEquals(0, cashierClosures.getId());
     }
