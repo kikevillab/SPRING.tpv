@@ -3,8 +3,6 @@ package wrappers;
 
 import entities.core.CashierClosures;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
 import java.util.Calendar;
 
 public class CashierClosuresWrapper {
