@@ -29,7 +29,7 @@ public class InvoiceController {
         List<InvoiceWrapper> invoiceWrappers = new ArrayList<>();
         for (Invoice invoice : invoiceDao.findAll()) {
             invoiceWrappers.add(new InvoiceWrapper(invoice.getId(), new TicketIdWrapper(invoice.getTicket().getId())));
-        }
+        }http://www.example.com/customers
         return invoiceWrappers;
     }
 
