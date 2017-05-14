@@ -14,7 +14,6 @@ import api.exceptions.AlreadyExistUserFieldException;
 import api.exceptions.InvalidUserFieldException;
 import controllers.UserController;
 import entities.users.Role;
-import wrappers.UserRegistrationWrapper;
 import wrappers.UserWrapper;
 
 @RestController
@@ -30,34 +29,59 @@ public class CustomersResource {
 
     @RequestMapping(method = RequestMethod.GET)
     @PreAuthorize("hasRole('ADMIN')")
-    public Page<UserWrapper> userList(Pageable pageable) {
+    public Page<UserWrapper> userList(Pageable pageable) throws InvalidUserFieldException {
+        this.validateFieldObject(pageable, "Pageable: objeto para paginar");
         return userController.getAllAndRole(pageable,Role.CUSTOMER);
     }
 
     @RequestMapping(value = Uris.MOBILE + Uris.USER_MOBILE, method = RequestMethod.GET)
     @PreAuthorize("hasRole('ADMIN')")
-    public UserWrapper userMobile(@PathVariable(value = "mobile") long userMobile) {
+    public UserWrapper userMobile(@PathVariable(value = "mobile") long userMobile) throws InvalidUserFieldException {
+        this.validateFieldObject(userMobile,"userMobile");
         return userController.getByMobileAndRole(userMobile,Role.CUSTOMER);
     }
 
     @RequestMapping(value = Uris.IDENTIFICATION + Uris.USER_IDENTIFICATION, method = RequestMethod.GET)
     @PreAuthorize("hasRole('ADMIN')")
-    public UserWrapper userIdentificacion(@PathVariable(value = "identification") String identification) {
+    public UserWrapper userIdentificacion(@PathVariable(value = "identification") String identification) throws InvalidUserFieldException {
+        this.validateField(identification, "identification:dni");
         return userController.getByDniAndRole(identification,Role.CUSTOMER);
     }
 
     @RequestMapping(value = Uris.EMAIL + Uris.USER_EMAIL, method = RequestMethod.GET)
     @PreAuthorize("hasRole('ADMIN')")
-    public UserWrapper userEmail(@PathVariable(value = "email") String email) {
+    public UserWrapper userEmail(@PathVariable(value = "email") String email) throws InvalidUserFieldException {
+        this.validateField(email, "email");
         return userController.getByEmailAndRole(email,Role.CUSTOMER);
     }
     
     @RequestMapping(value = Uris.CUSTOMERS, method = RequestMethod.POST)
     public void customerRegistration(@RequestBody UserWrapper userWrapper)
             throws InvalidUserFieldException, AlreadyExistUserFieldException {
+        this.validateFieldRegiter(userWrapper, "UserWrapper:usuario");
         if (!this.userController.registration(userWrapper, Role.CUSTOMER)) {
             throw new AlreadyExistUserFieldException();
         }
     }
+    
+    private void validateFieldObject (Object objeto, String msg) throws InvalidUserFieldException{
+        if (objeto==null)
+            throw new InvalidUserFieldException(msg);
+    }
 
+    private void validateField(String field, String msg) throws InvalidUserFieldException {
+        if (field == null || field.isEmpty()) {
+            throw new InvalidUserFieldException(msg);
+        }
+    }
+
+    private void validateFieldRegiter(UserWrapper user, String msg) throws InvalidUserFieldException {
+        if (user == null) {
+            throw new InvalidUserFieldException(msg);
+        }
+        else{
+            if ((user.getPassword()==null)||(user.getUsername()==null))
+                throw new InvalidUserFieldException(msg);
+        }
+    }
 }
