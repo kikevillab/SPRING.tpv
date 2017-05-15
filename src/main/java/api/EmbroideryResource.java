@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import api.exceptions.EmbroideryNotFoundException;
 import controllers.EmbroideryController;
 import wrappers.EmbroideryCreationWrapper;
 import wrappers.EmbroideryWrapper;
@@ -26,11 +27,15 @@ public class EmbroideryResource {
 
     @RequestMapping(method = RequestMethod.POST)
     public void createEmbroidery(@RequestBody EmbroideryCreationWrapper embroideryCreationWrapper) {
+        //TODO Check fields
         embroideryController.createEmbroidery(embroideryCreationWrapper);
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public void updateEmbroidery(@RequestBody EmbroideryWrapper embroideryUpdateWrapper) {
+    public void updateEmbroidery(@RequestBody EmbroideryWrapper embroideryUpdateWrapper) throws EmbroideryNotFoundException {
+        if(!embroideryController.embroideryExists(embroideryUpdateWrapper.getId())){
+            throw new EmbroideryNotFoundException("Id: " + embroideryUpdateWrapper.getId());
+        }
         embroideryController.updateEmbroidery(embroideryUpdateWrapper);
     }
 
@@ -40,7 +45,10 @@ public class EmbroideryResource {
     }
     
     @RequestMapping(value = Uris.ID, method = RequestMethod.GET)
-    public EmbroideryWrapper findOneEmbroidery(@PathVariable long id){
+    public EmbroideryWrapper findOneEmbroidery(@PathVariable long id) throws EmbroideryNotFoundException{
+        if(!embroideryController.embroideryExists(id)){
+            throw new EmbroideryNotFoundException("Id: " + id);
+        }
         return embroideryController.findOneEmbroidery(id);
     }
 }

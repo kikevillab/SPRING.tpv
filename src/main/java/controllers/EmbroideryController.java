@@ -72,4 +72,8 @@ public class EmbroideryController {
         return embroideryWrapper;
     }
 
+    public boolean embroideryExists(long id) {
+        return embroideryDao.exists(id);
+    }
+
 }
