@@ -6,7 +6,7 @@ public class EmbroideryNotFoundException extends ApiException {
     
     private static final String DESCRIPTION = "Embroidery not found.";
 
-    private static final int CODE = 8;
+    private static final int CODE = 28;
 
     public EmbroideryNotFoundException() {
         this("");

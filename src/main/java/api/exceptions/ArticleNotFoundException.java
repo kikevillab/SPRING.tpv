@@ -5,7 +5,7 @@ public class ArticleNotFoundException extends ApiException {
 
     private static final String DESCRIPTION = "Product amount is less than 0 in ticket update";
 
-    private static final int CODE = 13;
+    private static final int CODE = 30;
 
     public ArticleNotFoundException() {
         this("");

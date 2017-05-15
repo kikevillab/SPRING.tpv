@@ -6,7 +6,7 @@ public class TextilePrintingNotFoundException extends ApiException {
     
     public static final String DESCRIPTION = "Textile printing not found.";
 
-    public static final int CODE = 10;
+    public static final int CODE = 29;
 
     public TextilePrintingNotFoundException() {
         this("");
