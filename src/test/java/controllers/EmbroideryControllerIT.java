@@ -51,6 +51,8 @@ public class EmbroideryControllerIT {
         String desc = "test_desc";
         boolean discontinued = true;
         String image = "test_url";
+        int squareMillimeters = new Random().nextInt();
+        int stitches = new Random().nextInt();
         Embroidery randomEmbroidery = embroideryDao.findAll().get(0);
         EmbroideryUpdateWrapper embroideryUpdateWrapper = new EmbroideryUpdateWrapper();
         embroideryUpdateWrapper.setId(randomEmbroidery.getId());
@@ -60,12 +62,14 @@ public class EmbroideryControllerIT {
         embroideryUpdateWrapper.setDiscontinued(discontinued);
         embroideryUpdateWrapper.setImage(image);
         embroideryUpdateWrapper.setRetailPrice(randomEmbroidery.getRetailPrice());
-        embroideryUpdateWrapper.setSquareMillimeters(randomEmbroidery.getSquareMillimeters());
-        embroideryUpdateWrapper.setStitches(randomEmbroidery.getStitches());
+        embroideryUpdateWrapper.setSquareMillimeters(squareMillimeters);
+        embroideryUpdateWrapper.setStitches(stitches);
         embroideryController.updateEmbroidery(embroideryUpdateWrapper);
         Embroidery sameEmbroidery = embroideryDao.findOne(randomEmbroidery.getId());
         assertEquals(desc, sameEmbroidery.getDescription());
         assertEquals(discontinued, sameEmbroidery.isDiscontinued());
         assertEquals(image, sameEmbroidery.getImage());
+        assertEquals(squareMillimeters, sameEmbroidery.getSquareMillimeters());
+        assertEquals(stitches, sameEmbroidery.getStitches());
     }
 }
