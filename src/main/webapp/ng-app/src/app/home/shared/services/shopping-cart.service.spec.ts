@@ -23,27 +23,9 @@ export const MockTicket = {
   ticketReference: '12341234'
 }
 
-export class TPVServiceMock {
-
-  public requestGet(url: string) {
-    let response: ResponseOptions = new ResponseOptions({
-      body: JSON.stringify(MockProduct)
-    });
-    return Observable.of(new Response(response));
-  }
-
-  public requestPost(url: string, object: Object) {
-    let response: ResponseOptions = new ResponseOptions({
-      body: JSON.stringify(MockTicket)
-    });
-    return Observable.of(new Response(response));
-  }
-
-}
-
 describe('Service: ShoppingCartService', () => {
 
-  let product_code: string = 'article0';
+  let product_code: string = 'article6';
   let shoppingCartService: ShoppingCartService;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -69,16 +51,12 @@ describe('Service: ShoppingCartService', () => {
   });
 
   it(`Should add product to cart when 'addProduct()' is called`, inject([MockBackend], (mockBackend: MockBackend) => {
-    let found: boolean = false;
     mockBackend.connections.subscribe((conn: MockConnection) => {
       conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(MockProduct) })));
     });
-    shoppingCartService.addProduct(product_code);
-
-    shoppingCartService.getCartProducts().forEach((cartProduct: CartProduct) => {
-      if (cartProduct.productCode == product_code) found = true;
+    shoppingCartService.addProduct(product_code).then(()=>{
+      expect(shoppingCartService.getCartProducts()).toContain(new CartProduct('article6', 'article6', 20));
     });
-    expect(found).toBe(true);
   }));
 
   it(`Should remove product with code '${product_code}' of cart`, () => {

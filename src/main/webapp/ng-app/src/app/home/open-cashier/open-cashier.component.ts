@@ -18,6 +18,7 @@ export class OpenCashierComponent implements OnDestroy {
 
 	constructor(private router: Router, private cashierService: CashierService, private toastService: ToastService){
 		this.cashierSubscription = this.cashierService.getCurrentCashierObservable().subscribe((currentCashier: CashierClosure) => {
+			console.log(currentCashier);
 			currentCashier.closureDate && this.router.navigate(['/home']);
 	      	this.cashierClosureDate = currentCashier.closureDate;
     	});

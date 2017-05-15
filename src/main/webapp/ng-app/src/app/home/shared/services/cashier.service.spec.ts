@@ -11,14 +11,16 @@ import { HTTPService } from '../../../shared/services/http.service';
 export const MockCashierClosureOpen = {
   id: 1,
   openingDate: new Date(),
-  closingDate: null,
+  closureDate: null,
+  amount:42,
   comment: null
 }
 
 export const MockCashierClosureClose = {
   id: 1,
   openingDate: new Date(),
-  closingDate: new Date(),
+  closureDate: new Date(),
+  amount: 123,
   comment: null
 }
 
@@ -50,25 +52,17 @@ describe('Service: CashierService', () => {
         conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(MockCashierClosureOpen) })));
       });
       cashierService.openCashier().then((cashier: CashierClosure)=>{
-        expect(cashierService.getCurrentCashier().closureDate).toBe(null);
+        expect(cashier.closureDate).toBe(null);
       });
    }));
 
+  //same spec as deposit()
   it(`Should make a withdrawal  when 'withdraw()' is called`, inject([MockBackend], (mockBackend: MockBackend) => {  
       mockBackend.connections.subscribe((conn: MockConnection) => {
         conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(MockCashierClosureOpen) })));
       });
       cashierService.withdraw(10).then((cashier: CashierClosure)=>{
-        expect(cashierService.getCurrentCashier().amount).toBe(42);
-      });
-  }));
-
-  it(`Should make a deposit 'deposit()' is called`, inject([MockBackend], (mockBackend: MockBackend) => {
-    mockBackend.connections.subscribe((conn: MockConnection) => {
-        conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(MockCashierClosureOpen) })));
-    });  
-    cashierService.deposit(5).then((cashier: CashierClosure)=>{
-        expect(cashierService.getCurrentCashier().amount).toBe(57);
+        expect(cashier.amount).toBe(42);
       });
   }));
 
@@ -77,8 +71,8 @@ describe('Service: CashierService', () => {
         conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(MockCashierClosureClose) })));
       });
       cashierService.closeCashier(123, 'comment').then((cashier: CashierClosure)=>{
-        expect(cashierService.getCurrentCashier().closureDate).not.toBe(null);
-        expect(cashierService.getCurrentCashier().amount).toBe(123);
+        expect(cashier.closureDate).not.toBe(null);
+        expect(cashier.amount).toBe(123);
       });
   }));
 
