@@ -21,6 +21,7 @@ export class ShoppingCartService {
   private cartProducts: CartProduct[] = JSON.parse(this.storageService.getItem(this.storage_key)) || [];
   private totalPrice: number;
   private userMobile: number;
+  private moneyDelivered: number = 0;
 
   constructor (private storageService: LocalStorageService, private httpService: HTTPService) {
     this.updateCart();
@@ -81,6 +82,7 @@ export class ShoppingCartService {
     this.storageService.removeItem(this.storage_key);
     this.cartProducts = [];
     this.userMobile = null;
+    this.moneyDelivered = 0;
     this.updateCart();
   }
 
@@ -109,6 +111,14 @@ export class ShoppingCartService {
 
   disassociateUser(): void {
     this.userMobile = null;
+  }
+
+  setMoneyDelivered(moneyDelivered: number): void {
+    this.moneyDelivered = moneyDelivered;
+  }
+
+  getMoneyDelivered(): number {
+    return this.moneyDelivered;
   }
 
   private updateCart(): void {

@@ -13,12 +13,15 @@ import { ToastService } from '../../shared/services/toast.service';
 
 export class OpenCashierComponent implements OnDestroy {
 
-	private cashierClosureDate: Date = this.cashierService.getCurrentCashier().closureDate;
+	private cashierClosureDate: Date;
 	private cashierSubscription: Subscription;
 
 	constructor(private router: Router, private cashierService: CashierService, private toastService: ToastService){
+		let currentCashier:CashierClosure = this.cashierService.getCurrentCashier();
+		if (currentCashier){
+			this.cashierClosureDate = currentCashier.closureDate;
+		}
 		this.cashierSubscription = this.cashierService.getCurrentCashierObservable().subscribe((currentCashier: CashierClosure) => {
-			console.log(currentCashier);
 			currentCashier.closureDate && this.router.navigate(['/home']);
 	      	this.cashierClosureDate = currentCashier.closureDate;
     	});

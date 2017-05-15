@@ -53,6 +53,14 @@ export class CloseCashierComponent implements OnDestroy {
     });
   }
 
+  getCashierMoney(): number {
+    return this.cashier ? this.cashier.amount : 0;
+  }
+
+  getDesbalance(): number {
+    return this.cashier ? (this.countedMoney - this.cashier.amount) : 0;
+  }
+
   ngOnDestroy(){
     this.cashierSubscription.unsubscribe();
   }

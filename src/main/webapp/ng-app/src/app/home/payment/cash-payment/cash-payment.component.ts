@@ -60,8 +60,8 @@ export class CashPaymentComponent {
 
   finishPayment(): void {
     this.dialogRef.close();
-    let dialog = this.dialog.open(ChangeDialog);
-    dialog.componentInstance.moneyCharged = this.moneyCharged - this.totalPrice;
+    this.shoppingCartService.setMoneyDelivered(this.moneyCharged);
+    this.dialog.open(ChangeDialog);
   }
 }
 
@@ -81,7 +81,9 @@ export class ChangeDialog {
 
   moneyCharged: number = 0;
 
-  constructor(public dialogRef: MdDialogRef<ChangeDialog>) {}
+  constructor(public dialogRef: MdDialogRef<ChangeDialog>, private shoppingCartService: ShoppingCartService) {
+    this.moneyCharged = shoppingCartService.getMoneyDelivered() - shoppingCartService.getTotalPrice();
+  }
 
   close(){
     this.moneyCharged = 0;

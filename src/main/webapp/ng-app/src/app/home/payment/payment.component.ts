@@ -67,9 +67,7 @@ export class PaymentComponent implements OnInit, OnDestroy{
   openCashPaymentDialog(){
     let dialogRef = this.dialog.open(CashPaymentComponent);
     dialogRef.afterClosed().subscribe(() => {
-      if (dialogRef.componentInstance.moneyCharged > this.totalPrice){
-        this.paidOut = true;
-      }
+      this.paidOut = this.shoppingCartService.getMoneyDelivered() > this.totalPrice; 
     });
   }
 

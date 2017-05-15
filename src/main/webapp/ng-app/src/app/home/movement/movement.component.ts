@@ -77,6 +77,10 @@ export class MovementComponent {
     return this.selectedCommentOption == null || this.amount == 0 || (this.selectedCommentOption == 'Other reason' && this.otherReasonComment == '')
   }
 
+  getMaxAmount(): number {
+    return this.cashier ? this.cashier.amount : 0;
+  }
+
   cancel(): void {
     this.location.back();
   }

@@ -3,11 +3,11 @@
 	<md-card>
 		<md-card-title>Money count</md-card-title>
 		<md-card-content fxLayout="column">
-			<h3>Cashier money: <span class="text-primary">{{cashier.amount | currency:'EUR':true}}</span></h3>
+			<h3>Cashier money: <span class="text-primary">{{getCashierMoney() | currency:'EUR':true}}</span></h3>
 			<md-input-container>
 				<input mdInput placeholder="Balance counted" [(ngModel)]="countedMoney">
 			</md-input-container>
-			<b>Desbalance: <span class="text-primary">{{(countedMoney - cashier.amount) | currency:'EUR':true}}</span></b>
+			<b>Desbalance: <span class="text-primary">{{getDesbalance() | currency:'EUR':true}}</span></b>
 		</md-card-content>
 	</md-card>
 	<md-card>

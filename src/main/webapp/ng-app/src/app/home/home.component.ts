@@ -40,7 +40,7 @@ export class HomeComponent implements OnInit{
 	ngOnInit(){
 		this.cashierService.getCurrentCashierObservable().subscribe((currentCashier: CashierClosure) => {
 	      this.openedCashier = currentCashier.closureDate == null;
-	      currentCashier.closureDate && this.router.navigate(['/home/opencashier']);
+	      (!this.openedCashier || currentCashier.openingDate == null) && this.router.navigate(['/home/opencashier']);
     	});
     	this.cashierService.initialize();
 	}
