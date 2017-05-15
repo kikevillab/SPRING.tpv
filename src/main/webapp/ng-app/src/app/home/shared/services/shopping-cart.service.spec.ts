@@ -19,6 +19,14 @@ export const MockProduct = {
   discontinued: false
 }
 
+export const MockUser = {
+  mobile: 666000002,
+  username: 'username',
+  dni: 'dni',
+  email: 'email',
+  address: 'address'
+}
+
 export const MockTicket = {
   ticketReference: '12341234'
 }
@@ -27,6 +35,8 @@ describe('Service: ShoppingCartService', () => {
 
   let product_code: string = 'article6';
   let shoppingCartService: ShoppingCartService;
+  let mockBackend: MockBackend;
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [HttpModule],
@@ -44,22 +54,25 @@ describe('Service: ShoppingCartService', () => {
       ]
     });
     shoppingCartService = TestBed.get(ShoppingCartService);
+    mockBackend = TestBed.get(MockBackend);
   }));
 
-  afterEach(() => {
+  afterAll(() => {
     shoppingCartService.clear();
   });
 
-  it(`Should add product to cart when 'addProduct()' is called`, inject([MockBackend], (mockBackend: MockBackend) => {
+  it(`Should add product to cart when 'addProduct()' is called`, () => {
     mockBackend.connections.subscribe((conn: MockConnection) => {
       conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(MockProduct) })));
     });
-    shoppingCartService.addProduct(product_code).then(()=>{
-      expect(shoppingCartService.getCartProducts()).toContain(new CartProduct('article6', 'article6', 20));
-    });
-  }));
+    shoppingCartService.addProduct(product_code);
+    expect(shoppingCartService.getCartProducts()).toContain(new CartProduct('article6', 'article6', 20));
+  });
 
   it(`Should remove product with code '${product_code}' of cart`, () => {
+    mockBackend.connections.subscribe((conn: MockConnection) => {
+      conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(MockProduct) })));
+    });
     shoppingCartService.addProduct(product_code);
     shoppingCartService.removeProduct(new CartProduct(product_code, 'DESCRIPTION1', 12.21));
     let found: boolean = false;
@@ -70,28 +83,30 @@ describe('Service: ShoppingCartService', () => {
   });
 
   it(`Should update the product data when 'updateProduct()' method is called`, () => {
-    shoppingCartService.addProduct(product_code).then(() => {
-      let cartProduct: CartProduct = new CartProduct(product_code, 'DESCRIPTION1', 12.21);
-      cartProduct.delivered = false;
-      shoppingCartService.updateProduct(cartProduct);
-      expect(shoppingCartService.getCartProducts()[0].delivered).toBe(false);
+    mockBackend.connections.subscribe((conn: MockConnection) => {
+      conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(MockProduct) })));
     });
+    shoppingCartService.addProduct(product_code);
+    let cartProduct: CartProduct = new CartProduct(product_code, 'DESCRIPTION1', 12.21);
+    cartProduct.delivered = false;
+    shoppingCartService.updateProduct(cartProduct);
+    expect(shoppingCartService.getCartProducts()[0].delivered).toBe(false);
+  });
+
+  it(`Should obtain the total price when 'getTotalPrice()' method is called`, () => {
+    let totalPrice:number = shoppingCartService.getTotalPrice();
+    expect(totalPrice).toBe(12.21);
   });
 
   it(`Should clear the cart when 'clear()' method is called`,() => {
-    shoppingCartService.addProduct(product_code);
     shoppingCartService.clear();
     expect(shoppingCartService.getCartProducts().length).toBe(0);
   });
 
-  it(`Should obtain the total price when 'getTotalPrice()' method is called`, () => {
-    shoppingCartService.addProduct(product_code).then(() => {
-      let totalPrice:number = shoppingCartService.getTotalPrice();
-      expect(totalPrice).toBe(20);
-    }); 
-  });
-
   it(`Should associate an user when 'associateUser()' method is called`, () => {
+    mockBackend.connections.subscribe((conn: MockConnection) => {
+      conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(MockUser) })));
+    });
     shoppingCartService.associateUser(666000002).then((userAssociated: User) => {
       expect(userAssociated.mobile).toBe(666000002);
     });
@@ -99,7 +114,7 @@ describe('Service: ShoppingCartService', () => {
 
   it(`Should disassociate an user when 'disassociateUser()' method is called`, () => {
     shoppingCartService.disassociateUser();
-     expect(shoppingCartService.getUserMobile()).toBeNull();
+    expect(shoppingCartService.getUserMobile()).toBeNull();
   });
 
 });

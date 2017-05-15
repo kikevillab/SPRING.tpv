@@ -37,7 +37,6 @@ export class ShoppingCartService {
           this.cartProducts.push(new CartProduct(productDetails.code, productDetails.description, productDetails.retailPrice));
         }
         this.updateCart();
-        this.storageService.setItem(this.storage_key, this.cartProducts);
         resolve();
       }, (error: TPVHTTPError) => reject(error.description));
     });
