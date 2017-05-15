@@ -29,16 +29,19 @@ public class CashierClosuresController {
 	}
 
 	public boolean isLastCashierClosuresClosed() {
-		return cashierClosuresDao.findFirstByOrderByOpeningDateDesc().getClosureDate() != null;
+		if(this.getLastCashierClosure() == null)
+			return true;
+		
+		return getLastCashierClosure().getClosureDate() != null;
 	}
 
-	public CashierClosures getLastCashierClosure() {
+	public CashierClosures getLastCashierClosure() throws NullPointerException {
 		return cashierClosuresDao.findFirstByOrderByOpeningDateDesc();
 	}
 
 	public CashierClosures closeCashierRequest(int amount, String comment) {
 		CashierClosures lastCashierClosure = this.getLastCashierClosure();
-		lastCashierClosure.setAmount(getLastCashierClosureAmount() + amount);
+		lastCashierClosure.setAmount(amount);
 		lastCashierClosure.setComment(comment);
 		lastCashierClosure.setClosureDate(new GregorianCalendar());
 
