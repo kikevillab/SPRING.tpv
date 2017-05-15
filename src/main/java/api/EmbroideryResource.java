@@ -32,10 +32,10 @@ public class EmbroideryResource {
         embroideryController.createEmbroidery(embroideryCreationWrapper);
     }
 
-    @RequestMapping(method = RequestMethod.PUT)
-    public void updateEmbroidery(@RequestBody EmbroideryUpdateWrapper embroideryUpdateWrapper) throws EmbroideryNotFoundException {
-        if(!embroideryController.embroideryExists(embroideryUpdateWrapper.getId())){
-            throw new EmbroideryNotFoundException("Id: " + embroideryUpdateWrapper.getId());
+    @RequestMapping(value = Uris.ID, method = RequestMethod.PUT)
+    public void updateEmbroidery(@PathVariable long id, @RequestBody EmbroideryUpdateWrapper embroideryUpdateWrapper) throws EmbroideryNotFoundException {
+        if(!embroideryController.embroideryExists(id)){
+            throw new EmbroideryNotFoundException("Id: " + id);
         }
         embroideryController.updateEmbroidery(embroideryUpdateWrapper);
     }

@@ -32,10 +32,10 @@ public class TextilePrintingResource {
         textilePrintingController.createTextilePrinting(textilePrintingCreationWrapper);
     }
 
-    @RequestMapping(method = RequestMethod.PUT)
-    public void updateTextilePrinting(@RequestBody TextilePrintingUpdateWrapper textilePrintingUpdateWrapper) throws TextilePrintingNotFoundException {
-        if(!textilePrintingController.textilePrintingExists(textilePrintingUpdateWrapper.getId())){
-            throw new TextilePrintingNotFoundException("Id: " + textilePrintingUpdateWrapper.getId());
+    @RequestMapping(value = Uris.ID, method = RequestMethod.PUT)
+    public void updateTextilePrinting(@PathVariable long id, @RequestBody TextilePrintingUpdateWrapper textilePrintingUpdateWrapper) throws TextilePrintingNotFoundException {
+        if(!textilePrintingController.textilePrintingExists(id)){
+            throw new TextilePrintingNotFoundException("Id: " + id);
         }
         textilePrintingController.updateTextilePrinting(textilePrintingUpdateWrapper);
     }

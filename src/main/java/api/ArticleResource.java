@@ -32,10 +32,10 @@ public class ArticleResource {
         articleController.createArticle(articleCreationWrapper);
     }
 
-    @RequestMapping(method = RequestMethod.PUT)
-    public void updateArticle(@RequestBody ArticleUpdateWrapper articleUpdateWrapper) throws ArticleNotFoundException {
-        if (!articleController.articleExists(articleUpdateWrapper.getId())) {
-            throw new ArticleNotFoundException("Id: " + articleUpdateWrapper.getId());
+    @RequestMapping(value = Uris.ID, method = RequestMethod.PUT)
+    public void updateArticle(@PathVariable long id, @RequestBody ArticleUpdateWrapper articleUpdateWrapper) throws ArticleNotFoundException {
+        if (!articleController.articleExists(id)) {
+            throw new ArticleNotFoundException("Id: " + id);
         }
         articleController.updateArticle(articleUpdateWrapper);
     }
