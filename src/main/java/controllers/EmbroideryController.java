@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import daos.core.EmbroideryDao;
 import entities.core.Embroidery;
 import wrappers.EmbroideryCreationWrapper;
+import wrappers.EmbroideryUpdateWrapper;
 import wrappers.EmbroideryWrapper;
 
 @Controller
@@ -34,7 +35,7 @@ public class EmbroideryController {
         embroideryDao.saveAndFlush(embroideryToBeSaved);
     }
 
-    public void updateEmbroidery(EmbroideryWrapper embroideryUpdateWrapper) {
+    public void updateEmbroidery(EmbroideryUpdateWrapper embroideryUpdateWrapper) {
         Embroidery embroideryToBeUpdated = embroideryDao.findOne(embroideryUpdateWrapper.getId());
         embroideryToBeUpdated.setCode(embroideryUpdateWrapper.getCode());
         embroideryToBeUpdated.setColors(embroideryUpdateWrapper.getColors());
@@ -44,7 +45,7 @@ public class EmbroideryController {
         embroideryToBeUpdated.setRetailPrice(embroideryUpdateWrapper.getRetailPrice());
         embroideryToBeUpdated.setSquareMillimeters(embroideryUpdateWrapper.getSquareMillimeters());
         embroideryToBeUpdated.setStitches(embroideryUpdateWrapper.getStitches());       
-        embroideryDao.saveAndFlush(embroideryToBeUpdated);       
+        embroideryDao.save(embroideryToBeUpdated);       
     }
 
     public List<EmbroideryWrapper> findAllEmbroideries() {

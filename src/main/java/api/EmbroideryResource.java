@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import api.exceptions.EmbroideryNotFoundException;
 import controllers.EmbroideryController;
 import wrappers.EmbroideryCreationWrapper;
+import wrappers.EmbroideryUpdateWrapper;
 import wrappers.EmbroideryWrapper;
 
 @RestController
@@ -32,7 +33,7 @@ public class EmbroideryResource {
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public void updateEmbroidery(@RequestBody EmbroideryWrapper embroideryUpdateWrapper) throws EmbroideryNotFoundException {
+    public void updateEmbroidery(@RequestBody EmbroideryUpdateWrapper embroideryUpdateWrapper) throws EmbroideryNotFoundException {
         if(!embroideryController.embroideryExists(embroideryUpdateWrapper.getId())){
             throw new EmbroideryNotFoundException("Id: " + embroideryUpdateWrapper.getId());
         }
