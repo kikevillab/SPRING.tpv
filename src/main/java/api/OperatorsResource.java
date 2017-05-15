@@ -13,7 +13,7 @@ import api.exceptions.AlreadyExistUserFieldException;
 import api.exceptions.InvalidUserFieldException;
 import controllers.UserController;
 import entities.users.Role;
-import wrappers.UserRegistrationWrapper;
+import wrappers.UserPageWrapper;
 import wrappers.UserWrapper;
 
 @RequestMapping(Uris.VERSION + Uris.OPERATORS)
@@ -50,9 +50,9 @@ public class OperatorsResource {
     }
     
     @RequestMapping(value = Uris.CUSTOMERS, method = RequestMethod.POST)
-    public void customerRegistration(@RequestBody UserRegistrationWrapper userRegistrationWrapper)
+    public void customerRegistration(@RequestBody UserWrapper userPageWrapper)
             throws InvalidUserFieldException, AlreadyExistUserFieldException {
-        if (!this.userController.registration(userRegistrationWrapper, Role.OPERATOR)) {
+        if (!this.userController.registration(userPageWrapper, Role.OPERATOR)) {
             throw new AlreadyExistUserFieldException();
         }
     }

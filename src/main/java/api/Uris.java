@@ -56,4 +56,6 @@ public class Uris {
 
     public static final String PHONE = "/{mobilePhone}";
 
+    public static final String SEARCH = "/search";
+
 }

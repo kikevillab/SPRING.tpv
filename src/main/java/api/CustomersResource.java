@@ -17,7 +17,7 @@ import entities.users.Role;
 import wrappers.UserWrapper;
 
 @RestController
-@RequestMapping(Uris.VERSION + Uris.CUSTOMERS)
+@RequestMapping(Uris.VERSION)
 public class CustomersResource {
 
     private UserController userController;
@@ -27,22 +27,22 @@ public class CustomersResource {
         this.userController = userController;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
-    @PreAuthorize("hasRole('ADMIN')")
+    @RequestMapping(value = Uris.SEARCH, method = RequestMethod.GET)
+    //@PreAuthorize("hasRole('ADMIN')")
     public Page<UserWrapper> userList(Pageable pageable) throws InvalidUserFieldException {
         this.validateFieldObject(pageable, "Pageable: objeto para paginar");
         return userController.getAllAndRole(pageable,Role.CUSTOMER);
     }
 
-    @RequestMapping(value = Uris.MOBILE + Uris.USER_MOBILE, method = RequestMethod.GET)
-    @PreAuthorize("hasRole('ADMIN')")
-    public UserWrapper userMobile(@PathVariable(value = "mobile") long userMobile) throws InvalidUserFieldException {
+    @RequestMapping(value = Uris.CUSTOMERS + Uris.USER_MOBILE, method = RequestMethod.GET)
+    //@PreAuthorize("hasRole('ADMIN')")
+    public UserWrapper userMobile(@PathVariable long userMobile) throws InvalidUserFieldException {
         this.validateFieldObject(userMobile,"userMobile");
         return userController.getByMobileAndRole(userMobile,Role.CUSTOMER);
     }
 
     @RequestMapping(value = Uris.IDENTIFICATION + Uris.USER_IDENTIFICATION, method = RequestMethod.GET)
-    @PreAuthorize("hasRole('ADMIN')")
+   // @PreAuthorize("hasRole('ADMIN')")
     public UserWrapper userIdentificacion(@PathVariable(value = "identification") String identification) throws InvalidUserFieldException {
         this.validateField(identification, "identification:dni");
         return userController.getByDniAndRole(identification,Role.CUSTOMER);

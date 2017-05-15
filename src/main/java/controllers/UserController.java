@@ -14,12 +14,8 @@ import daos.users.UserDao;
 import entities.users.Authorization;
 import entities.users.Role;
 import entities.users.User;
-
-import wrappers.UserRegistrationWrapper;
-
 import wrappers.UserDetailsWrapper;
 import wrappers.UserUpdateWrapper;
-
 import wrappers.UserWrapper;
 
 @Controller
@@ -106,7 +102,7 @@ public class UserController {
         return userRetorno;
     }
     
-    public boolean registrationUser(UserRegistrationWrapper userRegistrationWrapper, Role role) {
+    public boolean registrationUser(UserWrapper userRegistrationWrapper, Role role) {
         if (null == userDao.findByMobile(userRegistrationWrapper.getMobile())) {
             User user = new User(userRegistrationWrapper.getMobile(), userRegistrationWrapper.getUsername(), userRegistrationWrapper.getPassword());
             userDao.save(user);

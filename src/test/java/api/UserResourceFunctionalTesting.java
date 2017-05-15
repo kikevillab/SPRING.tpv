@@ -13,10 +13,18 @@ import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.client.HttpClientErrorException;
 
+import api.exceptions.InvalidUserFieldException;
+import entities.users.Role;
 import wrappers.UserDetailsWrapper;
+import wrappers.UserPageWrapper;
 import wrappers.UserUpdateWrapper;
 import wrappers.UserWrapper;
 
@@ -135,6 +143,80 @@ public class UserResourceFunctionalTesting {
         .path(Uris.USERS).body(userWrapper).basicAuth(token, "").clazz(Object.class)
         .put().build();
     }
+    @Test
+    public void  testCustomerApi(){
+        String token = new RestService().loginAdmin();
+        Pageable pageable = new PageRequest(0, 4);
+        String mobilePhone = "1235678X";
+        /*UserPageWrapper productosSalida = new RestBuilder<UserPageWrapper>(RestService.URL).path(Uris.CUSTOMERS+Uris.SEARCH)
+                        .param("size", "4").param("page", "1").basicAuth(token, "")
+                        .clazz(UserPageWrapper.class).get().build();*/
+        UserWrapper user= new RestBuilder<UserWrapper>(RestService.URL).path(Uris.CUSTOMERS)
+                .pathId(mobilePhone).basicAuth(token, "")
+                .clazz(UserWrapper.class).get().build();
+        
+        pageable=null;
+    }
+    
+/* 
+ *  String token = new RestService().loginAdmin();
+        String mobilePhone = String.valueOf(123456789L);
+        UserDetailsWrapper user = new RestBuilder<UserDetailsWrapper>(RestService.URL).path(Uris.USERS).pathId(mobilePhone).basicAuth(token, "")
+        .clazz(UserDetailsWrapper.class).get().build();
+        assertNotNull(user);
+ * 
+ * @RequestMapping(value = Uris.MOBILE + Uris.USER_MOBILE, method = RequestMethod.GET)
+    //@PreAuthorize("hasRole('ADMIN')")
+    public UserWrapper userMobile(@PathVariable(value = "mobile") long userMobile) throws InvalidUserFieldException {
+        this.validateFieldObject(userMobile,"userMobile");
+        return userController.getByMobileAndRole(userMobile,Role.CUSTOMER);
+    }
+ * 
+ * 
+ * ArticlePageWrapper articlePage = new RestBuilder<ArticlePageWrapper>(RestService.URL).path(Uris.ARTICLES + Uris.SEARCH)
+                .param("size", "4").param("page", "1").param("onlyOnStock", "true").basicAuth(tokenManager, "")
+                .clazz(ArticlePageWrapper.class).get().build();
+ * @Test
+    public void testGetProductsByFilter() {
+        ProductFilterWrapper productsFilterWrapper = new ProductFilterWrapper();
+        productsFilterWrapper.setDescription("");
+        productsFilterWrapper.setReference("");
+        productsFilterWrapper.setMinRetailPrice(new BigDecimal("0"));
+        productsFilterWrapper.setMaxRetailPrice(new BigDecimal("0"));
+        List<ProductsOutFilterWrapper> productosSalida = Arrays
+                .asList(new RestBuilder<ProductsOutFilterWrapper[]>(RestService.URL).path(Uris.PRODUCTS + Uris.FILTER)
+                        .clazz(ProductsOutFilterWrapper[].class).body(productsFilterWrapper).basicAuth(token, "").post().build());
+        assertTrue(productosSalida.size()>0);
+    }
+    
+    @Test
+    public void testGetProductsByFilterExtreme() {
+        ProductFilterWrapper productsFilterWrapper = new ProductFilterWrapper();
+        productsFilterWrapper.setDescription("");
+        productsFilterWrapper.setReference("");
+        productsFilterWrapper.setMinRetailPrice(new BigDecimal("1000000000000"));
+        productsFilterWrapper.setMaxRetailPrice(new BigDecimal("0"));
+        List<ProductsOutFilterWrapper> productosSalida = Arrays
+                .asList(new RestBuilder<ProductsOutFilterWrapper[]>(RestService.URL).path(Uris.PRODUCTS + Uris.FILTER)
+                        .clazz(ProductsOutFilterWrapper[].class).body(productsFilterWrapper).basicAuth(token, "").post().build());
+        assertEquals(0,productosSalida.size());
+        productsFilterWrapper.setMinRetailPrice(new BigDecimal("10"));
+        productsFilterWrapper.setMaxRetailPrice(new BigDecimal("1"));
+        List<ProductsOutFilterWrapper> productosSalida2 = Arrays
+                .asList(new RestBuilder<ProductsOutFilterWrapper[]>(RestService.URL).path(Uris.PRODUCTS + Uris.FILTER)
+                        .clazz(ProductsOutFilterWrapper[].class).body(productsFilterWrapper).basicAuth(token, "").post().build());
+        assertEquals(0,productosSalida2.size());
+    }
+    
+    @Test(expected=HttpClientErrorException.class)
+    public void testGetProductsByFilterException() {
+        ProductFilterWrapper productsFilterWrapper = new ProductFilterWrapper();
+        productsFilterWrapper.setDescription(null);
+        new RestBuilder<ProductsOutFilterWrapper[]>(RestService.URL).path(Uris.PRODUCTS + Uris.FILTER)
+        .clazz(ProductsOutFilterWrapper[].class).body(productsFilterWrapper).basicAuth(token, "").post().build();
+    }
+ * 
+ */
     
     @After
     public void deleteAll() {
