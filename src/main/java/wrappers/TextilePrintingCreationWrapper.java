@@ -5,7 +5,7 @@ public class TextilePrintingCreationWrapper extends ProductNoIdWrapper{
     private String type;
 
     public TextilePrintingCreationWrapper(){
-        
+        super();
     }
     
     public TextilePrintingCreationWrapper(String type) {

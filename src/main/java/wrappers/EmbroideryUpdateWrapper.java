@@ -8,6 +8,7 @@ public class EmbroideryUpdateWrapper extends ProductWrapper {
     private int squareMillimeters;
 
     public EmbroideryUpdateWrapper() {
+        super();
     }
 
     public int getStitches() {

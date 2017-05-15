@@ -9,6 +9,7 @@ public class EmbroideryWrapper extends ProductWrapper {
     private int squareMillimeters;
 
     public EmbroideryWrapper() {
+        super();
     }
 
     public int getStitches() {
