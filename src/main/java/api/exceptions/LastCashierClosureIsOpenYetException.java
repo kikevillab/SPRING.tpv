@@ -1,7 +1,10 @@
 package api.exceptions;
 
 public class LastCashierClosureIsOpenYetException extends ApiException {
-    public static final String DESCRIPTION = "Impossible to create an cashier closure when a last is opened yet";
+
+	private static final long serialVersionUID = -1087223939569524961L;
+
+	public static final String DESCRIPTION = "Impossible to create an cashier closure when a last is opened yet";
 
     public static final int CODE = 25;
 
