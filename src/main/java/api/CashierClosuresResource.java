@@ -2,6 +2,7 @@ package api;
 
 import api.exceptions.LastCashierClosureIsClosedException;
 import api.exceptions.LastCashierClosureIsOpenYetException;
+import api.exceptions.NotExistsCashierClosuresException;
 import controllers.CashierClosuresController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,8 +32,13 @@ public class CashierClosuresResource {
     }
 
     @RequestMapping(method = RequestMethod.GET, path = Uris.CASHIER_CLOSURES_LAST )
-    public CashierClosuresWrapper getLastCashierClosure() {
-        return new CashierClosuresWrapper( cashierClosuresController.getLastCashierClosure() );
+    public CashierClosuresWrapper getLastCashierClosure() throws NotExistsCashierClosuresException {
+    	if(cashierClosuresController.getLastCashierClosure() == null){
+    		throw new NotExistsCashierClosuresException();
+    	}
+    		
+    	return new CashierClosuresWrapper( cashierClosuresController.getLastCashierClosure() );
+    
     }
 
     @RequestMapping(method = RequestMethod.PUT, path = Uris.CASHIER_CLOSURES_CLOSE )
