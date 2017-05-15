@@ -29,7 +29,7 @@ public class TextilePrintingController {
         textilePrintingToBeSaved.setDiscontinued(textilePrintingCreationWrapper.isDiscontinued());
         textilePrintingToBeSaved.setImage(textilePrintingCreationWrapper.getImage());
         textilePrintingToBeSaved.setRetailPrice(textilePrintingCreationWrapper.getRetailPrice());
-
+        textilePrintingToBeSaved.setType(textilePrintingCreationWrapper.getType());
         textilePrintingDao.saveAndFlush(textilePrintingToBeSaved);
     }
 
@@ -40,6 +40,7 @@ public class TextilePrintingController {
         textilePrintingToBeUpdated.setDiscontinued(textilePrintingUpdateWrapper.isDiscontinued());
         textilePrintingToBeUpdated.setImage(textilePrintingUpdateWrapper.getImage());
         textilePrintingToBeUpdated.setRetailPrice(textilePrintingUpdateWrapper.getRetailPrice());
+        textilePrintingToBeUpdated.setType(textilePrintingUpdateWrapper.getType());
         textilePrintingDao.saveAndFlush(textilePrintingToBeUpdated);       
     }
 
