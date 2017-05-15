@@ -87,7 +87,7 @@ export class ShoppingCartService {
   }
 
   submitOrder(): Promise<any> {
-    return new Promise((resolve,reject) => {
+    return new Promise((resolve: Function,reject: Function) => {
       let newTicket = new TicketCheckout(this.cartProducts, this.userMobile);
       this.httpService.post(`${API_GENERIC_URI}/tickets`, newTicket).subscribe((ticketCreated: any) => {
         this.clear();
@@ -101,7 +101,7 @@ export class ShoppingCartService {
   }
 
   associateUser(userMobile: number): Promise<User> {
-    return new Promise((resolve,reject) => {
+    return new Promise((resolve: Function,reject: Function) => {
       this.httpService.get(`${API_GENERIC_URI}/users/${userMobile}`).subscribe((associatedUser: User) => {
         this.userMobile = associatedUser.mobile;
         resolve(associatedUser);
