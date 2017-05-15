@@ -4,7 +4,7 @@ public class MalformedHeaderException extends ApiException {
 
     private static final long serialVersionUID = -1344640670884805385L;
 
-    public static final String DESCRIPTION = "Error de Authorization en cabecera por formato erroneo, debe estar en Auth Basic";
+    public static final String DESCRIPTION = "Authorization header error due to wrong format, Auth Basic should be used";
 
     public static final int CODE = 3;
 

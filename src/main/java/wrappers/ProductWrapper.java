@@ -19,6 +19,8 @@ public class ProductWrapper {
     private BigDecimal retailPrice;
 
     private boolean discontinued;
+    
+    private String image;
 
     public ProductWrapper() {
     }
@@ -29,6 +31,7 @@ public class ProductWrapper {
         this.retailPrice = product.getRetailPrice();
         this.description = product.getDescription();
         this.discontinued = product.isDiscontinued();
+        this.image = product.getImage();
     }
 
     public long getId() {
@@ -70,11 +73,19 @@ public class ProductWrapper {
     public void setDiscontinued(boolean discontinued) {
         this.discontinued = discontinued;
     }
+    
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 
     @Override
     public String toString() {
-        return id + ": code=" + code + ", description=" + description + ", retailPrice=" + retailPrice + ", discontinued=" + discontinued
-                + "]";
+        return id + ": code=" + code + ", description=" + description + ", retailPrice=" + retailPrice + ", discontinued=" + discontinued 
+                +  ", image=" + image +  "]";
     }
 
 }

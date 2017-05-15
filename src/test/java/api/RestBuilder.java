@@ -10,6 +10,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.DefaultResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
@@ -34,6 +35,7 @@ public class RestBuilder<T> {
     private HttpMethod method;
 
     public RestBuilder(String serverUri) {
+        restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
         this.uri = serverUri;
         headerValues = new HashMap<>();
         params = new HttpHeaders();

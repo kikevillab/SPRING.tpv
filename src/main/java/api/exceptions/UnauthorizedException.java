@@ -4,7 +4,7 @@ public class UnauthorizedException extends ApiException {
 
     private static final long serialVersionUID = -1344640670884805385L;
 
-    public static final String DESCRIPTION = "La identificación utilizada no tiene la autoridad suficiente";
+    public static final String DESCRIPTION = "Identification utilised hasn't got enough authority level";
 
     public static final int CODE = 5;
 

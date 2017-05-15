@@ -79,6 +79,7 @@ articleList:
     wholesalePrice: 10
     stock: 5
     provider: *provider666100000
+    image: /assets/img/products/img-product-5.png
   - &article84000001112
     id: 84000001112
     code: article1
@@ -87,6 +88,7 @@ articleList:
     wholesalePrice: 11
     stock: 8
     provider: *provider666100000
+    image: /assets/img/products/img-product-6.png
   - &article84000001113
     id: 84000001113
     code: article2
@@ -95,6 +97,7 @@ articleList:
     wholesalePrice: 12
     stock: 0
     provider: *provider666100000
+    image: /assets/img/products/img-product-1.png
   - &article84000001114
     id: 84000001114
     code: article3
@@ -103,6 +106,7 @@ articleList:
     wholesalePrice: 13
     stock: 15
     provider: *provider666100000
+    image: /assets/img/products/img-product-2.png
   - id: 84000001115
     code: article4
     retailPrice: 24
@@ -110,6 +114,7 @@ articleList:
     wholesalePrice: 14
     stock: 26
     provider: *provider666100001
+    image: /assets/img/products/img-product-3.png
   - id: 84000001116
     code: article5
     retailPrice: 25
@@ -117,6 +122,7 @@ articleList:
     wholesalePrice: 15
     stock: 3
     provider: *provider666100001
+    image: /assets/img/products/img-product-4.png
   - id: 84000001117
     code: article6
     retailPrice: 26
@@ -124,6 +130,7 @@ articleList:
     wholesalePrice: 16
     stock: 125
     provider: *provider666100001
+    image: /assets/img/products/img-product-5.png
   - id: 84000001118
     code: article7
     retailPrice: 27
@@ -131,6 +138,7 @@ articleList:
     wholesalePrice: 17
     stock: 67
     provider: *provider666100001
+    image: /assets/img/products/img-product-6.png
 
 embroideryList:
   - &embroidery84000002222
@@ -141,6 +149,7 @@ embroideryList:
     stitches: 0
     colors: 0
     squareMillimeters: 0
+    image: /assets/img/products/img-product-1.png
   - &embroidery84000002223
     id: 84000002223
     code: embroidery1
@@ -149,6 +158,7 @@ embroideryList:
     stitches: 1000
     colors: 1
     squareMillimeters: 10
+    image: /assets/img/products/img-product-2.png
   - &embroidery84000002224
     id: 84000002224
     code: embroidery2
@@ -157,6 +167,7 @@ embroideryList:
     stitches: 2000
     colors: 2
     squareMillimeters: 20
+    image: /assets/img/products/img-product-3.png
   - &embroidery84000002225
     id: 84000002225
     code: embroidery3
@@ -165,6 +176,7 @@ embroideryList:
     stitches: 3000
     colors: 3
     squareMillimeters: 30
+    image: /assets/img/products/img-product-4.png
 
 textilePrintingList:
   - &textilePrinting84000003333
@@ -172,24 +184,28 @@ textilePrintingList:
     code: textilePrinting0
     retailPrice: 20
     description: textilePrinting0
+    image: /assets/img/products/img-product-4.png
     type: ploter
   - &textilePrinting84000003334
     id: 84000003334
     code: textilePrinting1
     retailPrice: 21
     description: textilePrinting1
+    image: /assets/img/products/img-product-1.png
     type: ploter
   - &textilePrinting84000003335
     id: 84000003335
     code: textilePrinting2
     retailPrice: 22
     description: textilePrinting2
+    image: /assets/img/products/img-product-2.png
     type: ploter
   - &textilePrinting84000003336
     id: 84000003336
     code: textilePrinting3
     retailPrice: 23
     description: textilePrinting3
+    image: /assets/img/products/img-product-3.png
     type: ploter
 
 ticketList:
