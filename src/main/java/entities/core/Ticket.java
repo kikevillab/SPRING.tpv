@@ -13,6 +13,7 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
@@ -20,6 +21,8 @@ import javax.persistence.TemporalType;
 
 import entities.users.Encrypting;
 import entities.users.User;
+import net.glxn.qrgen.QRCode;
+import net.glxn.qrgen.image.ImageType;
 
 @Entity
 @IdClass(TicketPK.class)
@@ -34,6 +37,10 @@ public class Ticket {
 
     @Column(unique = true, nullable = false)
     private String reference;
+    
+    @Lob
+    @Column
+    private byte[] qrReference;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Shopping> shoppingList;
@@ -67,6 +74,7 @@ public class Ticket {
 
     private void updateReference() {
         reference = new Encrypting().encryptInBase64UrlSafe("" + this.getId() + Long.toString(new Date().getTime()));
+        qrReference = QRCode.from(reference).to(ImageType.JPG).stream().toByteArray();
     }
 
     public void addShopping(Shopping shopping) {
@@ -97,6 +105,11 @@ public class Ticket {
         return reference;
     }
 
+    public byte[] getQrReference()
+    {
+    	return qrReference;
+    }
+    
     @Override
     public int hashCode() {
         final int prime = 31;
