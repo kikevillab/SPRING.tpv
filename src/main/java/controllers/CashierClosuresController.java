@@ -41,7 +41,7 @@ public class CashierClosuresController {
 
 	public CashierClosures closeCashierRequest(int amount, String comment) {
 		CashierClosures lastCashierClosure = this.getLastCashierClosure();
-		lastCashierClosure.setAmount(getLastCashierClosureAmount() + amount);
+		lastCashierClosure.setAmount(amount);
 		lastCashierClosure.setComment(comment);
 		lastCashierClosure.setClosureDate(new GregorianCalendar());
 
