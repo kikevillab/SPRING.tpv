@@ -4,16 +4,17 @@ import { MockBackend, MockConnection } from '@angular/http/testing';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 
-import { CartProduct } from './cart-product';
+import { CartProduct } from '../models/cart-product';
+import { User } from '../../../shared/models/user';
 
 import { ShoppingCartService } from './shopping-cart.service';
-import { LocalStorageService } from '../../shared/local-storage.service';
-import { HTTPService } from '../../shared/http.service';
+import { LocalStorageService } from '../../../shared/services/local-storage.service';
+import { HTTPService } from '../../../shared/services/http.service';
 
 export const MockProduct = {
   id: 0,
-  code: 'article0',
-  description: 'article0',
+  code: 'article6',
+  description: 'article6',
   retailPrice: 20.00,
   discontinued: false
 }
@@ -22,25 +23,10 @@ export const MockTicket = {
   ticketReference: '12341234'
 }
 
-export class TPVServiceMock {
-  public requestGet(url:string) {
-    let response = new ResponseOptions({
-      body: JSON.stringify(MockProduct)
-    });
-    return Observable.of(new Response(response));
-  }
-  public requestPost(url:string, object:Object) {
-    let response = new ResponseOptions({
-      body: JSON.stringify(MockTicket)
-    });
-    return Observable.of(new Response(response));
-  }
-}
-
 describe('Service: ShoppingCartService', () => {
 
-  let product_code:string = 'article0';
-  let shoppingCartService:ShoppingCartService;
+  let product_code: string = 'article6';
+  let shoppingCartService: ShoppingCartService;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [HttpModule],
@@ -64,33 +50,28 @@ describe('Service: ShoppingCartService', () => {
     shoppingCartService.clear();
   });
 
-  it(`Should add product to cart when 'addProduct()' is called`, inject([MockBackend], (mockBackend:MockBackend) => {
-    let found:boolean = false;
-    mockBackend.connections.subscribe(conn => {
+  it(`Should add product to cart when 'addProduct()' is called`, inject([MockBackend], (mockBackend: MockBackend) => {
+    mockBackend.connections.subscribe((conn: MockConnection) => {
       conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(MockProduct) })));
     });
-    shoppingCartService.addProduct(product_code);
-
-    shoppingCartService.getCartProducts().forEach(cartProduct => {
-      if (cartProduct.productCode == product_code) found = true;
+    shoppingCartService.addProduct(product_code).then(()=>{
+      expect(shoppingCartService.getCartProducts()).toContain(new CartProduct('article6', 'article6', 20));
     });
-    expect(found).toBe(true);
   }));
 
   it(`Should remove product with code '${product_code}' of cart`, () => {
     shoppingCartService.addProduct(product_code);
     shoppingCartService.removeProduct(new CartProduct(product_code, 'DESCRIPTION1', 12.21));
-    let found:boolean = false;
-    shoppingCartService.getCartProducts().forEach(cartProduct => {
+    let found: boolean = false;
+    shoppingCartService.getCartProducts().forEach((cartProduct: CartProduct) => {
       if (cartProduct.productCode === product_code) found = true;
     });
     expect(found).toBe(false);
   });
 
   it(`Should update the product data when 'updateProduct()' method is called`, () => {
-    let added = shoppingCartService.addProduct(product_code);
-    added.then(added=>{
-      let cartProduct:CartProduct = new CartProduct(product_code, 'DESCRIPTION1', 12.21);
+    shoppingCartService.addProduct(product_code).then(() => {
+      let cartProduct: CartProduct = new CartProduct(product_code, 'DESCRIPTION1', 12.21);
       cartProduct.delivered = false;
       shoppingCartService.updateProduct(cartProduct);
       expect(shoppingCartService.getCartProducts()[0].delivered).toBe(false);
@@ -104,15 +85,14 @@ describe('Service: ShoppingCartService', () => {
   });
 
   it(`Should obtain the total price when 'getTotalPrice()' method is called`, () => {
-    let added = shoppingCartService.addProduct(product_code);
-    added.then(added => {
+    shoppingCartService.addProduct(product_code).then(() => {
       let totalPrice:number = shoppingCartService.getTotalPrice();
       expect(totalPrice).toBe(20);
     }); 
   });
 
   it(`Should associate an user when 'associateUser()' method is called`, () => {
-    shoppingCartService.associateUser(666000002).then(userAssociated=>{
+    shoppingCartService.associateUser(666000002).then((userAssociated: User) => {
       expect(userAssociated.mobile).toBe(666000002);
     });
   });

@@ -9,30 +9,26 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import 'hammerjs';
 import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
 
-import { SearchComponent } from './search.component';
-
+import { MovementComponent } from './movement.component';
+import { CashierService } from '../shared/services/cashier.service';
 import { ToastService } from '../../shared/services/toast.service';
-import { ShoppingCartService } from '../shared/services/shopping-cart.service';
-import { LocalStorageService } from '../../shared/services/local-storage.service';
 import { HTTPService } from '../../shared/services/http.service';
 
+describe('Component: MovementComponent', () => {
 
-describe('Component: SearchComponent', () => {
-
-  let search: SearchComponent;
+  let movement: MovementComponent;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [ MaterialModule, FlexLayoutModule, FormsModule, BrowserAnimationsModule ],
-      declarations: [ SearchComponent ],
+      declarations: [ MovementComponent ],
       providers: [
         { provide: Router },
         ToastService,
-        ShoppingCartService,
-        LocalStorageService,
-        HTTPService, 
         MockBackend,
         BaseRequestOptions,
+        HTTPService, 
+        CashierService
         {
           provide: Http,
           useFactory: (backend, options) => new Http(backend, options),
@@ -41,8 +37,8 @@ describe('Component: SearchComponent', () => {
         ToastyService, ToastyConfig, ToastOptions, ToastData
       ]
     });
-    let fixture: any = TestBed.createComponent(SearchComponent);
-    search = fixture.componentInstance;
+    let fixture: any = TestBed.createComponent(MovementComponent);
+    movement = fixture.componentInstance;
   }));
 
 });

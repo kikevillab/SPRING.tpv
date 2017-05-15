@@ -1,24 +1,19 @@
 import { TestBed, async, inject } from '@angular/core/testing';
-import 'hammerjs';
 import { Response, ResponseOptions, BaseRequestOptions, Http } from '@angular/http';
 import { MockBackend, MockConnection } from '@angular/http/testing';
-import {browser} from 'protractor'
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/of';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import 'hammerjs';
 import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
 
 import { PaymentComponent } from './payment.component';
-import { User } from '../shared/user';
-import { ToastService } from '../../shared/toast.service';
-import { ShoppingCartService } from '../shared/shopping-cart.service';
-import { LocalStorageService } from '../../shared/local-storage.service';
-import { HTTPService } from '../../shared/http.service';
+import { ToastService } from '../../shared/services/toast.service';
+import { ShoppingCartService } from '../shared/services/shopping-cart.service';
+import { LocalStorageService } from '../../shared/services/local-storage.service';
+import { HTTPService } from '../../shared/services/http.service';
 
 
 export const UserMock = {
@@ -30,32 +25,30 @@ export const UserMock = {
 }
 describe('Component: PaymentComponent', () => {
 
-  let fixture, payment, element, de;
+  let payment;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [MaterialModule, FlexLayoutModule, NgxDatatableModule, FormsModule, BrowserAnimationsModule],
-      declarations: [PaymentComponent],
+      imports: [ MaterialModule, FlexLayoutModule, FormsModule, BrowserAnimationsModule ],
+      declarations: [ PaymentComponent ],
       providers: [
-      {provide: Router},
-      ToastService,
-      ShoppingCartService,
-      LocalStorageService,
-      MockBackend,
-      BaseRequestOptions,
-      HTTPService, 
-      {
-        provide: Http,
-        useFactory: (backend, options) => new Http(backend, options),
-        deps: [MockBackend, BaseRequestOptions]
-      },
-      ToastyService, ToastyConfig, ToastOptions, ToastData
+        { provide: Router },
+        ToastService,
+        ShoppingCartService,
+        LocalStorageService,
+        MockBackend,
+        BaseRequestOptions,
+        HTTPService, 
+        {
+          provide: Http,
+          useFactory: (backend, options) => new Http(backend, options),
+          deps: [ MockBackend, BaseRequestOptions ]
+        },
+        ToastyService, ToastyConfig, ToastOptions, ToastData
       ]
     });
-    fixture = TestBed.createComponent(PaymentComponent);
+    let fixture: any = TestBed.createComponent(PaymentComponent);
     payment = fixture.componentInstance;
-    element = fixture.nativeElement;
-    de = fixture.debugElement;
     payment.mobileNumberInput = 666000002;
   }));
 

@@ -6,15 +6,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '@angular/material';
 import 'hammerjs';
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ToastyModule } from 'ng2-toasty';
 
-import { CalculatorComponent } from './calculator/calculator.component';
+import { MovementComponent } from './movement.component';
 
+import { CashierService } from '../shared/services/cashier.service';
 import { HTTPService } from '../../shared/services/http.service';
-import { LocalStorageService } from '../../shared/services/local-storage.service';
 import { ToastService } from '../../shared/services/toast.service';
-import { ShoppingCartService } from '../shared/services/shopping-cart.service';
 
 @NgModule({
   imports: [
@@ -25,11 +23,9 @@ import { ShoppingCartService } from '../shared/services/shopping-cart.service';
     BrowserAnimationsModule,
     FlexLayoutModule,
     MaterialModule,
-    NgxDatatableModule,
     ToastyModule
   ],
-  declarations: [ CalculatorComponent ],
-  providers: [ HTTPService, LocalStorageService, ToastService, ShoppingCartService ],
-  entryComponents: [ CalculatorComponent ]
+  declarations: [ MovementComponent ],
+  providers: [ HTTPService, ToastService, CashierService ]
 })
-export class CartModule { }
+export class MovementModule { }

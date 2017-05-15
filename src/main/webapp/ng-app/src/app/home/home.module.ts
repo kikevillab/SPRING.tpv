@@ -14,16 +14,20 @@ import { HomeRoutingModule } from './home-routing.module';
 
 import { HomeComponent, OrderTrackingDialog } from './home.component';
 import { CartComponent } from './cart/cart.component';
-import { CalculatorComponent } from './cart/calculator/calculator.component';
-import { DateComponent } from '../shared/date.component';
+import { CalculatorComponent } from './cart/calculator/calculator.component'
+import { CashierService } from './shared/services/cashier.service';
+import { DateComponent } from '../shared/directives/date.component';
 
-import { HTTPService } from '../shared/http.service';
-import { LocalStorageService } from '../shared/local-storage.service';
-import { ToastService } from '../shared/toast.service';
+import { HTTPService } from '../shared/services/http.service';
+import { LocalStorageService } from '../shared/services/local-storage.service';
+import { ToastService } from '../shared/services/toast.service';
 
 import { CartModule } from './cart/cart.module';
 import { SearchModule } from './search/search.module';
 import { PaymentModule } from './payment/payment.module';
+import { OpenCashierModule } from './open-cashier/open-cashier.module';
+import { CloseCashierModule } from './close-cashier/close-cashier.module';
+import { MovementModule } from './movement/movement.module';
 
 @NgModule({
   imports: [
@@ -39,6 +43,9 @@ import { PaymentModule } from './payment/payment.module';
     CartModule,
     SearchModule,
     PaymentModule,
+    MovementModule,
+    OpenCashierModule,
+    CloseCashierModule,
     NgxDatatableModule
   ],
   declarations: [
@@ -47,7 +54,7 @@ import { PaymentModule } from './payment/payment.module';
     CartComponent,
     OrderTrackingDialog
   ],
-  providers: [HTTPService, LocalStorageService, ToastService],
+  providers: [HTTPService, LocalStorageService, ToastService, CashierService],
   entryComponents: [OrderTrackingDialog]
 })
 export class HomeModule { }

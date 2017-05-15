@@ -7,6 +7,9 @@
 
 @import '/node_modules/ng2-toasty/style-default.css';
 
+@import '~@angular/material/theming';
+@import 'theme';
+
 body{
 	background-color: #f1f1f1;
 	margin:0;
@@ -58,4 +61,8 @@ a {
 
 a, a:visited {
     color: inherit;
+}
+
+.text-primary {
+	color: mat-color($tpv-app-primary);
 }

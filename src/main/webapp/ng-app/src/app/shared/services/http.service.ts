@@ -17,12 +17,12 @@ export class HTTPService {
 		return this.http.get(endpoint, headers).map(this.extractData).catch(this.handleError);
 	}
 
-	post(endpoint:string, body:Object, headers?:Headers): Observable<any> {
+	post(endpoint:string, body?:Object, headers?:Headers): Observable<any> {
 		let options = new RequestOptions({headers: headers});
 		return this.http.post(endpoint, body, options).map(this.extractData).catch(this.handleError);
 	}
 
-	put(endpoint:string, body:Object, headers?:Headers): Observable<any> {
+	put(endpoint:string, body?:Object, headers?:Headers): Observable<any> {
 		let options = new RequestOptions({headers: headers});
 		return this.http.put(endpoint, body).map(this.extractData).catch(this.handleError);
 	}
