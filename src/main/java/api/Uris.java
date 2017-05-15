@@ -58,4 +58,13 @@ public class Uris {
 
     public static final String SEARCH = "/search";
 
+    public static final String CASHIER_CLOSURES = "/cashierclosures";
+
+    public static final String CASHIER_CLOSURES_LAST = "/last";
+
+    public static final String CASHIER_CLOSURES_CLOSE = "/close";
+
+    public static final String CASHIER_CLOSURES_DEPOSIT = "/deposit";
+
+    public static final String CASHIER_CLOSURES_WITHDRAW = "/withdraw";
 }

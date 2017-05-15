@@ -1,29 +1,28 @@
-import { Component, OnDestroy, NgModule, HostListener } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
+import { Component, HostListener } from '@angular/core';
 
 @Component({
   selector: 'calculator-view',
   templateUrl: './calculator.component.html',
   styles: [`
-  b {
-    font-size:200%;
-  }
-  #currentOperator {
-    float:right;
-  }
-  div > div > div {
-    padding:0.5em;
-  }
+    b {
+      font-size:200%;
+    }
+    #currentOperator {
+      float:right;
+    }
+    div > div > div {
+      padding:0.5em;
+    }
   `]
 })
 
 export class CalculatorComponent {
 
-  currentOperator = null;
-  firstValue = '';
-  secondValue = '';
-  result = '0';
-  decimalsActivated = false;
+  currentOperator: string = null;
+  firstValue: string = '';
+  secondValue: string = '';
+  result: string = '0';
+  decimalsActivated: boolean = false;
 
   ngOnInit(){
   	this.reset();
@@ -54,7 +53,7 @@ export class CalculatorComponent {
   }
 
   setDecimals(){
-  	if (this.currentOperator == null && this.firstValue.indexOf('.')==-1){
+  	if (this.currentOperator == null && this.firstValue.indexOf('.') == -1){
   		this.firstValue+='.';
   		this.decimalsActivated = true;
   	}else if (this.secondValue.indexOf('.')==-1){
@@ -89,7 +88,7 @@ export class CalculatorComponent {
   @HostListener('document:keypress', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) { 
     event.preventDefault();
-    let key:string = event.key;
+    let key: string = event.key;
     key == "Enter" && this.calculate();
     key == 'a' && this.reset();
     key == '.' && this.setDecimals();
