@@ -1,5 +1,5 @@
 <button id="mobileMenuButton" fxHide fxShow.xs md-icon-button mdTooltip="Close" mdTooltipPosition="below" (click)="close()">
-    <md-icon>subject</md-icon>
+  <md-icon>subject</md-icon>
 </button>
 <div [fxLayout]="row">
   <div fxFlex="50">
@@ -17,11 +17,13 @@
 <ngx-datatable
   fxHide.xs
   class="material"
-  [messages]="{emptyMessage: 'The shopping cart is empty'}"
+  [messages]="{emptyMessage: 'The shopping cart is empty', totalMessage: 'products'}"
   [rowHeight]="'auto'"
-  [columnMode]="'flex'"
+  [columnMode]="'force'"
   [rows]="cartProducts"
   [reorderable]="false"
+  [footerHeight]="50"
+  [limit]="5"
   [columns]="columns">
   <ngx-datatable-column name="Description" [flexGrow]="3">
     <ng-template let-value="value" ngx-datatable-cell-template>
@@ -81,9 +83,9 @@
   </md-list>
 </md-card>
 <p>Total: <b id="totalPrice">{{totalPrice | currency:'EUR':true}}</b></p>
-<div fxLayout="column space-around center" id="paddingContainer">
+<div fxLayout="column" id="paddingContainer">
   <md-card >
-    <form fxLayout="column" (ngSubmit)="onSubmit('cartForm', $event)" #cartForm="ngForm" class="center">
+    <form fxLayout="column" (ngSubmit)="onSubmit($event)" #cartForm="ngForm" class="center">
       <div class="form-group">
         Add product by code: 
         <md-input-container>

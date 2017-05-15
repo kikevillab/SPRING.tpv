@@ -12,16 +12,17 @@
 		<md-card-content *ngIf="!loading; else spinner">
 			<div *ngIf="products; else notFound">
 				<b>Reference</b>: {{ticketReference}}
-				<p>Number of products: {{products.length}}</p>
 				<ngx-datatable
 				fxHide.xs
 				class="material"
-				[messages]="{emptyMessage: 'No products in the ticket'}"
+				[messages]="{emptyMessage: 'No products in the ticket', totalMessage: ' products'}"
 				[rowHeight]="'auto'"
 				[columnMode]="'force'"
 				[rows]="products"
 				[reorderable]="false"
-				[columns]="columns">
+				[columns]="columns"
+				[footerHeight]="50"
+				[limit]="10">
 					<ngx-datatable-column name="Code" prop="productCode" >
 						<ng-template let-value="value" ngx-datatable-cell-template>
 							{{value}}
@@ -41,7 +42,7 @@
 						</ng-template>
 					</ngx-datatable-column>
 				</ngx-datatable>
-				<div fxHide fxShow.xs *ngIf="products.length>0; else notFound">
+				<div fxHide fxShow.xs>
 					<md-list *ngFor="let product of products">
 					    <md-list-item>
 					    <md-icon md-list-icon>shopping_basket</md-icon>
@@ -58,15 +59,20 @@
 					      <md-divider></md-divider>
 					</md-list>
 				</div>
-				<ng-template #notFound>
-					<h3 class="red">
-						<button md-icon-button>
-							<md-icon>warning</md-icon>
-						</button>
-						We're sorry, there is no ticket with the reference '{{ticketReference}}'
-					</h3>
-				</ng-template>
 			</div>
+			<ng-template #notFound>
+				<h3 class="red">
+					<button md-icon-button>
+						<md-icon>warning</md-icon>
+					</button>
+					<span fxHide.xs>
+						We're sorry, there is no ticket with the reference '{{ticketReference}}'
+					</span>
+					<span fxHide fxShow.xs>
+						We're sorry, there is no ticket with the given reference
+					</span>
+				</h3>
+			</ng-template>
 		</md-card-content>
 		<ng-template #spinner>
 			<md-spinner></md-spinner>

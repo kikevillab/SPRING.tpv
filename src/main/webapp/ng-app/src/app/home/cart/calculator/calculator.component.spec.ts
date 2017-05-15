@@ -15,10 +15,10 @@ describe('Component: CalculatorComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [MaterialModule, FlexLayoutModule],
-      declarations: [CalculatorComponent]
+      imports: [ MaterialModule, FlexLayoutModule ],
+      declarations: [ CalculatorComponent ]
     });
-    let fixture = TestBed.createComponent(CalculatorComponent);
+    let fixture: any = TestBed.createComponent(CalculatorComponent);
     calculator = fixture.componentInstance;
   }));
 

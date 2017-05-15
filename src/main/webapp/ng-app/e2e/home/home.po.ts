@@ -5,7 +5,7 @@ export class HomePage {
 	navigateTo() {
 		return browser.get('/home');
 	}
-
+	
 	getPageTitleText() {
 		return element(by.id('pageTitle')).getText();
 	}

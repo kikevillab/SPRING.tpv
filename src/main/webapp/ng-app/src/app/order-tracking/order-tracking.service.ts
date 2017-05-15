@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
 
-import { ProductState } from './product-state';
-import { HTTPService } from '../shared/http.service';
-
 import { API_GENERIC_URI } from '../app.config';
+
+import { ProductState } from './product-state';
+
+import { TPVHTTPError } from '../shared/models/tpv-http-error';
+import { HTTPService } from '../shared/services/http.service';
+
 
 
 @Injectable()
@@ -15,7 +18,7 @@ export class OrderTrackingService {
     return new Promise((resolve,reject) => {
       this.httpService.get(`${API_GENERIC_URI}/tickets/tracking/${reference}`).subscribe((products:ProductState[]) => {
         resolve(products);
-      }, error => reject(error));
+      }, (error: TPVHTTPError) => reject(error.description));
     });
   }
 }

@@ -8,7 +8,7 @@ import {Token} from './token.model';
 import {API_GENERIC_URI} from '../../app.config';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
-import {HTTPService} from '../../shared/http.service';
+import {HTTPService} from '../../shared/services/http.service';
 
 @Injectable()
 export class LoginService {
