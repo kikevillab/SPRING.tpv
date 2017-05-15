@@ -29,10 +29,13 @@ public class CashierClosuresController {
 	}
 
 	public boolean isLastCashierClosuresClosed() {
-		return cashierClosuresDao.findFirstByOrderByOpeningDateDesc().getClosureDate() != null;
+		if(this.getLastCashierClosure() == null)
+			return true;
+		
+		return getLastCashierClosure().getClosureDate() != null;
 	}
 
-	public CashierClosures getLastCashierClosure() {
+	public CashierClosures getLastCashierClosure() throws NullPointerException {
 		return cashierClosuresDao.findFirstByOrderByOpeningDateDesc();
 	}
 

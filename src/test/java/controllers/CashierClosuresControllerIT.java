@@ -32,6 +32,19 @@ public class CashierClosuresControllerIT extends TestCase {
     }
     
     @Test
+    public void shouldReturnLastCashierIsClosedWhenNoCashierClosuresExist()
+    {
+    	assertTrue(cashierClosuresController.isLastCashierClosuresClosed());
+    }
+    
+    public void shouldReturnLastCashierIsNotClosed()
+    {
+    	cashierClosuresController.createCashierClosures();
+    	
+    	assertFalse(cashierClosuresController.isLastCashierClosuresClosed());
+    }
+    
+    @Test
     public void shouldReturnCashierClosureWellformed()
     {
     	CashierClosures cashierClosures = cashierClosuresController.createCashierClosures();
@@ -42,6 +55,7 @@ public class CashierClosuresControllerIT extends TestCase {
     	assertEquals(cashierClosuresController.getLastCashierClosure().getId(), cashierClosures.getId());
     	
     }
+   
     
     @Test
     public void shouldIncreaseAmount()
@@ -76,6 +90,7 @@ public class CashierClosuresControllerIT extends TestCase {
     	assertEquals(lastCashierClosure.getId(),closesCashier.getId());
     	assertEquals(10, lastCashierClosure.getAmount());
     	assertNotNull(lastCashierClosure.getClosureDate());
+    	assertTrue(cashierClosuresController.isLastCashierClosuresClosed());
     }
     
 }
