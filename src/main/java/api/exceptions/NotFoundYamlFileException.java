@@ -4,7 +4,7 @@ public class NotFoundYamlFileException extends ApiException {
 
     private static final long serialVersionUID = 3886231640831810298L;
 
-    public static final String DESCRIPTION = "Fichero YAML no encontrado";
+    public static final String DESCRIPTION = "YAML file not found";
 
     public static final int CODE = 6;
 

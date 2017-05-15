@@ -4,7 +4,7 @@ public class AlreadyExistUserFieldException extends ApiException {
 
     private static final long serialVersionUID = -1344640670884805385L;
 
-    public static final String DESCRIPTION = "Campo mobile o email ya existente en la BD";
+    public static final String DESCRIPTION = "The mobile or email field already exists in database";
 
     public static final int CODE = 1;
 
