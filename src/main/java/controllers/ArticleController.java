@@ -102,4 +102,8 @@ public class ArticleController {
         articleWrapper.setStock(article.getStock());
         return articleWrapper;
     }
+
+    public void deleteArticle(long id) {
+        articleDao.delete(id);      
+    }
 }

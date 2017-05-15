@@ -68,5 +68,9 @@ public class TextilePrintingController {
 
     public boolean textilePrintingExists(long id) {
         return textilePrintingDao.exists(id);
+    }
+
+    public void deleteTextilePrinting(long id) {
+        textilePrintingDao.delete(id);    
     }  
 }

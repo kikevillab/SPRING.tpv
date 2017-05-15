@@ -52,4 +52,12 @@ public class ArticleResource {
         }
         return articleController.findOneArticle(id);
     }
+    
+    @RequestMapping(value = Uris.ID, method = RequestMethod.DELETE)
+    public void deleteArticle(@PathVariable long id) throws ArticleNotFoundException{
+        if(!articleController.articleExists(id)){
+            throw new ArticleNotFoundException("Id: " + id);
+        }
+        articleController.deleteArticle(id);        
+    }
 }

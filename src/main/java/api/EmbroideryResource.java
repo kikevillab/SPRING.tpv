@@ -52,4 +52,12 @@ public class EmbroideryResource {
         }
         return embroideryController.findOneEmbroidery(id);
     }
+    
+    @RequestMapping(value = Uris.ID, method = RequestMethod.DELETE)
+    public void deleteEmbroidery(@PathVariable long id) throws EmbroideryNotFoundException{
+        if(!embroideryController.embroideryExists(id)){
+            throw new EmbroideryNotFoundException("Id: " + id);
+        }
+        embroideryController.deleteEmbroidery(id);        
+    }
 }

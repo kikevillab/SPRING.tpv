@@ -77,4 +77,8 @@ public class EmbroideryController {
         return embroideryDao.exists(id);
     }
 
+    public void deleteEmbroidery(long id) {
+        embroideryDao.delete(id);
+    }
+
 }

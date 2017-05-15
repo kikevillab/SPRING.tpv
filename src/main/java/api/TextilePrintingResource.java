@@ -52,4 +52,12 @@ public class TextilePrintingResource {
         }
         return textilePrintingController.findOneTextilePrinting(id);
     }    
+    
+    @RequestMapping(value = Uris.ID, method = RequestMethod.DELETE)
+    public void deleteTextilePrinting(@PathVariable long id) throws TextilePrintingNotFoundException{
+        if(!textilePrintingController.textilePrintingExists(id)){
+            throw new TextilePrintingNotFoundException("Id: " + id);
+        }
+        textilePrintingController.deleteTextilePrinting(id);        
+    }
 }
