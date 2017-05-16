@@ -1,7 +1,10 @@
 package api;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import api.exceptions.NotFoundProductCodeException;
 import controllers.ProductController;
 import entities.core.Product;
+import wrappers.PatchChangeDescriptionWrapper;
 import wrappers.ProductWrapper;
 
 @RestController
@@ -32,4 +36,17 @@ public class ProductResource {
         return new ProductWrapper(product);
     }
 
+    @RequestMapping(value = Uris.ID, method = RequestMethod.PATCH)
+    public void setProductAsDiscontinued(@PathVariable long id, @RequestBody List<PatchChangeDescriptionWrapper> patchChangeDescriptionsWrapper){
+        for(PatchChangeDescriptionWrapper patchRequestBodyWrapper : patchChangeDescriptionsWrapper){
+            String operation = patchRequestBodyWrapper.getOp();
+            String path = patchRequestBodyWrapper.getPath();
+            String value = patchRequestBodyWrapper.getValue();
+            if(operation.equals(PatchOperations.REPLACE)){
+                if(path.equals(Uris.DISCONTINUED)){
+                    productController.setProductAsDiscontinued(id, Boolean.parseBoolean(value));
+                }
+            }
+        }
+    }
 }

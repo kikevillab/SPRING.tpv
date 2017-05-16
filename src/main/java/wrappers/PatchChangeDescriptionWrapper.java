@@ -1,13 +1,13 @@
 package wrappers;
 
-public class PatchRequestBodyWrapper {
+public class PatchChangeDescriptionWrapper {
     private String op;
 
     private String path;
 
     private String value;
 
-    public PatchRequestBodyWrapper(){
+    public PatchChangeDescriptionWrapper(){
         
     }
 

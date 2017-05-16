@@ -24,4 +24,10 @@ public class ProductController {
         Product product = productDao.findFirstByCode(productCode);
         return product != null;
     }
+
+    public void setProductAsDiscontinued(long id, boolean discontinued) {
+        Product product = productDao.findOne(id);
+        product.setDiscontinued(discontinued);
+        productDao.saveAndFlush(product);
+    }
 }
