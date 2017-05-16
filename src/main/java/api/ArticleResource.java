@@ -16,7 +16,7 @@ import wrappers.ArticleUpdateWrapper;
 import wrappers.ArticleWrapper;
 
 @RestController
-@RequestMapping(Uris.VERSION + Uris.EMBROIDERIES)
+@RequestMapping(Uris.VERSION + Uris.ARTICLES)
 public class ArticleResource {
 
     private ArticleController articleController;

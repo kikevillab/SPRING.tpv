@@ -44,6 +44,8 @@ public class Uris {
     
     public static final String TEXTILE_PRINTINGS = "/textileprintings";
     
+    public static final String ARTICLES = "/articles";
+    
     public static final String DISCONTINUED = "/discontinued";
 
 }
