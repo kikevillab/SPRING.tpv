@@ -34,9 +34,7 @@ public class EmbroideryResource {
 
     @RequestMapping(value = Uris.ID, method = RequestMethod.PUT)
     public void updateEmbroidery(@PathVariable long id, @RequestBody EmbroideryUpdateWrapper embroideryUpdateWrapper) throws EmbroideryNotFoundException {
-        if(!embroideryController.embroideryExists(id)){
-            throw new EmbroideryNotFoundException("Id: " + id);
-        }
+        throwExceptionIfEmbroideryDoesNotExist(id);
         embroideryController.updateEmbroidery(embroideryUpdateWrapper);
     }
 
@@ -47,17 +45,19 @@ public class EmbroideryResource {
     
     @RequestMapping(value = Uris.ID, method = RequestMethod.GET)
     public EmbroideryWrapper findOneEmbroidery(@PathVariable long id) throws EmbroideryNotFoundException{
-        if(!embroideryController.embroideryExists(id)){
-            throw new EmbroideryNotFoundException("Id: " + id);
-        }
+        throwExceptionIfEmbroideryDoesNotExist(id);
         return embroideryController.findOneEmbroidery(id);
     }
     
     @RequestMapping(value = Uris.ID, method = RequestMethod.DELETE)
     public void deleteEmbroidery(@PathVariable long id) throws EmbroideryNotFoundException{
+        throwExceptionIfEmbroideryDoesNotExist(id);
+        embroideryController.deleteEmbroidery(id);        
+    }
+    
+    private void throwExceptionIfEmbroideryDoesNotExist(long id) throws EmbroideryNotFoundException{
         if(!embroideryController.embroideryExists(id)){
             throw new EmbroideryNotFoundException("Id: " + id);
         }
-        embroideryController.deleteEmbroidery(id);        
     }
 }

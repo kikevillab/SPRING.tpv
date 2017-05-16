@@ -34,9 +34,7 @@ public class ArticleResource {
 
     @RequestMapping(value = Uris.ID, method = RequestMethod.PUT)
     public void updateArticle(@PathVariable long id, @RequestBody ArticleUpdateWrapper articleUpdateWrapper) throws ArticleNotFoundException {
-        if (!articleController.articleExists(id)) {
-            throw new ArticleNotFoundException("Id: " + id);
-        }
+        throwExceptionIfArticleDoesNotExist(id);
         articleController.updateArticle(articleUpdateWrapper);
     }
 
@@ -47,17 +45,19 @@ public class ArticleResource {
 
     @RequestMapping(value = Uris.ID, method = RequestMethod.GET)
     public ArticleWrapper findOneArticle(@PathVariable long id) throws ArticleNotFoundException {
-        if (!articleController.articleExists(id)) {
-            throw new ArticleNotFoundException("Id: " + id);
-        }
+        throwExceptionIfArticleDoesNotExist(id);
         return articleController.findOneArticle(id);
     }
     
     @RequestMapping(value = Uris.ID, method = RequestMethod.DELETE)
     public void deleteArticle(@PathVariable long id) throws ArticleNotFoundException{
+        throwExceptionIfArticleDoesNotExist(id);
+        articleController.deleteArticle(id);        
+    }
+    
+    private void throwExceptionIfArticleDoesNotExist(long id) throws ArticleNotFoundException{
         if(!articleController.articleExists(id)){
             throw new ArticleNotFoundException("Id: " + id);
         }
-        articleController.deleteArticle(id);        
     }
 }

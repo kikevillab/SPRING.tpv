@@ -34,9 +34,7 @@ public class TextilePrintingResource {
 
     @RequestMapping(value = Uris.ID, method = RequestMethod.PUT)
     public void updateTextilePrinting(@PathVariable long id, @RequestBody TextilePrintingUpdateWrapper textilePrintingUpdateWrapper) throws TextilePrintingNotFoundException {
-        if(!textilePrintingController.textilePrintingExists(id)){
-            throw new TextilePrintingNotFoundException("Id: " + id);
-        }
+        throwExceptionIfTextilePrintingDoesNotExist(id);
         textilePrintingController.updateTextilePrinting(textilePrintingUpdateWrapper);
     }
 
@@ -47,17 +45,19 @@ public class TextilePrintingResource {
     
     @RequestMapping(value = Uris.ID, method = RequestMethod.GET)
     public TextilePrintingWrapper findOneTextilePrinting(@PathVariable long id) throws TextilePrintingNotFoundException{
-        if(!textilePrintingController.textilePrintingExists(id)){
-            throw new TextilePrintingNotFoundException("Id: " + id);
-        }
+        throwExceptionIfTextilePrintingDoesNotExist(id);
         return textilePrintingController.findOneTextilePrinting(id);
     }    
     
     @RequestMapping(value = Uris.ID, method = RequestMethod.DELETE)
     public void deleteTextilePrinting(@PathVariable long id) throws TextilePrintingNotFoundException{
+        throwExceptionIfTextilePrintingDoesNotExist(id);
+        textilePrintingController.deleteTextilePrinting(id);        
+    }
+    
+    private void throwExceptionIfTextilePrintingDoesNotExist(long id) throws TextilePrintingNotFoundException{
         if(!textilePrintingController.textilePrintingExists(id)){
             throw new TextilePrintingNotFoundException("Id: " + id);
         }
-        textilePrintingController.deleteTextilePrinting(id);        
     }
 }
