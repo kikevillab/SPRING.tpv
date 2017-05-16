@@ -7,6 +7,9 @@ import java.util.Base64.Encoder;
 import java.util.Calendar;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import api.Constants;
 import entities.core.Shopping;
 import entities.core.Ticket;
 
@@ -14,6 +17,7 @@ public class TicketWrapper {
     
     private long id;
 
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern=Constants.US_DATE_FORMAT)
     private Calendar created;
 
     private String reference;
