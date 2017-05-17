@@ -13,7 +13,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
 
 import { CartProduct } from '../shared/models/cart-product';
-import { CartComponent } from './cart.component';
+import { ShoppingCartComponent } from './shopping-cart.component';
 import { DateComponent } from '../../shared/directives/date.component';
 
 import { ToastService } from '../../shared/services/toast.service';
@@ -34,15 +34,15 @@ export const MockTicket = {
   ticketReference: '12341234'
 }
 
-describe('Component: CartComponent', () => {
+describe('Component: ShoppingCartComponent', () => {
 
-  let cart: CartComponent;
+  let cart: ShoppingCartComponent;
   let product_code: number = 12341234;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [ MaterialModule, FlexLayoutModule, NgxDatatableModule, FormsModule, BrowserAnimationsModule ],
-      declarations: [ DateComponent, CartComponent ],
+      declarations: [ DateComponent, ShoppingCartComponent ],
       providers: [
         { provide: Router },
         ToastService,
@@ -59,7 +59,7 @@ describe('Component: CartComponent', () => {
         ToastyService, ToastyConfig, ToastOptions, ToastData
       ]
     });
-    let fixture: any = TestBed.createComponent(CartComponent);
+    let fixture: any = TestBed.createComponent(ShoppingCartComponent);
     cart = fixture.componentInstance;
     cart.codeInput = product_code;
   }));

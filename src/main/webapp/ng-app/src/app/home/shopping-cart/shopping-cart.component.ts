@@ -10,8 +10,8 @@ import { ShoppingCartService } from '../shared/services/shopping-cart.service';
 import { ToastService } from '../../shared/services/toast.service';
 
 @Component({
-  selector: 'cart-view',
-  templateUrl: './cart.component.html',
+  selector: 'shopping-cart-view',
+  templateUrl: './shopping-cart.component.html',
   styles: [`
     #mobileMenuButton {
       position:absolute;
@@ -40,7 +40,7 @@ import { ToastService } from '../../shared/services/toast.service';
   `]
 })
 
-export class CartComponent implements OnInit, OnDestroy {
+export class ShoppingCartComponent implements OnInit, OnDestroy {
 
   @Output() closeSidenavEvent: EventEmitter<boolean> = new EventEmitter();
   codeInput: number;

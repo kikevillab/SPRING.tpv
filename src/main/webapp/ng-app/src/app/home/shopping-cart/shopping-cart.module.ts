@@ -32,4 +32,4 @@ import { ShoppingCartService } from '../shared/services/shopping-cart.service';
   providers: [ HTTPService, LocalStorageService, ToastService, ShoppingCartService ],
   entryComponents: [ CalculatorComponent ]
 })
-export class CartModule { }
+export class ShoppingCartModule { }

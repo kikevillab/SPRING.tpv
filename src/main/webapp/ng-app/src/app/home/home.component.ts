@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { MdSidenav, MdDialog, MdDialogRef, MdDialogConfig } from '@angular/material';
 
-import { CartComponent } from './cart/cart.component';
+import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { CashierClosure } from './shared/models/cashier-closure';
 import { CashierService } from './shared/services/cashier.service';
 
