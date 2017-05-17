@@ -1,100 +1,103 @@
-import { Component, OnDestroy, NgModule } from '@angular/core';
-import { Router } from '@angular/router';
-import { Subscription } from 'rxjs/Subscription';
-import { MdDialog } from '@angular/material';
+import {Component, OnDestroy, NgModule} from '@angular/core';
+import {Router} from '@angular/router';
+import {Subscription} from 'rxjs/Subscription';
+import {MdDialog} from '@angular/material';
 
-import { CartProduct } from '../shared/cart-product';
-import { User } from '../shared/user';
-import { TicketCheckout } from './ticket-checkout';
-import { CashPaymentComponent } from './cash-payment.component';
+import {CartProduct} from '../shared/cart-product';
+import {User} from '../shared/user';
+import {TicketCheckout} from './ticket-checkout';
+import {CashPaymentComponent} from './cash-payment.component';
 
-import { ShoppingCartService } from '../shared/shopping-cart.service';
-import { ToastService } from '../../shared/toast.service';
-import { TPVHTTPError } from '../../shared/tpv-http-error';
+import {ShoppingCartService} from '../shared/shopping-cart.service';
+import {ToastService} from '../../shared/services/toast.service';
+import {TPVHTTPError} from '../../shared/models/tpv-http-error';
 
 @Component({
-  selector: 'payment-view',
-  templateUrl: './payment.component.html',
-  styles: [`
-  md-card {
-    margin-bottom:1em;
-    margin-right:1em;
-    position:relative;
-  }
-  #disassociateUser {
-    position:absolute;
-    right:0px;
-    top:0px;
-  }
-  md-card-content > button {
-    margin-bottom:1em;
-  }
-  md-input-container {
-    width:100%;
-  }
-  `]
+    selector: 'payment-view',
+    templateUrl: './payment.component.html',
+    styles: [`
+        md-card {
+            margin-bottom: 1em;
+            margin-right: 1em;
+            position: relative;
+        }
+
+        #disassociateUser {
+            position: absolute;
+            right: 0px;
+            top: 0px;
+        }
+
+        md-card-content > button {
+            margin-bottom: 1em;
+        }
+
+        md-input-container {
+            width: 100%;
+        }
+    `]
 })
 
 export class PaymentComponent {
 
-  totalPrice:number = this.shoppingCartService.getTotalPrice();
-  paidOut:boolean = false;
-  subscription: Subscription;
-  mobileNumberInput:number;
-  userAssociated: User;
-  
-  constructor (private shoppingCartService: ShoppingCartService, private toastService: ToastService, public dialog: MdDialog, private router:Router){
-    this.subscription = this.shoppingCartService.getCartProductsObservable().subscribe((cartProducts:CartProduct[]) => {
-      this.totalPrice = Number(this.shoppingCartService.getTotalPrice().toFixed(2));
-    });
-  }
+    totalPrice: number = this.shoppingCartService.getTotalPrice();
+    paidOut: boolean = false;
+    subscription: Subscription;
+    mobileNumberInput: number;
+    userAssociated: User;
 
-  ngOnInit(){
-    this.shoppingCartService.isShoppingCartEmpty() && this.router.navigate(['/home']);
-  }
+    constructor(private shoppingCartService: ShoppingCartService, private toastService: ToastService, public dialog: MdDialog, private router: Router) {
+        this.subscription = this.shoppingCartService.getCartProductsObservable().subscribe((cartProducts: CartProduct[]) => {
+            this.totalPrice = Number(this.shoppingCartService.getTotalPrice().toFixed(2));
+        });
+    }
 
-  isShoppingCartEmpty():boolean{
-    return this.shoppingCartService.isShoppingCartEmpty();
-  }
+    ngOnInit() {
+        this.shoppingCartService.isShoppingCartEmpty() && this.router.navigate(['/home']);
+    }
 
-  submitOrder():void {
-    this.shoppingCartService.submitOrder().then(ticketCreated =>{
-      this.router.navigate(['/home']);
-      this.toastService.success('Checkout done', `Ticket created with reference ${ticketCreated.ticketReference}`);
-    }).catch((error:TPVHTTPError) =>{
-      this.toastService.error('Error in checkout', error.description);
-    });
-  }
+    isShoppingCartEmpty(): boolean {
+        return this.shoppingCartService.isShoppingCartEmpty();
+    }
 
-  openCashPaymentDialog(){
-    let dialogRef = this.dialog.open(CashPaymentComponent);
-    dialogRef.afterClosed().subscribe(result => {
-      if (dialogRef.componentInstance.moneyCharged>this.totalPrice){
-        this.paidOut = true;
-      }
-    });
-  }
+    submitOrder(): void {
+        this.shoppingCartService.submitOrder().then(ticketCreated => {
+            this.router.navigate(['/home']);
+            this.toastService.success('Checkout done', `Ticket created with reference ${ticketCreated.ticketReference}`);
+        }).catch((error: TPVHTTPError) => {
+            this.toastService.error('Error in checkout', error.description);
+        });
+    }
 
-  associateUser(event:Event):void {
-    event.preventDefault();
-    this.shoppingCartService.associateUser(this.mobileNumberInput).then(userAssociated =>{
-      this.mobileNumberInput = null;
-      this.userAssociated = userAssociated;
-      this.toastService.success('Client asociated', `The client with the mobile ${userAssociated.mobile} has been associated`);
-    }).catch((error:TPVHTTPError) =>{
-      this.toastService.error('Error', error.description);
-    });
-  }
+    openCashPaymentDialog() {
+        let dialogRef = this.dialog.open(CashPaymentComponent);
+        dialogRef.afterClosed().subscribe(result => {
+            if (dialogRef.componentInstance.moneyCharged > this.totalPrice) {
+                this.paidOut = true;
+            }
+        });
+    }
 
-  disassociateUser():void {
-    this.toastService.info('Client dissasociated', `The client with the mobile ${this.mobileNumberInput} has been disassociated`);
-    this.shoppingCartService.disassociateUser();
-    this.userAssociated = null;
-  }
+    associateUser(event: Event): void {
+        event.preventDefault();
+        this.shoppingCartService.associateUser(this.mobileNumberInput).then(userAssociated => {
+            this.mobileNumberInput = null;
+            this.userAssociated = userAssociated;
+            this.toastService.success('Client asociated', `The client with the mobile ${userAssociated.mobile} has been associated`);
+        }).catch((error: TPVHTTPError) => {
+            this.toastService.error('Error', error.description);
+        });
+    }
 
-  cancel():void {
-    this.shoppingCartService.clear();
-    this.router.navigate(['/home']);
-  }
+    disassociateUser(): void {
+        this.toastService.info('Client dissasociated', `The client with the mobile ${this.mobileNumberInput} has been disassociated`);
+        this.shoppingCartService.disassociateUser();
+        this.userAssociated = null;
+    }
+
+    cancel(): void {
+        this.shoppingCartService.clear();
+        this.router.navigate(['/home']);
+    }
 
 }
