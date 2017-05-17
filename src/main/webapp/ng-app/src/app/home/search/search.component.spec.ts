@@ -32,7 +32,7 @@ describe('Component: SearchComponent', () => {
       providers: [
         { provide: Router },
         ToastService,
-        ShoppingCartService,
+        ShoppingService,
         LocalStorageService,
         HTTPService,
         MockBackend,

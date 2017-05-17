@@ -15,7 +15,7 @@ export class AdminGuard implements CanActivate {
     }
 
     canActivate(): boolean {
-        if (this.localStorageService.isStoraged(LOCAL_STORAGE_TOKEN_ATTRIBUTE)) {
+        if (this.localStorageService.isStored(LOCAL_STORAGE_TOKEN_ATTRIBUTE)) {
             let sessionString: string = this.localStorageService.getItem(
                 LOCAL_STORAGE_TOKEN_ATTRIBUTE);
             let parsedSession = JSON.parse(sessionString);
