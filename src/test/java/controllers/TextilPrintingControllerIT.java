@@ -41,7 +41,7 @@ public class TextilPrintingControllerIT {
         long previousCount = textilePrintingDao.count();
         textilePrintingController.createTextilePrinting(textilePrintingCreationWrapper);
         assertEquals(previousCount + 1, textilePrintingDao.count());
-        textilePrintingDao.delete(0L);
+        textilePrintingDao.delete("CODE");
     }
 
     @Test
@@ -52,15 +52,14 @@ public class TextilPrintingControllerIT {
         String type = "test_type";
         TextilePrinting randomTextilePrinting = textilePrintingDao.findAll().get(0);
         TextilePrintingUpdateWrapper textilePrintingUpdateWrapper = new TextilePrintingUpdateWrapper();
-        textilePrintingUpdateWrapper.setId(randomTextilePrinting.getId());
         textilePrintingUpdateWrapper.setCode(randomTextilePrinting.getCode());
         textilePrintingUpdateWrapper.setDescription(desc);
         textilePrintingUpdateWrapper.setDiscontinued(discontinued);
         textilePrintingUpdateWrapper.setImage(image);
         textilePrintingUpdateWrapper.setRetailPrice(randomTextilePrinting.getRetailPrice());
         textilePrintingUpdateWrapper.setType(type);
-        textilePrintingController.updateTextilePrinting(textilePrintingUpdateWrapper);
-        TextilePrinting sameTextilePrinting = textilePrintingDao.findOne(randomTextilePrinting.getId());
+        textilePrintingController.updateTextilePrinting(randomTextilePrinting.getCode(), textilePrintingUpdateWrapper);
+        TextilePrinting sameTextilePrinting = textilePrintingDao.findOne(randomTextilePrinting.getCode());
         assertEquals(desc, sameTextilePrinting.getDescription());
         assertEquals(discontinued, sameTextilePrinting.isDiscontinued());
         assertEquals(image, sameTextilePrinting.getImage());
