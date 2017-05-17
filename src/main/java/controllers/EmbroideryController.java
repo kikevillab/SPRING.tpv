@@ -25,6 +25,7 @@ public class EmbroideryController {
     public void createEmbroidery(EmbroideryCreationWrapper embroideryCreationWrapper) {
         Embroidery embroideryToBeSaved = new Embroidery();
         embroideryToBeSaved.setCode(embroideryCreationWrapper.getCode());
+        embroideryToBeSaved.setReference(embroideryCreationWrapper.getReference());
         embroideryToBeSaved.setColors(embroideryCreationWrapper.getColors());
         embroideryToBeSaved.setDescription(embroideryCreationWrapper.getDescription());
         embroideryToBeSaved.setDiscontinued(embroideryCreationWrapper.isDiscontinued());
@@ -38,6 +39,7 @@ public class EmbroideryController {
     public void updateEmbroidery(String code, EmbroideryUpdateWrapper embroideryUpdateWrapper) {
         Embroidery embroideryToBeUpdated = embroideryDao.findOne(code);
         embroideryToBeUpdated.setCode(embroideryUpdateWrapper.getCode());
+        embroideryToBeUpdated.setReference(embroideryUpdateWrapper.getReference());
         embroideryToBeUpdated.setColors(embroideryUpdateWrapper.getColors());
         embroideryToBeUpdated.setDescription(embroideryUpdateWrapper.getDescription());
         embroideryToBeUpdated.setDiscontinued(embroideryUpdateWrapper.isDiscontinued());

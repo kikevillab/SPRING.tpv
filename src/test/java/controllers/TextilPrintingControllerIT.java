@@ -33,6 +33,7 @@ public class TextilPrintingControllerIT {
     public void testCreateTextilePrinting() {
         TextilePrintingCreationWrapper textilePrintingCreationWrapper = new TextilePrintingCreationWrapper();
         textilePrintingCreationWrapper.setCode("CODE");
+        textilePrintingCreationWrapper.setReference("REFERENCE");
         textilePrintingCreationWrapper.setDescription("DESCRIPTION");
         textilePrintingCreationWrapper.setDiscontinued(false);
         textilePrintingCreationWrapper.setImage("IMAGE_URL");
@@ -53,6 +54,7 @@ public class TextilPrintingControllerIT {
         TextilePrinting randomTextilePrinting = textilePrintingDao.findAll().get(0);
         TextilePrintingUpdateWrapper textilePrintingUpdateWrapper = new TextilePrintingUpdateWrapper();
         textilePrintingUpdateWrapper.setCode(randomTextilePrinting.getCode());
+        textilePrintingUpdateWrapper.setReference(randomTextilePrinting.getReference());
         textilePrintingUpdateWrapper.setDescription(desc);
         textilePrintingUpdateWrapper.setDiscontinued(discontinued);
         textilePrintingUpdateWrapper.setImage(image);

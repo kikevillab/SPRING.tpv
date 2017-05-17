@@ -23,16 +23,16 @@ public class ArticleController {
     }
 
     public boolean articleCodeExists(String articleCode) {
-        Article article = articleDao.findFirstByCode(articleCode);
+        Article article = articleDao.findOne(articleCode);
         return article != null;
     }
 
     public Article getArticleByCode(String articleCode) {
-        return articleDao.findFirstByCode(articleCode);
+        return articleDao.findOne(articleCode);
     }
 
     public boolean hasEnoughStock(String articleCode, int amount) {
-        Article article = articleDao.findFirstByCode(articleCode);
+        Article article = articleDao.findOne(articleCode);
         boolean enoughStock = false;
         if (article != null) {
             if (article.getStock() >= amount) {
@@ -43,7 +43,7 @@ public class ArticleController {
     }
 
     public void consumeArticle(String articleCode, int amount) {
-        Article article = articleDao.findFirstByCode(articleCode);
+        Article article = articleDao.findOne(articleCode);
         if (article != null) {
             int stock = article.getStock();
             article.setStock(stock - amount);
@@ -54,6 +54,7 @@ public class ArticleController {
     public void createArticle(ArticleCreationWrapper articleCreationWrapper) {
         Article articleToBeSaved = new Article();
         articleToBeSaved.setCode(articleCreationWrapper.getCode());
+        articleToBeSaved.setReference(articleCreationWrapper.getReference());
         articleToBeSaved.setDescription(articleCreationWrapper.getDescription());
         articleToBeSaved.setDiscontinued(articleCreationWrapper.isDiscontinued());
         articleToBeSaved.setImage(articleCreationWrapper.getImage());

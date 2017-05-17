@@ -33,6 +33,7 @@ public class EmbroideryControllerIT {
     public void testCreateEmbroidery() {
         EmbroideryCreationWrapper embroideryCreationWrapper = new EmbroideryCreationWrapper();
         embroideryCreationWrapper.setCode("CODE");
+        embroideryCreationWrapper.setReference("REFERENCE");
         embroideryCreationWrapper.setColors(new Random().nextInt());
         embroideryCreationWrapper.setDescription("DESCRIPTION");
         embroideryCreationWrapper.setDiscontinued(false);
@@ -43,7 +44,7 @@ public class EmbroideryControllerIT {
         long previousCount = embroideryDao.count();
         embroideryController.createEmbroidery(embroideryCreationWrapper);
         assertEquals(previousCount + 1, embroideryDao.count());
-        embroideryDao.delete(0L);
+        embroideryDao.delete("CODE");
     }
 
     @Test
@@ -55,8 +56,8 @@ public class EmbroideryControllerIT {
         int stitches = new Random().nextInt();
         Embroidery randomEmbroidery = embroideryDao.findAll().get(0);
         EmbroideryUpdateWrapper embroideryUpdateWrapper = new EmbroideryUpdateWrapper();
-        embroideryUpdateWrapper.setId(randomEmbroidery.getId());
         embroideryUpdateWrapper.setCode(randomEmbroidery.getCode());
+        embroideryUpdateWrapper.setReference(randomEmbroidery.getReference());
         embroideryUpdateWrapper.setColors(randomEmbroidery.getColors());
         embroideryUpdateWrapper.setDescription(desc);
         embroideryUpdateWrapper.setDiscontinued(discontinued);
@@ -64,8 +65,8 @@ public class EmbroideryControllerIT {
         embroideryUpdateWrapper.setRetailPrice(randomEmbroidery.getRetailPrice());
         embroideryUpdateWrapper.setSquareMillimeters(squareMillimeters);
         embroideryUpdateWrapper.setStitches(stitches);
-        embroideryController.updateEmbroidery(embroideryUpdateWrapper);
-        Embroidery sameEmbroidery = embroideryDao.findOne(randomEmbroidery.getId());
+        embroideryController.updateEmbroidery(randomEmbroidery.getCode(), embroideryUpdateWrapper);
+        Embroidery sameEmbroidery = embroideryDao.findOne(randomEmbroidery.getCode());
         assertEquals(desc, sameEmbroidery.getDescription());
         assertEquals(discontinued, sameEmbroidery.isDiscontinued());
         assertEquals(image, sameEmbroidery.getImage());

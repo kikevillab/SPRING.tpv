@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 
 public class ProductNoIdWrapper {
     private String code;
+    
+    private String reference;
 
     private String description;
 
@@ -15,9 +17,10 @@ public class ProductNoIdWrapper {
     
     public ProductNoIdWrapper(){}
 
-    public ProductNoIdWrapper(String code, String description, BigDecimal retailPrice, boolean discontinued, String image) {
+    public ProductNoIdWrapper(String code, String reference, String description, BigDecimal retailPrice, boolean discontinued, String image) {
         super();
         this.code = code;
+        this.reference = reference;
         this.description = description;
         this.retailPrice = retailPrice;
         this.discontinued = discontinued;
@@ -64,10 +67,18 @@ public class ProductNoIdWrapper {
         this.image = image;
     }
 
+    public String getReference() {
+        return reference;
+    }
+
+    public void setReference(String reference) {
+        this.reference = reference;
+    }
+
     @Override
     public String toString() {
-        return "ProductNoIdWrapper [code=" + code + ", description=" + description + ", retailPrice=" + retailPrice + ", discontinued="
-                + discontinued + ", image=" + image + "]";
+        return "ProductNoIdWrapper [code=" + code + ", reference=" + reference + ", description=" + description + ", retailPrice="
+                + retailPrice + ", discontinued=" + discontinued + ", image=" + image + "]";
     }
     
 }

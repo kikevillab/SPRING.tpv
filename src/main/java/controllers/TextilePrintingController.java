@@ -25,6 +25,7 @@ public class TextilePrintingController {
     public void createTextilePrinting(TextilePrintingCreationWrapper textilePrintingCreationWrapper) {
         TextilePrinting textilePrintingToBeSaved = new TextilePrinting();
         textilePrintingToBeSaved.setCode(textilePrintingCreationWrapper.getCode());
+        textilePrintingToBeSaved.setReference(textilePrintingCreationWrapper.getReference());
         textilePrintingToBeSaved.setDescription(textilePrintingCreationWrapper.getDescription());
         textilePrintingToBeSaved.setDiscontinued(textilePrintingCreationWrapper.isDiscontinued());
         textilePrintingToBeSaved.setImage(textilePrintingCreationWrapper.getImage());
@@ -36,6 +37,7 @@ public class TextilePrintingController {
     public void updateTextilePrinting(String code, TextilePrintingUpdateWrapper textilePrintingUpdateWrapper) {
         TextilePrinting textilePrintingToBeUpdated = textilePrintingDao.findOne(code);
         textilePrintingToBeUpdated.setCode(textilePrintingUpdateWrapper.getCode());
+        textilePrintingToBeUpdated.setReference(textilePrintingUpdateWrapper.getReference());
         textilePrintingToBeUpdated.setDescription(textilePrintingUpdateWrapper.getDescription());
         textilePrintingToBeUpdated.setDiscontinued(textilePrintingUpdateWrapper.isDiscontinued());
         textilePrintingToBeUpdated.setImage(textilePrintingUpdateWrapper.getImage());

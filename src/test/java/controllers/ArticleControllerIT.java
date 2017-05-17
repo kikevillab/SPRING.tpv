@@ -33,7 +33,7 @@ public class ArticleControllerIT {
 
     @Test
     public void testExistentArticleCode() {
-        String articleCode = "article0";
+        String articleCode = "84000001111";
         assertTrue(articleController.articleCodeExists(articleCode));
     }
 
@@ -45,14 +45,14 @@ public class ArticleControllerIT {
     
     @Test
     public void testConsumeArticle() {
-        String articleCode = "article0";
+        String articleCode = "84000001111";
         int amount = 2;
         
-        Article article = articleDao.findFirstByCode(articleCode);
+        Article article = articleDao.findOne(articleCode);
         int previousStock = article.getStock();
         assertTrue(articleController.hasEnoughStock(articleCode, amount));
         articleController.consumeArticle(articleCode, amount);
-        article = articleDao.findFirstByCode(articleCode);
+        article = articleDao.findOne(articleCode);
         assertEquals(amount, previousStock - article.getStock());
         
         //Leave database as it was
@@ -72,6 +72,7 @@ public class ArticleControllerIT {
         ArticleCreationWrapper articleCreationWrapper = new ArticleCreationWrapper();
         articleCreationWrapper.setCode("CODE");
         articleCreationWrapper.setDescription("DESCRIPTION");
+        articleCreationWrapper.setReference("REFERENCE");
         articleCreationWrapper.setDiscontinued(false);
         articleCreationWrapper.setImage("IMAGE_URL");
         articleCreationWrapper.setRetailPrice(new BigDecimal(new Random().nextDouble()));
@@ -93,6 +94,7 @@ public class ArticleControllerIT {
         Article randomArticle = articleDao.findAll().get(0);
         ArticleUpdateWrapper articleUpdateWrapper = new ArticleUpdateWrapper();
         articleUpdateWrapper.setCode(randomArticle.getCode());
+        articleUpdateWrapper.setReference(randomArticle.getReference());
         articleUpdateWrapper.setDescription(desc);
         articleUpdateWrapper.setDiscontinued(discontinued);
         articleUpdateWrapper.setImage(image);

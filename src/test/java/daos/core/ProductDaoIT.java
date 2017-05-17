@@ -25,9 +25,6 @@ public class ProductDaoIT {
 
     @Autowired
     private TextilePrintingDao textilePrintingDao;
-    
-    @Autowired
-    private ProductDao productDao;
 
     @Test
     public void testCreateArticle() {
@@ -42,14 +39,6 @@ public class ProductDaoIT {
     @Test
     public void testCreateTextilePrinting() {
         assertEquals(4, textilePrintingDao.count());
-    }
-    
-    @Test
-    public void testFindProductByCode() {
-        String code = "embroidery2";
-        Product product = productDao.findFirstByCode(code);
-        assertNotNull(product);
-        assertEquals(code, product.getCode());
     }
 
 }
