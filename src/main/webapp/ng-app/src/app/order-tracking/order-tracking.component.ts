@@ -1,6 +1,6 @@
 /**
   * @author Sergio Banegas Cortijo
-  * Github: https://github.com/sergiobanegas 
+  * Github: https://github.com/sergiobanegas
 */
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
@@ -44,7 +44,7 @@ export class OrderTrackingComponent implements OnInit {
     ];
 
     constructor(private route: ActivatedRoute, private orderTrackingService: OrderTrackingService, private location: Location){}
-    
+
     ngOnInit(){
        this.ticketReference = this.route.snapshot.params['reference'];
        this.orderTrackingService.getTicket(this.ticketReference).then((products: ProductState[]) => {

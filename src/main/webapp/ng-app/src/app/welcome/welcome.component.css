@@ -4,10 +4,6 @@
 
 @import url('../shared/shared.css');
 
-.border {
-    border: 1px solid black;
-}
-
 .header {
     margin-left: 10%;
     margin-right: 10%;

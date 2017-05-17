@@ -18,4 +18,8 @@ export class LocalStorageService {
 	removeItem(key:string):void {
 		 localStorage.removeItem(key);
 	}
+
+	isStored(key: string): boolean {
+		return (this.getItem(key) !== null);
+	}
 }
