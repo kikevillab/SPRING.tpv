@@ -21,19 +21,17 @@ export class CashierService {
 
   constructor (private httpService: HTTPService) {}
 
-  initialize(): Promise<any> {
-    return new Promise((resolve: Function,reject: Function) => {
+  initialize(): void {
       this.httpService.get(`${API_GENERIC_URI}/cashierclosures/last`).subscribe((cashier: CashierClosure) => {
         this.currentCashier = cashier;
         this.currentCashierObservable.next(this.currentCashier);
       },(error: TPVHTTPError) => {
-           if (error.error == 'NotExistsCashierClosuresException'){
-               this.currentCashier = new CashierClosure();
-               this.currentCashierObservable.next(this.currentCashier);
-           } else {
-             reject(error.description);
-           }
-      });
+        if (error.error == 'NotExistsCashierClosuresException'){
+          this.currentCashier = new CashierClosure();
+          this.currentCashierObservable.next(this.currentCashier);
+        } else {
+          console.log(error.description);
+        }
     });
   }
 
