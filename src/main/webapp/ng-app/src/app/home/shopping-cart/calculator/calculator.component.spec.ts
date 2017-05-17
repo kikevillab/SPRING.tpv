@@ -1,3 +1,7 @@
+/**
+  * @author Sergio Banegas Cortijo
+  * Github: https://github.com/sergiobanegas 
+*/
 import { TestBed, async } from '@angular/core/testing';
 import 'hammerjs';
 import { Observable } from 'rxjs/Observable';
@@ -15,10 +19,10 @@ describe('Component: CalculatorComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [MaterialModule, FlexLayoutModule],
-      declarations: [CalculatorComponent]
+      imports: [ MaterialModule, FlexLayoutModule ],
+      declarations: [ CalculatorComponent ]
     });
-    let fixture = TestBed.createComponent(CalculatorComponent);
+    let fixture: any = TestBed.createComponent(CalculatorComponent);
     calculator = fixture.componentInstance;
   }));
 

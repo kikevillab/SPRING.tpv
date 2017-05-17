@@ -1,48 +1,63 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
-import {HttpModule, JsonpModule} from '@angular/http';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+/**
+  * @author Sergio Banegas Cortijo
+  * Github: https://github.com/sergiobanegas
+*/
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { HttpModule, JsonpModule } from '@angular/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import 'hammerjs';
-import {FlexLayoutModule} from '@angular/flex-layout';
-import {MaterialModule} from '@angular/material';
-import {NgxDatatableModule} from '@swimlane/ngx-datatable';
-import {ToastyModule} from 'ng2-toasty';
-import {HomeRoutingModule} from './home-routing.module';
-import {HomeComponent, OrderTrackingDialog} from './home.component';
-import {CartComponent} from './cart/cart.component';
-import {HTTPService} from '../shared/services/http.service';
-import {LocalStorageService} from '../shared/services/local-storage.service';
-import {ToastService} from '../shared/services/toast.service';
-import {CartModule} from './cart/cart.module';
-import {SearchModule} from './search/search.module';
-import {PaymentModule} from './payment/payment.module';
-import {SharedModule} from '../shared/shared.module';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MaterialModule } from '@angular/material';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { ToastyModule } from 'ng2-toasty';
+
+
+import { HomeRoutingModule } from './home-routing.module';
+
+import { HomeComponent, OrderTrackingDialog } from './home.component';
+import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
+import { CashierService } from './shared/services/cashier.service';
+import { DateComponent } from '../shared/directives/date.component';
+
+import { HTTPService } from '../shared/services/http.service';
+import { LocalStorageService } from '../shared/services/local-storage.service';
+import { ToastService } from '../shared/services/toast.service';
+
+import { ShoppingCartModule } from './shopping-cart/shopping-cart.module';
+import { SearchModule } from './search/search.module';
+import { PaymentModule } from './payment/payment.module';
+import { OpenCashierModule } from './open-cashier/open-cashier.module';
+import { CloseCashierModule } from './close-cashier/close-cashier.module';
+import { MovementModule } from './movement/movement.module';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        HomeRoutingModule,
-        FormsModule,
-        HttpModule,
-        JsonpModule,
-        BrowserAnimationsModule,
-        FlexLayoutModule,
-        MaterialModule,
-        ToastyModule,
-        CartModule,
-        SearchModule,
-        PaymentModule,
-        NgxDatatableModule,
-        SharedModule
-    ],
-    declarations: [
-        HomeComponent,
-        CartComponent,
-        OrderTrackingDialog
-    ],
-    providers: [HTTPService, LocalStorageService, ToastService],
-    entryComponents: [OrderTrackingDialog]
+  imports: [
+    CommonModule,
+    HomeRoutingModule,
+    FormsModule,
+    HttpModule,
+    JsonpModule,
+    BrowserAnimationsModule,
+    FlexLayoutModule,
+    MaterialModule,
+    ToastyModule,
+    ShoppingCartModule,
+    SearchModule,
+    PaymentModule,
+    MovementModule,
+    OpenCashierModule,
+    CloseCashierModule,
+    NgxDatatableModule
+  ],
+  declarations: [
+    HomeComponent,
+    DateComponent,
+    ShoppingCartComponent,
+    OrderTrackingDialog
+  ],
+  providers: [ HTTPService, LocalStorageService, ToastService, CashierService ],
+  entryComponents: [ OrderTrackingDialog ]
 })
-export class HomeModule {
-}
+export class HomeModule { }

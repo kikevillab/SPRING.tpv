@@ -1,11 +1,13 @@
-import {Component} from '@angular/core';
-import {Location} from '@angular/common';
-import {Router, ActivatedRoute, Params} from '@angular/router';
+/**
+  * @author Sergio Banegas Cortijo
+  * Github: https://github.com/sergiobanegas
+*/
+import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
+import { Router, ActivatedRoute } from '@angular/router';
 
-import {ProductState} from './product-state';
-import {OrderTrackingService} from './order-tracking.service';
-
-import {TPVHTTPError} from '../shared/models/tpv-http-error';
+import { ProductState } from './product-state';
+import { OrderTrackingService } from './order-tracking.service';
 
 @Component({
     selector: 'order-tracking-view',
@@ -14,51 +16,47 @@ import {TPVHTTPError} from '../shared/models/tpv-http-error';
         md-spinner {
             margin: 0 auto;
         }
-
         .green {
-            color: green;
+            color:green;
         }
-
         #backButton {
-            cursor: pointer;
+            cursor:pointer;
         }
-
         .red {
-            color: red;
+            color:red;
         }
 
         .red > button {
-            cursor: auto;
+            cursor:auto;
         }
     `]
 })
-export class OrderTrackingComponent {
+export class OrderTrackingComponent implements OnInit {
 
     ticketReference: string;
     loading: boolean = true;
     products: ProductState[];
     error: boolean = false;
     columns = [
-        {name: 'productCode'},
-        {name: 'description'},
-        {name: 'shoppingState'}
+      { name: 'productCode' },
+      { name: 'description' },
+      { name: 'shoppingState' }
     ];
 
-    constructor(private route: ActivatedRoute, private orderTrackingService: OrderTrackingService, private location: Location) {
+    constructor(private route: ActivatedRoute, private orderTrackingService: OrderTrackingService, private location: Location){}
+
+    ngOnInit(){
+       this.ticketReference = this.route.snapshot.params['reference'];
+       this.orderTrackingService.getTicket(this.ticketReference).then((products: ProductState[]) => {
+           this.products = products;
+           this.loading = false;
+       }).catch((error: string) => {
+           this.error = true;
+           this.loading = false;
+       }); 
     }
 
-    ngOnInit() {
-        this.ticketReference = this.route.snapshot.params['reference'];
-        this.orderTrackingService.getTicket(this.ticketReference).then((products: ProductState[]) => {
-            this.products = products;
-            this.loading = false;
-        }).catch((error: TPVHTTPError) => {
-            this.error = true;
-            this.loading = false;
-        });
-    }
-
-    goToPreviousPage(): void {
+    goToPreviousPage(): void{
         this.location.back();
     }
 

@@ -1,3 +1,9 @@
+/**
+ * @author Fran lopez
+ *
+ * @author Sergio Banegas Cortijo
+ * Github: https://github.com/sergiobanegas
+*/
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {ToastyModule} from 'ng2-toasty';
