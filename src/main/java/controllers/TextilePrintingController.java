@@ -33,8 +33,8 @@ public class TextilePrintingController {
         textilePrintingDao.saveAndFlush(textilePrintingToBeSaved);
     }
 
-    public void updateTextilePrinting(TextilePrintingUpdateWrapper textilePrintingUpdateWrapper) {
-        TextilePrinting textilePrintingToBeUpdated = textilePrintingDao.findOne(textilePrintingUpdateWrapper.getId());
+    public void updateTextilePrinting(String code, TextilePrintingUpdateWrapper textilePrintingUpdateWrapper) {
+        TextilePrinting textilePrintingToBeUpdated = textilePrintingDao.findOne(code);
         textilePrintingToBeUpdated.setCode(textilePrintingUpdateWrapper.getCode());
         textilePrintingToBeUpdated.setDescription(textilePrintingUpdateWrapper.getDescription());
         textilePrintingToBeUpdated.setDiscontinued(textilePrintingUpdateWrapper.isDiscontinued());
@@ -52,8 +52,8 @@ public class TextilePrintingController {
         return textilePrintingWrappers;
     }
 
-    public TextilePrintingWrapper findOneTextilePrinting(long id) {      
-        return entityToWrapper(textilePrintingDao.findOne(id));
+    public TextilePrintingWrapper findOneTextilePrinting(String code) {      
+        return entityToWrapper(textilePrintingDao.findOne(code));
     }
     
     private TextilePrintingWrapper entityToWrapper(TextilePrinting textilePrinting){
@@ -66,11 +66,11 @@ public class TextilePrintingController {
         return textilePrintingWrapper;
     }
 
-    public boolean textilePrintingExists(long id) {
-        return textilePrintingDao.exists(id);
+    public boolean textilePrintingExists(String code) {
+        return textilePrintingDao.exists(code);
     }
 
-    public void deleteTextilePrinting(long id) {
-        textilePrintingDao.delete(id);    
+    public void deleteTextilePrinting(String code) {
+        textilePrintingDao.delete(code);    
     }  
 }

@@ -80,7 +80,7 @@ public class ArticleControllerIT {
         long previousCount = articleDao.count();
         articleController.createArticle(articleCreationWrapper);
         assertEquals(previousCount + 1, articleDao.count());
-        articleDao.delete(0L);
+        articleDao.delete("CODE");
     }
 
     @Test
@@ -92,7 +92,6 @@ public class ArticleControllerIT {
         BigDecimal wholesalePrice = new BigDecimal(new Random().nextDouble());
         Article randomArticle = articleDao.findAll().get(0);
         ArticleUpdateWrapper articleUpdateWrapper = new ArticleUpdateWrapper();
-        articleUpdateWrapper.setId(randomArticle.getId());
         articleUpdateWrapper.setCode(randomArticle.getCode());
         articleUpdateWrapper.setDescription(desc);
         articleUpdateWrapper.setDiscontinued(discontinued);
@@ -101,7 +100,7 @@ public class ArticleControllerIT {
         articleUpdateWrapper.setStock(stock);
         articleUpdateWrapper.setWholesalePrice(wholesalePrice);
         articleController.updateArticle(articleUpdateWrapper);
-        Article sameArticle = articleDao.findOne(randomArticle.getId());
+        Article sameArticle = articleDao.findOne(randomArticle.getCode());
         assertEquals(desc, sameArticle.getDescription());
         assertEquals(discontinued, sameArticle.isDiscontinued());
         assertEquals(image, sameArticle.getImage());

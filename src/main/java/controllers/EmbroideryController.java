@@ -35,8 +35,8 @@ public class EmbroideryController {
         embroideryDao.saveAndFlush(embroideryToBeSaved);
     }
 
-    public void updateEmbroidery(EmbroideryUpdateWrapper embroideryUpdateWrapper) {
-        Embroidery embroideryToBeUpdated = embroideryDao.findOne(embroideryUpdateWrapper.getId());
+    public void updateEmbroidery(String code, EmbroideryUpdateWrapper embroideryUpdateWrapper) {
+        Embroidery embroideryToBeUpdated = embroideryDao.findOne(code);
         embroideryToBeUpdated.setCode(embroideryUpdateWrapper.getCode());
         embroideryToBeUpdated.setColors(embroideryUpdateWrapper.getColors());
         embroideryToBeUpdated.setDescription(embroideryUpdateWrapper.getDescription());
@@ -56,8 +56,8 @@ public class EmbroideryController {
         return embroideryWrappers;
     }
 
-    public EmbroideryWrapper findOneEmbroidery(long id) {      
-        return entityToWrapper(embroideryDao.findOne(id));
+    public EmbroideryWrapper findOneEmbroidery(String code) {      
+        return entityToWrapper(embroideryDao.findOne(code));
     }
     
     private EmbroideryWrapper entityToWrapper(Embroidery embroidery){
@@ -73,12 +73,12 @@ public class EmbroideryController {
         return embroideryWrapper;
     }
 
-    public boolean embroideryExists(long id) {
-        return embroideryDao.exists(id);
+    public boolean embroideryExists(String code) {
+        return embroideryDao.exists(code);
     }
 
-    public void deleteEmbroidery(long id) {
-        embroideryDao.delete(id);
+    public void deleteEmbroidery(String code) {
+        embroideryDao.delete(code);
     }
 
 }

@@ -3,6 +3,7 @@ package api;
 import java.math.BigDecimal;
 import java.util.Random;
 
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
@@ -34,4 +35,10 @@ public class EmbroideryResourceFunctionalTesting {
         new RestBuilder<Object>(RestService.URL).path(Uris.EMBROIDERIES).body(embroideryCreationWrapper).basicAuth(token, "")
         .clazz(Object.class).post().build();
     }
+    
+    @AfterClass
+    public static void tearDownOnce(){
+        new RestService().deleteAll();
+    }
 }
+        

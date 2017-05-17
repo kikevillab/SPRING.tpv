@@ -33,9 +33,9 @@ public class TextilePrintingResource {
     }
 
     @RequestMapping(value = Uris.ID, method = RequestMethod.PUT)
-    public void updateTextilePrinting(@PathVariable long id, @RequestBody TextilePrintingUpdateWrapper textilePrintingUpdateWrapper) throws TextilePrintingNotFoundException {
-        throwExceptionIfTextilePrintingDoesNotExist(id);
-        textilePrintingController.updateTextilePrinting(textilePrintingUpdateWrapper);
+    public void updateTextilePrinting(@PathVariable String code, @RequestBody TextilePrintingUpdateWrapper textilePrintingUpdateWrapper) throws TextilePrintingNotFoundException {
+        throwExceptionIfTextilePrintingDoesNotExist(code);
+        textilePrintingController.updateTextilePrinting(code, textilePrintingUpdateWrapper);
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -44,20 +44,20 @@ public class TextilePrintingResource {
     }
     
     @RequestMapping(value = Uris.ID, method = RequestMethod.GET)
-    public TextilePrintingWrapper findOneTextilePrinting(@PathVariable long id) throws TextilePrintingNotFoundException{
-        throwExceptionIfTextilePrintingDoesNotExist(id);
-        return textilePrintingController.findOneTextilePrinting(id);
+    public TextilePrintingWrapper findOneTextilePrinting(@PathVariable String code) throws TextilePrintingNotFoundException{
+        throwExceptionIfTextilePrintingDoesNotExist(code);
+        return textilePrintingController.findOneTextilePrinting(code);
     }    
     
     @RequestMapping(value = Uris.ID, method = RequestMethod.DELETE)
-    public void deleteTextilePrinting(@PathVariable long id) throws TextilePrintingNotFoundException{
-        throwExceptionIfTextilePrintingDoesNotExist(id);
-        textilePrintingController.deleteTextilePrinting(id);        
+    public void deleteTextilePrinting(@PathVariable String code) throws TextilePrintingNotFoundException{
+        throwExceptionIfTextilePrintingDoesNotExist(code);
+        textilePrintingController.deleteTextilePrinting(code);        
     }
     
-    private void throwExceptionIfTextilePrintingDoesNotExist(long id) throws TextilePrintingNotFoundException{
-        if(!textilePrintingController.textilePrintingExists(id)){
-            throw new TextilePrintingNotFoundException("Id: " + id);
+    private void throwExceptionIfTextilePrintingDoesNotExist(String code) throws TextilePrintingNotFoundException{
+        if(!textilePrintingController.textilePrintingExists(code)){
+            throw new TextilePrintingNotFoundException("Code: " + code);
         }
     }
 }

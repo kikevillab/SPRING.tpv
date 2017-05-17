@@ -33,9 +33,9 @@ public class EmbroideryResource {
     }
 
     @RequestMapping(value = Uris.ID, method = RequestMethod.PUT)
-    public void updateEmbroidery(@PathVariable long id, @RequestBody EmbroideryUpdateWrapper embroideryUpdateWrapper) throws EmbroideryNotFoundException {
-        throwExceptionIfEmbroideryDoesNotExist(id);
-        embroideryController.updateEmbroidery(embroideryUpdateWrapper);
+    public void updateEmbroidery(@PathVariable String code, @RequestBody EmbroideryUpdateWrapper embroideryUpdateWrapper) throws EmbroideryNotFoundException {
+        throwExceptionIfEmbroideryDoesNotExist(code);
+        embroideryController.updateEmbroidery(code, embroideryUpdateWrapper);
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -44,20 +44,20 @@ public class EmbroideryResource {
     }
     
     @RequestMapping(value = Uris.ID, method = RequestMethod.GET)
-    public EmbroideryWrapper findOneEmbroidery(@PathVariable long id) throws EmbroideryNotFoundException{
-        throwExceptionIfEmbroideryDoesNotExist(id);
-        return embroideryController.findOneEmbroidery(id);
+    public EmbroideryWrapper findOneEmbroidery(@PathVariable String code) throws EmbroideryNotFoundException{
+        throwExceptionIfEmbroideryDoesNotExist(code);
+        return embroideryController.findOneEmbroidery(code);
     }
     
     @RequestMapping(value = Uris.ID, method = RequestMethod.DELETE)
-    public void deleteEmbroidery(@PathVariable long id) throws EmbroideryNotFoundException{
-        throwExceptionIfEmbroideryDoesNotExist(id);
-        embroideryController.deleteEmbroidery(id);        
+    public void deleteEmbroidery(@PathVariable String code) throws EmbroideryNotFoundException{
+        throwExceptionIfEmbroideryDoesNotExist(code);
+        embroideryController.deleteEmbroidery(code);        
     }
     
-    private void throwExceptionIfEmbroideryDoesNotExist(long id) throws EmbroideryNotFoundException{
-        if(!embroideryController.embroideryExists(id)){
-            throw new EmbroideryNotFoundException("Id: " + id);
+    private void throwExceptionIfEmbroideryDoesNotExist(String code) throws EmbroideryNotFoundException{
+        if(!embroideryController.embroideryExists(code)){
+            throw new EmbroideryNotFoundException("Code: " + code);
         }
     }
 }

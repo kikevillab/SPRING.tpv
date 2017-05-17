@@ -33,8 +33,8 @@ public class ArticleResource {
     }
 
     @RequestMapping(value = Uris.ID, method = RequestMethod.PUT)
-    public void updateArticle(@PathVariable long id, @RequestBody ArticleUpdateWrapper articleUpdateWrapper) throws ArticleNotFoundException {
-        throwExceptionIfArticleDoesNotExist(id);
+    public void updateArticle(@PathVariable String code, @RequestBody ArticleUpdateWrapper articleUpdateWrapper) throws ArticleNotFoundException {
+        throwExceptionIfArticleDoesNotExist(code);
         articleController.updateArticle(articleUpdateWrapper);
     }
 
@@ -44,20 +44,20 @@ public class ArticleResource {
     }
 
     @RequestMapping(value = Uris.ID, method = RequestMethod.GET)
-    public ArticleWrapper findOneArticle(@PathVariable long id) throws ArticleNotFoundException {
-        throwExceptionIfArticleDoesNotExist(id);
-        return articleController.findOneArticle(id);
+    public ArticleWrapper findOneArticle(@PathVariable String code) throws ArticleNotFoundException {
+        throwExceptionIfArticleDoesNotExist(code);
+        return articleController.findOneArticle(code);
     }
     
     @RequestMapping(value = Uris.ID, method = RequestMethod.DELETE)
-    public void deleteArticle(@PathVariable long id) throws ArticleNotFoundException{
-        throwExceptionIfArticleDoesNotExist(id);
-        articleController.deleteArticle(id);        
+    public void deleteArticle(@PathVariable String code) throws ArticleNotFoundException{
+        throwExceptionIfArticleDoesNotExist(code);
+        articleController.deleteArticle(code);        
     }
     
-    private void throwExceptionIfArticleDoesNotExist(long id) throws ArticleNotFoundException{
-        if(!articleController.articleExists(id)){
-            throw new ArticleNotFoundException("Id: " + id);
+    private void throwExceptionIfArticleDoesNotExist(String code) throws ArticleNotFoundException{
+        if(!articleController.articleExists(code)){
+            throw new ArticleNotFoundException("Code: " + code);
         }
     }
 }

@@ -37,14 +37,14 @@ public class ProductResource {
     }
 
     @RequestMapping(value = Uris.ID, method = RequestMethod.PATCH)
-    public void setProductAsDiscontinued(@PathVariable long id, @RequestBody List<PatchChangeDescriptionWrapper> patchChangeDescriptionsWrapper){
+    public void setProductAsDiscontinued(@PathVariable String code, @RequestBody List<PatchChangeDescriptionWrapper> patchChangeDescriptionsWrapper){
         for(PatchChangeDescriptionWrapper patchRequestBodyWrapper : patchChangeDescriptionsWrapper){
             String operation = patchRequestBodyWrapper.getOp();
             String path = patchRequestBodyWrapper.getPath();
             String value = patchRequestBodyWrapper.getValue();
             if(operation.equals(PatchOperations.REPLACE)){
                 if(path.equals(Uris.DISCONTINUED)){
-                    productController.setProductAsDiscontinued(id, Boolean.parseBoolean(value));
+                    productController.setProductAsDiscontinued(code, Boolean.parseBoolean(value));
                 }
             }
         }

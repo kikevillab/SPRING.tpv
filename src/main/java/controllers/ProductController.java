@@ -17,16 +17,16 @@ public class ProductController {
     }
 
     public Product getProductByCode(String code) {
-        return productDao.findFirstByCode(code);
+        return productDao.findOne(code);
     }
 
     public boolean productCodeExists(String productCode) {
-        Product product = productDao.findFirstByCode(productCode);
+        Product product = productDao.findOne(productCode);
         return product != null;
     }
 
-    public void setProductAsDiscontinued(long id, boolean discontinued) {
-        Product product = productDao.findOne(id);
+    public void setProductAsDiscontinued(String code, boolean discontinued) {
+        Product product = productDao.findOne(code);
         product.setDiscontinued(discontinued);
         productDao.saveAndFlush(product);
     }

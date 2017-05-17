@@ -63,12 +63,12 @@ public class ArticleController {
         articleDao.saveAndFlush(articleToBeSaved);   
     }
 
-    public boolean articleExists(long id) {
-        return articleDao.exists(id);
+    public boolean articleExists(String code) {
+        return articleDao.exists(code);
     }
 
     public void updateArticle(ArticleUpdateWrapper articleUpdateWrapper) {
-        Article articleToBeUpdated = articleDao.findOne(articleUpdateWrapper.getId());
+        Article articleToBeUpdated = articleDao.findOne(articleUpdateWrapper.getCode());
         articleToBeUpdated.setCode(articleUpdateWrapper.getCode());
         articleToBeUpdated.setDescription(articleUpdateWrapper.getDescription());
         articleToBeUpdated.setDiscontinued(articleUpdateWrapper.isDiscontinued());
@@ -87,8 +87,8 @@ public class ArticleController {
         return articleWrappers;
     }
 
-    public ArticleWrapper findOneArticle(long id) {
-        return entityToWrapper(articleDao.findOne(id));
+    public ArticleWrapper findOneArticle(String code) {
+        return entityToWrapper(articleDao.findOne(code));
     }
 
     private ArticleWrapper entityToWrapper(Article article) {
@@ -103,7 +103,7 @@ public class ArticleController {
         return articleWrapper;
     }
 
-    public void deleteArticle(long id) {
-        articleDao.delete(id);      
+    public void deleteArticle(String code) {
+        articleDao.delete(code);      
     }
 }
