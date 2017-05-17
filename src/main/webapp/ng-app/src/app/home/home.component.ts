@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { MdSidenav, MdDialog, MdDialogRef, MdDialogConfig } from '@angular/material';
@@ -27,7 +27,7 @@ import { ToastService } from '../shared/services/toast.service';
 	`]
 })
 
-export class HomeComponent implements OnInit{
+export class HomeComponent implements OnInit, OnDestroy {
 
 	@ViewChild('cart') cartSidenav: MdSidenav;
 
@@ -38,28 +38,28 @@ export class HomeComponent implements OnInit{
 	constructor(private router: Router, private toastService: ToastService, private dialog: MdDialog, private cashierService: CashierService) {}
 
 	ngOnInit(){
-		this.cashierService.getCurrentCashierObservable().subscribe((currentCashier: CashierClosure) => {
+		this.cashierSubscription = this.cashierService.getCurrentCashierObservable().subscribe((currentCashier: CashierClosure) => {
 	      this.openedCashier = currentCashier.closureDate == null;
 	      (!this.openedCashier || currentCashier.openingDate == null) && this.router.navigate(['/home/opencashier']);
     	});
     	this.cashierService.initialize();
 	}
 
-	closeCartSidenav(): void{
+	closeCartSidenav(): void {
 		this.cartSideNavOpened = false;
 	}
 
-	openOrderTrackingDialog(): void{
+	openOrderTrackingDialog(): void {
 		this.dialog.open(OrderTrackingDialog);
 	}
 
-	goToMovementPage(): void {
-		this.router.navigate(['/home/movement']);
-	}
-
-	logout(): void{
+	logout(): void {
 		this.router.navigate(['/welcome']);
 		this.toastService.info('Goodbye', 'You have logged out');
+	}
+
+	ngOnDestroy(){
+		this.cashierSubscription.unsubscribe();
 	}
 
 }
