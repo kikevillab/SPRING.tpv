@@ -1,3 +1,7 @@
+/**
+  * @author Sergio Banegas Cortijo
+  * Github: https://github.com/sergiobanegas 
+*/
 import { TestBed, async, inject } from '@angular/core/testing';
 
 import { DateComponent } from './date.component';

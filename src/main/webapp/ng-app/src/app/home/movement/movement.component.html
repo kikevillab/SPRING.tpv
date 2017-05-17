@@ -8,7 +8,7 @@
 			</div>
 			<div fxLayout="row" fxLayout.xs="column">
 			<md-card class="margin-botton margin-right" fxLayout="column">
-				<md-select placeholder="Operation" [(ngModel)]="operation" >
+				<md-select placeholder="Operation" [(ngModel)]="operation" (change)="onChangeOperation()">
 				  <md-option value="Withdraw">
 				  	Withdraw
 				  </md-option>
@@ -31,8 +31,8 @@
 			<md-card-content fxLayout="row" fxLayout.xs="column">
 				<md-card class="margin-right">
 					<md-radio-group fxLayout="column">
-						  <md-radio-button name="reason" *ngIf="operation=='Withdraw'" [checked]="selectedCommentOption =='Payment to suppliers'" (click)="selectCommentOption('Payment to suppliers')" value="Payment to suppliers">Payment to suppliers</md-radio-button>
 						  <md-radio-button name="reason" [checked]="selectedCommentOption == 'Cashier closing'" (click)="selectCommentOption('Cashier closing')" value="Cashier closing" id="cashierClosureRadioButton">Cashier closing</md-radio-button>
+						  <md-radio-button name="reason" *ngIf="operation=='Withdraw'" [checked]="selectedCommentOption =='Payment to suppliers'" (click)="selectCommentOption('Payment to suppliers')" value="Payment to suppliers">Payment to suppliers</md-radio-button>
 						  <md-radio-button name="reason" [checked]="selectedCommentOption == 'Other reason'" (click)="selectCommentOption('Other reason')" value="Other reason">Other reason</md-radio-button>
 					</md-radio-group>
 				</md-card>

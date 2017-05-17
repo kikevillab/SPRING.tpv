@@ -1,3 +1,7 @@
+/**
+  * @author Sergio Banegas Cortijo
+  * Github: https://github.com/sergiobanegas 
+*/
 import { HomePage } from './home.po';
 import { CartView } from './cart/cart.po';
 import { CalculatorView } from './cart/calculator.po';

@@ -1,3 +1,7 @@
+/**
+  * @author Sergio Banegas Cortijo
+  * Github: https://github.com/sergiobanegas 
+*/
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';

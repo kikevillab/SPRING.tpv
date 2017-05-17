@@ -1,3 +1,7 @@
+/**
+  * @author Sergio Banegas Cortijo
+  * Github: https://github.com/sergiobanegas 
+*/
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
 import { Subscription } from 'rxjs/Subscription';
@@ -40,6 +44,10 @@ export class MovementComponent implements OnInit, OnDestroy {
       this.cashier = cashier;
       this.amount = 0;
     });
+  }
+
+  onChangeOperation(){
+     this.selectedCommentOption = undefined;
   }
 
   selectCommentOption(entry: string): void {

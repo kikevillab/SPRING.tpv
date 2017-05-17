@@ -1,3 +1,7 @@
+/**
+  * @author Sergio Banegas Cortijo
+  * Github: https://github.com/sergiobanegas 
+*/
 import { Component, HostListener, OnInit } from '@angular/core';
 
 @Component({

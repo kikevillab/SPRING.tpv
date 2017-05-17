@@ -1,11 +1,15 @@
+/**
+  * @author Sergio Banegas Cortijo
+  * Github: https://github.com/sergiobanegas 
+*/
 import { TestBed, async, inject } from '@angular/core/testing';
 
 import { LocalStorageService } from './local-storage.service';
 
 describe('Component: LocalStorageService', () => {
 
-  let tpv_key:string = 'tpv-test';
-  let tpv_value:string = 'testing';
+  let tpv_key: string = 'tpv-test';
+  let tpv_value: string = 'testing';
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({

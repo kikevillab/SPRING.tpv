@@ -1,3 +1,7 @@
+/**
+  * @author Sergio Banegas Cortijo
+  * Github: https://github.com/sergiobanegas 
+*/
 import { TestBed, async } from '@angular/core/testing';
 import 'hammerjs';
 import { Observable } from 'rxjs/Observable';

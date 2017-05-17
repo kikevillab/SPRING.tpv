@@ -1,3 +1,7 @@
+/**
+  * @author Sergio Banegas Cortijo
+  * Github: https://github.com/sergiobanegas 
+*/
 import { TestBed, async, inject } from '@angular/core/testing';
 import { HttpModule, Response, ResponseOptions, BaseRequestOptions, Http } from '@angular/http';
 import { MockBackend, MockConnection } from '@angular/http/testing';

@@ -1,3 +1,7 @@
+/**
+  * @author Sergio Banegas Cortijo
+  * Github: https://github.com/sergiobanegas 
+*/
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
@@ -10,7 +14,6 @@ import { ToastService } from '../../shared/services/toast.service';
   selector: 'open-cashier-view',
   templateUrl: './open-cashier.component.html'
 })
-
 export class OpenCashierComponent implements OnInit, OnDestroy {
 
 	private cashierClosureDate: Date;
@@ -22,12 +25,12 @@ export class OpenCashierComponent implements OnInit, OnDestroy {
 		let currentCashier:CashierClosure = this.cashierService.getCurrentCashier();
 		this.cashierClosureDate = currentCashier != undefined ? currentCashier.closureDate : undefined;
 		this.cashierSubscription = this.cashierService.getCurrentCashierObservable().subscribe((currentCashier: CashierClosure) => {
-			currentCashier.closureDate && this.router.navigate(['/home']);
+			!currentCashier.closureDate && this.router.navigate(['/home']);
 	      	this.cashierClosureDate = currentCashier.closureDate;
     	});
 	}
 
-	open():void {
+	open(): void {
 		this.cashierService.openCashier().then((cashier: CashierClosure) => {
 			this.toastService.info('Cashier opened', "The cashier has been opened and it's now available");
 			this.router.navigate(['/home']);
