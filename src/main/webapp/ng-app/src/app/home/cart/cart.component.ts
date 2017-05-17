@@ -43,7 +43,7 @@ import { ToastService } from '../../shared/services/toast.service';
 export class CartComponent implements OnDestroy {
 
   @Output() closeSidenavEvent: EventEmitter<boolean> = new EventEmitter();
-  codeInput: string = '';
+  codeInput: number;
   totalPrice: number = this.shoppingCartService.getTotalPrice();
   cartProducts: CartProduct[] = this.shoppingCartService.getCartProducts();
   subscription: Subscription;
@@ -69,7 +69,7 @@ export class CartComponent implements OnDestroy {
     }).catch((error: string) => {
       this.toastService.error('Error adding product', error);
     });
-    this.codeInput = '';
+    this.codeInput = null;
   }
 
   updateProduct(row: any, event: any, attribute: string): void {

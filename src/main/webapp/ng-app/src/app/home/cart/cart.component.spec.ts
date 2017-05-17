@@ -23,8 +23,8 @@ import { HTTPService } from '../../shared/services/http.service';
 
 
 export const MockProduct = {
-  id: 0,
-  code: 'article6',
+  code: 12341234,
+  reference: 'article6',
   description: 'article6',
   retailPrice: 20.00,
   discontinued: false
@@ -37,7 +37,7 @@ export const MockTicket = {
 describe('Component: CartComponent', () => {
 
   let cart: CartComponent;
-  let product_code: string = 'article6';
+  let product_code: number = 12341234;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({

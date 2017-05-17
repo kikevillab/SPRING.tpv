@@ -27,7 +27,7 @@ export class ShoppingCartService {
     this.updateCart();
   }
 
-  addProduct(productCode: string): Promise<any> {
+  addProduct(productCode: number): Promise<any> {
     return new Promise((resolve,reject) => {
       this.httpService.get(`${API_GENERIC_URI}/products/${productCode}`).subscribe((productDetails: Product) => {
         let index: number = this.cartProducts.findIndex((cp: CartProduct) => cp.productCode == productCode);
@@ -86,7 +86,7 @@ export class ShoppingCartService {
   }
 
   submitOrder(): Promise<any> {
-    return new Promise((resolve: Function,reject: Function) => {
+    return new Promise((resolve: Function, reject: Function) => {
       let newTicket = new TicketCheckout(this.cartProducts, this.userMobile);
       this.httpService.post(`${API_GENERIC_URI}/tickets`, newTicket).subscribe((ticketCreated: any) => {
         this.clear();

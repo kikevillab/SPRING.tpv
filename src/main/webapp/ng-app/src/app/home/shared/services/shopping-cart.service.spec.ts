@@ -12,8 +12,8 @@ import { LocalStorageService } from '../../../shared/services/local-storage.serv
 import { HTTPService } from '../../../shared/services/http.service';
 
 export const MockProduct = {
-  id: 0,
-  code: 'article6',
+  code: 12341234,
+  reference: 'article6',
   description: 'article6',
   retailPrice: 20.00,
   discontinued: false
@@ -33,7 +33,7 @@ export const MockTicket = {
 
 describe('Service: ShoppingCartService', () => {
 
-  let product_code: string = 'article6';
+  let product_code: number = 12341234;
   let shoppingCartService: ShoppingCartService;
   let mockBackend: MockBackend;
 
@@ -66,7 +66,7 @@ describe('Service: ShoppingCartService', () => {
       conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(MockProduct) })));
     });
     shoppingCartService.addProduct(product_code);
-    expect(shoppingCartService.getCartProducts()).toContain(new CartProduct('article6', 'article6', 20));
+    expect(shoppingCartService.getCartProducts()).toContain(new CartProduct(12341234, 'article6', 20));
   });
 
   it(`Should remove product with code '${product_code}' of cart`, () => {
