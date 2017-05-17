@@ -10,7 +10,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MaterialModule} from '@angular/material';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {NgxDatatableModule} from '@swimlane/ngx-datatable';
-import {SharedModule} from '../../shared/modules/shared.module';
+import {SharedModule} from '../../shared/shared.module';
 import {ToastyService, ToastyConfig, ToastOptions, ToastData} from 'ng2-toasty';
 
 import {CartProduct} from '../shared/cart-product';
