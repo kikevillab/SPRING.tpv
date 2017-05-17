@@ -26,7 +26,6 @@ import { ToastService } from '../shared/services/toast.service';
 		}
 	`]
 })
-
 export class HomeComponent implements OnInit, OnDestroy {
 
 	@ViewChild('cart') cartSidenav: MdSidenav;

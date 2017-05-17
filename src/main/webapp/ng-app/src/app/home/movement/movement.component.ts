@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
+import { Subscription } from 'rxjs/Subscription';
 
 import { CashierClosure } from '../shared/models/cashier-closure';
 import { CashierService } from '../shared/services/cashier.service';
@@ -22,18 +23,20 @@ import { ToastService } from '../../shared/services/toast.service';
     }
   `]
 })
-
-export class MovementComponent {
+export class MovementComponent implements OnInit, OnDestroy {
 
   operation: string = 'Withdraw';
   selectedCommentOption: string;
   otherReasonComment: string = '';
   amount: number = 0.0;
   cashier: CashierClosure;
+  cashierSubscription: Subscription;
 
-  constructor(private location: Location, private cashierService: CashierService, private toastService: ToastService){
-    this.cashier = cashierService.getCurrentCashier();
-    cashierService.getCurrentCashierObservable().subscribe((cashier: CashierClosure) => {
+  constructor(private location: Location, private cashierService: CashierService, private toastService: ToastService){}
+
+  ngOnInit(){
+    this.cashier = this.cashierService.getCurrentCashier();
+    this.cashierSubscription = this.cashierService.getCurrentCashierObservable().subscribe((cashier: CashierClosure) => {
       this.cashier = cashier;
       this.amount = 0;
     });
@@ -84,4 +87,9 @@ export class MovementComponent {
   cancel(): void {
     this.location.back();
   }
+
+  ngOnDestroy(){
+    this.cashierSubscription.unsubscribe();
+  }
+
 }

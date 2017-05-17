@@ -1,4 +1,4 @@
-import { Component, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { MdDialog } from '@angular/material';
@@ -40,7 +40,7 @@ import { ToastService } from '../../shared/services/toast.service';
   `]
 })
 
-export class CartComponent implements OnDestroy {
+export class CartComponent implements OnInit, OnDestroy {
 
   @Output() closeSidenavEvent: EventEmitter<boolean> = new EventEmitter();
   codeInput: number;
@@ -56,7 +56,9 @@ export class CartComponent implements OnDestroy {
   { name: 'totalPrice'}
   ];
 
-  constructor (private shoppingCartService: ShoppingCartService, private toastService: ToastService, private router: Router, public dialog: MdDialog){
+  constructor (private shoppingCartService: ShoppingCartService, private toastService: ToastService, private router: Router, public dialog: MdDialog){}
+
+  ngOnInit(){
     this.subscription = this.shoppingCartService.getCartProductsObservable().subscribe((cartProducts: CartProduct[]) => {
       this.cartProducts = cartProducts;
       this.totalPrice = this.shoppingCartService.getTotalPrice();
