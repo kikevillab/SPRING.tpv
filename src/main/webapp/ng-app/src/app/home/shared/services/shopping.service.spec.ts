@@ -7,7 +7,7 @@ import 'rxjs/add/observable/of';
 import { CartProduct } from '../models/cart-product';
 import { User } from '../../../shared/models/user';
 
-import { ShoppingCartService } from './shopping-cart.service';
+import { ShoppingService } from './shopping.service';
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
 import { HTTPService } from '../../../shared/services/http.service';
 
@@ -31,17 +31,17 @@ export const MockTicket = {
   ticketReference: '12341234'
 }
 
-describe('Service: ShoppingCartService', () => {
+describe('Service: ShoppingService', () => {
 
   let product_code: number = 12341234;
-  let shoppingCartService: ShoppingCartService;
+  let shoppingService: ShoppingService;
   let mockBackend: MockBackend;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [HttpModule],
       providers: [ 
-      ShoppingCartService,
+      ShoppingService,
       LocalStorageService,
       MockBackend,
       BaseRequestOptions,
@@ -53,30 +53,30 @@ describe('Service: ShoppingCartService', () => {
       }
       ]
     });
-    shoppingCartService = TestBed.get(ShoppingCartService);
+    shoppingService = TestBed.get(ShoppingService);
     mockBackend = TestBed.get(MockBackend);
   }));
 
   afterAll(() => {
-    shoppingCartService.clear();
+    shoppingService.clear();
   });
 
   it(`Should add product to cart when 'addProduct()' is called`, () => {
     mockBackend.connections.subscribe((conn: MockConnection) => {
       conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(MockProduct) })));
     });
-    shoppingCartService.addProduct(product_code);
-    expect(shoppingCartService.getCartProducts()).toContain(new CartProduct(12341234, 'article6', 20));
+    shoppingService.addProduct(product_code);
+    expect(shoppingService.getCartProducts()).toContain(new CartProduct(12341234, 'article6', 20));
   });
 
   it(`Should remove product with code '${product_code}' of cart`, () => {
     mockBackend.connections.subscribe((conn: MockConnection) => {
       conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(MockProduct) })));
     });
-    shoppingCartService.addProduct(product_code);
-    shoppingCartService.removeProduct(new CartProduct(product_code, 'DESCRIPTION1', 12.21));
+    shoppingService.addProduct(product_code);
+    shoppingService.removeProduct(new CartProduct(product_code, 'DESCRIPTION1', 12.21));
     let found: boolean = false;
-    shoppingCartService.getCartProducts().forEach((cartProduct: CartProduct) => {
+    shoppingService.getCartProducts().forEach((cartProduct: CartProduct) => {
       if (cartProduct.productCode === product_code) found = true;
     });
     expect(found).toBe(false);
@@ -86,35 +86,35 @@ describe('Service: ShoppingCartService', () => {
     mockBackend.connections.subscribe((conn: MockConnection) => {
       conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(MockProduct) })));
     });
-    shoppingCartService.addProduct(product_code);
+    shoppingService.addProduct(product_code);
     let cartProduct: CartProduct = new CartProduct(product_code, 'DESCRIPTION1', 12.21);
     cartProduct.delivered = false;
-    shoppingCartService.updateProduct(cartProduct);
-    expect(shoppingCartService.getCartProducts()[0].delivered).toBe(false);
+    shoppingService.updateProduct(cartProduct);
+    expect(shoppingService.getCartProducts()[0].delivered).toBe(false);
   });
 
   it(`Should obtain the total price when 'getTotalPrice()' method is called`, () => {
-    let totalPrice:number = shoppingCartService.getTotalPrice();
+    let totalPrice:number = shoppingService.getTotalPrice();
     expect(totalPrice).toBe(12.21);
   });
 
   it(`Should clear the cart when 'clear()' method is called`,() => {
-    shoppingCartService.clear();
-    expect(shoppingCartService.getCartProducts().length).toBe(0);
+    shoppingService.clear();
+    expect(shoppingService.getCartProducts().length).toBe(0);
   });
 
   it(`Should associate an user when 'associateUser()' method is called`, () => {
     mockBackend.connections.subscribe((conn: MockConnection) => {
       conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(MockUser) })));
     });
-    shoppingCartService.associateUser(666000002).then((userAssociated: User) => {
+    shoppingService.associateUser(666000002).then((userAssociated: User) => {
       expect(userAssociated.mobile).toBe(666000002);
     });
   });
 
   it(`Should disassociate an user when 'disassociateUser()' method is called`, () => {
-    shoppingCartService.disassociateUser();
-    expect(shoppingCartService.getUserMobile()).toBeNull();
+    shoppingService.disassociateUser();
+    expect(shoppingService.getUserMobile()).toBeNull();
   });
 
 });

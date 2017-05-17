@@ -14,7 +14,7 @@ import { TPVHTTPError } from '../../../shared/models/tpv-http-error';
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
 
 @Injectable()
-export class ShoppingCartService {
+export class ShoppingService {
 
   private storage_key: string = 'tpv-shopping_cart';
   private cartProductsSubject: Subject<CartProduct[]> = new Subject<CartProduct[]>();

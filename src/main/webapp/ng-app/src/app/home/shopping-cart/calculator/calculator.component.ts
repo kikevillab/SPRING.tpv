@@ -18,11 +18,11 @@ import { Component, HostListener, OnInit } from '@angular/core';
 
 export class CalculatorComponent implements OnInit {
 
-  currentOperator: string;
-  firstValue: string;
-  secondValue: string;
-  result: string;
-  decimalsActivated: boolean;
+    currentOperator: string = null;
+    firstValue: string = '';
+    secondValue: string = '';
+    result: string = '0';
+    decimalsActivated: boolean = false;
 
   ngOnInit(){
   	this.reset();

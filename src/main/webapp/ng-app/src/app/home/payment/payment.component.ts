@@ -7,7 +7,7 @@ import { CartProduct } from '../shared/models/cart-product';
 import { User } from '../../shared/models/user';
 import { CashPaymentComponent } from './cash-payment/cash-payment.component';
 
-import { ShoppingCartService } from '../shared/services/shopping-cart.service';
+import { ShoppingService } from '../shared/services/shopping.service';
 import { ToastService } from '../../shared/services/toast.service';
 
 @Component({
@@ -35,28 +35,28 @@ import { ToastService } from '../../shared/services/toast.service';
 
 export class PaymentComponent implements OnInit, OnDestroy{
 
-  totalPrice: number = this.shoppingCartService.getTotalPrice();
+  totalPrice: number = this.shoppingService.getTotalPrice();
   paidOut: boolean = false;
   shoppingCartSubscription: Subscription;
   mobileNumberInput: number;
   userAssociated: User;
   
-  constructor (private shoppingCartService: ShoppingCartService, private toastService: ToastService, public dialog: MdDialog, private router: Router){
-    this.shoppingCartSubscription = this.shoppingCartService.getCartProductsObservable().subscribe((cartProducts: CartProduct[]) => {
-      this.totalPrice = this.shoppingCartService.getTotalPrice();
+  constructor (private shoppingService: ShoppingService, private toastService: ToastService, public dialog: MdDialog, private router: Router){
+    this.shoppingCartSubscription = this.shoppingService.getCartProductsObservable().subscribe((cartProducts: CartProduct[]) => {
+      this.totalPrice = this.shoppingService.getTotalPrice();
     });
   }
 
   ngOnInit(){
-    this.shoppingCartService.isShoppingCartEmpty() && this.router.navigate(['/home']);
+    this.shoppingService.isShoppingCartEmpty() && this.router.navigate(['/home']);
   }
 
   isShoppingCartEmpty(): boolean {
-    return this.shoppingCartService.isShoppingCartEmpty();
+    return this.shoppingService.isShoppingCartEmpty();
   }
 
   submitOrder(): void {
-    this.shoppingCartService.submitOrder().then((ticketCreated: any) => {
+    this.shoppingService.submitOrder().then((ticketCreated: any) => {
       this.router.navigate(['/home']);
       this.toastService.success('Checkout done', `Ticket created with reference ${ticketCreated.ticketReference}`);
     }).catch((error: string) => {
@@ -67,13 +67,13 @@ export class PaymentComponent implements OnInit, OnDestroy{
   openCashPaymentDialog(){
     let dialogRef = this.dialog.open(CashPaymentComponent);
     dialogRef.afterClosed().subscribe(() => {
-      this.paidOut = this.shoppingCartService.getMoneyDelivered() > this.totalPrice; 
+      this.paidOut = this.shoppingService.getMoneyDelivered() > this.totalPrice; 
     });
   }
 
   associateUser(event: Event): void {
     event.preventDefault();
-    this.shoppingCartService.associateUser(this.mobileNumberInput).then((userAssociated: User) => {
+    this.shoppingService.associateUser(this.mobileNumberInput).then((userAssociated: User) => {
       this.mobileNumberInput = null;
       this.userAssociated = userAssociated;
       this.toastService.success('Client asociated', `The client with the mobile ${userAssociated.mobile} has been associated`);
@@ -84,12 +84,12 @@ export class PaymentComponent implements OnInit, OnDestroy{
 
   disassociateUser(): void {
     this.toastService.info('Client dissasociated', `The client with the mobile ${this.mobileNumberInput} has been disassociated`);
-    this.shoppingCartService.disassociateUser();
+    this.shoppingService.disassociateUser();
     this.userAssociated = null;
   }
 
   cancel(): void {
-    this.shoppingCartService.clear();
+    this.shoppingService.clear();
     this.router.navigate(['/home']);
   }
 

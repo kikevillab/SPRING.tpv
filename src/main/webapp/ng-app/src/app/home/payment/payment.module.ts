@@ -14,7 +14,7 @@ import { CashPaymentComponent, ChangeDialog } from './cash-payment/cash-payment.
 import { HTTPService } from '../../shared/services/http.service';
 import { LocalStorageService } from '../../shared/services/local-storage.service';
 import { ToastService } from '../../shared/services/toast.service';
-import { ShoppingCartService } from '../shared/services/shopping-cart.service';
+import { ShoppingService } from '../shared/services/shopping.service';
 
 @NgModule({
   imports: [
@@ -28,7 +28,7 @@ import { ShoppingCartService } from '../shared/services/shopping-cart.service';
   ToastyModule
   ],
   declarations: [ PaymentComponent, CashPaymentComponent, ChangeDialog ],
-  providers: [ HTTPService, LocalStorageService, ToastService, ShoppingCartService ],
+  providers: [ HTTPService, LocalStorageService, ToastService, ShoppingService ],
   entryComponents: [ CashPaymentComponent, ChangeDialog]
 })
 export class PaymentModule { }
