@@ -1,4 +1,8 @@
-import { Component, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
+/**
+  * @author Sergio Banegas Cortijo
+  * Github: https://github.com/sergiobanegas 
+*/
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { MdDialog } from '@angular/material';
@@ -6,12 +10,12 @@ import { MdDialog } from '@angular/material';
 import { CalculatorComponent } from './calculator/calculator.component';
 import { CartProduct } from '../shared/models/cart-product';
 
-import { ShoppingCartService } from '../shared/services/shopping-cart.service';
+import { ShoppingService } from '../shared/services/shopping.service';
 import { ToastService } from '../../shared/services/toast.service';
 
 @Component({
-  selector: 'cart-view',
-  templateUrl: './cart.component.html',
+  selector: 'shopping-cart-view',
+  templateUrl: './shopping-cart.component.html',
   styles: [`
     #mobileMenuButton {
       position:absolute;
@@ -39,13 +43,12 @@ import { ToastService } from '../../shared/services/toast.service';
     }
   `]
 })
-
-export class CartComponent implements OnDestroy {
+export class ShoppingCartComponent implements OnInit, OnDestroy {
 
   @Output() closeSidenavEvent: EventEmitter<boolean> = new EventEmitter();
-  codeInput: string = '';
-  totalPrice: number = this.shoppingCartService.getTotalPrice();
-  cartProducts: CartProduct[] = this.shoppingCartService.getCartProducts();
+  codeInput: number;
+  totalPrice: number = this.shoppingService.getTotalPrice();
+  cartProducts: CartProduct[] = this.shoppingService.getCartProducts();
   subscription: Subscription;
   columns: Object[] = [
   { name: 'description' },
@@ -56,20 +59,22 @@ export class CartComponent implements OnDestroy {
   { name: 'totalPrice'}
   ];
 
-  constructor (private shoppingCartService: ShoppingCartService, private toastService: ToastService, private router: Router, public dialog: MdDialog){
-    this.subscription = this.shoppingCartService.getCartProductsObservable().subscribe((cartProducts: CartProduct[]) => {
+  constructor (private shoppingService: ShoppingService, private toastService: ToastService, private router: Router, public dialog: MdDialog){}
+
+  ngOnInit(){
+    this.subscription = this.shoppingService.getCartProductsObservable().subscribe((cartProducts: CartProduct[]) => {
       this.cartProducts = cartProducts;
-      this.totalPrice = this.shoppingCartService.getTotalPrice();
+      this.totalPrice = this.shoppingService.getTotalPrice();
     });
   }
 
   onSubmit(event: Event): void { 
   	event.preventDefault();
-  	this.shoppingCartService.addProduct(this.codeInput).then(() => {   
+  	this.shoppingService.addProduct(this.codeInput).then(() => {   
     }).catch((error: string) => {
       this.toastService.error('Error adding product', error);
     });
-    this.codeInput = '';
+    this.codeInput = null;
   }
 
   updateProduct(row: any, event: any, attribute: string): void {
@@ -79,22 +84,22 @@ export class CartComponent implements OnDestroy {
     } else {
       cartProduct.delivered = !cartProduct.delivered;
     }
-    this.shoppingCartService.updateProduct(cartProduct);
+    this.shoppingService.updateProduct(cartProduct);
   }
 
   updateTotalPrice(row: any, event: any): void {
     let cartProduct: any = this.cartProducts[row.$$index];
     let total: number = event.target.value;
     cartProduct.discount = 100 * (1 - (total / (cartProduct.retailPrice * cartProduct.amount)));
-    this.shoppingCartService.updateProduct(cartProduct);
+    this.shoppingService.updateProduct(cartProduct);
   }
 
   removeFromCart(cartProduct:CartProduct): void {
-    this.shoppingCartService.removeProduct(cartProduct);
+    this.shoppingService.removeProduct(cartProduct);
   }
 
   clearCart(): void {
-  	this.shoppingCartService.clear();
+  	this.shoppingService.clear();
   }
 
   checkout(): void {

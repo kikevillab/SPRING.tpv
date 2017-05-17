@@ -1,3 +1,7 @@
+/**
+  * @author Sergio Banegas Cortijo
+  * Github: https://github.com/sergiobanegas 
+*/
 import { TestBed, async, inject } from '@angular/core/testing';
 import { Response, ResponseOptions, BaseRequestOptions, Http } from '@angular/http';
 import { MockBackend, MockConnection } from '@angular/http/testing';
@@ -12,7 +16,7 @@ import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty
 import { SearchComponent } from './search.component';
 
 import { ToastService } from '../../shared/services/toast.service';
-import { ShoppingCartService } from '../shared/services/shopping-cart.service';
+import { ShoppingService } from '../shared/services/shopping.service';
 import { LocalStorageService } from '../../shared/services/local-storage.service';
 import { HTTPService } from '../../shared/services/http.service';
 

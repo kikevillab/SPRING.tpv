@@ -1,3 +1,7 @@
+/**
+  * @author Sergio Banegas Cortijo
+  * Github: https://github.com/sergiobanegas 
+*/
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Subject } from 'rxjs/Subject';
@@ -14,7 +18,7 @@ import { TPVHTTPError } from '../../../shared/models/tpv-http-error';
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
 
 @Injectable()
-export class ShoppingCartService {
+export class ShoppingService {
 
   private storage_key: string = 'tpv-shopping_cart';
   private cartProductsSubject: Subject<CartProduct[]> = new Subject<CartProduct[]>();
@@ -27,7 +31,7 @@ export class ShoppingCartService {
     this.updateCart();
   }
 
-  addProduct(productCode: string): Promise<any> {
+  addProduct(productCode: number): Promise<any> {
     return new Promise((resolve,reject) => {
       this.httpService.get(`${API_GENERIC_URI}/products/${productCode}`).subscribe((productDetails: Product) => {
         let index: number = this.cartProducts.findIndex((cp: CartProduct) => cp.productCode == productCode);
@@ -86,7 +90,7 @@ export class ShoppingCartService {
   }
 
   submitOrder(): Promise<any> {
-    return new Promise((resolve: Function,reject: Function) => {
+    return new Promise((resolve: Function, reject: Function) => {
       let newTicket = new TicketCheckout(this.cartProducts, this.userMobile);
       this.httpService.post(`${API_GENERIC_URI}/tickets`, newTicket).subscribe((ticketCreated: any) => {
         this.clear();

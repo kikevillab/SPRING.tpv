@@ -1,3 +1,7 @@
+/**
+  * @author Sergio Banegas Cortijo
+  * Github: https://github.com/sergiobanegas 
+*/
 import { Injectable } from '@angular/core';
 
 import { API_GENERIC_URI } from '../app.config';

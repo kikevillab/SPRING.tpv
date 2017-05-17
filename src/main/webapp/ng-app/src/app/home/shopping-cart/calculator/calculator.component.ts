@@ -1,4 +1,8 @@
-import { Component, HostListener } from '@angular/core';
+/**
+  * @author Sergio Banegas Cortijo
+  * Github: https://github.com/sergiobanegas 
+*/
+import { Component, HostListener, OnInit } from '@angular/core';
 
 @Component({
   selector: 'calculator-view',
@@ -16,13 +20,13 @@ import { Component, HostListener } from '@angular/core';
   `]
 })
 
-export class CalculatorComponent {
+export class CalculatorComponent implements OnInit {
 
-  currentOperator: string = null;
-  firstValue: string = '';
-  secondValue: string = '';
-  result: string = '0';
-  decimalsActivated: boolean = false;
+    currentOperator: string = null;
+    firstValue: string = '';
+    secondValue: string = '';
+    result: string = '0';
+    decimalsActivated: boolean = false;
 
   ngOnInit(){
   	this.reset();

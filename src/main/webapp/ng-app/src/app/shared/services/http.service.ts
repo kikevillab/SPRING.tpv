@@ -1,7 +1,9 @@
 /**
  * @author Fran lopez
- * @author Sergio Banegas
- */
+ *
+ * @author Sergio Banegas Cortijo
+ * Github: https://github.com/sergiobanegas 
+*/
 
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';

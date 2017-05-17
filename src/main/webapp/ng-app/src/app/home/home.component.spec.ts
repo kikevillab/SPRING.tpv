@@ -1,3 +1,7 @@
+/**
+  * @author Sergio Banegas Cortijo
+  * Github: https://github.com/sergiobanegas 
+*/
 import { TestBed, async, inject } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -9,7 +13,7 @@ import 'hammerjs';
 import { CartProduct } from './shared/models/cart-product';
 
 import { DateComponent } from '../shared/directives/date.component';
-import { CartComponent } from './cart/cart.component';
+import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { HomeComponent } from './home.component';
 
 import { ToastService } from '../shared/services/toast.service';
@@ -25,7 +29,7 @@ describe('Component: HomeComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [ MaterialModule, FlexLayoutModule, FormsModule, BrowserAnimationsModule ],
-      declarations: [ DateComponent, HomeComponent, CartComponent ],
+      declarations: [ DateComponent, HomeComponent, ShoppingCartComponent ],
       providers: [
         { provide: Router },
         ToastService,
