@@ -9,10 +9,10 @@ import { Router } from '@angular/router';
 import { MaterialModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import 'hammerjs';
+import { SharedModule } from '../shared/shared.module';
 
 import { CartProduct } from './shared/models/cart-product';
 
-import { DateComponent } from '../shared/directives/date.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { HomeComponent } from './home.component';
 
@@ -28,8 +28,8 @@ describe('Component: HomeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ MaterialModule, FlexLayoutModule, FormsModule, BrowserAnimationsModule ],
-      declarations: [ DateComponent, HomeComponent, ShoppingCartComponent ],
+      imports: [ MaterialModule, FlexLayoutModule, FormsModule, BrowserAnimationsModule, SharedModule ],
+      declarations: [ HomeComponent, ShoppingCartComponent ],
       providers: [
         { provide: Router },
         ToastService,

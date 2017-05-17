@@ -19,7 +19,6 @@ import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent, OrderTrackingDialog } from './home.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { CashierService } from './shared/services/cashier.service';
-import { DateComponent } from '../shared/directives/date.component';
 
 import { HTTPService } from '../shared/services/http.service';
 import { LocalStorageService } from '../shared/services/local-storage.service';
@@ -31,6 +30,7 @@ import { PaymentModule } from './payment/payment.module';
 import { OpenCashierModule } from './open-cashier/open-cashier.module';
 import { CloseCashierModule } from './close-cashier/close-cashier.module';
 import { MovementModule } from './movement/movement.module';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -49,11 +49,11 @@ import { MovementModule } from './movement/movement.module';
     MovementModule,
     OpenCashierModule,
     CloseCashierModule,
-    NgxDatatableModule
+    NgxDatatableModule,
+    SharedModule
   ],
   declarations: [
     HomeComponent,
-    DateComponent,
     ShoppingCartComponent,
     OrderTrackingDialog
   ],
