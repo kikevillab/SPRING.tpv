@@ -6,6 +6,7 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({TokenControllerIT.class, ProductControllerIT.class, InvoiceControllerIT.class, UserControllerIT.class,
-        ArticleControllerIT.class, CashierClosuresControllerIT.class})
+        ArticleControllerIT.class, EmbroideryControllerIT.class, TextilPrintingControllerIT.class, CashierClosuresControllerIT.class})
+
 public class AllControllersIntegrationTests {
 }

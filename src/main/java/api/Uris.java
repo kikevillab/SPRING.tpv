@@ -39,6 +39,14 @@ public class Uris {
     public static final String REFERENCE = "/{reference}";
     
     public static final String PHONE = "/{mobilePhone}";
+    
+    public static final String EMBROIDERIES = "/embroideries";
+    
+    public static final String TEXTILE_PRINTINGS = "/textileprintings";
+    
+    public static final String ARTICLES = "/articles";
+    
+    public static final String DISCONTINUED = "/discontinued";
 
     public static final String CASHIER_CLOSURES = "/cashierclosures";
 
@@ -49,4 +57,5 @@ public class Uris {
     public static final String CASHIER_CLOSURES_DEPOSIT = "/deposit";
 
     public static final String CASHIER_CLOSURES_WITHDRAW = "/withdraw";
+
 }
