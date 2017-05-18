@@ -37,7 +37,23 @@ public class Uris {
     public static final String DATE = "/{date}";
 
     public static final String REFERENCE = "/{reference}";
+
+    public static final String MOBILE = "/mobile";
+
+    public static final String IDENTIFICATION = "/identification";
+
+    public static final String EMAIL = "/email";
+
+    public static final String USER_MOBILE = "/{mobile}";
+
+    public static final String USER_IDENTIFICATION = "/{identification}";
+
+    public static final String USER_EMAIL = "/{email}";
     
+    public static final String OPERATORS="/operators";
+    
+    public static final String MANAGERS="/managers";
+
     public static final String PHONE = "/{mobilePhone}";
     
     public static final String EMBROIDERIES = "/embroideries";
@@ -47,6 +63,8 @@ public class Uris {
     public static final String ARTICLES = "/articles";
     
     public static final String DISCONTINUED = "/discontinued";
+
+    public static final String SEARCH = "/search";
 
     public static final String CASHIER_CLOSURES = "/cashierclosures";
 

@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 
 import daos.users.AuthorizationDao;
@@ -33,8 +36,11 @@ public class UserController {
     }
 
     public boolean registration(UserWrapper userWrapper, Role role) {
+        if ((userWrapper==null)||(role==null))
+            return false;
         if (null == userDao.findByMobile(userWrapper.getMobile())) {
-            User user = new User(userWrapper.getMobile(), userWrapper.getUsername(), userWrapper.getPassword());
+            User user = new User(userWrapper.getMobile(), userWrapper.getUsername(),userWrapper.getDni(),userWrapper.getAddress(),
+                    userWrapper.getEmail(), userWrapper.getPassword(),userWrapper.isActive());
             userDao.save(user);
             authorizationDao.save(new Authorization(user, role));
             return true;
@@ -43,6 +49,11 @@ public class UserController {
         }
     }
 
+
+    public boolean userMobileExists(long userMobile) {
+        User user = userDao.findByMobile(userMobile);
+        return user != null;
+    }
     public boolean userExists(long userMobile) {
         return userExists(userDao.findByMobile(userMobile));
     }
@@ -52,7 +63,55 @@ public class UserController {
     }
     
     private boolean userExists(User user){
+
         return user != null;
+    }
+
+
+    public Page<UserWrapper> getAllAndRole(Pageable pageable,Role role) {
+        Page<User> page = userDao.findAllAndRole(pageable,role);
+        List<UserWrapper> userWrappers = new ArrayList<>();
+        for (User user : page.getContent()) {
+            userWrappers.add(new UserWrapper(user));
+        }
+
+        return new PageImpl<UserWrapper>(userWrappers, pageable, page.getTotalElements());
+    }
+    
+    public UserWrapper getByMobileAndRole (long userMobile,Role role){
+        User user = userDao.findByMobileAndRole(role,userMobile);
+        UserWrapper userRetorno= null;
+        if (user!=null)
+         userRetorno= new UserWrapper(user);
+        return userRetorno;
+    }
+    
+    public UserWrapper getByEmailAndRole (String email, Role role){
+        String emailCustomer = "user2@user2.com";
+        User user = userDao.findByEmailAndRole(role,email);
+        UserWrapper userRetorno= null;
+        if (user!=null)
+         userRetorno= new UserWrapper(user);
+        return userRetorno;
+    }
+    
+    public UserWrapper getByDniAndRole(String dni, Role role){
+        User user = userDao.findByDniAndRole(role,dni);
+        UserWrapper userRetorno= null;
+        if (user!=null)
+         userRetorno= new UserWrapper(user);
+        return userRetorno;
+    }
+    
+    public boolean registrationUser(UserWrapper userRegistrationWrapper, Role role) {
+        if (null == userDao.findByMobile(userRegistrationWrapper.getMobile())) {
+            User user = new User(userRegistrationWrapper.getMobile(), userRegistrationWrapper.getUsername(), userRegistrationWrapper.getPassword());
+            userDao.save(user);
+            authorizationDao.save(new Authorization(user, role));
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public boolean userIsValid(User user) {
@@ -100,4 +159,5 @@ public class UserController {
         userDao.save(user);
     }
     
+
 }
