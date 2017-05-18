@@ -1,9 +1,10 @@
-import { Component, OnDestroy, NgModule } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
-import { MdDialog } from '@angular/material';
+/**
+  * @author Sergio Banegas Cortijo
+  * Github: https://github.com/sergiobanegas
+*/
+import { Component } from '@angular/core';
 
-import { HTTPService } from '../../shared/http.service';
-import { ToastService } from '../../shared/toast.service';
+import { ToastService } from '../../shared/services/toast.service';
 
 @Component({
   selector: 'search-view',
@@ -16,7 +17,7 @@ import { ToastService } from '../../shared/toast.service';
 export class SearchComponent {
 
 
-  constructor (private toastService: ToastService, private httpService: HTTPService){
+  constructor (private toastService: ToastService){
 
   }
 

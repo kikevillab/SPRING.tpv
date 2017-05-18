@@ -1,3 +1,8 @@
+/**
+ * @author Sergio Banegas Cortijo
+ * Github: https://github.com/sergiobanegas 
+*/
+
 import { Component } from '@angular/core';
 
 @Component({

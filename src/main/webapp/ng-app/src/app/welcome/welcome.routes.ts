@@ -19,10 +19,6 @@ const routes: Routes = [
     }
 ];
 
-export const routableComponents = [
-    WelcomeComponent
-];
-
 @NgModule({
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]

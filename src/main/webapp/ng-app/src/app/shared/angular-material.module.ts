@@ -9,10 +9,32 @@ import {MdToolbarModule} from '@angular/material';
 import {MdGridListModule} from '@angular/material';
 import {MdInputModule} from '@angular/material';
 import {MdButtonModule} from '@angular/material';
+import {MdIconModule} from '@angular/material';
+import {MdChipsModule} from '@angular/material';
+import {MdDialogModule} from '@angular/material';
+import {MdCheckboxModule} from '@angular/material';
 
 @NgModule({
-    imports: [MdToolbarModule, MdGridListModule, MdInputModule, MdButtonModule],
-    exports: [MdToolbarModule, MdGridListModule, MdInputModule, MdButtonModule]
+    imports: [
+        MdToolbarModule,
+        MdGridListModule,
+        MdInputModule,
+        MdButtonModule,
+        MdIconModule,
+        MdChipsModule,
+        MdDialogModule,
+        MdCheckboxModule
+    ],
+    exports: [
+        MdToolbarModule,
+        MdGridListModule,
+        MdInputModule,
+        MdButtonModule,
+        MdIconModule,
+        MdChipsModule,
+        MdDialogModule,
+        MdCheckboxModule
+    ]
 })
 export class AngularMaterialModule {
 }

@@ -21,9 +21,12 @@ import api.exceptions.InvalidProductDiscountException;
 import api.exceptions.InvalidUserFieldException;
 import api.exceptions.InvoiceDoesNotAllowNotClosedTicketsException;
 import api.exceptions.InvoiceNotFoundException;
+import api.exceptions.LastCashierClosureIsClosedException;
+import api.exceptions.LastCashierClosureIsOpenYetException;
 import api.exceptions.MalformedDateException;
 import api.exceptions.MalformedHeaderException;
 import api.exceptions.NotEnoughStockException;
+import api.exceptions.NotExistsCashierClosuresException;
 import api.exceptions.NotFoundProductCodeException;
 import api.exceptions.NotFoundProductCodeInTicketException;
 import api.exceptions.NotFoundTicketReferenceException;
@@ -43,7 +46,9 @@ public class ApiExceptionHandler {
     @ExceptionHandler({NotFoundUserIdException.class, NotFoundYamlFileException.class, NotFoundProductCodeException.class,
             FileNotFoundException.class, TicketNotFoundException.class, InvoiceNotFoundException.class, NotFoundUserMobileException.class,
             NotFoundTicketReferenceException.class, NotFoundProductCodeInTicketException.class, EmbroideryNotFoundException.class,
-            ArticleNotFoundException.class, TextilePrintingNotFoundException.class})
+            ArticleNotFoundException.class, TextilePrintingNotFoundException.class, NotFoundTicketReferenceException.class,
+            NotFoundProductCodeInTicketException.class, NotExistsCashierClosuresException.class})
+
     @ResponseBody
     public ErrorMessage notFoundRequest(ApiException exception) {
         ErrorMessage apiErrorMessage = new ErrorMessage(exception);
@@ -69,7 +74,8 @@ public class ApiExceptionHandler {
     }
 
     @ResponseStatus(HttpStatus.CONFLICT)
-    @ExceptionHandler({AlreadyExistUserFieldException.class, AlreadyExistUserFieldException.class, NotEnoughStockException.class})
+    @ExceptionHandler({AlreadyExistUserFieldException.class, AlreadyExistUserFieldException.class, NotEnoughStockException.class,
+            LastCashierClosureIsClosedException.class, LastCashierClosureIsOpenYetException.class})
     @ResponseBody
     public ErrorMessage conflictRequest(ApiException exception) {
         ErrorMessage apiErrorMessage = new ErrorMessage(exception);

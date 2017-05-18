@@ -1,3 +1,7 @@
+/**
+  * @author Sergio Banegas Cortijo
+  * Github: https://github.com/sergiobanegas 
+*/
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 
@@ -6,6 +10,9 @@
 @import '/node_modules/@swimlane/ngx-datatable/release/assets/icons.css';
 
 @import '/node_modules/ng2-toasty/style-default.css';
+
+@import '~@angular/material/theming';
+@import 'theme';
 
 body{
 	background-color: #f1f1f1;
@@ -58,4 +65,8 @@ a {
 
 a, a:visited {
     color: inherit;
+}
+
+.text-primary {
+	color: mat-color($tpv-app-primary);
 }
