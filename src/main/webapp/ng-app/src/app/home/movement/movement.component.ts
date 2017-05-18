@@ -32,7 +32,7 @@ export class MovementComponent implements OnInit, OnDestroy {
   operation: string = 'Withdraw';
   selectedCommentOption: string;
   otherReasonComment: string = '';
-  amount: number = 0.0;
+  amount: number;
   cashier: CashierClosure;
   cashierSubscription: Subscription;
 
@@ -42,7 +42,7 @@ export class MovementComponent implements OnInit, OnDestroy {
     this.cashier = this.cashierService.getCurrentCashier();
     this.cashierSubscription = this.cashierService.getCurrentCashierObservable().subscribe((cashier: CashierClosure) => {
       this.cashier = cashier;
-      this.amount = 0;
+      this.amount = undefined;
     });
   }
 
@@ -55,11 +55,15 @@ export class MovementComponent implements OnInit, OnDestroy {
   }
 
   validateAmount(): void {
-    if (this.amount < 0){
-      this.amount = 0;
+    if (this.amount < 0 || this.amount == undefined){
+      this.amount = undefined;
     } else if (this.amount > this.cashier.amount && this.operation == "Withdraw") {
       this.amount = this.cashier.amount;
     }
+  }
+
+  formatAmount(): void {
+    this.amount = Math.round(this.amount * 100) / 100;
   }
 
   submit():void {
@@ -85,7 +89,7 @@ export class MovementComponent implements OnInit, OnDestroy {
   }
 
   isInvalidForm(): boolean {
-    return this.selectedCommentOption == null || this.amount == 0 || (this.selectedCommentOption == 'Other reason' && this.otherReasonComment == '')
+    return this.selectedCommentOption == null || this.amount == 0 || this.amount == undefined || isNaN(Number(this.amount.toString())) || (this.selectedCommentOption == 'Other reason' && this.otherReasonComment == '');
   }
 
   getMaxAmount(): number {
@@ -97,7 +101,7 @@ export class MovementComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(){
-    this.cashierSubscription.unsubscribe();
+    this.cashierSubscription && this.cashierSubscription.unsubscribe();
   }
 
 }

@@ -99,7 +99,7 @@ export class PaymentComponent implements OnInit, OnDestroy{
   }
 
   ngOnDestroy() {
-    this.shoppingCartSubscription.unsubscribe();
+    this.shoppingCartSubscription && this.shoppingCartSubscription.unsubscribe();
   }
 
 }
