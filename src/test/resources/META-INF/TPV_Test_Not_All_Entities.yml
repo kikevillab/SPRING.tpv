@@ -12,8 +12,8 @@ tokenList:
     
 embroideryList:
   - &embroidery74000002223
-    id: 74000002223
-    code: embroidery1_seed_test
+    code: 74000002223
+    reference: embroidery1_seed_test
     retailPrice: 20
     description: embroidery1_seed_test
     stitches: 0
@@ -22,13 +22,13 @@ embroideryList:
     
 textilePrintingList:
   - &textilePrinting74000003334
-    id: 74000003334
-    code: textilePrinting1_seed_test
+    code: 74000003334
+    reference: textilePrinting1_seed_test
     retailPrice: 20
     description: textilePrinting1_seed_test
     type: ploter
-  - id: 74000003335
-    code: textilePrinting2_seed_test
+  - code: 74000003335
+    reference: textilePrinting2_seed_test
     retailPrice: 56.33
     description: textilePrinting2_seed_test
     type: ploter

@@ -11,8 +11,8 @@ public class TextilePrinting extends Product {
     public TextilePrinting() {
     }
 
-    public TextilePrinting(long id, String reference, BigDecimal retailPrice, String description, String type) {
-        super(id, reference, retailPrice, description);
+    public TextilePrinting(String code, String reference, BigDecimal retailPrice, String description, String type) {
+        super(code, reference, retailPrice, description);
         this.type = type;
     }
 

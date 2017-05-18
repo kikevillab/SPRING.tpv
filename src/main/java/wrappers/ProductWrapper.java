@@ -10,9 +10,9 @@ import entities.core.Product;
  */
 public class ProductWrapper {
     
-    private long id;
-
     private String code;
+    
+    private String reference;
 
     private String description;
 
@@ -26,20 +26,12 @@ public class ProductWrapper {
     }
 
     public ProductWrapper(Product product) {
-        this.id = product.getId();
         this.code = product.getCode();
+        this.reference = product.getReference();
         this.retailPrice = product.getRetailPrice();
         this.description = product.getDescription();
         this.discontinued = product.isDiscontinued();
         this.image = product.getImage();
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getCode() {
@@ -82,10 +74,18 @@ public class ProductWrapper {
         this.image = image;
     }
 
+    public String getReference() {
+        return reference;
+    }
+
+    public void setReference(String reference) {
+        this.reference = reference;
+    }
+
     @Override
     public String toString() {
-        return id + ": code=" + code + ", description=" + description + ", retailPrice=" + retailPrice + ", discontinued=" + discontinued 
-                +  ", image=" + image +  "]";
+        return "ProductWrapper [code=" + code + ", reference=" + reference + ", description=" + description + ", retailPrice=" + retailPrice
+                + ", discontinued=" + discontinued + ", image=" + image + "]";
     }
 
 }
