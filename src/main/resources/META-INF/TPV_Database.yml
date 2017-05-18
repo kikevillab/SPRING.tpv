@@ -216,6 +216,12 @@ textilePrintingList:
     description: textilePrinting3
     image: /assets/img/products/img-product-3.png
     type: ploter
+  - code: 84000003337
+    reference: textilePrinting4
+    retailPrice: 23
+    description: textilePrinting4
+    image: /assets/img/products/img-product-4.png
+    type: ploter
 
 ticketList:
   - id: 1

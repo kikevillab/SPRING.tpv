@@ -32,7 +32,7 @@ public class TextilePrintingResource {
         textilePrintingController.createTextilePrinting(textilePrintingCreationWrapper);
     }
 
-    @RequestMapping(value = Uris.ID, method = RequestMethod.PUT)
+    @RequestMapping(value = Uris.CODE, method = RequestMethod.PUT)
     public void updateTextilePrinting(@PathVariable String code, @RequestBody TextilePrintingUpdateWrapper textilePrintingUpdateWrapper) throws TextilePrintingNotFoundException {
         throwExceptionIfTextilePrintingDoesNotExist(code);
         textilePrintingController.updateTextilePrinting(code, textilePrintingUpdateWrapper);
@@ -43,13 +43,13 @@ public class TextilePrintingResource {
         return textilePrintingController.findAllTextilePrintings();
     }
     
-    @RequestMapping(value = Uris.ID, method = RequestMethod.GET)
+    @RequestMapping(value = Uris.CODE, method = RequestMethod.GET)
     public TextilePrintingWrapper findOneTextilePrinting(@PathVariable String code) throws TextilePrintingNotFoundException{
         throwExceptionIfTextilePrintingDoesNotExist(code);
         return textilePrintingController.findOneTextilePrinting(code);
     }    
     
-    @RequestMapping(value = Uris.ID, method = RequestMethod.DELETE)
+    @RequestMapping(value = Uris.CODE, method = RequestMethod.DELETE)
     public void deleteTextilePrinting(@PathVariable String code) throws TextilePrintingNotFoundException{
         throwExceptionIfTextilePrintingDoesNotExist(code);
         textilePrintingController.deleteTextilePrinting(code);        
