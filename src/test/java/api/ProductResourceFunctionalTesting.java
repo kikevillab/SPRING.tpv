@@ -1,6 +1,10 @@
 package api;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -9,6 +13,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.springframework.http.HttpStatus;
 
+import wrappers.PatchChangeDescriptionWrapper;
 import wrappers.ProductWrapper;
 
 public class ProductResourceFunctionalTesting {
@@ -37,6 +42,33 @@ public class ProductResourceFunctionalTesting {
         ProductWrapper product = new RestBuilder<ProductWrapper>(RestService.URL).path(Uris.PRODUCTS).pathId(productCode)
                 .basicAuth(token, "").clazz(ProductWrapper.class).get().build();
         assertEquals(productCode, product.getCode());
+    }
+    
+    @Test
+    public void testGetProductByCodeWithNonExistentProduct(){
+        thrown.expect(new HttpMatcher(HttpStatus.NOT_FOUND));
+        String productCode = "0000000000000";
+        String token = new RestService().loginAdmin();
+        ProductWrapper product = new RestBuilder<ProductWrapper>(RestService.URL).path(Uris.PRODUCTS).pathId(productCode)
+                .basicAuth(token, "").clazz(ProductWrapper.class).get().build();
+        assertEquals(productCode, product.getCode());
+    }
+    
+    @Test
+    public void testSetProductAsDiscontinued(){
+        String productCode = "84000002223";
+        String token = new RestService().loginAdmin();
+        PatchChangeDescriptionWrapper patchChangeDescription = new PatchChangeDescriptionWrapper();
+        patchChangeDescription.setOp(PatchOperations.REPLACE);
+        patchChangeDescription.setPath(Uris.DISCONTINUED);
+        patchChangeDescription.setValue("true");
+        List<PatchChangeDescriptionWrapper> patchChangeDescriptions = new ArrayList<>();
+        patchChangeDescriptions.add(patchChangeDescription);
+        new RestBuilder<Object>(RestService.URL).path(Uris.PRODUCTS).pathId(productCode)
+        .basicAuth(token, "").body(patchChangeDescriptions).clazz(Object.class).patch().build();
+        ProductWrapper product = new RestBuilder<ProductWrapper>(RestService.URL).path(Uris.PRODUCTS).pathId(productCode)
+                .basicAuth(token, "").clazz(ProductWrapper.class).get().build();
+        assertTrue(product.isDiscontinued());
     }
 
     // Waiting for front-end to implement login and add roles.

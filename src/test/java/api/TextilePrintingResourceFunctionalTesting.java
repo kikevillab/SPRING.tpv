@@ -44,7 +44,7 @@ public class TextilePrintingResourceFunctionalTesting {
     }
 
     @Test
-    public void updateTextilePrintingWithNonExistentTextilePrinting() {
+    public void testUpdateTextilePrintingWithNonExistentTextilePrinting() {
         thrown.expect(new HttpMatcher(HttpStatus.NOT_FOUND));
         String code = "00000000000";
         String token = new RestService().loginAdmin();

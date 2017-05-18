@@ -46,7 +46,7 @@ public class EmbroideryResourceFunctionalTesting {
     }
     
     @Test
-    public void updateEmbroideryWithNonExistentEmbroidery(){
+    public void testUpdateEmbroideryWithNonExistentEmbroidery(){
         thrown.expect(new HttpMatcher(HttpStatus.NOT_FOUND));
         String code = "00000000000";
         String token = new RestService().loginAdmin();

@@ -29,15 +29,13 @@ public class ProductResource {
     // @PreAuthorize("hasRole('ADMIN')or hasRole('MANAGER') or hasRole('OPERATOR')")
     @RequestMapping(value = Uris.CODE, method = RequestMethod.GET)
     public ProductWrapper getProductByCode(@PathVariable(value = "code") String code) throws NotFoundProductCodeException {
-        Product product = productController.getProductByCode(code);
-        if (product == null) {
-            throw new NotFoundProductCodeException("Product code: " + code);
-        }
-        return new ProductWrapper(product);
+        throwExceptionIfProductDoesNotExists(code);
+        return new ProductWrapper(productController.getProductByCode(code));
     }
 
-    @RequestMapping(value = Uris.ID, method = RequestMethod.PATCH)
-    public void setProductAsDiscontinued(@PathVariable String code, @RequestBody List<PatchChangeDescriptionWrapper> patchChangeDescriptionsWrapper){
+    @RequestMapping(value = Uris.CODE, method = RequestMethod.PATCH)
+    public void setProductAsDiscontinued(@PathVariable String code, @RequestBody List<PatchChangeDescriptionWrapper> patchChangeDescriptionsWrapper) throws NotFoundProductCodeException{
+        throwExceptionIfProductDoesNotExists(code);
         for(PatchChangeDescriptionWrapper patchRequestBodyWrapper : patchChangeDescriptionsWrapper){
             String operation = patchRequestBodyWrapper.getOp();
             String path = patchRequestBodyWrapper.getPath();
@@ -47,6 +45,13 @@ public class ProductResource {
                     productController.setProductAsDiscontinued(code, Boolean.parseBoolean(value));
                 }
             }
+        }
+    }
+    
+    private void throwExceptionIfProductDoesNotExists(String code) throws NotFoundProductCodeException{
+        Product product = productController.getProductByCode(code);
+        if (product == null) {
+            throw new NotFoundProductCodeException("Product code: " + code);
         }
     }
 }
