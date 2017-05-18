@@ -32,7 +32,7 @@ public class ArticleResource {
         articleController.createArticle(articleCreationWrapper);
     }
 
-    @RequestMapping(value = Uris.ID, method = RequestMethod.PUT)
+    @RequestMapping(value = Uris.CODE, method = RequestMethod.PUT)
     public void updateArticle(@PathVariable String code, @RequestBody ArticleUpdateWrapper articleUpdateWrapper) throws ArticleNotFoundException {
         throwExceptionIfArticleDoesNotExist(code);
         articleController.updateArticle(articleUpdateWrapper);
@@ -43,13 +43,13 @@ public class ArticleResource {
         return articleController.findAllArticles();
     }
 
-    @RequestMapping(value = Uris.ID, method = RequestMethod.GET)
+    @RequestMapping(value = Uris.CODE, method = RequestMethod.GET)
     public ArticleWrapper findOneArticle(@PathVariable String code) throws ArticleNotFoundException {
         throwExceptionIfArticleDoesNotExist(code);
         return articleController.findOneArticle(code);
     }
     
-    @RequestMapping(value = Uris.ID, method = RequestMethod.DELETE)
+    @RequestMapping(value = Uris.CODE, method = RequestMethod.DELETE)
     public void deleteArticle(@PathVariable String code) throws ArticleNotFoundException{
         throwExceptionIfArticleDoesNotExist(code);
         articleController.deleteArticle(code);        

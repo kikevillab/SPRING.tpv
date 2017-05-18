@@ -72,6 +72,7 @@ public class ArticleController {
         Article articleToBeUpdated = articleDao.findOne(articleUpdateWrapper.getCode());
         articleToBeUpdated.setCode(articleUpdateWrapper.getCode());
         articleToBeUpdated.setDescription(articleUpdateWrapper.getDescription());
+        articleToBeUpdated.setReference(articleUpdateWrapper.getReference());
         articleToBeUpdated.setDiscontinued(articleUpdateWrapper.isDiscontinued());
         articleToBeUpdated.setImage(articleUpdateWrapper.getImage());
         articleToBeUpdated.setRetailPrice(articleUpdateWrapper.getRetailPrice());   
