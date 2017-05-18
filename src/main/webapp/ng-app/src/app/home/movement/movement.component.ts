@@ -1,7 +1,12 @@
-import { Component } from '@angular/core';
+/**
+  * @author Sergio Banegas Cortijo
+  * Github: https://github.com/sergiobanegas 
+*/
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
+import { Subscription } from 'rxjs/Subscription';
 
-import { CashierClosure } from '../shared/models/cashier-closure';
+import { CashierClosure } from '../shared/models/cashier-closure.model';
 import { CashierService } from '../shared/services/cashier.service';
 import { ToastService } from '../../shared/services/toast.service';
 
@@ -22,21 +27,27 @@ import { ToastService } from '../../shared/services/toast.service';
     }
   `]
 })
-
-export class MovementComponent {
+export class MovementComponent implements OnInit, OnDestroy {
 
   operation: string = 'Withdraw';
   selectedCommentOption: string;
   otherReasonComment: string = '';
-  amount: number = 0.0;
+  amount: number;
   cashier: CashierClosure;
+  cashierSubscription: Subscription;
 
-  constructor(private location: Location, private cashierService: CashierService, private toastService: ToastService){
-    this.cashier = cashierService.getCurrentCashier();
-    cashierService.getCurrentCashierObservable().subscribe((cashier: CashierClosure) => {
+  constructor(private location: Location, private cashierService: CashierService, private toastService: ToastService){}
+
+  ngOnInit(){
+    this.cashier = this.cashierService.getCurrentCashier();
+    this.cashierSubscription = this.cashierService.getCurrentCashierObservable().subscribe((cashier: CashierClosure) => {
       this.cashier = cashier;
-      this.amount = 0;
+      this.amount = undefined;
     });
+  }
+
+  onChangeOperation(){
+     this.selectedCommentOption = undefined;
   }
 
   selectCommentOption(entry: string): void {
@@ -44,11 +55,15 @@ export class MovementComponent {
   }
 
   validateAmount(): void {
-    if (this.amount < 0){
-      this.amount = 0;
+    if (this.amount < 0 || this.amount == undefined){
+      this.amount = undefined;
     } else if (this.amount > this.cashier.amount && this.operation == "Withdraw") {
       this.amount = this.cashier.amount;
     }
+  }
+
+  formatAmount(): void {
+    this.amount = Math.round(this.amount * 100) / 100;
   }
 
   submit():void {
@@ -74,7 +89,7 @@ export class MovementComponent {
   }
 
   isInvalidForm(): boolean {
-    return this.selectedCommentOption == null || this.amount == 0 || (this.selectedCommentOption == 'Other reason' && this.otherReasonComment == '')
+    return this.selectedCommentOption == null || this.amount == 0 || this.amount == undefined || isNaN(Number(this.amount.toString())) || (this.selectedCommentOption == 'Other reason' && this.otherReasonComment == '');
   }
 
   getMaxAmount(): number {
@@ -84,4 +99,9 @@ export class MovementComponent {
   cancel(): void {
     this.location.back();
   }
+
+  ngOnDestroy(){
+    this.cashierSubscription && this.cashierSubscription.unsubscribe();
+  }
+
 }

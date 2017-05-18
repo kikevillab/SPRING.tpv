@@ -1,8 +1,12 @@
-import { Component, OnDestroy } from '@angular/core';
+/**
+  * @author Sergio Banegas Cortijo
+  * Github: https://github.com/sergiobanegas 
+*/
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
-import { CashierClosure } from '../shared/models/cashier-closure';
+import { CashierClosure } from '../shared/models/cashier-closure.model';
 import { CashierService } from '../shared/services/cashier.service';
 import { ToastService } from '../../shared/services/toast.service';
 
@@ -10,24 +14,23 @@ import { ToastService } from '../../shared/services/toast.service';
   selector: 'open-cashier-view',
   templateUrl: './open-cashier.component.html'
 })
-
-export class OpenCashierComponent implements OnDestroy {
+export class OpenCashierComponent implements OnInit, OnDestroy {
 
 	private cashierClosureDate: Date;
 	private cashierSubscription: Subscription;
 
-	constructor(private router: Router, private cashierService: CashierService, private toastService: ToastService){
+	constructor(private router: Router, private cashierService: CashierService, private toastService: ToastService){}
+
+	ngOnInit(){
 		let currentCashier:CashierClosure = this.cashierService.getCurrentCashier();
-		if (currentCashier){
-			this.cashierClosureDate = currentCashier.closureDate;
-		}
+		this.cashierClosureDate = currentCashier != undefined ? currentCashier.closureDate : undefined;
 		this.cashierSubscription = this.cashierService.getCurrentCashierObservable().subscribe((currentCashier: CashierClosure) => {
-			currentCashier.closureDate && this.router.navigate(['/home']);
+			!currentCashier.closureDate && this.router.navigate(['/home']);
 	      	this.cashierClosureDate = currentCashier.closureDate;
     	});
 	}
 
-	open():void {
+	open(): void {
 		this.cashierService.openCashier().then((cashier: CashierClosure) => {
 			this.toastService.info('Cashier opened', "The cashier has been opened and it's now available");
 			this.router.navigate(['/home']);
@@ -37,7 +40,7 @@ export class OpenCashierComponent implements OnDestroy {
 	}
 
 	ngOnDestroy(){
-		this.cashierSubscription.unsubscribe();
+		this.cashierSubscription && this.cashierSubscription.unsubscribe();
 	}
 
 }

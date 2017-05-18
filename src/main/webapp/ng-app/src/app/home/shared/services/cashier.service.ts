@@ -1,15 +1,19 @@
+/**
+  * @author Sergio Banegas Cortijo
+  * Github: https://github.com/sergiobanegas 
+*/
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Subject } from 'rxjs/Subject';
 
 import { API_GENERIC_URI } from '../../../app.config';
 
-import { CashierClosure } from '../models/cashier-closure';
-import { Amount } from '../models/amount';
-import { CashierClosingData } from '../models/cashier-closing-data';
+import { CashierClosure } from '../models/cashier-closure.model';
+import { Amount } from '../models/amount.model';
+import { CashierClosingData } from '../models/cashier-closing-data.model';
 
 import { HTTPService } from '../../../shared/services/http.service';
-import { TPVHTTPError } from '../../../shared/models/tpv-http-error';
+import { TPVHTTPError } from '../../../shared/models/tpv-http-error.model';
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
 
 
@@ -21,19 +25,17 @@ export class CashierService {
 
   constructor (private httpService: HTTPService) {}
 
-  initialize(): Promise<any> {
-    return new Promise((resolve: Function,reject: Function) => {
+  initialize(): void {
       this.httpService.get(`${API_GENERIC_URI}/cashierclosures/last`).subscribe((cashier: CashierClosure) => {
         this.currentCashier = cashier;
         this.currentCashierObservable.next(this.currentCashier);
       },(error: TPVHTTPError) => {
-           if (error.error == 'NotExistsCashierClosuresException'){
-               this.currentCashier = new CashierClosure();
-               this.currentCashierObservable.next(this.currentCashier);
-           } else {
-             reject(error.description);
-           }
-      });
+        if (error.error == 'NotExistsCashierClosuresException'){
+          this.currentCashier = new CashierClosure();
+          this.currentCashierObservable.next(this.currentCashier);
+        } else {
+          console.log(error.description);
+        }
     });
   }
 

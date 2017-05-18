@@ -1,3 +1,7 @@
+/**
+  * @author Sergio Banegas Cortijo
+  * Github: https://github.com/sergiobanegas
+*/
 import { TestBed, async, inject } from '@angular/core/testing';
 import { Response, ResponseOptions, BaseRequestOptions, Http } from '@angular/http';
 import { MockBackend, MockConnection } from '@angular/http/testing';
@@ -11,7 +15,7 @@ import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty
 
 import { PaymentComponent } from './payment.component';
 import { ToastService } from '../../shared/services/toast.service';
-import { ShoppingCartService } from '../shared/services/shopping-cart.service';
+import { ShoppingService } from '../shared/services/shopping.service';
 import { LocalStorageService } from '../../shared/services/local-storage.service';
 import { HTTPService } from '../../shared/services/http.service';
 
@@ -34,11 +38,11 @@ describe('Component: PaymentComponent', () => {
       providers: [
         { provide: Router },
         ToastService,
-        ShoppingCartService,
+        ShoppingService,
         LocalStorageService,
         MockBackend,
         BaseRequestOptions,
-        HTTPService, 
+        HTTPService,
         {
           provide: Http,
           useFactory: (backend, options) => new Http(backend, options),
@@ -52,18 +56,17 @@ describe('Component: PaymentComponent', () => {
     payment.mobileNumberInput = 666000002;
   }));
 
-  it(`Should associate an User when 'associateUser()' method is called`, inject([MockBackend, ShoppingCartService], (mockBackend: MockBackend, shoppingCartService: ShoppingCartService) => {
+  it(`Should associate an User when 'associateUser()' method is called`, inject([MockBackend, ShoppingService], (mockBackend: MockBackend, shoppingService: ShoppingService) => {
     mockBackend.connections.subscribe(conn => {
       conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(UserMock) })));
     });
     payment.associateUser(new Event('testEvent'));
-    expect(shoppingCartService.getUserMobile()).toBe(666000002);
+    expect(shoppingService.getUserMobile()).toBe(666000002);
   }));
 
-  it(`Should disassociate an User when 'disassociateUser()' method is called`, inject([MockBackend, ShoppingCartService], (mockBackend: MockBackend, shoppingCartService: ShoppingCartService) => {
+  it(`Should disassociate an User when 'disassociateUser()' method is called`, () => {
     payment.disassociateUser();
-    expect(payment.userAssociated).toBeNull();    
-  }));
-
+    expect(payment.userAssociated).toBeNull();
+  });
 
 });

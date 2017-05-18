@@ -1,3 +1,7 @@
+/**
+  * @author Sergio Banegas Cortijo
+  * Github: https://github.com/sergiobanegas 
+*/
 import { Injectable } from '@angular/core';
 
 @Injectable()
@@ -13,5 +17,9 @@ export class LocalStorageService {
 
 	removeItem(key:string):void {
 		 localStorage.removeItem(key);
+	}
+
+	isStored(key: string): boolean {
+		return (this.getItem(key) !== null);
 	}
 }

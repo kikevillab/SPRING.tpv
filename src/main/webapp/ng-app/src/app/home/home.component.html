@@ -10,7 +10,7 @@
 			<md-icon>more_vert</md-icon>
 		</button>
 		<md-menu #toolbarMenu="mdMenu">
-			<button md-menu-item (click)="goToMovementPage()" *ngIf="openedCashier">
+			<button md-menu-item routerLink="/home/movement" *ngIf="openedCashier">
 				<md-icon>compare_arrows</md-icon>
 				<span>Make a movement</span>
 			</button>
@@ -36,6 +36,6 @@
 		<router-outlet></router-outlet>
 	</div>
 	<md-sidenav #cart align="end" [opened]="cartSideNavOpened" class="sidenav">
-		<cart-view (closeSidenavEvent)= "closeCartSidenav()"></cart-view>
+		<shopping-cart-view (closeSidenavEvent)= "closeCartSidenav()"></shopping-cart-view>
 	</md-sidenav>
 </md-sidenav-container>

@@ -5,7 +5,7 @@
 		<md-card-content fxLayout="column">
 			<h3>Cashier money: <span class="text-primary">{{getCashierMoney() | currency:'EUR':true}}</span></h3>
 			<md-input-container>
-				<input mdInput placeholder="Balance counted" [(ngModel)]="countedMoney">
+				<input mdInput type="number" placeholder="Balance counted" [(ngModel)]="countedMoney" (blur)="formatCountedMoney()" id="balanceCountedInput">
 			</md-input-container>
 			<b>Desbalance: <span class="text-primary">{{getDesbalance() | currency:'EUR':true}}</span></b>
 		</md-card-content>
@@ -15,7 +15,7 @@
 		<md-card-content fxLayout="column">
 			<div fxLayout="row">
 				<md-radio-group>
-				  <md-radio-button name="agreeOption" [checked]="selectedOption =='I agree'" (click)="selectOption('I agree')" value="I agree">I agree</md-radio-button>
+				  <md-radio-button name="agreeOption" [checked]="selectedOption =='I agree'" (click)="selectOption('I agree')" value="I agree" id="agreeRadioButton">I agree</md-radio-button>
 				  <md-radio-button name="agreeOption" [checked]="selectedOption == 'I disagree'" (click)="selectOption('I disagree')" value="I disagree">I disagree</md-radio-button>
 				</md-radio-group>
 			</div>
@@ -23,7 +23,7 @@
 			<md-input-container>
 				<input mdInput placeholder="Comment about the closure" [(ngModel)]="comment">
             </md-input-container>
-            <button md-raised-button color="primary" (click)="close()" [disabled]="countedMoney==0">Close cashier</button>
+            <button md-raised-button color="primary" (click)="close()" [disabled]="isValidForm()" id="closeCashierButton">Close cashier</button>
         </md-card-content>
 	</md-card>
 </div>

@@ -1,7 +1,11 @@
+/**
+  * @author Sergio Banegas Cortijo
+  * Github: https://github.com/sergiobanegas 
+*/
 import { Component } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
 
-import { ShoppingCartService } from '../../shared/services/shopping-cart.service';
+import { ShoppingService } from '../../shared/services/shopping.service';
 
 @Component({
   selector: 'cash-payment-view',
@@ -24,7 +28,7 @@ import { ShoppingCartService } from '../../shared/services/shopping-cart.service
 
 export class CashPaymentComponent {
 
-  totalPrice: number = this.shoppingCartService.getTotalPrice();
+  totalPrice: number = this.shoppingService.getTotalPrice();
   moneyQuantitiesCharged: Object = {
     "500": 0,
     "200": 0,
@@ -42,11 +46,14 @@ export class CashPaymentComponent {
     "0.02": 0,
     "0.01": 0
   };
-  moneyCharged: number = 0.00;
+  moneyCharged: number;
 
-  constructor(public dialog: MdDialog, public dialogRef: MdDialogRef<CashPaymentComponent>, private shoppingCartService: ShoppingCartService){ }
+  constructor(public dialog: MdDialog, public dialogRef: MdDialogRef<CashPaymentComponent>, private shoppingService: ShoppingService){ }
 
   addQuantity(quantity: number): void {
+    if (this.moneyCharged == undefined){
+      this.moneyCharged = 0.0;
+    }
     this.moneyQuantitiesCharged[quantity.toString()]++;
     let total = this.moneyCharged + quantity;
     this.moneyCharged=Math.round(total * 100) / 100;
@@ -60,7 +67,7 @@ export class CashPaymentComponent {
 
   finishPayment(): void {
     this.dialogRef.close();
-    this.shoppingCartService.setMoneyDelivered(this.moneyCharged);
+    this.shoppingService.setMoneyDelivered(this.moneyCharged);
     this.dialog.open(ChangeDialog);
   }
 }
@@ -81,8 +88,8 @@ export class ChangeDialog {
 
   moneyCharged: number = 0;
 
-  constructor(public dialogRef: MdDialogRef<ChangeDialog>, private shoppingCartService: ShoppingCartService) {
-    this.moneyCharged = shoppingCartService.getMoneyDelivered() - shoppingCartService.getTotalPrice();
+  constructor(public dialogRef: MdDialogRef<ChangeDialog>, private shoppingService: ShoppingService) {
+    this.moneyCharged = shoppingService.getMoneyDelivered() - shoppingService.getTotalPrice();
   }
 
   close(){

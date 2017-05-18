@@ -1,8 +1,14 @@
+/**
+  * @author Sergio Banegas Cortijo
+  * Github: https://github.com/sergiobanegas 
+*/
 import { HomePage } from './home.po';
 import { CartView } from './cart/cart.po';
 import { CalculatorView } from './cart/calculator.po';
 import { PaymentView } from './payment/payment.po';
 import { MovementView } from './movement/movement.po';
+import { CloseCashierView } from './close-cashier/close-cashier.po';
+
 
 describe('Page: Home', () => {
 
@@ -11,6 +17,7 @@ describe('Page: Home', () => {
 	let calculatorView: CalculatorView;
 	let paymentView: PaymentView;
 	let movementView: MovementView;
+	let closeCashierView: CloseCashierView;
 
 	beforeAll(() => {
 		page = new HomePage();
@@ -18,7 +25,9 @@ describe('Page: Home', () => {
 		calculatorView = new CalculatorView();
 		paymentView = new PaymentView();
 		movementView = new MovementView();
+		closeCashierView = new CloseCashierView();
 		page.navigateTo();
+		page.openCashier();
 	});
 
 	it(`should display a 'Products' title'`, () => {
@@ -54,31 +63,21 @@ describe('Page: Home', () => {
 	});
 
 
-	it(`should redirect to home after make a movement`, () => {
+	it(`should show the movement submit button after filling the form`, () => {
 		movementView.navigateTo();
 		expect(movementView.getSubmitButton().isEnabled()).toBe(false);
 		movementView.fillForm();
 		expect(movementView.getSubmitButton().isEnabled()).toBe(true);
 	});
 
-	// Commented because the dialog opening delay makes impossible to handle it correctly
-	// it(`should do the cash payment properly`, (done) => {
-	// 	paymentView.navigateTo();
-	// 	paymentView.clickCashPaymentButton();
-	// 	setTimeout(()=>{
-	// 		paymentView.clickMoneyButton(1);
-	// 		paymentView.clickMoneyButton(20);
-	// 		paymentView.clickMoneyButton(5);
-	// 		paymentView.clickMoneyButton(0.5);
-	// 		expect(paymentView.getMoneyChargedText()).toEqual('26.5');
-	// 		paymentView.clickRemoveMoneyButton(1);
-	// 		expect(paymentView.getMoneyChargedText()).toEqual('25.5');
-	// 		done();
-	// 	}, 7000);
-	// });
+	it(`should show the close cashier button after filling the form`, () => {
+		closeCashierView.navigateTo();
+		closeCashierView.fillForm();
+		expect(closeCashierView.getCloseCashierButton().isEnabled()).toBe(true);
+	});
 
 	afterAll(() => {
-		cartView.clickClearCartButton();
+		closeCashierView.clickCloseCashierButton();
 	});
 
 });
