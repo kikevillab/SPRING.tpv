@@ -8,7 +8,7 @@ import {User, MOBILE_ATTRIBUTE_NAME, DNI_ATTRIBUTE_NAME, EMAIL_ATTRIBUTE_NAME} f
 import {CustomersService} from '../customers.service';
 import {RegExpFormValidatorService} from '../../../shared/services/reg-exp-form-validator.service';
 import {ToastService} from '../../../shared/services/toast.service';
-import {TPVHTTPError} from "../../../shared/models/tpv-http-error";
+import {TPVHTTPError} from "../../../shared/models/tpv-http-error.model";
 import {isNull} from "util";
 
 @Component({

@@ -8,8 +8,8 @@ import { MockBackend, MockConnection } from '@angular/http/testing';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 
-import { CartProduct } from '../models/cart-product';
-import { User } from '../../../shared/models/user';
+import { CartProduct } from '../models/cart-product.model';
+import { User } from '../shared/models/user.model';
 
 import { ShoppingService } from './shopping.service';
 import { LocalStorageService } from '../../../shared/services/local-storage.service';

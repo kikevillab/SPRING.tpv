@@ -17,7 +17,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { SharedModule } from '../../shared/shared.module';
 import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
 
-import { CartProduct } from '../shared/models/cart-product';
+import { CartProduct } from '../shared/models/cart-product.model';
 import { ShoppingCartComponent } from './shopping-cart.component';
 
 import { ToastService } from '../../shared/services/toast.service';

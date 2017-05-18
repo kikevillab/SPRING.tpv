@@ -4,7 +4,7 @@
 
 import {Component, OnInit} from '@angular/core';
 import {CustomersService} from './customers.service';
-import {TPVHTTPError} from '../../shared/models/tpv-http-error';
+import {TPVHTTPError} from '../../shared/models/tpv-http-error.model';
 import {ToastService} from '../../shared/services/toast.service';
 import {User} from '../../shared/models/user.model';
 import {MdDialog} from '@angular/material';

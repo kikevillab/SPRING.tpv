@@ -8,13 +8,13 @@ import { Subject } from 'rxjs/Subject';
 
 import { API_GENERIC_URI } from '../../../app.config';
 
-import { CartProduct } from '../models/cart-product';
-import { Product } from '../../../shared/models/product';
-import { User } from '../../../shared/models/user';
-import { TicketCheckout } from '../models/ticket-checkout';
+import { CartProduct } from '../models/cart-product.model';
+import { Product } from '../../../shared/models/product.model';
+import { User } from '../models/user.model';
+import { TicketCheckout } from '../models/ticket-checkout.model';
 
 import { HTTPService } from '../../../shared/services/http.service';
-import { TPVHTTPError } from '../../../shared/models/tpv-http-error';
+import { TPVHTTPError } from '../../../shared/models/tpv-http-error.model';
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
 
 @Injectable()

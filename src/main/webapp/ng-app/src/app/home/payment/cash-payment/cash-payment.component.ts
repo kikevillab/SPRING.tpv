@@ -46,11 +46,14 @@ export class CashPaymentComponent {
     "0.02": 0,
     "0.01": 0
   };
-  moneyCharged: number = 0.00;
+  moneyCharged: number;
 
   constructor(public dialog: MdDialog, public dialogRef: MdDialogRef<CashPaymentComponent>, private shoppingService: ShoppingService){ }
 
   addQuantity(quantity: number): void {
+    if (this.moneyCharged == undefined){
+      this.moneyCharged = 0.0;
+    }
     this.moneyQuantitiesCharged[quantity.toString()]++;
     let total = this.moneyCharged + quantity;
     this.moneyCharged=Math.round(total * 100) / 100;

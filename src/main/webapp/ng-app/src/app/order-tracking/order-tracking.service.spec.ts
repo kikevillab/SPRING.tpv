@@ -6,7 +6,7 @@ import { TestBed, async, inject } from '@angular/core/testing';
 import { HttpModule, Response, ResponseOptions, BaseRequestOptions, Http } from '@angular/http';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 
-import { ProductState }  from './product-state';
+import { ProductState }  from './product-state.model';
 import { OrderTrackingService } from './order-tracking.service';
 import { HTTPService } from '../shared/services/http.service';
 

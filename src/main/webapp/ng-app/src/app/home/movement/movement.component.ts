@@ -6,7 +6,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
 import { Subscription } from 'rxjs/Subscription';
 
-import { CashierClosure } from '../shared/models/cashier-closure';
+import { CashierClosure } from '../shared/models/cashier-closure.model';
 import { CashierService } from '../shared/services/cashier.service';
 import { ToastService } from '../../shared/services/toast.service';
 
