@@ -48,6 +48,7 @@ export class PaymentComponent implements OnInit, OnDestroy{
   constructor (private shoppingService: ShoppingService, private toastService: ToastService, public dialog: MdDialog, private router: Router){
     this.shoppingCartSubscription = this.shoppingService.getCartProductsObservable().subscribe((cartProducts: CartProduct[]) => {
       this.totalPrice = this.shoppingService.getTotalPrice();
+      this.paidOut = false;
     });
   }
 
