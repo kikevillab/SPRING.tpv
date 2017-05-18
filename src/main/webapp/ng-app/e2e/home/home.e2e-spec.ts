@@ -78,7 +78,6 @@ describe('Page: Home', () => {
 
 	afterAll(() => {
 		closeCashierView.clickCloseCashierButton();
-		cartView.clickClearCartButton();
 	});
 
 });

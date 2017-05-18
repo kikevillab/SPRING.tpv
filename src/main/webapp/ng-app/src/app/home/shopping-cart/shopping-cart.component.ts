@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { MdDialog } from '@angular/material';
 
 import { CalculatorComponent } from './calculator/calculator.component';
-import { CartProduct } from '../shared/models/cart-product';
+import { CartProduct } from '../shared/models/cart-product.model';
 
 import { ShoppingService } from '../shared/services/shopping.service';
 import { ToastService } from '../../shared/services/toast.service';

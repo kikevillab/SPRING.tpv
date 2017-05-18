@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { ProductState } from './product-state';
+import { ProductState } from './product-state.model';
 import { OrderTrackingService } from './order-tracking.service';
 
 @Component({

@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { MdSidenav, MdDialog, MdDialogRef, MdDialogConfig } from '@angular/material';
 
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
-import { CashierClosure } from './shared/models/cashier-closure';
+import { CashierClosure } from './shared/models/cashier-closure.model';
 import { CashierService } from './shared/services/cashier.service';
 
 import { ToastService } from '../shared/services/toast.service';

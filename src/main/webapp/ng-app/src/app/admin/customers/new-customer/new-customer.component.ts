@@ -5,7 +5,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import {User} from '../../../shared/models/user.model';
-import {TPVHTTPError} from '../../../shared/models/tpv-http-error';
+import {TPVHTTPError} from '../../../shared/models/tpv-http-error.model';
 import {MdDialogRef} from '@angular/material';
 import {RegExpFormValidatorService} from '../../../shared/services/reg-exp-form-validator.service';
 import {ToastService} from '../../../shared/services/toast.service';

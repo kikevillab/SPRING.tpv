@@ -7,8 +7,8 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { MdDialog } from '@angular/material';
 
-import { CartProduct } from '../shared/models/cart-product';
-import { User } from '../../shared/models/user';
+import { CartProduct } from '../shared/models/cart-product.model';
+import { User } from '../shared/models/user.model';
 import { CashPaymentComponent } from './cash-payment/cash-payment.component';
 
 import { ShoppingService } from '../shared/services/shopping.service';

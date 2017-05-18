@@ -8,12 +8,12 @@ import { Subject } from 'rxjs/Subject';
 
 import { API_GENERIC_URI } from '../../../app.config';
 
-import { CashierClosure } from '../models/cashier-closure';
-import { Amount } from '../models/amount';
-import { CashierClosingData } from '../models/cashier-closing-data';
+import { CashierClosure } from '../models/cashier-closure.model';
+import { Amount } from '../models/amount.model';
+import { CashierClosingData } from '../models/cashier-closing-data.model';
 
 import { HTTPService } from '../../../shared/services/http.service';
-import { TPVHTTPError } from '../../../shared/models/tpv-http-error';
+import { TPVHTTPError } from '../../../shared/models/tpv-http-error.model';
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
 
 
