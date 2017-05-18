@@ -10,7 +10,7 @@ public class CashierClosuresWrapper {
 
     private long id;
 
-    private int amount;
+    private double amount;
 
     private Calendar openingDate;
 
@@ -34,11 +34,11 @@ public class CashierClosuresWrapper {
         this.id = id;
     }
 
-    public int getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 
