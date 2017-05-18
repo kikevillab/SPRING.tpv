@@ -13,10 +13,10 @@ import javax.persistence.InheritanceType;
 public abstract class Product {
 
     @Id
-    private long id;
-
-    @Column(unique = true, nullable = false)
     private String code;
+    
+    @Column(unique = true, nullable = false)
+    private String reference;
 
     private String description;
 
@@ -29,20 +29,12 @@ public abstract class Product {
     public Product() {
     }
 
-    public Product(long id, String code, BigDecimal retailPrice, String description) {
-        this.id = id;
+    public Product(String code, String reference, BigDecimal retailPrice, String description) {
         this.code = code;
+        this.reference = reference;
         this.retailPrice = retailPrice;
         this.description = description;
         discontinued = false;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getCode() {
@@ -85,29 +77,70 @@ public abstract class Product {
         this.image = image;
     }
 
+    public String getReference() {
+        return reference;
+    }
+
+    public void setReference(String reference) {
+        this.reference = reference;
+    }
+
     @Override
     public int hashCode() {
-        return (int) id;
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((code == null) ? 0 : code.hashCode());
+        result = prime * result + ((description == null) ? 0 : description.hashCode());
+        result = prime * result + (discontinued ? 1231 : 1237);
+        result = prime * result + ((image == null) ? 0 : image.hashCode());
+        result = prime * result + ((reference == null) ? 0 : reference.hashCode());
+        result = prime * result + ((retailPrice == null) ? 0 : retailPrice.hashCode());
+        return result;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
+        if (this == obj)
             return true;
-        }
-        if (obj == null) {
+        if (obj == null)
             return false;
-        }
-        if (getClass() != obj.getClass()) {
+        if (getClass() != obj.getClass())
             return false;
-        }
-        return id == ((Product) obj).id;
+        Product other = (Product) obj;
+        if (code == null) {
+            if (other.code != null)
+                return false;
+        } else if (!code.equals(other.code))
+            return false;
+        if (description == null) {
+            if (other.description != null)
+                return false;
+        } else if (!description.equals(other.description))
+            return false;
+        if (discontinued != other.discontinued)
+            return false;
+        if (image == null) {
+            if (other.image != null)
+                return false;
+        } else if (!image.equals(other.image))
+            return false;
+        if (reference == null) {
+            if (other.reference != null)
+                return false;
+        } else if (!reference.equals(other.reference))
+            return false;
+        if (retailPrice == null) {
+            if (other.retailPrice != null)
+                return false;
+        } else if (!retailPrice.equals(other.retailPrice))
+            return false;
+        return true;
     }
-    
+
     @Override
     public String toString() {
-        return id + ": code=" + code + ", description=" + description + ", retailPrice=" + retailPrice + ", discontinued="
-                + discontinued + "]";
+        return "Product [code=" + code + ", reference=" + reference + ", description=" + description + ", retailPrice=" + retailPrice
+                + ", discontinued=" + discontinued + ", image=" + image + "]";
     }
 
 }

@@ -65,7 +65,7 @@ public class TicketControllerIT {
         Ticket ticket = ticketController.createTicket(ticketCreationWrapper);
         List<Shopping> shoppingList = ticket.getShoppingList();
         Shopping shopping = shoppingList.get(0);
-        Article article = articleDao.findFirstByCode(shoppingCreationWrapper.getProductCode());
+        Article article = articleDao.findOne(shoppingCreationWrapper.getProductCode());
 
         assertEquals(lastTicketId + 1, ticket.getId());
         assertNull(ticket.getUser());
