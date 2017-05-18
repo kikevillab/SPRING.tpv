@@ -38,14 +38,7 @@ public class UserResource {
         }
     }
 
-    @RequestMapping(value = Uris.CUSTOMERS, method = RequestMethod.POST)
-    public void customerRegistration(@RequestBody UserWrapper userWrapper)
-            throws InvalidUserFieldException, AlreadyExistUserFieldException {
-        validateField(userWrapper.getUsername(), "username");
-        if (!this.userController.registration(userWrapper, Role.CUSTOMER)) {
-            throw new AlreadyExistUserFieldException();
-        }
-    }
+  
 
     private void validateField(String field, String msg) throws InvalidUserFieldException {
         if (field == null || field.isEmpty()) {
@@ -73,5 +66,5 @@ public class UserResource {
         }
         userController.updateUser(userUpdateWrapper);
     }
-
+    
 }

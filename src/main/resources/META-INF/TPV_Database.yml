@@ -21,6 +21,20 @@ userList:
     address: Calle Gran Vía, 23. Madrid
     dni: 1235678X
     email: user@user.com
+  - &user666000004
+    mobile: 666000004
+    username: operator1
+    password: pass
+    address: Calle Gran Vía, 12. Madrid
+    dni: 1245538L
+    email: userO@userO.com
+  - &user666000005
+    mobile: 666000005
+    username: manager1
+    password: pass
+    address: Calle Goya, 11. Madrid
+    dni: 1232578M
+    email: userM@userM.com
 
 authorizationList:
   - user: *user666000000
@@ -31,6 +45,10 @@ authorizationList:
     role: CUSTOMER
   - user: *user666000003
     role: CUSTOMER
+  - user: *user666000004
+    role: OPERATOR
+  - user: *user666000005
+    role: MANAGER
 
 tokenList:
   - user: *user666000000
