@@ -3,11 +3,11 @@ package api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import api.exceptions.AlreadyExistUserFieldException;
@@ -17,7 +17,7 @@ import entities.users.Role;
 import wrappers.UserWrapper;
 
 @RestController
-@RequestMapping(Uris.VERSION)
+@RequestMapping(Uris.VERSION+Uris.CUSTOMERS )
 public class CustomersResource {
 
     private UserController userController;
@@ -27,19 +27,21 @@ public class CustomersResource {
         this.userController = userController;
     }
 
-    @RequestMapping(value = Uris.SEARCH, method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     //@PreAuthorize("hasRole('ADMIN')")
     public Page<UserWrapper> userList(Pageable pageable) throws InvalidUserFieldException {
         this.validateFieldObject(pageable, "Pageable: objeto para paginar");
         return userController.getAllAndRole(pageable,Role.CUSTOMER);
     }
 
-    @RequestMapping(value = Uris.CUSTOMERS + Uris.USER_MOBILE, method = RequestMethod.GET)
+    @RequestMapping(value = Uris.MOBILE+ Uris.USER_MOBILE, method = RequestMethod.GET)
     //@PreAuthorize("hasRole('ADMIN')")
-    public UserWrapper userMobile(@PathVariable long userMobile) throws InvalidUserFieldException {
-        this.validateFieldObject(userMobile,"userMobile");
-        return userController.getByMobileAndRole(userMobile,Role.CUSTOMER);
+    public UserWrapper userMobile(@PathVariable long mobile) throws InvalidUserFieldException {
+        this.validateFieldObject(mobile,"mobile");
+        return userController.getByMobileAndRole(mobile,Role.CUSTOMER);
     }
+    
+   
 
     @RequestMapping(value = Uris.IDENTIFICATION + Uris.USER_IDENTIFICATION, method = RequestMethod.GET)
    // @PreAuthorize("hasRole('ADMIN')")
@@ -48,14 +50,14 @@ public class CustomersResource {
         return userController.getByDniAndRole(identification,Role.CUSTOMER);
     }
 
-    @RequestMapping(value = Uris.EMAIL + Uris.USER_EMAIL, method = RequestMethod.GET)
-    @PreAuthorize("hasRole('ADMIN')")
-    public UserWrapper userEmail(@PathVariable(value = "email") String email) throws InvalidUserFieldException {
+    @RequestMapping(value = Uris.EMAIL , method = RequestMethod.GET)
+    //@PreAuthorize("hasRole('ADMIN')")
+    public UserWrapper userEmail(@RequestParam(value = "email") String email) throws InvalidUserFieldException {
         this.validateField(email, "email");
         return userController.getByEmailAndRole(email,Role.CUSTOMER);
     }
     
-    @RequestMapping(value = Uris.CUSTOMERS, method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     public void customerRegistration(@RequestBody UserWrapper userWrapper)
             throws InvalidUserFieldException, AlreadyExistUserFieldException {
         this.validateFieldRegiter(userWrapper, "UserWrapper:usuario");
@@ -63,6 +65,8 @@ public class CustomersResource {
             throw new AlreadyExistUserFieldException();
         }
     }
+    
+    
     
     private void validateFieldObject (Object objeto, String msg) throws InvalidUserFieldException{
         if (objeto==null)
