@@ -177,6 +177,15 @@ embroideryList:
     colors: 3
     squareMillimeters: 30
     image: /assets/img/products/img-product-4.png
+  - &embroidery84000002226
+    code: 84000002226
+    reference: embroidery4
+    retailPrice: 23
+    description: embroidery4
+    stitches: 3000
+    colors: 3
+    squareMillimeters: 30
+    image: /assets/img/products/img-product-5.png
 
 textilePrintingList:
   - &textilePrinting84000003333
