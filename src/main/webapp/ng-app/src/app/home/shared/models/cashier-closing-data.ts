@@ -3,5 +3,5 @@
   * Github: https://github.com/sergiobanegas 
 */
 export class CashierClosingData {
-	constructor(public amount: number, comment: string) {}
+	constructor(public amount: number, public comment: string) {}
 }

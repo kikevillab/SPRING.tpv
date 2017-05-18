@@ -29,7 +29,7 @@ import { ToastService } from '../../shared/services/toast.service';
 
 export class CloseCashierComponent implements OnDestroy {
 
-  countedMoney: number = 0;
+  countedMoney: number;
   selectedOption: string = 'I agree';
   comment: string = '';
   cashier: CashierClosure;
@@ -44,6 +44,10 @@ export class CloseCashierComponent implements OnDestroy {
 
   selectOption(entry): void {
     this.selectedOption = entry;
+  }
+
+  formatCountedMoney(): void {
+    this.countedMoney = Math.round(this.countedMoney * 100) / 100;
   }
 
   close(): void {
@@ -63,11 +67,17 @@ export class CloseCashierComponent implements OnDestroy {
   }
 
   getDesbalance(): number {
-    return this.cashier ? (this.countedMoney - this.cashier.amount) : 0;
+     if (this.cashier){
+       return (this.countedMoney == undefined || isNaN(Number(this.countedMoney.toString()))) ? this.cashier.amount : this.countedMoney - this.cashier.amount;
+     } else return 0;
+  }
+
+  isValidForm(): boolean {
+    return this.countedMoney == 0 || this.countedMoney == undefined;
   }
 
   ngOnDestroy(){
-    this.cashierSubscription.unsubscribe();
+    this.cashierSubscription && this.cashierSubscription.unsubscribe();
   }
 
 }

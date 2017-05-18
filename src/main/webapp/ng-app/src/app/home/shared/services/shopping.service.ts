@@ -31,7 +31,7 @@ export class ShoppingService {
     this.updateCart();
   }
 
-  addProduct(productCode: number): Promise<any> {
+  addProduct(productCode: string): Promise<any> {
     return new Promise((resolve,reject) => {
       this.httpService.get(`${API_GENERIC_URI}/products/${productCode}`).subscribe((productDetails: Product) => {
         let index: number = this.cartProducts.findIndex((cp: CartProduct) => cp.productCode == productCode);

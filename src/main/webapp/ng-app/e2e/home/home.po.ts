@@ -9,6 +9,12 @@ export class HomePage {
 	navigateTo() {
 		return browser.get('/home');
 	}
+
+	openCashier() {
+		element.all(by.id('openCashierButton')).then(items => {
+		    items.length > 0 && element(by.id('openCashierButton')).click();
+		});
+	}
 	
 	getPageTitleText() {
 		return element(by.id('pageTitle')).getText();

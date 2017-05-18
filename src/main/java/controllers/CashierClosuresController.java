@@ -24,7 +24,7 @@ public class CashierClosuresController {
 		return cashierClosures;
 	}
 
-	private int getLastCashierClosureAmount() {
+	private double getLastCashierClosureAmount() {
 		return getLastCashierClosure() != null ? getLastCashierClosure().getAmount() : 0;
 	}
 
@@ -39,7 +39,7 @@ public class CashierClosuresController {
 		return cashierClosuresDao.findFirstByOrderByOpeningDateDesc();
 	}
 
-	public CashierClosures closeCashierRequest(int amount, String comment) {
+	public CashierClosures closeCashierRequest(double amount, String comment) {
 		CashierClosures lastCashierClosure = this.getLastCashierClosure();
 		lastCashierClosure.setAmount(amount);
 		lastCashierClosure.setComment(comment);
@@ -50,7 +50,7 @@ public class CashierClosuresController {
 		return lastCashierClosure;
 	}
 
-	public CashierClosures depositCashierRequest(int amount) {
+	public CashierClosures depositCashierRequest(double amount) {
 		CashierClosures lastCashierClosures = this.getLastCashierClosure();
 		lastCashierClosures.setAmount(getLastCashierClosureAmount() + amount);
 		cashierClosuresDao.saveAndFlush(lastCashierClosures);
@@ -58,7 +58,7 @@ public class CashierClosuresController {
 		return lastCashierClosures;
 	}
 
-	public CashierClosures withDrawCashierRequest(int amount) {
+	public CashierClosures withDrawCashierRequest(double amount) {
 		CashierClosures lastCashierClosures = this.getLastCashierClosure();
 		lastCashierClosures.setAmount(getLastCashierClosureAmount() - amount);
 		cashierClosuresDao.saveAndFlush(lastCashierClosures);

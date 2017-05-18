@@ -40,7 +40,7 @@ export class OpenCashierComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnDestroy(){
-		this.cashierSubscription.unsubscribe();
+		this.cashierSubscription && this.cashierSubscription.unsubscribe();
 	}
 
 }

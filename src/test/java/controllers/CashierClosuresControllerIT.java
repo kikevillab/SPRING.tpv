@@ -50,7 +50,7 @@ public class CashierClosuresControllerIT extends TestCase {
     	CashierClosures cashierClosures = cashierClosuresController.createCashierClosures();
     	
     	assertNotNull(cashierClosures);
-    	assertEquals(0, cashierClosures.getAmount());
+    	assertEquals(0.0, cashierClosures.getAmount(), 0.01);
     	assertEquals(cashierClosures.getClosureDate(), null);
     	assertEquals(cashierClosuresController.getLastCashierClosure().getId(), cashierClosures.getId());
     	
@@ -64,7 +64,7 @@ public class CashierClosuresControllerIT extends TestCase {
 
     	cashierClosuresController.depositCashierRequest(5);
     	
-    	assertEquals(5, cashierClosuresDao.findFirstByOrderByOpeningDateDesc().getAmount());
+    	assertEquals(5.0, cashierClosuresDao.findFirstByOrderByOpeningDateDesc().getAmount(), 0.01);
     }
     
     @Test
@@ -74,7 +74,7 @@ public class CashierClosuresControllerIT extends TestCase {
 
     	cashierClosuresController.withDrawCashierRequest(3);
     	
-    	assertEquals(-3, cashierClosuresDao.findFirstByOrderByOpeningDateDesc().getAmount());
+    	assertEquals(-3.0, cashierClosuresDao.findFirstByOrderByOpeningDateDesc().getAmount(), 0.01);
 
     }
     
@@ -88,7 +88,7 @@ public class CashierClosuresControllerIT extends TestCase {
     	CashierClosures lastCashierClosure = cashierClosuresController.getLastCashierClosure();
     	
     	assertEquals(lastCashierClosure.getId(),closesCashier.getId());
-    	assertEquals(10, lastCashierClosure.getAmount());
+    	assertEquals(10.0, lastCashierClosure.getAmount(), 0.01);
     	assertNotNull(lastCashierClosure.getClosureDate());
     	assertTrue(cashierClosuresController.isLastCashierClosuresClosed());
     }

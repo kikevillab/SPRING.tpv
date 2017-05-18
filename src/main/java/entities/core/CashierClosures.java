@@ -15,7 +15,7 @@ public class CashierClosures {
     private long id;
 
     @Column(nullable = false)
-    private int amount;
+    private double amount;
 
     @Column(nullable = false)
     private Calendar openingDate;
@@ -29,13 +29,13 @@ public class CashierClosures {
     public CashierClosures() {
     }
 
-    public CashierClosures(long id, int amount, Calendar openingDate) {
+    public CashierClosures(long id, double amount, Calendar openingDate) {
         this.id = id;
         this.amount = amount;
         this.openingDate = openingDate;
     }
 
-    public CashierClosures(long id, int amount, Calendar openingDate, Calendar closureDate, String comment) {
+    public CashierClosures(long id, double amount, Calendar openingDate, Calendar closureDate, String comment) {
         this.id = id;
         this.amount = amount;
         this.openingDate = openingDate;
@@ -51,11 +51,11 @@ public class CashierClosures {
         this.id = id;
     }
 
-    public int getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 
