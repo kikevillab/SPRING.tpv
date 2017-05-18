@@ -19,7 +19,7 @@ import wrappers.TextilePrintingCreationWrapper;
 import wrappers.TextilePrintingUpdateWrapper;
 import wrappers.TextilePrintingWrapper;
 
-public class TextilePrintingFunctionalTesting {
+public class TextilePrintingResourceFunctionalTesting {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
