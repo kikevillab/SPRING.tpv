@@ -34,10 +34,10 @@ describe('Page: Home', () => {
 		expect(page.getPageTitleText()).toEqual('Products');
 	});
 
-	it(`should display the product with code 'article0' when submitted`, () => {
+	it(`should display the product with code '84000001113' when submitted`, () => {
 		page.clickCartButton();
 		let totalPriceBefore = cartView.getTotalValueText();
-		cartView.submitProductCode('article0');
+		cartView.submitProductCode('84000001113');
 		let totalPriceAfter = cartView.getTotalValueText();
 		expect(totalPriceBefore).not.toBe(totalPriceAfter);
 	});
@@ -57,7 +57,7 @@ describe('Page: Home', () => {
 	it(`should empty the cart when 'X' button is clicked`, () => {
 		page.navigateTo();
 		page.clickCartButton();
-		cartView.submitProductCode('article0');
+		cartView.submitProductCode('84000001113');
 		cartView.clickClearCartButton();
 		expect(cartView.getCartInputs()).toBe(0);
 	});
