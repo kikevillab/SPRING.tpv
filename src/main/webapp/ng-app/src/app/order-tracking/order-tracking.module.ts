@@ -1,6 +1,6 @@
 /**
   * @author Sergio Banegas Cortijo
-  * Github: https://github.com/sergiobanegas 
+  * Github: https://github.com/sergiobanegas
 */
 import {NgModule} from '@angular/core';
 import {HttpModule} from '@angular/http';

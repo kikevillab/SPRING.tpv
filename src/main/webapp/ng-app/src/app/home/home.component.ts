@@ -1,6 +1,6 @@
 /**
   * @author Sergio Banegas Cortijo
-  * Github: https://github.com/sergiobanegas 
+  * Github: https://github.com/sergiobanegas
 */
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';

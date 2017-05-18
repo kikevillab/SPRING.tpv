@@ -1,6 +1,6 @@
 /**
   * @author Sergio Banegas Cortijo
-  * Github: https://github.com/sergiobanegas 
+  * Github: https://github.com/sergiobanegas
 */
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
@@ -44,7 +44,7 @@ export class PaymentComponent implements OnInit, OnDestroy{
   shoppingCartSubscription: Subscription;
   mobileNumberInput: number;
   userAssociated: User;
-  
+
   constructor (private shoppingService: ShoppingService, private toastService: ToastService, public dialog: MdDialog, private router: Router){
     this.shoppingCartSubscription = this.shoppingService.getCartProductsObservable().subscribe((cartProducts: CartProduct[]) => {
       this.totalPrice = this.shoppingService.getTotalPrice();
@@ -72,7 +72,7 @@ export class PaymentComponent implements OnInit, OnDestroy{
   openCashPaymentDialog(){
     let dialogRef = this.dialog.open(CashPaymentComponent);
     dialogRef.afterClosed().subscribe(() => {
-      this.paidOut = this.shoppingService.getMoneyDelivered() > this.totalPrice; 
+      this.paidOut = this.shoppingService.getMoneyDelivered() > this.totalPrice;
     });
   }
 

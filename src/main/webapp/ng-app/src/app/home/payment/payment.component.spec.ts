@@ -1,6 +1,6 @@
 /**
   * @author Sergio Banegas Cortijo
-  * Github: https://github.com/sergiobanegas 
+  * Github: https://github.com/sergiobanegas
 */
 import { TestBed, async, inject } from '@angular/core/testing';
 import { Response, ResponseOptions, BaseRequestOptions, Http } from '@angular/http';
@@ -42,7 +42,7 @@ describe('Component: PaymentComponent', () => {
         LocalStorageService,
         MockBackend,
         BaseRequestOptions,
-        HTTPService, 
+        HTTPService,
         {
           provide: Http,
           useFactory: (backend, options) => new Http(backend, options),
@@ -66,7 +66,7 @@ describe('Component: PaymentComponent', () => {
 
   it(`Should disassociate an User when 'disassociateUser()' method is called`, () => {
     payment.disassociateUser();
-    expect(payment.userAssociated).toBeNull();    
+    expect(payment.userAssociated).toBeNull();
   });
 
 });

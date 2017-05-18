@@ -14,7 +14,7 @@ import {TicketComponent} from './ticket/ticket.component';
 import {WelcomeRoutingModule} from './welcome.routes';
 import {HTTPService} from '../shared/services/http.service';
 import {LoginService} from './login/login.service';
-import {TokenService} from './login/token.service';
+import {LocalStorageService} from '../shared/services/local-storage.service';
 import {AngularMaterialModule} from '../shared/angular-material.module';
 
 @NgModule({
@@ -35,7 +35,7 @@ import {AngularMaterialModule} from '../shared/angular-material.module';
     providers: [
         HTTPService,
         LoginService,
-        TokenService
+        LocalStorageService
     ],
 })
 export class WelcomeModule {

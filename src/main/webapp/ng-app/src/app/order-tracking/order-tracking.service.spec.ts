@@ -1,6 +1,6 @@
 /**
   * @author Sergio Banegas Cortijo
-  * Github: https://github.com/sergiobanegas 
+  * Github: https://github.com/sergiobanegas
 */
 import { TestBed, async, inject } from '@angular/core/testing';
 import { HttpModule, Response, ResponseOptions, BaseRequestOptions, Http } from '@angular/http';
@@ -20,7 +20,7 @@ describe('Service: OrderTrackingService', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [ HttpModule ],
-      providers: [ 
+      providers: [
       OrderTrackingService,
       MockBackend,
       BaseRequestOptions,

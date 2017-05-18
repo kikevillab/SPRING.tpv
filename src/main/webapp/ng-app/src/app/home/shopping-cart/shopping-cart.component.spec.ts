@@ -14,11 +14,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { SharedModule } from '../../shared/shared.module';
 import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
 
 import { CartProduct } from '../shared/models/cart-product';
 import { ShoppingCartComponent } from './shopping-cart.component';
-import { DateComponent } from '../../shared/directives/date.component';
 
 import { ToastService } from '../../shared/services/toast.service';
 import { ShoppingService } from '../shared/services/shopping.service';
@@ -45,8 +45,8 @@ describe('Component: ShoppingCartComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ MaterialModule, FlexLayoutModule, NgxDatatableModule, FormsModule, BrowserAnimationsModule ],
-      declarations: [ DateComponent, ShoppingCartComponent ],
+      imports: [ MaterialModule, FlexLayoutModule, NgxDatatableModule, FormsModule, BrowserAnimationsModule, SharedModule ],
+      declarations: [ ShoppingCartComponent ],
       providers: [
         { provide: Router },
         ToastService,

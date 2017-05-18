@@ -4,7 +4,7 @@
 
 import {Injectable}    from '@angular/core';
 import {Headers} from '@angular/http';
-import {Token} from './token.model';
+import {Session} from '../../shared/models/session.model';
 import {API_GENERIC_URI} from '../../app.config';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
@@ -17,7 +17,7 @@ export class LoginService {
     constructor(private httpService: HTTPService) {
     }
 
-    login(mobile: number, password: string): Observable<Token> {
+    login(mobile: number, password: string): Observable<Session> {
         let headers = new Headers({
             'Authorization': 'Basic ' + btoa(mobile + ':' + password)
         });

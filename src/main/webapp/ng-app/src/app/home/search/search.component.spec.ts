@@ -1,6 +1,6 @@
 /**
   * @author Sergio Banegas Cortijo
-  * Github: https://github.com/sergiobanegas 
+  * Github: https://github.com/sergiobanegas
 */
 import { TestBed, async, inject } from '@angular/core/testing';
 import { Response, ResponseOptions, BaseRequestOptions, Http } from '@angular/http';
@@ -32,9 +32,9 @@ describe('Component: SearchComponent', () => {
       providers: [
         { provide: Router },
         ToastService,
-        ShoppingCartService,
+        ShoppingService,
         LocalStorageService,
-        HTTPService, 
+        HTTPService,
         MockBackend,
         BaseRequestOptions,
         {

@@ -42,29 +42,29 @@ public class CashierClosuresResource {
     }
 
     @RequestMapping(method = RequestMethod.PUT, path = Uris.CASHIER_CLOSURES_CLOSE )
-    public CashierClosuresWrapper closeCashierRequest(@RequestBody int amount, @RequestBody String comment) throws LastCashierClosureIsClosedException {
+    public CashierClosuresWrapper closeCashierRequest(@RequestBody CashierClosuresWrapper cashierClosuresWrapper) throws LastCashierClosureIsClosedException {
         if(cashierClosuresController.isLastCashierClosuresClosed()) {
             throw new LastCashierClosureIsClosedException();
         }
 
-        return new CashierClosuresWrapper( cashierClosuresController.closeCashierRequest(amount, comment) );
+        return new CashierClosuresWrapper( cashierClosuresController.closeCashierRequest(cashierClosuresWrapper.getAmount(), cashierClosuresWrapper.getComment()) );
     }
 
     @RequestMapping(method = RequestMethod.PUT, path = Uris.CASHIER_CLOSURES_DEPOSIT)
-    public CashierClosuresWrapper depositCashierRequest(@RequestBody int amount) throws LastCashierClosureIsClosedException {
+    public CashierClosuresWrapper depositCashierRequest(@RequestBody CashierClosuresWrapper cashierClosuresWrapper) throws LastCashierClosureIsClosedException {
         if(cashierClosuresController.isLastCashierClosuresClosed()) {
             throw new LastCashierClosureIsClosedException();
         }
-        return new CashierClosuresWrapper( cashierClosuresController.depositCashierRequest(amount));
+        return new CashierClosuresWrapper( cashierClosuresController.depositCashierRequest(cashierClosuresWrapper.getAmount()));
     }
 
     @RequestMapping(method = RequestMethod.PUT, path = Uris.CASHIER_CLOSURES_WITHDRAW )
-    public CashierClosuresWrapper withDrawCashierRequest(@RequestBody int amount) throws LastCashierClosureIsClosedException {
+    public CashierClosuresWrapper withDrawCashierRequest(@RequestBody CashierClosuresWrapper cashierClosuresWrapper) throws LastCashierClosureIsClosedException {
         if(cashierClosuresController.isLastCashierClosuresClosed()) {
             throw new LastCashierClosureIsClosedException();
         }
 
-        return new CashierClosuresWrapper( cashierClosuresController.withDrawCashierRequest(amount));
+        return new CashierClosuresWrapper( cashierClosuresController.withDrawCashierRequest(cashierClosuresWrapper.getAmount()));
 
     }
 
