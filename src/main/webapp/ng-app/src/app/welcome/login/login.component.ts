@@ -5,8 +5,9 @@
 import {Component, OnInit} from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import {LoginService} from './login.service';
-import {TokenService} from './token.service';
-import {User} from './user.model';
+import {LocalStorageService} from '../../shared/services/local-storage.service';
+import {User} from '../../shared/models/user.model';
+import {LOCAL_STORAGE_TOKEN_ATTRIBUTE} from '../../app.config';
 
 @Component({
     selector: 'login',
@@ -25,9 +26,7 @@ export class LoginComponent implements OnInit {
         'mobile': {
             'required': 'Mobile is required.',
             'minlength': 'Mobile must be 9 digits long.',
-            'maxlength': 'Mobile must be 9 digits long.',
-            'invalid': 'Mobile prefix must be 9 digits long and first '
-            + 'must be 6'
+            'maxlength': 'Mobile must be 9 digits long.'
         },
         'password': {
             'required': 'Password is required.'
@@ -36,16 +35,17 @@ export class LoginComponent implements OnInit {
 
     constructor(private formBuilder: FormBuilder,
                 private loginService: LoginService,
-                private tokenService: TokenService) {
-        this.user = new User(null, '');
+                private localStorageService: LocalStorageService) {
+        this.user = new User();
     }
 
     onSubmit(): void {
         this.user = this.loginForm.value;
         this.loginService.login(this.user.mobile, this.user.password)
             .subscribe(
-                token => this.tokenService.login(token.token),
-                error => this.formErrors.login = error);
+                session => this.localStorageService.setItem(LOCAL_STORAGE_TOKEN_ATTRIBUTE, session),
+                error => this.formErrors.login = error
+            );
     }
 
     ngOnInit(): void {

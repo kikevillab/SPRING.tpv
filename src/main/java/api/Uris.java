@@ -31,14 +31,51 @@ public class Uris {
     public static final String INVOICES = "/invoices";
 
     public static final String TRACKING = "/tracking";
-    
+
     public static final String DAY_TICKETS = "/day_tickets";
-    
+
     public static final String DATE = "/{date}";
 
     public static final String REFERENCE = "/{reference}";
-    
+
+    public static final String MOBILE = "/mobile";
+
+    public static final String IDENTIFICATION = "/identification";
+
+    public static final String EMAIL = "/email";
+
+    public static final String USER_MOBILE = "/{mobile}";
+
+    public static final String USER_IDENTIFICATION = "/{identification}";
+
+    public static final String USER_EMAIL = "/{email}";
+
+    public static final String OPERATORS = "/operators";
+
+    public static final String MANAGERS = "/managers";
+
     public static final String PHONE = "/{mobilePhone}";
-    
+
     public static final String VOUCHERS = "/vouchers";
+
+    public static final String EMBROIDERIES = "/embroideries";
+
+    public static final String TEXTILE_PRINTINGS = "/textileprintings";
+
+    public static final String ARTICLES = "/articles";
+
+    public static final String DISCONTINUED = "/discontinued";
+
+    public static final String SEARCH = "/search";
+
+    public static final String CASHIER_CLOSURES = "/cashierclosures";
+
+    public static final String CASHIER_CLOSURES_LAST = "/last";
+
+    public static final String CASHIER_CLOSURES_CLOSE = "/close";
+
+    public static final String CASHIER_CLOSURES_DEPOSIT = "/deposit";
+
+    public static final String CASHIER_CLOSURES_WITHDRAW = "/withdraw";
+
 }

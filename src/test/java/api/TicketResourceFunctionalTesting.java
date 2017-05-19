@@ -50,7 +50,7 @@ public class TicketResourceFunctionalTesting {
 
         List<ShoppingCreationWrapper> shoppingCreationWrapperList = new ArrayList<>();
         ShoppingCreationWrapper shoppingCreationWrapper = new ShoppingCreationWrapper();
-        shoppingCreationWrapper.setProductCode("article0");
+        shoppingCreationWrapper.setProductCode("84000001111");
         shoppingCreationWrapper.setAmount(2);
         shoppingCreationWrapper.setDiscount(0);
         shoppingCreationWrapper.setDelivered(true);
@@ -85,7 +85,7 @@ public class TicketResourceFunctionalTesting {
 
         List<ShoppingCreationWrapper> shoppingCreationWrapperList = new ArrayList<>();
         ShoppingCreationWrapper shoppingCreationWrapper = new ShoppingCreationWrapper();
-        shoppingCreationWrapper.setProductCode("article2");
+        shoppingCreationWrapper.setProductCode("84000001113");
         shoppingCreationWrapper.setAmount(2);
         shoppingCreationWrapper.setDiscount(0);
         shoppingCreationWrapper.setDelivered(true);
@@ -107,7 +107,7 @@ public class TicketResourceFunctionalTesting {
 
         List<ShoppingCreationWrapper> shoppingCreationWrapperList = new ArrayList<>();
         ShoppingCreationWrapper shoppingCreationWrapper = new ShoppingCreationWrapper();
-        shoppingCreationWrapper.setProductCode("embroidery2");
+        shoppingCreationWrapper.setProductCode("84000002224");
         shoppingCreationWrapper.setAmount(0);
         shoppingCreationWrapper.setDiscount(0);
         shoppingCreationWrapper.setDelivered(true);
@@ -129,7 +129,7 @@ public class TicketResourceFunctionalTesting {
 
         List<ShoppingCreationWrapper> shoppingCreationWrapperList = new ArrayList<>();
         ShoppingCreationWrapper shoppingCreationWrapper = new ShoppingCreationWrapper();
-        shoppingCreationWrapper.setProductCode("embroidery2");
+        shoppingCreationWrapper.setProductCode("84000002224");
         shoppingCreationWrapper.setAmount(10);
         shoppingCreationWrapper.setDiscount(120);
         shoppingCreationWrapper.setDelivered(true);
@@ -150,7 +150,7 @@ public class TicketResourceFunctionalTesting {
 
         List<ShoppingCreationWrapper> shoppingCreationWrapperList = new ArrayList<>();
         ShoppingCreationWrapper shoppingCreationWrapper = new ShoppingCreationWrapper();
-        shoppingCreationWrapper.setProductCode("article1");
+        shoppingCreationWrapper.setProductCode("84000001112");
         shoppingCreationWrapper.setAmount(2);
         shoppingCreationWrapper.setDiscount(0);
         shoppingCreationWrapper.setDelivered(true);
@@ -172,7 +172,7 @@ public class TicketResourceFunctionalTesting {
 
         List<ShoppingCreationWrapper> shoppingCreationWrapperList = new ArrayList<>();
         ShoppingCreationWrapper shoppingCreationWrapper = new ShoppingCreationWrapper();
-        shoppingCreationWrapper.setProductCode("article0");
+        shoppingCreationWrapper.setProductCode("84000001111");
         shoppingCreationWrapper.setAmount(2);
         shoppingCreationWrapper.setDiscount(0);
         shoppingCreationWrapper.setDelivered(true);
@@ -193,7 +193,7 @@ public class TicketResourceFunctionalTesting {
         String token = new RestService().loginAdmin();
 
         List<ShoppingUpdateWrapper> shoppingUpdateWrapperList = new ArrayList<>();
-        ShoppingUpdateWrapper shoppingUpdateWrapper = new ShoppingUpdateWrapper("article0", 2, ShoppingState.COMMITTED);
+        ShoppingUpdateWrapper shoppingUpdateWrapper = new ShoppingUpdateWrapper("84000001111", 2, ShoppingState.COMMITTED);
         shoppingUpdateWrapperList.add(shoppingUpdateWrapper);
         new RestBuilder<TicketReferenceWrapper>(RestService.URL).path(Uris.TICKETS).pathId(ticketReference).body(shoppingUpdateWrapperList)
                 .basicAuth(token, "").clazz(TicketReferenceWrapper.class).patch().build();
@@ -201,7 +201,7 @@ public class TicketResourceFunctionalTesting {
 
     @Test
     public void testUpdateTicket() {
-        String productCode = "textilePrinting0";
+        String productCode = "84000003333";
         String token = new RestService().loginAdmin();
         TicketCreationWrapper ticketCreationWrapper = new TicketCreationWrapper();
         List<ShoppingCreationWrapper> shoppingCreationWrapperList = new ArrayList<>();
@@ -233,7 +233,7 @@ public class TicketResourceFunctionalTesting {
         TicketCreationWrapper ticketCreationWrapper = new TicketCreationWrapper();
         List<ShoppingCreationWrapper> shoppingCreationWrapperList = new ArrayList<>();
         ShoppingCreationWrapper shoppingCreationWrapper = new ShoppingCreationWrapper();
-        shoppingCreationWrapper.setProductCode("textilePrinting0");
+        shoppingCreationWrapper.setProductCode("84000003333");
         shoppingCreationWrapper.setAmount(3);
         shoppingCreationWrapper.setDiscount(15);
         shoppingCreationWrapper.setDelivered(false);
@@ -253,7 +253,7 @@ public class TicketResourceFunctionalTesting {
     @Test
     public void testUpdateTicketInvalidProductAmount() {
         thrown.expect(new HttpMatcher(HttpStatus.BAD_REQUEST));
-        String productCode = "textilePrinting0";
+        String productCode = "84000003333";
         String token = new RestService().loginAdmin();
         TicketCreationWrapper ticketCreationWrapper = new TicketCreationWrapper();
         List<ShoppingCreationWrapper> shoppingCreationWrapperList = new ArrayList<>();
@@ -278,7 +278,7 @@ public class TicketResourceFunctionalTesting {
     @Test
     public void testUpdateTicketNotEnoughProductStock() {
         thrown.expect(new HttpMatcher(HttpStatus.CONFLICT));
-        String productCode = "article4";
+        String productCode = "84000001115";
         String token = new RestService().loginAdmin();
         TicketCreationWrapper ticketCreationWrapper = new TicketCreationWrapper();
         List<ShoppingCreationWrapper> shoppingCreationWrapperList = new ArrayList<>();
@@ -317,7 +317,7 @@ public class TicketResourceFunctionalTesting {
 
         List<ShoppingCreationWrapper> shoppingCreationWrapperList = new ArrayList<>();
         ShoppingCreationWrapper shoppingCreationWrapper = new ShoppingCreationWrapper();
-        shoppingCreationWrapper.setProductCode("embroidery0");
+        shoppingCreationWrapper.setProductCode("84000002222");
         shoppingCreationWrapper.setAmount(6);
         shoppingCreationWrapper.setDiscount(10);
         shoppingCreationWrapper.setDelivered(false);
@@ -378,7 +378,7 @@ public class TicketResourceFunctionalTesting {
 
         List<ShoppingCreationWrapper> shoppingCreationWrapperList = new ArrayList<>();
         ShoppingCreationWrapper shoppingCreationWrapper = new ShoppingCreationWrapper();
-        shoppingCreationWrapper.setProductCode("article0");
+        shoppingCreationWrapper.setProductCode("84000001111");
         shoppingCreationWrapper.setAmount(2);
         shoppingCreationWrapper.setDiscount(0);
         shoppingCreationWrapper.setDelivered(true);

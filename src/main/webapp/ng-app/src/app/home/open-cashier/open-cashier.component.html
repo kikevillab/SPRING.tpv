@@ -1,0 +1,9 @@
+<h1 id="pageTitle">Open cashier</h1>
+<div fxLayoutAlign="space-around center">
+	<md-card fxLayout="column" fxLayoutAlign="space-around ">
+  	<p>
+  		<span *ngIf="cashierClosureDate"> The cashier was closed at {{cashierClosureDate | date: 'medium'}}</span>
+  	</p>
+	<button md-raised-button color="primary" (click)="open()" id="openCashierButton">OPEN CASHIER</button>
+	</md-card>
+</div>

@@ -53,7 +53,7 @@ public class TicketControllerIT {
 
         List<ShoppingCreationWrapper> shoppingCreationWrapperList = new ArrayList<>();
         ShoppingCreationWrapper shoppingCreationWrapper = new ShoppingCreationWrapper();
-        shoppingCreationWrapper.setProductCode("article0");
+        shoppingCreationWrapper.setProductCode("84000001111");
         shoppingCreationWrapper.setAmount(2);
         shoppingCreationWrapper.setDiscount(0);
         shoppingCreationWrapper.setDelivered(true);
@@ -65,7 +65,7 @@ public class TicketControllerIT {
         Ticket ticket = ticketController.createTicket(ticketCreationWrapper);
         List<Shopping> shoppingList = ticket.getShoppingList();
         Shopping shopping = shoppingList.get(0);
-        Article article = articleDao.findFirstByCode(shoppingCreationWrapper.getProductCode());
+        Article article = articleDao.findOne(shoppingCreationWrapper.getProductCode());
 
         assertEquals(lastTicketId + 1, ticket.getId());
         assertNull(ticket.getUser());
@@ -88,7 +88,7 @@ public class TicketControllerIT {
 
         List<ShoppingCreationWrapper> shoppingCreationWrapperList = new ArrayList<>();
         ShoppingCreationWrapper shoppingCreationWrapper = new ShoppingCreationWrapper();
-        shoppingCreationWrapper.setProductCode("embroidery0");
+        shoppingCreationWrapper.setProductCode("84000002222");
         shoppingCreationWrapper.setAmount(1);
         shoppingCreationWrapper.setDiscount(5);
         shoppingCreationWrapper.setDelivered(false);
@@ -114,7 +114,7 @@ public class TicketControllerIT {
 
     @Test
     public void testUpdateTicket() {
-        String productCode = "textilePrinting0";
+        String productCode = "84000003333";
         TicketCreationWrapper ticketCreationWrapper = new TicketCreationWrapper();
         List<ShoppingCreationWrapper> shoppingCreationWrapperList = new ArrayList<>();
         ShoppingCreationWrapper shoppingCreationWrapper = new ShoppingCreationWrapper();

@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.client.HttpClientErrorException;
 
 import wrappers.UserDetailsWrapper;
+import wrappers.UserPageWrapper;
 import wrappers.UserUpdateWrapper;
 import wrappers.UserWrapper;
 
@@ -25,6 +26,9 @@ public class UserResourceFunctionalTesting {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
+   
+    
+    
     @Test
     public void testCreateManager() {
         String token = new RestService().loginAdmin();
@@ -135,6 +139,8 @@ public class UserResourceFunctionalTesting {
         .path(Uris.USERS).body(userWrapper).basicAuth(token, "").clazz(Object.class)
         .put().build();
     }
+   
+    
     
     @After
     public void deleteAll() {
