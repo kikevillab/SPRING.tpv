@@ -8,6 +8,7 @@ import { CalculatorView } from './cart/calculator.po';
 import { PaymentView } from './payment/payment.po';
 import { MovementView } from './movement/movement.po';
 import { CloseCashierView } from './close-cashier/close-cashier.po';
+import { TicketsOfTheDayView } from './tickets-of-the-day/tickets-of-the-day.po';
 
 
 describe('Page: Home', () => {
@@ -18,6 +19,7 @@ describe('Page: Home', () => {
 	let paymentView: PaymentView;
 	let movementView: MovementView;
 	let closeCashierView: CloseCashierView;
+	let ticketsOfTheDayView: TicketsOfTheDayView;
 
 	beforeAll(() => {
 		page = new HomePage();
@@ -26,12 +28,18 @@ describe('Page: Home', () => {
 		paymentView = new PaymentView();
 		movementView = new MovementView();
 		closeCashierView = new CloseCashierView();
+		ticketsOfTheDayView = new TicketsOfTheDayView();
 		page.navigateTo();
 		page.openCashier();
 	});
 
 	it(`should display a 'Products' title'`, () => {
 		expect(page.getPageTitleText()).toEqual('Products');
+	});
+
+	it(`should display the correct title in the tickets of the day page`, () => {
+		ticketsOfTheDayView.navigateTo();
+		expect(page.getPageTitleText()).toContain('Tickets of the day');
 	});
 
 	it(`should display the product with code '84000001113' when submitted`, () => {
