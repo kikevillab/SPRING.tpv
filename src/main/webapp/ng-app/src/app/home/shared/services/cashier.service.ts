@@ -20,7 +20,7 @@ import { LocalStorageService } from '../../../shared/services/local-storage.serv
 @Injectable()
 export class CashierService {
 
-  private currentCashierObservable: Subject<CashierClosure> = new Subject<CashierClosure>();
+  private currentCashierSubject: Subject<CashierClosure> = new Subject<CashierClosure>();
   private currentCashier: CashierClosure;
 
   constructor (private httpService: HTTPService) {}
@@ -28,11 +28,11 @@ export class CashierService {
   initialize(): void {
       this.httpService.get(`${API_GENERIC_URI}/cashierclosures/last`).subscribe((cashier: CashierClosure) => {
         this.currentCashier = cashier;
-        this.currentCashierObservable.next(this.currentCashier);
+        this.currentCashierSubject.next(this.currentCashier);
       },(error: TPVHTTPError) => {
         if (error.error == 'NotExistsCashierClosuresException'){
           this.currentCashier = new CashierClosure();
-          this.currentCashierObservable.next(this.currentCashier);
+          this.currentCashierSubject.next(this.currentCashier);
         } else {
           console.log(error.description);
         }
@@ -40,7 +40,7 @@ export class CashierService {
   }
 
   getCurrentCashierObservable(): Observable<CashierClosure> {
-    return this.currentCashierObservable.asObservable();
+    return this.currentCashierSubject.asObservable();
   }
 
   getCurrentCashier(): CashierClosure {
@@ -51,7 +51,7 @@ export class CashierService {
     return new Promise((resolve: Function,reject: Function) => {
        this.httpService.post(`${API_GENERIC_URI}/cashierclosures`).subscribe((cashier: CashierClosure) => {
            this.currentCashier = cashier;
-           this.currentCashierObservable.next(this.currentCashier);
+           this.currentCashierSubject.next(this.currentCashier);
            resolve(this.currentCashier);
        },(error: TPVHTTPError) => {
          reject(error.description);
@@ -64,7 +64,7 @@ export class CashierService {
       let closureData: CashierClosingData = new CashierClosingData(countedMoney, comment);
       this.httpService.put(`${API_GENERIC_URI}/cashierclosures/close`, closureData).subscribe((cashier: CashierClosure) => {
         this.currentCashier = cashier;
-        this.currentCashierObservable.next(this.currentCashier);
+        this.currentCashierSubject.next(this.currentCashier);
         resolve(this.currentCashier);
       },(error: TPVHTTPError) => {
         reject(error.description);
@@ -77,7 +77,7 @@ export class CashierService {
       let amountWrapper: Amount = new Amount(amount);
       this.httpService.put(`${API_GENERIC_URI}/cashierclosures/withdraw`, amountWrapper).subscribe((cashier: CashierClosure) => {
         this.currentCashier = cashier;
-        this.currentCashierObservable.next(this.currentCashier);
+        this.currentCashierSubject.next(this.currentCashier);
         resolve(cashier)
       },(error: TPVHTTPError) => {
         reject(error.description);
@@ -90,7 +90,7 @@ export class CashierService {
     return new Promise((resolve: Function,reject: Function) => {
         this.httpService.put(`${API_GENERIC_URI}/cashierclosures/deposit`, amountWrapper).subscribe((cashier: CashierClosure) => {
           this.currentCashier = cashier;
-          this.currentCashierObservable.next(this.currentCashier);
+          this.currentCashierSubject.next(this.currentCashier);
           resolve(cashier)
         },(error: TPVHTTPError) => {
           reject(error.description);

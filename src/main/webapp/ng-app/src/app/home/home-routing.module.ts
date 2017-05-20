@@ -11,6 +11,7 @@ import { PaymentComponent } from './payment/payment.component';
 import { OpenCashierComponent } from './open-cashier/open-cashier.component';
 import { CloseCashierComponent } from './close-cashier/close-cashier.component';
 import { MovementComponent } from './movement/movement.component';
+import { TicketsOfTheDayComponent } from './tickets-of-the-day/tickets-of-the-day.component';
 
 
 const routes: Routes = [
@@ -23,7 +24,8 @@ const routes: Routes = [
 	    	{ path: 'payment', component: PaymentComponent },
 	    	{ path: 'opencashier', component: OpenCashierComponent },
 	    	{ path: 'closecashier', component: CloseCashierComponent },
-	    	{ path: 'movement', component: MovementComponent }
+	    	{ path: 'movement', component: MovementComponent },
+	    	{ path: 'ticketsoftheday', component: TicketsOfTheDayComponent }
 	    ]
 	},
 ];

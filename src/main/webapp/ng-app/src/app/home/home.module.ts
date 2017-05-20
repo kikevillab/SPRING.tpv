@@ -30,6 +30,8 @@ import { PaymentModule } from './payment/payment.module';
 import { OpenCashierModule } from './open-cashier/open-cashier.module';
 import { CloseCashierModule } from './close-cashier/close-cashier.module';
 import { MovementModule } from './movement/movement.module';
+import { TicketsOfTheDayModule } from './tickets-of-the-day/tickets-of-the-day.module';
+
 import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
@@ -49,6 +51,7 @@ import { SharedModule } from '../shared/shared.module';
     MovementModule,
     OpenCashierModule,
     CloseCashierModule,
+    TicketsOfTheDayModule,
     NgxDatatableModule,
     SharedModule
   ],
