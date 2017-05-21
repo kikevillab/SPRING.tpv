@@ -50,7 +50,7 @@ public class VoucherController {
     }
 
     public boolean voucherExists(String reference) {     
-        return voucherDao.existsByReference(reference);
+        return voucherDao.findByReference(reference) != null;
     }
     
     public boolean isVoucherConsumed(String reference){

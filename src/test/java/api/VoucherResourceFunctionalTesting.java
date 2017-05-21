@@ -3,6 +3,7 @@ package api;
 import static org.junit.Assert.assertNotNull;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
@@ -22,10 +23,14 @@ import wrappers.VoucherCreationWrapper;
 public class VoucherResourceFunctionalTesting {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
+    
+    private static List<Voucher> vouchersToBeTested = new ArrayList<Voucher>();
 
     @BeforeClass
     public static void setUp(){
         new RestService().seedDatabase();
+        vouchersToBeTested = Arrays.asList(
+                new RestBuilder<Voucher[]>(RestService.URL).path(Uris.VOUCHERS).clazz(Voucher[].class).get().build());
     }
     
     @AfterClass
@@ -67,7 +72,6 @@ public class VoucherResourceFunctionalTesting {
         thrown.expect(new HttpMatcher(HttpStatus.CONFLICT));
         String token = new RestService().loginAdmin();
         VoucherConsumptionWrapper voucher = new VoucherConsumptionWrapper();
-        voucher.setId(4);
         new RestBuilder<Object>(RestService.URL).path(Uris.VOUCHERS).body(voucher).basicAuth(token, "").clazz(Object.class).put().build();
     }
 
