@@ -96,6 +96,10 @@ public class Voucher {
     public boolean isConsumed() {
         return dateOfUse != null;
     }
+    
+    public boolean isExpired() {
+        return Calendar.getInstance().after(this.expiration);
+    }
 
     @Override
     public int hashCode() {

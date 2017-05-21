@@ -1,6 +1,7 @@
 package controllers;
 
-import java.util.Calendar;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,7 @@ import org.springframework.stereotype.Controller;
 
 import daos.core.VoucherDao;
 import entities.core.Voucher;
-import wrappers.VoucherConsumptionWrapper;
+import wrappers.ActiveVouchersTotalValueWrapper;
 import wrappers.VoucherCreationWrapper;
 
 @Controller
@@ -29,26 +30,45 @@ public class VoucherController {
     public List<Voucher> findAllVouchers() {
         return voucherDao.findAll();
     }
-
-    public boolean voucherExists(int id) {     
-        return voucherDao.exists(id);
+    
+    private List<Voucher> findAllActiveVouchers() {
+        List<Voucher> activeVouchers = new ArrayList<>();
+        for(Voucher voucher : findAllVouchers()){
+            if(!voucher.isExpired()){
+                activeVouchers.add(voucher);
+            }
+        }
+        return activeVouchers;
     }
     
-    public boolean isVoucherConsumed(int id){
-        Voucher voucher = voucherDao.findOne(id);
+    public ActiveVouchersTotalValueWrapper getActiveVouchersTotalValue(){
+        double totalValue = 0.0;
+        for(Voucher voucher : findAllActiveVouchers()){
+            totalValue += voucher.getValue().doubleValue();
+        }     
+        return new ActiveVouchersTotalValueWrapper(new BigDecimal(totalValue));
+    }
+
+    public boolean voucherExists(String reference) {     
+        return voucherDao.existsByReference(reference);
+    }
+    
+    public boolean isVoucherConsumed(String reference){
+        Voucher voucher = findVoucherByReference(reference);
         return voucher.isConsumed();
     }
 
-    public void consumeVoucher(VoucherConsumptionWrapper voucherConsumptionWrapper) {
-        Voucher voucher = voucherDao.findOne(voucherConsumptionWrapper.getId());
+    public void consumeVoucher(String reference) {
+        Voucher voucher = findVoucherByReference(reference);
         voucher.consume();
-        voucherDao.save(voucher);
+        voucherDao.saveAndFlush(voucher);
     }
 
-    public boolean voucherHasExpired(int id) {
-        Voucher voucher = voucherDao.findOne(id);
-        Calendar today = Calendar.getInstance();
-        boolean todaysDateExceedsVouchersDate = today.after(voucher.getExpiration());
-        return todaysDateExceedsVouchersDate;
+    public Voucher findVoucherByReference(String reference){
+        return voucherDao.findByReference(reference);
+    }
+    public boolean voucherHasExpired(String reference) {
+        Voucher voucher = findVoucherByReference(reference);
+        return voucher.isExpired();
     }
 }

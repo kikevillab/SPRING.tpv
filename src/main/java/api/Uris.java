@@ -77,5 +77,9 @@ public class Uris {
     public static final String CASHIER_CLOSURES_DEPOSIT = "/deposit";
 
     public static final String CASHIER_CLOSURES_WITHDRAW = "/withdraw";
+    
+    public static final String VOUCHER_CONSUMPTION = "/consume";
+    
+    public static final String VOUCHER_ACTIVESTOTALVALUE = "/activesvaluetotal";
 
 }

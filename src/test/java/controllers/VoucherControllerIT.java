@@ -18,7 +18,7 @@ import config.PersistenceConfig;
 import config.TestsControllerConfig;
 import config.TestsPersistenceConfig;
 import daos.core.VoucherDao;
-import wrappers.VoucherConsumptionWrapper;
+import entities.core.Voucher;
 import wrappers.VoucherCreationWrapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -33,8 +33,10 @@ public class VoucherControllerIT {
 
     @Test
     public void testVoucherHasExpired() {
-        assertTrue(voucherController.voucherHasExpired(5));
-        assertFalse(voucherController.voucherHasExpired(4));
+        Voucher expiredVoucher = voucherDao.findOne(5);
+        Voucher noExpiredVoucher = voucherDao.findOne(4);
+        assertTrue(voucherController.voucherHasExpired(expiredVoucher.getReference()));
+        assertFalse(voucherController.voucherHasExpired(noExpiredVoucher.getReference()));
     }
 
     @Test
@@ -52,21 +54,23 @@ public class VoucherControllerIT {
 
     @Test
     public void testConsumeVoucher() {
-        VoucherConsumptionWrapper voucherConsumptionWrapper = new VoucherConsumptionWrapper();
-        voucherConsumptionWrapper.setId(1);
-        voucherController.consumeVoucher(voucherConsumptionWrapper);
+        Voucher voucher = voucherDao.findOne(1);
+        voucherController.consumeVoucher(voucher.getReference());
         assertTrue(voucherDao.findOne(1).isConsumed());
     }
     
     @Test
     public void testIsVoucherConsumed(){
-        assertTrue(voucherController.isVoucherConsumed(4));
-        assertFalse(voucherController.isVoucherConsumed(3));
+        Voucher consumedVoucher = voucherDao.findOne(4);
+        Voucher noConsumedVoucher = voucherDao.findOne(3);
+        assertTrue(voucherController.isVoucherConsumed(consumedVoucher.getReference()));
+        assertFalse(voucherController.isVoucherConsumed(noConsumedVoucher.getReference()));
     }
     
     @Test
     public void testVoucherExists(){
-        assertTrue(voucherController.voucherExists(4));
-        assertFalse(voucherController.voucherExists(0));
+        Voucher existentVoucher = voucherDao.findOne(4);
+        assertTrue(voucherController.voucherExists(existentVoucher.getReference()));
+        assertFalse(voucherController.voucherExists("---------"));
     }
 }

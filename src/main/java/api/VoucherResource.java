@@ -2,8 +2,8 @@ package api;
 
 import java.util.List;
 
-import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,7 +14,7 @@ import api.exceptions.VoucherHasExpiredException;
 import api.exceptions.VoucherNotFoundException;
 import controllers.VoucherController;
 import entities.core.Voucher;
-import wrappers.VoucherConsumptionWrapper;
+import wrappers.ActiveVouchersTotalValueWrapper;
 import wrappers.VoucherCreationWrapper;
 
 @RestController
@@ -37,21 +37,34 @@ public class VoucherResource {
     public List<Voucher> findAllVouchers() {
         return voucherController.findAllVouchers();
     }
+    
+    @RequestMapping(value = Uris.REFERENCE, method = RequestMethod.GET)
+    public Voucher findVoucherByReference(@PathVariable String reference) throws VoucherNotFoundException{
+        throwExceptionIfVoucherDoesNotExist(reference);
+        return voucherController.findVoucherByReference(reference);
+    }
+    
+    @RequestMapping(value = Uris.VOUCHER_ACTIVESTOTALVALUE)
+    public ActiveVouchersTotalValueWrapper ActiveVouchersTotalValueWrapper(){
+        return voucherController.getActiveVouchersTotalValue();
+    }
 
-    @RequestMapping(method = RequestMethod.PUT)
-    public void consumeVoucher(@RequestBody VoucherConsumptionWrapper voucherConsumptionWrapper)
+    @RequestMapping(value = Uris.REFERENCE + Uris.VOUCHER_CONSUMPTION, method = RequestMethod.PUT)
+    public void consumeVoucher(@PathVariable String reference)
             throws VoucherNotFoundException, VoucherAlreadyConsumedException, VoucherHasExpiredException {
-        LogManager.getLogger(this.getClass())
-        .info(voucherController.findAllVouchers());
-        if (!voucherController.voucherExists(voucherConsumptionWrapper.getId())) {
-            throw new VoucherNotFoundException("Id: " + voucherConsumptionWrapper.getId());
+        throwExceptionIfVoucherDoesNotExist(reference);
+        if (voucherController.voucherHasExpired(reference)) {
+            throw new VoucherHasExpiredException("Reference: " + reference);
         }
-        if (voucherController.voucherHasExpired(voucherConsumptionWrapper.getId())) {
-            throw new VoucherHasExpiredException("Id: " + voucherConsumptionWrapper.getId());
+        if (voucherController.isVoucherConsumed(reference)) {
+            throw new VoucherAlreadyConsumedException("Reference: " + reference);
         }
-        if (voucherController.isVoucherConsumed(voucherConsumptionWrapper.getId())) {
-            throw new VoucherAlreadyConsumedException("Id: " + voucherConsumptionWrapper.getId());
+        voucherController.consumeVoucher(reference);
+    }
+    
+    private void throwExceptionIfVoucherDoesNotExist(String reference) throws VoucherNotFoundException{
+        if (!voucherController.voucherExists(reference)) {
+            throw new VoucherNotFoundException("Reference: " + reference);
         }
-        voucherController.consumeVoucher(voucherConsumptionWrapper);
     }
 }
