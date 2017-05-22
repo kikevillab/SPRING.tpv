@@ -80,7 +80,7 @@ public class VoucherResourceFunctionalTesting {
         thrown.expect(new HttpMatcher(HttpStatus.NOT_FOUND));
         String token = new RestService().loginAdmin();
         loggeamePapi("AFTER");
-        new RestBuilder<Object>(RestService.URL).path(Uris.VOUCHERS + Uris.REFERENCE + Uris.VOUCHER_CONSUMPTION).pathId(0)
+        new RestBuilder<Object>(RestService.URL).path(Uris.VOUCHERS).pathId(0).path(Uris.VOUCHER_CONSUMPTION)
                 .basicAuth(token, "").clazz(Object.class).put().build();
     }
 
@@ -90,8 +90,12 @@ public class VoucherResourceFunctionalTesting {
         String token = new RestService().loginAdmin();
         loggeamePapi("AFTER");
         String alreadyConsumedVoucherReference = vouchersToBeTested.get(3).getReference();
-        new RestBuilder<Object>(RestService.URL).path(Uris.VOUCHERS + Uris.REFERENCE + Uris.VOUCHER_CONSUMPTION)
-                .pathId(alreadyConsumedVoucherReference).basicAuth(token, "").clazz(Object.class).put().build();
+        new RestBuilder<Object>(RestService.URL)
+        .path(Uris.VOUCHERS).pathId(alreadyConsumedVoucherReference).path(Uris.VOUCHER_CONSUMPTION)
+                .basicAuth(token, "")
+                .clazz(Object.class)
+                .put()
+                .build();
     }
 
     @Test
@@ -100,8 +104,9 @@ public class VoucherResourceFunctionalTesting {
         String token = new RestService().loginAdmin();
         loggeamePapi("AFTER");
         String expiredVoucherReference = vouchersToBeTested.get(4).getReference();
-        new RestBuilder<Object>(RestService.URL).path(Uris.VOUCHERS + Uris.REFERENCE + Uris.VOUCHER_CONSUMPTION)
-                .pathId(expiredVoucherReference).basicAuth(token, "").clazz(Object.class).put().build();
+        new RestBuilder<Object>(RestService.URL)
+        .path(Uris.VOUCHERS).pathId(expiredVoucherReference).path(Uris.VOUCHER_CONSUMPTION)
+                .basicAuth(token, "").clazz(Object.class).put().build();
     }
 
     @Test
@@ -110,7 +115,7 @@ public class VoucherResourceFunctionalTesting {
         String reference = vouchersToBeTested.get(1).getReference();
         loggeamePapi("AFTER");
         new RestBuilder<Object>(RestService.URL)
-        .path(Uris.VOUCHERS + Uris.REFERENCE + Uris.VOUCHER_CONSUMPTION).pathId(reference)
+        .path(Uris.VOUCHERS).pathId(reference).path(Uris.VOUCHER_CONSUMPTION)
                 .basicAuth(token, "").clazz(Object.class).put().build();
     }
     
