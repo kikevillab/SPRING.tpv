@@ -9,149 +9,295 @@ export class InMemoryDataService implements InMemoryDbService {
         let customers = [
             {
                 mobile: 600000000,
-                username: 'user1',
+                username: 'customer1',
                 dni: '66666666A',
-                email: 'user1@gmail.com',
+                email: 'customer1@gmail.com',
                 address: 'address1',
                 password: 'password1',
                 active: true
             },
             {
                 mobile: 600000001,
-                username: 'user2',
+                username: 'customer2',
                 dni: '66666666B',
-                email: 'user2@gmail.com',
+                email: 'customer2@gmail.com',
                 address: 'address2',
                 password: 'password2',
                 active: false
             },
             {
                 mobile: 600000002,
-                username: 'user3',
+                username: 'customer3',
                 dni: '66666666C',
-                email: 'user3@gmail.com',
+                email: 'customer3@gmail.com',
                 address: 'address2',
                 password: 'password2',
                 active: false
             },
             {
                 mobile: 600000003,
-                username: 'user4',
+                username: 'customer4',
                 dni: '66666666D',
-                email: 'user4@gmail.com',
+                email: 'customer4@gmail.com',
                 address: 'address3',
                 password: 'password3',
                 active: true
             },
             {
                 mobile: 600000004,
-                username: 'user5',
+                username: 'customer5',
                 dni: '66666666E',
-                email: 'user5@gmail.com',
+                email: 'customer5@gmail.com',
                 address: 'address4',
                 password: 'password4',
                 active: false
             },
             {
                 mobile: 600000005,
-                username: 'user6',
+                username: 'customer6',
                 dni: '66666666F',
-                email: 'user6@gmail.com',
+                email: 'customer6@gmail.com',
                 address: 'address5',
                 password: 'password5',
                 active: true
             },
             {
                 mobile: 600000006,
-                username: 'user7',
+                username: 'customer7',
                 dni: '66666666G',
-                email: 'user7@gmail.com',
+                email: 'customer7@gmail.com',
                 address: 'address6',
                 password: 'password6',
                 active: true
             },
             {
                 mobile: 600000007,
-                username: 'user8',
+                username: 'customer8',
                 dni: '66666666H',
-                email: 'user8@gmail.com',
+                email: 'customer8@gmail.com',
                 address: 'address7',
                 password: 'password7',
                 active: true
             },
             {
                 mobile: 600000008,
-                username: 'user9',
+                username: 'customer9',
                 dni: '66666666I',
-                email: 'user9@gmail.com',
+                email: 'customer9@gmail.com',
                 address: 'address8',
                 password: 'password8',
                 active: true
             },
             {
                 mobile: 600000009,
-                username: 'user10',
+                username: 'customer10',
                 dni: '66666666J',
-                email: 'user10@gmail.com',
+                email: 'customer10@gmail.com',
                 address: 'address9',
                 password: 'password9',
                 active: true
             },
             {
                 mobile: 600000010,
-                username: 'user11',
+                username: 'customer11',
                 dni: '66666666K',
-                email: 'user11@gmail.com',
+                email: 'customer11@gmail.com',
                 address: 'address10',
                 password: 'password10',
                 active: true
             },
             {
                 mobile: 600000011,
-                username: 'user12',
+                username: 'customer12',
                 dni: '66666666L',
-                email: 'user12@gmail.com',
+                email: 'customer12@gmail.com',
                 address: 'address10',
                 password: 'password10',
                 active: true
             },
             {
                 mobile: 600000012,
-                username: 'user13',
+                username: 'customer13',
                 dni: '66666666M',
-                email: 'user13@gmail.com',
+                email: 'customer13@gmail.com',
                 address: 'address11',
                 password: 'password11',
                 active: true
             },
             {
                 mobile: 600000013,
-                username: 'user14',
+                username: 'customer14',
                 dni: '66666666N',
-                email: 'user14@gmail.com',
+                email: 'customer14@gmail.com',
                 address: 'address12',
                 password: 'password12',
                 active: true
             },
             {
                 mobile: 600000014,
-                username: 'user15',
+                username: 'customer15',
                 dni: '66666666O',
-                email: 'user15@gmail.com',
+                email: 'customer15@gmail.com',
                 address: 'address13',
                 password: 'password13',
                 active: true
             },
             {
                 mobile: 600000015,
-                username: 'user16',
+                username: 'customer16',
                 dni: '66666666P',
-                email: 'user16@gmail.com',
+                email: 'customer16@gmail.com',
                 address: 'address14',
                 password: 'password14',
                 active: true
             },
         ];
-        return {customers};
+        let operators = [
+            {
+                mobile: 600000000,
+                username: 'operator1',
+                dni: '66666666A',
+                email: 'operator1@gmail.com',
+                address: 'address1',
+                password: 'password1',
+                active: true
+            },
+            {
+                mobile: 600000001,
+                username: 'operator2',
+                dni: '66666666B',
+                email: 'operator2@gmail.com',
+                address: 'address2',
+                password: 'password2',
+                active: false
+            },
+            {
+                mobile: 600000002,
+                username: 'operator3',
+                dni: '66666666C',
+                email: 'operator3@gmail.com',
+                address: 'address2',
+                password: 'password2',
+                active: false
+            },
+            {
+                mobile: 600000003,
+                username: 'operator4',
+                dni: '66666666D',
+                email: 'operator4@gmail.com',
+                address: 'address3',
+                password: 'password3',
+                active: true
+            },
+            {
+                mobile: 600000004,
+                username: 'operator5',
+                dni: '66666666E',
+                email: 'operator5@gmail.com',
+                address: 'address4',
+                password: 'password4',
+                active: false
+            },
+            {
+                mobile: 600000005,
+                username: 'operator6',
+                dni: '66666666F',
+                email: 'operator6@gmail.com',
+                address: 'address5',
+                password: 'password5',
+                active: true
+            },
+            {
+                mobile: 600000006,
+                username: 'operator7',
+                dni: '66666666G',
+                email: 'operator7@gmail.com',
+                address: 'address6',
+                password: 'password6',
+                active: true
+            },
+            {
+                mobile: 600000007,
+                username: 'operator8',
+                dni: '66666666H',
+                email: 'operator8@gmail.com',
+                address: 'address7',
+                password: 'password7',
+                active: true
+            },
+            {
+                mobile: 600000008,
+                username: 'operator9',
+                dni: '66666666I',
+                email: 'operator9@gmail.com',
+                address: 'address8',
+                password: 'password8',
+                active: true
+            },
+            {
+                mobile: 600000009,
+                username: 'operator10',
+                dni: '66666666J',
+                email: 'operator10@gmail.com',
+                address: 'address9',
+                password: 'password9',
+                active: true
+            },
+            {
+                mobile: 600000010,
+                username: 'operator11',
+                dni: '66666666K',
+                email: 'operator11@gmail.com',
+                address: 'address10',
+                password: 'password10',
+                active: true
+            },
+            {
+                mobile: 600000011,
+                username: 'operator12',
+                dni: '66666666L',
+                email: 'operator12@gmail.com',
+                address: 'address10',
+                password: 'password10',
+                active: true
+            },
+            {
+                mobile: 600000012,
+                username: 'operator13',
+                dni: '66666666M',
+                email: 'operator13@gmail.com',
+                address: 'address11',
+                password: 'password11',
+                active: true
+            },
+            {
+                mobile: 600000013,
+                username: 'operator14',
+                dni: '66666666N',
+                email: 'operator14@gmail.com',
+                address: 'address12',
+                password: 'password12',
+                active: true
+            },
+            {
+                mobile: 600000014,
+                username: 'operator15',
+                dni: '66666666O',
+                email: 'operator15@gmail.com',
+                address: 'address13',
+                password: 'password13',
+                active: true
+            },
+            {
+                mobile: 600000015,
+                username: 'operator16',
+                dni: '66666666P',
+                email: 'operator16@gmail.com',
+                address: 'address14',
+                password: 'password14',
+                active: true
+            },
+        ];
+        return {customers, operators};
     }
 }

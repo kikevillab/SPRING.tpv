@@ -4,21 +4,28 @@
 
 import {Component, OnInit, EventEmitter} from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
-import {User, MOBILE_ATTRIBUTE_NAME, DNI_ATTRIBUTE_NAME, EMAIL_ATTRIBUTE_NAME} from '../../../shared/models/user.model';
-import {CustomersService} from '../customers.service';
-import {RegExpFormValidatorService} from '../../../shared/services/reg-exp-form-validator.service';
-import {ToastService} from '../../../shared/services/toast.service';
-import {TPVHTTPError} from "../../../shared/models/tpv-http-error.model";
+import {
+    User,
+    MOBILE_ATTRIBUTE_NAME,
+    DNI_ATTRIBUTE_NAME,
+    EMAIL_ATTRIBUTE_NAME
+} from '../../../../shared/models/user.model';
+import {UsersService} from '../users.service';
+import {RegExpFormValidatorService} from '../../../../shared/services/reg-exp-form-validator.service';
+import {ToastService} from '../../../../shared/services/toast.service';
+import {TPVHTTPError} from "../../../../shared/models/tpv-http-error.model";
 import {isNull} from "util";
 
 @Component({
     selector: 'filter',
-    outputs: ['onCustomersSearched'],
+    inputs: ['httpService'],
+    outputs: ['onUsersSearched'],
     templateUrl: './filter.component.html',
     styleUrls: ['./filter.component.css']
 })
 export class FilterComponent implements OnInit {
     user: User;
+    httpService: UsersService;
     filterForm: FormGroup;
     validationMessages = {
         'mobile': {
@@ -40,12 +47,12 @@ export class FilterComponent implements OnInit {
         'dni': '',
         'email': ''
     };
-    onCustomersSearched: EventEmitter<User[]>;
+    onUsersSearched: EventEmitter<User[]>;
 
-    constructor(private formBuilder: FormBuilder, private customersService: CustomersService,
-                private formValidatorByRegExp: RegExpFormValidatorService, private toastService: ToastService) {
+    constructor(private formBuilder: FormBuilder, private formValidatorByRegExp: RegExpFormValidatorService,
+                private toastService: ToastService) {
         this.clearUser();
-        this.onCustomersSearched = new EventEmitter();
+        this.onUsersSearched = new EventEmitter();
     }
 
     clearUser() {
@@ -71,7 +78,7 @@ export class FilterComponent implements OnInit {
             fieldValue = this.user.email;
         }
 
-        this.customersService.search(fieldName, fieldValue).subscribe(
+        this.httpService.search(fieldName, fieldValue).subscribe(
             data => {
                 this.clearForm();
                 this.handleOK(data.data)
@@ -89,7 +96,7 @@ export class FilterComponent implements OnInit {
     }
 
     handleOK(customers: User[]) {
-        this.onCustomersSearched.emit(customers);
+        this.onUsersSearched.emit(customers);
     }
 
     handleError(httpError: TPVHTTPError) {
@@ -98,11 +105,11 @@ export class FilterComponent implements OnInit {
 
     disableSubmit(): boolean {
         return (!(((this.filterForm.controls['mobile'].dirty)
-         && (this.formErrors.mobile.length === 0))
-         || ((this.filterForm.controls['dni'].dirty)
-         && (this.formErrors.dni.length === 0))
-         || ((this.filterForm.controls['email'].dirty)
-         && (this.formErrors.email.length === 0))));
+        && (this.formErrors.mobile.length === 0))
+        || ((this.filterForm.controls['dni'].dirty)
+        && (this.formErrors.dni.length === 0))
+        || ((this.filterForm.controls['email'].dirty)
+        && (this.formErrors.email.length === 0))));
     }
 
     ngOnInit(): void {
