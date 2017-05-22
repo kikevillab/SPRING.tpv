@@ -64,7 +64,7 @@ public class VoucherResourceFunctionalTesting {
         String token = new RestService().loginAdmin();
         VoucherConsumptionWrapper voucher = new VoucherConsumptionWrapper();
         voucher.setId(0);
-        new RestBuilder<Object>(RestService.URL).path(Uris.VOUCHERS).body(voucher).basicAuth(token, "").clazz(Object.class).put().build();
+        new RestBuilder<Object>(RestService.URL).path(Uris.VOUCHERS).pathId(body(voucher).basicAuth(token, "").clazz(Object.class).put().build();
     }
 
     @Test

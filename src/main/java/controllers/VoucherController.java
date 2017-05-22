@@ -24,7 +24,7 @@ public class VoucherController {
     
     public void createVoucher(VoucherCreationWrapper voucherCreationWrapper) {
         Voucher voucher = new Voucher(voucherCreationWrapper.getValue(), voucherCreationWrapper.getExpiration());
-        voucherDao.save(voucher);
+        voucherDao.saveAndFlush(voucher);
     }
 
     public List<Voucher> findAllVouchers() {
