@@ -5,11 +5,10 @@
 import { TestBed, async, inject } from '@angular/core/testing';
 import { HttpModule, Response, ResponseOptions, BaseRequestOptions, Http } from '@angular/http';
 import { MockBackend, MockConnection } from '@angular/http/testing';
-import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 
 import { CartProduct } from '../models/cart-product.model';
-import { User } from '../shared/models/user.model';
+import { User } from '../models/user.model';
 
 import { ShoppingService } from './shopping.service';
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
