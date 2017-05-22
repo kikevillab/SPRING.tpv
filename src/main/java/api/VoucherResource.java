@@ -44,8 +44,8 @@ public class VoucherResource {
         return voucherController.findVoucherByReference(reference);
     }
     
-    @RequestMapping(value = Uris.VOUCHER_ACTIVESTOTALVALUE)
-    public ActiveVouchersTotalValueWrapper ActiveVouchersTotalValueWrapper(){
+    @RequestMapping(value = Uris.VOUCHER_ACTIVESTOTALVALUE, method = RequestMethod.GET)
+    public ActiveVouchersTotalValueWrapper getActiveVouchersTotalValue(){
         return voucherController.getActiveVouchersTotalValue();
     }
 

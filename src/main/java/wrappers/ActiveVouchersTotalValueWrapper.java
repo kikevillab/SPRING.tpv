@@ -5,6 +5,10 @@ import java.math.BigDecimal;
 public class ActiveVouchersTotalValueWrapper {
     BigDecimal totalValue;
 
+    public ActiveVouchersTotalValueWrapper(){
+        
+    }
+    
     public ActiveVouchersTotalValueWrapper(BigDecimal totalValue) {
         this.totalValue = totalValue;
     }

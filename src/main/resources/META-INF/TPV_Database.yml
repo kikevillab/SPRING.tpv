@@ -63,7 +63,7 @@ voucherList:
   - value: 80
     dateOfUse: 2017-08-14 11:00:00.00 +1
     expiration: 2017-09-14 11:00:00.00 +1
-  - value: 60.00
+  - value: 100.00
     expiration: 2017-04-01 11:00:00.00 +1
 
 providerList:
