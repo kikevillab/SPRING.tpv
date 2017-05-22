@@ -1,0 +1,39 @@
+<div *ngIf="userAssociated==null">
+	<md-card-title>Client</md-card-title>
+	<md-card-content fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center">
+		<form (ngSubmit)="associate($event)" #mobileNumberForm="ngForm" fxLayout="column">
+			<div class="form-group">
+				<p>Associate a client by entering his number: </p>
+				<md-input-container >
+					<input mdInput type="number" step="1" min="13" max="111" max="9999999999999" class="form-control" id="mobileNumberInput" required placeholder="Mobile number"
+					[(ngModel)]="mobileNumberInput" name="mobileNumberInput" #name="ngModel">
+				</md-input-container>
+				
+			</div>
+			<button md-raised-button color="primary" type="submit" [disabled]="!mobileNumberForm.form.valid" id="submitMobileNumberInputButton">OK</button >
+		</form>
+	</md-card-content>
+</div>
+<div *ngIf="userAssociated!=null">
+	<button md-mini-fab color="warn" mdTooltip="Disassociate client" mdTooltipPosition="below" (click)="disassociate()" id="disassociateUserButton">
+		<md-icon>clear</md-icon>
+	</button>
+	<md-card-title>Client data</md-card-title>
+	<md-card-content>
+		<p>
+			<b>Username</b>: {{userAssociated.username}}
+		</p>
+		<p>
+			<b>Mobile</b>: {{userAssociated.mobile}}
+		</p>
+		<p>
+			<b>Identification</b>: {{userAssociated.dni}}
+		</p>
+		<p>
+			<b>Email</b>: {{userAssociated.email}}
+		</p>
+		<p>
+			<b>Address</b>: {{userAssociated.address}}
+		</p>
+	</md-card-content>
+</div>

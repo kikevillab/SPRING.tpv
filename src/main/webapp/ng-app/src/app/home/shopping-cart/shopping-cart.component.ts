@@ -49,7 +49,7 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
   codeInput: string = '';
   totalPrice: number = this.shoppingService.getTotalPrice();
   cartProducts: CartProduct[] = this.shoppingService.getCartProducts();
-  subscription: Subscription;
+  cartProductsSubscription: Subscription;
   columns: Object[] = [
   { name: 'description' },
   { name: 'retailPrice' },
@@ -62,7 +62,7 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
   constructor (private shoppingService: ShoppingService, private toastService: ToastService, private router: Router, public dialog: MdDialog){}
 
   ngOnInit(){
-    this.subscription = this.shoppingService.getCartProductsObservable().subscribe((cartProducts: CartProduct[]) => {
+    this.cartProductsSubscription = this.shoppingService.getCartProductsObservable().subscribe((cartProducts: CartProduct[]) => {
       this.cartProducts = cartProducts;
       this.totalPrice = this.shoppingService.getTotalPrice();
     });
@@ -103,7 +103,7 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
   }
 
   checkout(): void {
-    this.router.navigate(['/home/payment']);
+    this.router.navigate(['/home/purchase/payment']);
     this.closeSidenavEvent.emit(true);
   }
 
@@ -125,7 +125,7 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(){
-    this.subscription && this.subscription.unsubscribe();
+    this.cartProductsSubscription && this.cartProductsSubscription.unsubscribe();
   }
 
 }

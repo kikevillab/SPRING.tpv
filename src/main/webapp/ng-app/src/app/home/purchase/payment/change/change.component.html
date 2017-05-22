@@ -1,0 +1,24 @@
+<md-card>
+	<button md-mini-fab color="warn" mdTooltip="Reset payment" mdTooltipPosition="below" (click)="resetPayment()" id="resetPaymentButton" *ngIf="totalPaid > 0">
+		<md-icon>clear</md-icon>
+	</button>
+	<md-card-title>Money received</md-card-title>
+	<md-card-content>
+		<p>Cash: {{ cashMoneyReceived | currency:'EUR':true }}</p>
+		<h3>Vouchers</h3>
+		<md-list *ngFor="let voucher of vouchers">
+			<md-list-item>
+				<a md-line>{{ voucher.value | currency:'EUR':true }}</a>
+				<button md-icon-button (click)="removeVoucher(voucher)" mdTooltip="Delete from purchase" mdTooltipPosition="left">
+			        <md-icon class="md-24" color="warn">clear</md-icon>
+			    </button>
+			</md-list-item>
+			<md-divider></md-divider>
+		</md-list>
+		<p>Total: <b>{{ totalPaid | currency:'EUR':true }}</b></p>
+		<span *ngIf="change > 0">
+			<h3>Change</h3>
+			<p>{{ change | currency:'EUR':true }}</p>
+		</span>
+	</md-card-content>
+</md-card>
