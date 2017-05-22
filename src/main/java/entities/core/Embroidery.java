@@ -15,9 +15,9 @@ public class Embroidery extends Product {
     public Embroidery() {
     }
 
-    public Embroidery(long id, String reference, BigDecimal retailPrice, String description, int stitches, int colors,
+    public Embroidery(String code, String reference, BigDecimal retailPrice, String description, int stitches, int colors,
             int squareMillimeters) {
-        super(id, reference, retailPrice, description);
+        super(code, reference, retailPrice, description);
         this.stitches = stitches;
         this.colors = colors;
         this.squareMillimeters = squareMillimeters;

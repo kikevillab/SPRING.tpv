@@ -21,6 +21,20 @@ userList:
     address: Calle Gran Vía, 23. Madrid
     dni: 1235678X
     email: user@user.com
+  - &user666000004
+    mobile: 666000004
+    username: operator1
+    password: pass
+    address: Calle Gran Vía, 12. Madrid
+    dni: 1245538L
+    email: userO@userO.com
+  - &user666000005
+    mobile: 666000005
+    username: manager1
+    password: pass
+    address: Calle Goya, 11. Madrid
+    dni: 1232578M
+    email: userM@userM.com
 
 authorizationList:
   - user: *user666000000
@@ -31,16 +45,26 @@ authorizationList:
     role: CUSTOMER
   - user: *user666000003
     role: CUSTOMER
+  - user: *user666000004
+    role: OPERATOR
+  - user: *user666000005
+    role: MANAGER
 
 tokenList:
   - user: *user666000000
 
 voucherList:
   - value: 20
+    expiration: 2017-08-14 11:00:00.00 +1
   - value: 40.00
+    expiration: 2017-08-14 11:00:00.00 +1
   - value: 60.00
+    expiration: 2017-08-14 11:00:00.00 +1
   - value: 80
     dateOfUse: 2017-08-14 11:00:00.00 +1
+    expiration: 2017-09-14 11:00:00.00 +1
+  - value: 100.00
+    expiration: 2017-04-01 11:00:00.00 +1
 
 providerList:
   - &provider666100000
@@ -72,128 +96,155 @@ providerList:
 
 articleList:
   - &article84000001111
-    id: 84000001111
-    code: article0
+    code: 84000001111
+    reference: article0
     retailPrice: 20
     description: article0
     wholesalePrice: 10
     stock: 5
     provider: *provider666100000
+    image: /assets/img/products/img-product-5.png
   - &article84000001112
-    id: 84000001112
-    code: article1
+    code: 84000001112
+    reference: article1
     retailPrice: 21
     description: article1
     wholesalePrice: 11
     stock: 8
     provider: *provider666100000
+    image: /assets/img/products/img-product-6.png
   - &article84000001113
-    id: 84000001113
-    code: article2
+    code: 84000001113
+    reference: article2
     retailPrice: 22
     description: article2
     wholesalePrice: 12
     stock: 0
     provider: *provider666100000
+    image: /assets/img/products/img-product-1.png
   - &article84000001114
-    id: 84000001114
-    code: article3
+    code: 84000001114
+    reference: article3
     retailPrice: 23
     description: article3
     wholesalePrice: 13
     stock: 15
     provider: *provider666100000
-  - id: 84000001115
-    code: article4
+    image: /assets/img/products/img-product-2.png
+  - code: 84000001115
+    reference: article4
     retailPrice: 24
     description: article4
     wholesalePrice: 14
     stock: 26
     provider: *provider666100001
-  - id: 84000001116
-    code: article5
+    image: /assets/img/products/img-product-3.png
+  - code: 84000001116
+    reference: article5
     retailPrice: 25
     description: article5
     wholesalePrice: 15
     stock: 3
     provider: *provider666100001
-  - id: 84000001117
-    code: article6
+    image: /assets/img/products/img-product-4.png
+  - code: 84000001117
+    reference: article6
     retailPrice: 26
     description: article6
     wholesalePrice: 16
     stock: 125
     provider: *provider666100001
-  - id: 84000001118
-    code: article7
+    image: /assets/img/products/img-product-5.png
+  - code: 84000001118
+    reference: article7
     retailPrice: 27
     description: article7
     wholesalePrice: 17
     stock: 67
     provider: *provider666100001
+    image: /assets/img/products/img-product-6.png
 
 embroideryList:
   - &embroidery84000002222
-    id: 84000002222
-    code: embroidery0
+    code: 84000002222
+    reference: embroidery0
     retailPrice: 20
     description: embroidery0
     stitches: 0
     colors: 0
     squareMillimeters: 0
+    image: /assets/img/products/img-product-1.png
   - &embroidery84000002223
-    id: 84000002223
-    code: embroidery1
+    code: 84000002223
+    reference: embroidery1
     retailPrice: 21
     description: embroidery1
     stitches: 1000
     colors: 1
     squareMillimeters: 10
+    image: /assets/img/products/img-product-2.png
   - &embroidery84000002224
-    id: 84000002224
-    code: embroidery2
+    code: 84000002224
+    reference: embroidery2
     retailPrice: 22
     description: embroidery2
     stitches: 2000
     colors: 2
     squareMillimeters: 20
+    image: /assets/img/products/img-product-3.png
   - &embroidery84000002225
-    id: 84000002225
-    code: embroidery3
+    code: 84000002225
+    reference: embroidery3
     retailPrice: 23
     description: embroidery3
     stitches: 3000
     colors: 3
     squareMillimeters: 30
+    image: /assets/img/products/img-product-4.png
+  - &embroidery84000002226
+    code: 84000002226
+    reference: embroidery4
+    retailPrice: 23
+    description: embroidery4
+    stitches: 3000
+    colors: 3
+    squareMillimeters: 30
+    image: /assets/img/products/img-product-5.png
 
 textilePrintingList:
   - &textilePrinting84000003333
-    id: 84000003333
-    code: textilePrinting0
+    code: 84000003333
+    reference: textilePrinting0
     retailPrice: 20
     description: textilePrinting0
     image: /assets/img/products/img-product-4.png
     type: ploter
   - &textilePrinting84000003334
-    id: 84000003334
-    code: textilePrinting1
+    code: 84000003334
+    reference: textilePrinting1
     retailPrice: 21
     description: textilePrinting1
     image: /assets/img/products/img-product-1.png
     type: ploter
   - &textilePrinting84000003335
-    id: 84000003335
-    code: textilePrinting2
+    code: 84000003335
+    reference: textilePrinting2
     retailPrice: 22
     description: textilePrinting2
     image: /assets/img/products/img-product-2.png
     type: ploter
   - &textilePrinting84000003336
-    id: 84000003336
-    code: textilePrinting3
+    code: 84000003336
+    reference: textilePrinting3
     retailPrice: 23
     description: textilePrinting3
     image: /assets/img/products/img-product-3.png
+    type: ploter
+  - code: 84000003337
+    reference: textilePrinting4
+    retailPrice: 23
+    description: textilePrinting4
+    image: /assets/img/products/img-product-4.png
     type: ploter
 
 ticketList:

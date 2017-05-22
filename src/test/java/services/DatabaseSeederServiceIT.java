@@ -115,13 +115,13 @@ public class DatabaseSeederServiceIT {
 
         assertEquals(1, providerDao.count() - previousProvidersCount);
 
-        assertNotNull(articleDao.findOne(74000001111L));
+        assertNotNull(articleDao.findOne("74000001111"));
         assertEquals(1, articleDao.count() - previousArticlesCount);
 
-        assertNotNull(embroideryDao.findOne(74000002222L));
+        assertNotNull(embroideryDao.findOne("74000002222"));
         assertEquals(1, embroideryDao.count() - previousEmbroideryCount);
 
-        assertNotNull(textilePrintingDao.findOne(74000003333L));
+        assertNotNull(textilePrintingDao.findOne("74000003333"));
         assertEquals(1, textilePrintingDao.count() - previousTextilePrintingsNum);
 
         assertNotNull(ticketDao.findOne(new TicketPK(71L)));
@@ -169,10 +169,10 @@ public class DatabaseSeederServiceIT {
 
         assertEquals(articleDao.count(), previousArticlesCount);
 
-        assertNotNull(embroideryDao.findOne(74000002223L));
+        assertNotNull(embroideryDao.findOne("74000002223"));
         assertEquals(1, embroideryDao.count() - previousEmbroideryCount);
 
-        assertNotNull(textilePrintingDao.findOne(74000003334L));
+        assertNotNull(textilePrintingDao.findOne("74000003334"));
         assertEquals(2, textilePrintingDao.count() - previousTextilePrintingsNum);
 
         assertNotNull(ticketDao.findOne(new TicketPK(73L)));

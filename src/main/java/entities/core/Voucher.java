@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -18,11 +19,14 @@ public class Voucher {
     @GeneratedValue
     private int id;
 
+    @Column(unique = true, nullable = false)
     private String reference;
 
     private BigDecimal value;
 
     private Calendar created;
+
+    private Calendar expiration;
 
     private Calendar dateOfUse;
 
@@ -31,9 +35,14 @@ public class Voucher {
         dateOfUse = null;
     }
 
-    public Voucher(BigDecimal value) {
+    public Voucher(BigDecimal value, Calendar expiration) {
         this();
         setValue(value);
+        setExpiration(expiration);
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getId() {
@@ -52,7 +61,7 @@ public class Voucher {
         this.value = value;
         updateReference();
     }
-    
+
     private void updateReference() {
         reference = new Encrypting().encryptInBase64UrlSafe("" + value + Long.toString(new Date().getTime()));
     }
@@ -63,6 +72,14 @@ public class Voucher {
 
     public Calendar getDateOfUse() {
         return dateOfUse;
+    }
+
+    public void setExpiration(Calendar expiration) {
+        this.expiration = expiration;
+    }
+
+    public Calendar getExpiration() {
+        return expiration;
     }
 
     public void setDateOfUse(Calendar dateOfUse) {
@@ -76,6 +93,14 @@ public class Voucher {
     public void consume() {
         assert dateOfUse == null;
         dateOfUse = Calendar.getInstance();
+    }
+
+    public boolean isConsumed() {
+        return dateOfUse != null;
+    }
+    
+    public boolean isExpired() {
+        return Calendar.getInstance().after(this.expiration);
     }
 
     @Override
@@ -100,6 +125,7 @@ public class Voucher {
     @Override
     public String toString() {
         String createTime = new SimpleDateFormat("HH:00 dd-MMM-yyyy ").format(created.getTime());
+        String expirationTime = new SimpleDateFormat("HH:00 dd-MMM-yyyy ").format(expiration.getTime());
         String useTime;
         if (this.used()) {
             useTime = new SimpleDateFormat("HH:00 dd-MMM-yyyy ").format(dateOfUse.getTime());
@@ -107,7 +133,7 @@ public class Voucher {
             useTime = "---";
         }
         return "Voucher[" + id + ": reference=" + reference + ", value=" + value + ", created=" + createTime + ", dateOfUse=" + useTime
-                + "]";
+                + ", expiration=" + expirationTime + "]";
     }
 
 }

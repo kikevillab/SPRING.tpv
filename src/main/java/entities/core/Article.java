@@ -19,8 +19,8 @@ public class Article extends Product {
     public Article() {
     }
 
-    public Article(long id, String reference, BigDecimal retailPrice, String description, BigDecimal wholesalePrice, Provider provider) {
-        super(id, reference, retailPrice, description);
+    public Article(String code, String reference, BigDecimal retailPrice, String description, BigDecimal wholesalePrice, Provider provider) {
+        super(code, reference, retailPrice, description);
         this.stock = 0;
         this.wholesalePrice = wholesalePrice;
         this.provider = provider;
