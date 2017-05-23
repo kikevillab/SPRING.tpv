@@ -85,6 +85,8 @@ public class PdfGeneratorServiceIT {
         new File(path).delete();
         path = PDFS_ROOT + TICKETS_PDFS_ROOT + TICKET_PDF_FILENAME_ROOT + 1 + PDF_FILE_EXT;
         new File(path).delete();
+        path = PDFS_ROOT + VOUCHERS_PDFS_ROOT + VOUCHER_PDF_FILENAME_ROOT + 1 + PDF_FILE_EXT;
+        new File(path).delete();
     }
 
 }

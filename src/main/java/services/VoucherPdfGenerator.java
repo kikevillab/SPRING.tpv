@@ -29,14 +29,15 @@ public class VoucherPdfGenerator extends PdfGenerator<Voucher> {
     @Override
     protected void buildPdf() {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        pdfDocument.add(new Paragraph(entity.getReference()));
-        pdfDocument.add(new Paragraph(entity.getValue().toPlainString()));
-        pdfDocument.add(new Paragraph(formatter.format(entity.getCreated().getTime())));
+        pdfDocument.add(new Paragraph("Referencia: " + entity.getReference()));     
+        pdfDocument.add(new Paragraph("Valor: " + entity.getValue().toPlainString()));
+        pdfDocument.add(new Paragraph("Fecha de creación: " + formatter.format(entity.getCreated().getTime())));
+        pdfDocument.add(new Paragraph("Fecha de expiración: " + formatter.format(entity.getExpiration().getTime())));
+        String canjeado = "No";
         if (entity.getDateOfUse() != null) {
-            pdfDocument.add(new Paragraph(formatter.format(entity.getDateOfUse().getTime())));
-        } else {
-            pdfDocument.add(new Paragraph("NO CANJEADO"));
+            canjeado = formatter.format(entity.getDateOfUse().getTime());
         }
+        pdfDocument.add(new Paragraph("Canjeado: " + canjeado));
     }
 
 }
