@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 
 import wrappers.InvoiceIdWrapper;
 import wrappers.TicketIdWrapper;
+import wrappers.VoucherIdWrapper;
 
 public class PdfGenerationResourceFunctionalTesting {
 
@@ -29,6 +30,10 @@ public class PdfGenerationResourceFunctionalTesting {
         .build();      
         new RestBuilder<Object>(RestService.URL).path(Uris.PDF_GENERATION + Uris.TICKETS)
         .body(new TicketIdWrapper(1))
+        .post()
+        .build();
+        new RestBuilder<Object>(RestService.URL).path(Uris.PDF_GENERATION + Uris.VOUCHERS)
+        .body(new VoucherIdWrapper(1))
         .post()
         .build();
     }
@@ -53,6 +58,16 @@ public class PdfGenerationResourceFunctionalTesting {
         .build();
     }
     
+    /*@Test
+    public void testGenerateVoucherPdfWithManagerLoggedIn() {
+        String token = new RestService().registerAndLoginManager();
+        new RestBuilder<Object>(RestService.URL).path(Uris.PDF_GENERATION + Uris.VOUCHERS)
+        .body(new VoucherIdWrapper(1))
+        .basicAuth(token, "")
+        .post()
+        .build();
+    }
+    */
     @After
     public void tearDown(){
         new RestService().deleteAll();
