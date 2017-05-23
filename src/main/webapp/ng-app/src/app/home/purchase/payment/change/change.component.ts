@@ -29,16 +29,16 @@ export class ChangeComponent implements OnInit, OnDestroy {
   vouchers: Voucher[] = [];
   change: number;
   totalPaid: number = 0;
-  cashMoneyReceived: number = this.shoppingService.getCashMoneyReceived();
-  cashMoneyReceivedSubscription: Subscription;
+  cashReceived: number = this.shoppingService.getCashReceived();
+  cashReceivedSubscription: Subscription;
   vouchersSubscription: Subscription;
 
   constructor (private shoppingService: ShoppingService, private toastService: ToastService, public dialog: MdDialog){
   }
 
   ngOnInit(){
-    this.cashMoneyReceivedSubscription = this.shoppingService.getCashMoneyReceivedObservable().subscribe((cashMoneyReceived: number) => {
-      this.cashMoneyReceived = cashMoneyReceived;
+    this.cashReceivedSubscription = this.shoppingService.getCashReceivedObservable().subscribe((cashReceived: number) => {
+      this.cashReceived = cashReceived;
       this.updateChange();
     });
     this.vouchersSubscription = this.shoppingService.getVouchersObservable().subscribe((vouchers: Voucher[]) => {
@@ -57,12 +57,12 @@ export class ChangeComponent implements OnInit, OnDestroy {
 
   private updateChange(): void {
     this.totalPaid = this.shoppingService.getTotalPaid();
-    this.change = (this.cashMoneyReceived > 0 && (this.totalPaid > this.totalPrice)) ?
+    this.change = this.totalPaid > this.totalPrice ?
       this.totalPaid - this.totalPrice : 0;
   }
 
   ngOnDestroy() {
-    this.cashMoneyReceivedSubscription && this.cashMoneyReceivedSubscription.unsubscribe();
+    this.cashReceivedSubscription && this.cashReceivedSubscription.unsubscribe();
     this.vouchersSubscription && this.vouchersSubscription.unsubscribe();
   }
 

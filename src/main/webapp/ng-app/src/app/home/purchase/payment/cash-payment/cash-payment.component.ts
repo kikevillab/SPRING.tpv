@@ -67,6 +67,6 @@ export class CashPaymentComponent {
 
   finishPayment(): void {
     this.dialogRef.close();
-    this.shoppingService.setCashMoneyReceived(this.moneyCharged);
+    this.shoppingService.setCashReceived(this.moneyCharged);
   }
 }

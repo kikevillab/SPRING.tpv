@@ -27,7 +27,7 @@ import { ToastService } from '../../../shared/services/toast.service';
   md-card-content > button {
     margin-bottom:1em;
   }
-  @media only screen and (min-width: 768px) {
+  @media only screen and (min-width: 960px) {
     #moneyReceivedContainer {
       width:20em;
     }
@@ -40,7 +40,7 @@ export class PaymentComponent implements OnInit, OnDestroy{
   totalPrice: number = this.shoppingService.getTotalPrice();
   paidOut: boolean = false;
   shoppingCartSubscription: Subscription;
-  cashMoneySubscription: Subscription;
+  cashReceivedSubscription: Subscription;
   vouchersSubscription: Subscription;
   submittedSubscription: Subscription;
   vouchers: Voucher[] = [];
@@ -53,8 +53,9 @@ export class PaymentComponent implements OnInit, OnDestroy{
     this.shoppingCartSubscription = this.shoppingService.getCartProductsObservable().subscribe((cartProducts: CartProduct[]) => {
       this.paidOut = false;
       this.shoppingService.resetPayment();
+      this.totalPrice = this.shoppingService.getTotalPrice();
     });
-    this.cashMoneySubscription = this.shoppingService.getCashMoneyReceivedObservable().subscribe((moneyReceived: number) => {
+    this.cashReceivedSubscription = this.shoppingService.getCashReceivedObservable().subscribe((cashReceived: number) => {
         this.paidOut = this.shoppingService.isPaidOut();
     });
     this.vouchersSubscription = this.shoppingService.getVouchersObservable().subscribe((vouchers: Voucher[]) => {
@@ -99,7 +100,7 @@ export class PaymentComponent implements OnInit, OnDestroy{
 
   ngOnDestroy() {
     this.shoppingCartSubscription && this.shoppingCartSubscription.unsubscribe();
-    this.cashMoneySubscription && this.cashMoneySubscription.unsubscribe();
+    this.cashReceivedSubscription && this.cashReceivedSubscription.unsubscribe();
     this.vouchersSubscription && this.vouchersSubscription.unsubscribe();
     this.submittedSubscription && this.submittedSubscription.unsubscribe();
   }

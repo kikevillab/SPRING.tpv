@@ -6,6 +6,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Subject } from 'rxjs/Subject';
 
+import * as moment from 'moment/moment';
+
 import { API_GENERIC_URI } from '../../../app.config';
 
 import { CartProduct } from '../models/cart-product.model';
@@ -24,13 +26,13 @@ export class ShoppingService {
   private storage_key: string = 'tpv-shopping_cart';
   private cartProductsSubject: Subject<CartProduct[]> = new Subject<CartProduct[]>();
   private vouchersSubject: Subject<Voucher[]> = new Subject<Voucher[]>();
-  private cashMoneyReceivedSubject: Subject<number> = new Subject<number>();
+  private cashReceivedSubject: Subject<number> = new Subject<number>();
   private submittedSubject: Subject<boolean> = new Subject<boolean>();
   private userMobileSubject: Subject<number> = new Subject<number>();
   private cartProducts: CartProduct[] = JSON.parse(this.storageService.getItem(this.storage_key)) || [];
   private totalPrice: number;
   private userMobile: number;
-  private cashMoneyReceived: number = 0;
+  private cashReceived: number = 0;
   private vouchers: Voucher[] = [];
   private submitted: boolean = false;
   private ticketReference: string;
@@ -69,18 +71,18 @@ export class ShoppingService {
     let found: CartProduct[] = this.cartProducts.filter((cp: CartProduct) => {
       return cp.productCode == cartProduct.productCode;
     });
-    found && this.cartProducts.splice(index, 1);
+    found.length > 0 && this.cartProducts.splice(index, 1);
     this.updateCart();
   }
 
   submitOrder(): Promise<any> {
     return new Promise((resolve: Function, reject: Function) => {
-      let newTicket: TicketCheckout = new TicketCheckout(this.cartProducts, this.userMobile);
+      let newTicket: TicketCheckout = new TicketCheckout(this.cartProducts, this.vouchers, this.userMobile);
       this.httpService.post(`${API_GENERIC_URI}/tickets`, newTicket).subscribe((ticketCreated: any) => {
-        this.clear();
         this.submitted = true;
         this.submittedSubject.next(this.submitted);
         this.ticketReference = ticketCreated.ticketReference;
+        this.clear();
         resolve(ticketCreated);
       }, (error: TPVHTTPError) => reject(error.description));
     });
@@ -103,9 +105,18 @@ export class ShoppingService {
 
   addVoucher(reference: string): Promise<any> {
     return new Promise((resolve: Function, reject: Function) => {
-      this.vouchers.push(new Voucher(reference, 10, new Date(), null));
-      this.vouchersSubject.next(this.vouchers);
-      resolve();
+      this.httpService.get(`${API_GENERIC_URI}/vouchers/${reference}`).subscribe((voucher: Voucher) => {
+        let today: Date = new Date();
+        let voucherExpirationDate: Date = moment(voucher.expiration).toDate();
+        if (voucherExpirationDate.getTime() < today.getTime()) reject('The voucher entered is expired');
+        else if (voucher.dateOfUse) reject('The voucher entered is already used');
+        else {
+          this.vouchers.push(voucher);
+          this.vouchersSubject.next(this.vouchers);
+          voucher.value > this.totalPrice && this.setCashReceived(0);      
+          resolve(voucher);
+        }
+      }, (error: TPVHTTPError) => reject(error.description));
     });
   }
 
@@ -120,16 +131,23 @@ export class ShoppingService {
   clear(): void {
     this.storageService.removeItem(this.storage_key);
     this.cartProducts = [];
-    this.userMobile = null;
+    if (!this.submitted) this.finishPayment();
     this.resetPayment();
     this.updateCart();
   }
 
   resetPayment(): void {
-    this.cashMoneyReceived = 0.0;
+    this.cashReceived = 0.0;
     this.vouchers = [];
-    this.cashMoneyReceivedSubject.next(this.cashMoneyReceived);
+    this.cashReceivedSubject.next(this.cashReceived);
     this.vouchersSubject.next(this.vouchers);
+  }
+
+  finishPayment(): void {
+    this.userMobile = null;
+    this.submitted = false;
+    this.submittedSubject.next(this.submitted);
+    this.userMobileSubject.next(this.userMobile);
   }
 
   private updateCart(): void {
@@ -178,12 +196,12 @@ export class ShoppingService {
     return this.vouchersSubject.asObservable();
   }
 
-  getCashMoneyReceived(): number {
-    return this.cashMoneyReceived;
+  getCashReceived(): number {
+    return this.cashReceived;
   }
 
-  getCashMoneyReceivedObservable(): Observable<number> {
-    return this.cashMoneyReceivedSubject.asObservable();
+  getCashReceivedObservable(): Observable<number> {
+    return this.cashReceivedSubject.asObservable();
   }
 
   getTicketReference(): string {
@@ -195,7 +213,7 @@ export class ShoppingService {
   }
 
   getTotalPaid(): number {
-    let total: number = this.cashMoneyReceived;
+    let total: number = this.cashReceived;
     this.vouchers.forEach((voucher: Voucher) => {
       total += voucher.value;
     });
@@ -206,9 +224,9 @@ export class ShoppingService {
     return this.getTotalPaid() >= this.totalPrice;
   }
 
-  setCashMoneyReceived(cashAmount: number): void {
-    this.cashMoneyReceived = cashAmount;
-    this.cashMoneyReceivedSubject.next(this.cashMoneyReceived);
+  setCashReceived(cash: number): void {
+    this.cashReceived = cash;
+    this.cashReceivedSubject.next(this.cashReceived);
   }
 
 }
