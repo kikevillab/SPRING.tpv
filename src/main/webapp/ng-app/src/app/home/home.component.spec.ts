@@ -11,8 +11,6 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import 'hammerjs';
 import { SharedModule } from '../shared/shared.module';
 
-import { CartProduct } from './shared/models/cart-product';
-
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { HomeComponent } from './home.component';
 
