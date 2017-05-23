@@ -5,16 +5,16 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {UsersModule} from '../shared/users/users.module';
-import {CustomersComponent} from './customers.component';
+import {OperatorsComponent} from './operators.component';
 
 @NgModule({
     declarations: [
-        CustomersComponent
+        OperatorsComponent
     ],
     imports: [
         CommonModule,
         UsersModule
     ]
 })
-export class CustomersModule {
+export class OperatorsModule {
 }

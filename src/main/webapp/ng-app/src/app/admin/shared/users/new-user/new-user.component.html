@@ -1,5 +1,5 @@
-<md-toolbar class="main-header"><span>New customer</span></md-toolbar>
-<form md-dialog-content class="small-margin-top" [formGroup]="newCustomerForm" (ngSubmit)="onSubmit()">
+<md-toolbar class="main-header"><span>New</span></md-toolbar>
+<form md-dialog-content class="small-margin-top" [formGroup]="newUserForm" (ngSubmit)="onSubmit()">
     <md-input-container class="form-element-container">
         <input mdInput type="text" name="mobile" placeholder="Mobile" maxlength="9" minlength="9"
                formControlName="mobile" required #mobile>
@@ -33,7 +33,7 @@
         <md-checkbox name="active" formControlName="active" color="accent" #active>Active</md-checkbox>
     </div>
     <button class="medium-margin-top" md-raised-button type="submit" color="accent"
-            [disabled]="!newCustomerForm.valid">Create
+            [disabled]="!newUserForm.valid">Create
         <md-icon class="md-24 margin-left">add_circle_outline</md-icon>
     </button>
 </form>
