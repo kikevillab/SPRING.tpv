@@ -298,6 +298,152 @@ export class InMemoryDataService implements InMemoryDbService {
                 active: true
             },
         ];
-        return {customers, operators};
+        let managers = [
+            {
+                mobile: 600000000,
+                username: 'manager1',
+                dni: '66666666A',
+                email: 'manager1@gmail.com',
+                address: 'address1',
+                password: 'password1',
+                active: true
+            },
+            {
+                mobile: 600000001,
+                username: 'manager2',
+                dni: '66666666B',
+                email: 'manager2@gmail.com',
+                address: 'address2',
+                password: 'password2',
+                active: false
+            },
+            {
+                mobile: 600000002,
+                username: 'manager3',
+                dni: '66666666C',
+                email: 'manager3@gmail.com',
+                address: 'address2',
+                password: 'password2',
+                active: false
+            },
+            {
+                mobile: 600000003,
+                username: 'manager4',
+                dni: '66666666D',
+                email: 'manager4@gmail.com',
+                address: 'address3',
+                password: 'password3',
+                active: true
+            },
+            {
+                mobile: 600000004,
+                username: 'manager5',
+                dni: '66666666E',
+                email: 'manager5@gmail.com',
+                address: 'address4',
+                password: 'password4',
+                active: false
+            },
+            {
+                mobile: 600000005,
+                username: 'manager6',
+                dni: '66666666F',
+                email: 'manager6@gmail.com',
+                address: 'address5',
+                password: 'password5',
+                active: true
+            },
+            {
+                mobile: 600000006,
+                username: 'manager7',
+                dni: '66666666G',
+                email: 'manager7@gmail.com',
+                address: 'address6',
+                password: 'password6',
+                active: true
+            },
+            {
+                mobile: 600000007,
+                username: 'manager8',
+                dni: '66666666H',
+                email: 'manager8@gmail.com',
+                address: 'address7',
+                password: 'password7',
+                active: true
+            },
+            {
+                mobile: 600000008,
+                username: 'manager9',
+                dni: '66666666I',
+                email: 'manager9@gmail.com',
+                address: 'address8',
+                password: 'password8',
+                active: true
+            },
+            {
+                mobile: 600000009,
+                username: 'manager10',
+                dni: '66666666J',
+                email: 'manager10@gmail.com',
+                address: 'address9',
+                password: 'password9',
+                active: true
+            },
+            {
+                mobile: 600000010,
+                username: 'manager11',
+                dni: '66666666K',
+                email: 'manager11@gmail.com',
+                address: 'address10',
+                password: 'password10',
+                active: true
+            },
+            {
+                mobile: 600000011,
+                username: 'manager12',
+                dni: '66666666L',
+                email: 'manager12@gmail.com',
+                address: 'address10',
+                password: 'password10',
+                active: true
+            },
+            {
+                mobile: 600000012,
+                username: 'manager13',
+                dni: '66666666M',
+                email: 'manager13@gmail.com',
+                address: 'address11',
+                password: 'password11',
+                active: true
+            },
+            {
+                mobile: 600000013,
+                username: 'manager14',
+                dni: '66666666N',
+                email: 'manager14@gmail.com',
+                address: 'address12',
+                password: 'password12',
+                active: true
+            },
+            {
+                mobile: 600000014,
+                username: 'manager15',
+                dni: '66666666O',
+                email: 'manager15@gmail.com',
+                address: 'address13',
+                password: 'password13',
+                active: true
+            },
+            {
+                mobile: 600000015,
+                username: 'manager16',
+                dni: '66666666P',
+                email: 'manager16@gmail.com',
+                address: 'address14',
+                password: 'password14',
+                active: true
+            },
+        ];
+        return {customers, operators, managers};
     }
 }

@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import api.exceptions.InvoiceNotFoundException;
 import api.exceptions.TicketNotFoundException;
+import api.exceptions.VoucherNotFoundException;
 import controllers.PdfGenerationController;
 import wrappers.InvoiceIdWrapper;
 import wrappers.TicketIdWrapper;
+import wrappers.VoucherIdWrapper;
 
 @RestController
 @RequestMapping(Uris.VERSION + Uris.PDF_GENERATION)
@@ -42,6 +44,16 @@ public class PdfGenerationResource {
             pdfGenController.generateTicketPdf(ticketId);
         } else {
             throw new TicketNotFoundException("Ticket: " + ticketId);
+        }
+    }
+    
+    @RequestMapping(value = Uris.VOUCHERS, method = RequestMethod.POST)
+    public void generateVoucherPdf(@RequestBody VoucherIdWrapper voucherIdWrapper) throws FileNotFoundException, VoucherNotFoundException{
+        int voucherId = voucherIdWrapper.getId();
+        if(pdfGenController.voucherExists(voucherId)){
+            pdfGenController.generateVoucherPdf(voucherId);
+        } else {
+            throw new VoucherNotFoundException("Voucher: " + voucherId);
         }
     }
 }
