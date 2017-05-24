@@ -6,8 +6,6 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Subject } from 'rxjs/Subject';
 
-import * as moment from 'moment/moment';
-
 import { API_GENERIC_URI } from '../../../app.config';
 
 import { CartProduct } from '../models/cart-product.model';
@@ -42,14 +40,12 @@ export class ShoppingService {
   }
 
   addProduct(productCode: string): Promise<any> {
-    return new Promise((resolve,reject) => {
+    return new Promise((resolve: Function, reject: Function) => {
       this.httpService.get(`${API_GENERIC_URI}/products/${productCode}`).subscribe((productDetails: Product) => {
         let index: number = this.cartProducts.findIndex((cp: CartProduct) => cp.productCode == productCode);
-        if (index > -1){
-          this.cartProducts[index].amount++;
-        } else {
-          this.cartProducts.push(new CartProduct(productDetails.code, productDetails.description, productDetails.retailPrice));
-        }
+        index > -1 
+          ? this.cartProducts[index].amount++
+          : this.cartProducts.push(new CartProduct(productDetails.code, productDetails.description, productDetails.retailPrice));
         this.updateCart();
         resolve();
       }, (error: TPVHTTPError) => reject(error.description));
@@ -107,10 +103,11 @@ export class ShoppingService {
     return new Promise((resolve: Function, reject: Function) => {
       this.httpService.get(`${API_GENERIC_URI}/vouchers/${reference}`).subscribe((voucher: Voucher) => {
         let today: Date = new Date();
-        let voucherExpirationDate: Date = moment(voucher.expiration).toDate();
-        if (voucherExpirationDate.getTime() < today.getTime()) reject('The voucher entered is expired');
-        else if (voucher.dateOfUse) reject('The voucher entered is already used');
-        else {
+        if (voucher.expiration < today.getTime()){
+          reject('The voucher entered is expired');
+        } else if (voucher.dateOfUse){
+          reject('The voucher entered is already used');
+        } else {
           this.vouchers.push(voucher);
           this.vouchersSubject.next(this.vouchers);
           voucher.value > this.totalPrice && this.setCashReceived(0);      
@@ -131,7 +128,7 @@ export class ShoppingService {
   clear(): void {
     this.storageService.removeItem(this.storage_key);
     this.cartProducts = [];
-    if (!this.submitted) this.finishPayment();
+    !this.submitted && this.finishPayment();
     this.resetPayment();
     this.updateCart();
   }

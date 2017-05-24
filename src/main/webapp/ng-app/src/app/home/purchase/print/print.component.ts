@@ -53,7 +53,6 @@ export class PrintComponent implements OnInit, OnDestroy {
   printInvoice(): void {
     if (this.userMobile){
       this.printService.createInvoice(this.shoppingService.getTicketReference()).then((invoice: any) => {
-      	console.log(invoice);
         this.printInvoiceSelected = false;
       }).catch((error: string) => {
       	this.toastService.error('Error generating invoice', error);
