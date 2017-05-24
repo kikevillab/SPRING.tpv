@@ -26,10 +26,10 @@ import { ToastService } from '../shared/services/toast.service';
 
 import { ShoppingCartModule } from './shopping-cart/shopping-cart.module';
 import { SearchModule } from './search/search.module';
-import { PaymentModule } from './payment/payment.module';
 import { OpenCashierModule } from './open-cashier/open-cashier.module';
 import { CloseCashierModule } from './close-cashier/close-cashier.module';
 import { MovementModule } from './movement/movement.module';
+import { PurchaseModule } from './purchase/purchase.module';
 import { TicketsOfTheDayModule } from './tickets-of-the-day/tickets-of-the-day.module';
 
 import { SharedModule } from '../shared/shared.module';
@@ -47,7 +47,7 @@ import { SharedModule } from '../shared/shared.module';
     ToastyModule,
     ShoppingCartModule,
     SearchModule,
-    PaymentModule,
+    PurchaseModule,
     MovementModule,
     OpenCashierModule,
     CloseCashierModule,

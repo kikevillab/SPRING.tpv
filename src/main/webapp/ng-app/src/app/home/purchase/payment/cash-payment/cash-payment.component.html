@@ -11,7 +11,7 @@
   	<md-input-container fxFlex="40">
   		<input mdInput placeholder="Counted money (€)" type="number" id="moneyCharged" [(ngModel)]="moneyCharged" step="0.01" min="0.00">
   	</md-input-container>
-  	<button fxFlex="20" md-raised-button color="primary" (click)="finishPayment()" [disabled]="moneyCharged<totalPrice">OK</button>
+  	<button fxFlex="20" md-raised-button color="primary" (click)="finishPayment()">OK</button>
 	</div>
 </md-card>
 <md-card fxHide.xs fxHide.sm> 

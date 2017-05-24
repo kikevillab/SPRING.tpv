@@ -1,0 +1,16 @@
+<form (ngSubmit)="create($event)" #voucherCreationForm="ngForm">
+	<div class="form-group" fxLayout="column">
+	  <md-input-container >
+	    <input mdInput placeholder="Voucher value" type="number" class="form-control" id="inputVoucherValue" required [(ngModel)]="voucherValueInput" name="inputVoucherValue" #name="ngModel">
+	  </md-input-container>
+	  <md-select placeholder="Validity" [(ngModel)]="validity" name="inputValidityValue" #name="ngModel" required>
+	  	<md-option value="1">
+	  		1 month
+	  	</md-option>
+	  	<md-option *ngFor="let monthNumber of [2,3,4,5,6,7,8,9,10,11,12]" value="{{monthNumber}}">
+		  	{{monthNumber}} months
+	 	</md-option>
+	  </md-select>
+	  <button md-raised-button color="primary" type="submit" [disabled]="!voucherCreationForm.form.valid" id="submitVoucherButton">OK</button>
+	</div>
+</form>

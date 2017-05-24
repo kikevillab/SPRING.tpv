@@ -4,10 +4,10 @@
 */
 import { browser, element, by } from 'protractor';
 
-export class PaymentView {
+export class PurchaseView {
 
   navigateTo() {
-    return browser.get('/home/payment');
+    return browser.get('/home/purchase/payment');
   }
 
   clickCashPaymentButton() {
