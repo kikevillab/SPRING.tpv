@@ -27,7 +27,7 @@
   [columns]="columns">
   <ngx-datatable-column name="Description" [flexGrow]="3">
     <ng-template let-value="value" ngx-datatable-cell-template>
-      {{value}}
+      {{value | capitalize}}
     </ng-template>
   </ngx-datatable-column>
   <ngx-datatable-column name="Price" prop="retailPrice" [flexGrow]="2">

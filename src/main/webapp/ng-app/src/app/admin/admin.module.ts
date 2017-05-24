@@ -7,6 +7,7 @@ import {CommonModule} from '@angular/common';
 import {SharedModule} from '../shared/shared.module';
 import {CustomersModule} from './customers/customers.module';
 import {OperatorsModule} from './operators/operators.module';
+import {ManagersModule} from './managers/managers.module';
 import {AdminComponent} from './admin.component';
 import {TicketsComponent} from './tickets/tickets.component';
 import {ProductsComponent} from './products/products.component';
@@ -14,7 +15,6 @@ import {CategoriesComponent} from './categories/categories.component';
 import {CashierClosuresComponent} from './cashier-closures/cashier-closures.component';
 import {MovementsComponent} from './movements/movements.component';
 import {ProvidersComponent} from './providers/providers.component';
-import {ManagersComponent} from './managers/managers.component';
 import {StatisticsComponent} from './statistics/statistics.component';
 import {AdminRoutingModule} from './admin.routes';
 import {AngularMaterialModule} from '../shared/angular-material.module';
@@ -29,7 +29,6 @@ import {AdminGuard} from './admin.guard';
         CashierClosuresComponent,
         MovementsComponent,
         ProvidersComponent,
-        ManagersComponent,
         StatisticsComponent
     ],
     imports: [
@@ -38,7 +37,8 @@ import {AdminGuard} from './admin.guard';
         AngularMaterialModule,
         SharedModule,
         CustomersModule,
-        OperatorsModule
+        OperatorsModule,
+        ManagersModule
     ],
     providers: [
         AdminGuard

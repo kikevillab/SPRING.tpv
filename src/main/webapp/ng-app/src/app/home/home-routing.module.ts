@@ -7,12 +7,13 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { HomeComponent } from './home.component';
 import { SearchComponent } from './search/search.component';
-import { PaymentComponent } from './payment/payment.component';
+import { PurchaseComponent } from './purchase/purchase.component';
+import { PaymentComponent } from './purchase/payment/payment.component';
+import { PrintComponent } from './purchase/print/print.component';
 import { OpenCashierComponent } from './open-cashier/open-cashier.component';
 import { CloseCashierComponent } from './close-cashier/close-cashier.component';
 import { MovementComponent } from './movement/movement.component';
 import { TicketsOfTheDayComponent } from './tickets-of-the-day/tickets-of-the-day.component';
-
 
 const routes: Routes = [
 	{ 
@@ -21,10 +22,14 @@ const routes: Routes = [
 	    children: [
 	   		{ path: '', redirectTo: 'search', pathMatch: 'full' },
 	   		{ path: 'search', component: SearchComponent },
-	    	{ path: 'payment', component: PaymentComponent },
 	    	{ path: 'opencashier', component: OpenCashierComponent },
 	    	{ path: 'closecashier', component: CloseCashierComponent },
 	    	{ path: 'movement', component: MovementComponent },
+	    	{ path: 'purchase', component: PurchaseComponent, children: [
+		   		{ path: '', redirectTo: 'payment', pathMatch: 'full' },
+		    	{ path: 'payment', component: PaymentComponent },
+		    	{ path: 'print', component: PrintComponent }
+	    	] },
 	    	{ path: 'ticketsoftheday', component: TicketsOfTheDayComponent }
 	    ]
 	},

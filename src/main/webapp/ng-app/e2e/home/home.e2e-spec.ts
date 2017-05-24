@@ -5,7 +5,7 @@
 import { HomePage } from './home.po';
 import { CartView } from './cart/cart.po';
 import { CalculatorView } from './cart/calculator.po';
-import { PaymentView } from './payment/payment.po';
+import { PurchaseView } from './purchase/purchase.po';
 import { MovementView } from './movement/movement.po';
 import { CloseCashierView } from './close-cashier/close-cashier.po';
 import { TicketsOfTheDayView } from './tickets-of-the-day/tickets-of-the-day.po';
@@ -16,7 +16,7 @@ describe('Page: Home', () => {
 	let page: HomePage;
 	let cartView: CartView;
 	let calculatorView: CalculatorView;
-	let paymentView: PaymentView;
+	let purchaseView: PurchaseView;
 	let movementView: MovementView;
 	let closeCashierView: CloseCashierView;
 	let ticketsOfTheDayView: TicketsOfTheDayView;
@@ -25,7 +25,7 @@ describe('Page: Home', () => {
 		page = new HomePage();
 		cartView = new CartView();
 		calculatorView = new CalculatorView();
-		paymentView = new PaymentView();
+		purchaseView = new PurchaseView();
 		movementView = new MovementView();
 		closeCashierView = new CloseCashierView();
 		ticketsOfTheDayView = new TicketsOfTheDayView();
