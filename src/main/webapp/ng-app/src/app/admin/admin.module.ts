@@ -8,6 +8,7 @@ import {SharedModule} from '../shared/shared.module';
 import {CustomersModule} from './customers/customers.module';
 import {OperatorsModule} from './operators/operators.module';
 import {ManagersModule} from './managers/managers.module';
+import {ClearAppDataModule} from './clear-app-data/clear-app-data.module';
 import {AdminComponent} from './admin.component';
 import {TicketsComponent} from './tickets/tickets.component';
 import {ProductsComponent} from './products/products.component';
@@ -38,7 +39,8 @@ import {AdminGuard} from './admin.guard';
         SharedModule,
         CustomersModule,
         OperatorsModule,
-        ManagersModule
+        ManagersModule,
+        ClearAppDataModule
     ],
     providers: [
         AdminGuard
