@@ -17,7 +17,10 @@ import { SearchComponent } from './search.component';
 import { HTTPService } from '../../shared/services/http.service';
 import { LocalStorageService } from '../../shared/services/local-storage.service';
 import { ToastService } from '../../shared/services/toast.service';
+import { SearchService } from './search.service';
 import { ShoppingService } from '../shared/services/shopping.service';
+
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -28,9 +31,10 @@ import { ShoppingService } from '../shared/services/shopping.service';
     BrowserAnimationsModule,
     FlexLayoutModule,
     MaterialModule,
-    ToastyModule
+    ToastyModule,
+    SharedModule
   ],
   declarations: [ SearchComponent ],
-  providers: [ HTTPService, LocalStorageService, ToastService, ShoppingService ]
+  providers: [ HTTPService, LocalStorageService, ToastService, ShoppingService, SearchService ]
 })
 export class SearchModule { }
