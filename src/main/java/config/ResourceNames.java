@@ -46,5 +46,5 @@ public class ResourceNames {
     
     public final static String BARCODES_PDFS_ROOT = "/barcode";
     
-    public final static String BARCODE_PDF_FILENAME_ROOT = "/BARCODE_";
+    public final static String BARCODE_PDF = "/barcodes";
 }
