@@ -35,10 +35,10 @@ export class HTTPService {
 		return this.http.delete(endpoint, options).map(this.extractData).catch(this.handleError);
 	}
 
-	private extractData(res: Response) {
-		return res.json();
+	private extractData(res: Response): any {
+		return res.arrayBuffer().byteLength > 0 ? res.json() : {};
 	}
-	private handleError (error: Response | any) {
+	private handleError (error: Response | any): any {
 		return Observable.throw(error.message || error.json());
 	}
 }

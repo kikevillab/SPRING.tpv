@@ -1,2 +1,24 @@
 <h1 id="pageTitle">Products</h1>
-<md-card>Product list</md-card>
+<md-card>
+	Search products and categories
+	<form (ngSubmit)="search($event)" #searchForm="ngForm">
+			<div class="form-group">
+				<md-input-container >
+					<input mdInput type="text" maxLength="255" class="form-control" id="referenceInput" required placeholder="Name"
+					[(ngModel)]="nameInput" name="nameInput" #name="ngModel">
+				</md-input-container>			
+			</div>
+			<button md-raised-button color="primary" type="submit" [disabled]="!searchForm.form.valid" id="submitSearchButton">Search</button >
+		</form>
+</md-card>
+<div fxLayout="row" fxLayout.xs="column" fxLayoutWrap="wrap" fxLayoutAlign="center space-around">
+	<div fxFlex.sm="calc(50%)" fxFlex.gt-xs="calc(25%)" *ngFor="let category of categories" class="category-container">
+	<md-card>
+		<button md-mini-fab color="accent" *ngIf="category.code" mdTooltip="Add to cart" mdTooltipPosition="below" (click)="addToCart(category.code)" class="addToCartButton">
+			<md-icon>add_shopping_cart</md-icon>
+		</button>
+		<img md-card-image src="{{category.image}}"/>
+		<md-card-title>{{category.name | capitalize}}</md-card-title>
+	</md-card>
+	</div>
+</div>

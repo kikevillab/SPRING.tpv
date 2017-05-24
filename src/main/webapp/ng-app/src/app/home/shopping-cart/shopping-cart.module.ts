@@ -20,6 +20,8 @@ import { LocalStorageService } from '../../shared/services/local-storage.service
 import { ToastService } from '../../shared/services/toast.service';
 import { ShoppingService } from '../shared/services/shopping.service';
 
+import { SharedModule } from '../../shared/shared.module';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -30,7 +32,8 @@ import { ShoppingService } from '../shared/services/shopping.service';
     FlexLayoutModule,
     MaterialModule,
     NgxDatatableModule,
-    ToastyModule
+    ToastyModule,
+    SharedModule
   ],
   declarations: [ CalculatorComponent ],
   providers: [ HTTPService, LocalStorageService, ToastService, ShoppingService ],
