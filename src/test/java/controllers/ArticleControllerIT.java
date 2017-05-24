@@ -33,7 +33,7 @@ public class ArticleControllerIT {
 
     @Test
     public void testExistentArticleCode() {
-        String articleCode = "84000001111";
+        String articleCode = "8400000001111";
         assertTrue(articleController.articleCodeExists(articleCode));
     }
 
@@ -45,7 +45,7 @@ public class ArticleControllerIT {
     
     @Test
     public void testConsumeArticle() {
-        String articleCode = "84000001111";
+        String articleCode = "8400000001111";
         int amount = 2;
         
         Article article = articleDao.findOne(articleCode);

@@ -43,4 +43,8 @@ public class ResourceNames {
     public final static String VOUCHERS_PDFS_ROOT = "/voucher";
     
     public final static String VOUCHER_PDF_FILENAME_ROOT = "/VOUCHER_";
+    
+    public final static String BARCODES_PDFS_ROOT = "/barcode";
+    
+    public final static String BARCODE_PDF = "/barcodes";
 }
