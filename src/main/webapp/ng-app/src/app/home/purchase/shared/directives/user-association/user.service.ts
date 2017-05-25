@@ -18,7 +18,6 @@ export class UserService {
 
   newUser(user: User): Promise<any> {
     return new Promise((resolve: Function, reject: Function) => {
-
       this.httpService.post(`${API_GENERIC_URI}/customers`, user).subscribe(
         () => resolve(),
         (error: TPVHTTPError) => {reject(error.description);}
