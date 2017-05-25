@@ -36,6 +36,9 @@ public class PdfGenerationResourceFunctionalTesting {
         .body(new VoucherIdWrapper(1))
         .post()
         .build();
+        new RestBuilder<Object>(RestService.URL).path(Uris.PDF_GENERATION + Uris.BARCODES)
+        .post()
+        .build();
     }
 
     @Test
@@ -68,6 +71,16 @@ public class PdfGenerationResourceFunctionalTesting {
         .build();
     }
     */
+    
+    @Test
+    public void testGenerateBarcodesPdfWithManagerLoggedIn() {
+        String token = new RestService().registerAndLoginManager();
+        new RestBuilder<Object>(RestService.URL).path(Uris.PDF_GENERATION + Uris.BARCODES)
+        .basicAuth(token, "")
+        .post()
+        .build();
+    }
+    
     @After
     public void tearDown(){
         new RestService().deleteAll();

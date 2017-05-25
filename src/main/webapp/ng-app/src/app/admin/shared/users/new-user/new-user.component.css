@@ -2,7 +2,7 @@
  * CSS for new-customer component
  */
 
-@import url('../../../../shared/shared.css');
+@import url('../../shared.css');
 
 .form-element-container {
     width: 40%;
@@ -14,16 +14,4 @@ button {
     width: 20%;
     margin-left: 40%;
     margin-right: 40%;
-}
-
-.small-margin-top {
-    margin-top: 20px;
-}
-
-.medium-margin-top {
-    margin-top: 40px;
-}
-
-.margin-left {
-    margin-left: 15px;
 }

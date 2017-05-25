@@ -231,6 +231,11 @@
             <artifactId>layout</artifactId>
             <version>7.0.2</version>
         </dependency>
+		<dependency>
+		    <groupId>com.itextpdf</groupId>
+		    <artifactId>barcodes</artifactId>
+		    <version>7.0.0</version>
+		</dependency>
         <!-- Fix RestBuilder to support PATCH -->
         <dependency>
 		    <groupId>org.apache.httpcomponents</groupId>

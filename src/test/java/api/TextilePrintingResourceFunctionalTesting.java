@@ -66,7 +66,7 @@ public class TextilePrintingResourceFunctionalTesting {
 
     @Test
     public void testUpdateTextilePrinting() {
-        String code = "84000003333";
+        String code = "8400000003333";
         String token = new RestService().loginAdmin();
         String desc = "test_desc";
         boolean discontinued = true;
@@ -86,7 +86,7 @@ public class TextilePrintingResourceFunctionalTesting {
 
     @Test
     public void testFindOneTextilePrinting() {
-        String code = "84000003333";
+        String code = "8400000003333";
         String token = new RestService().loginAdmin();
         TextilePrintingWrapper textilePrintingWrapper = new RestBuilder<TextilePrintingWrapper>(RestService.URL)
                 .path(Uris.TEXTILE_PRINTINGS).pathId(code).basicAuth(token, "").clazz(TextilePrintingWrapper.class).get().build();
@@ -104,7 +104,7 @@ public class TextilePrintingResourceFunctionalTesting {
 
     @Test
     public void testDeleteTextilePrinting() {
-        String code = "84000003337";
+        String code = "8400000003337";
         String token = new RestService().loginAdmin();
         new RestBuilder<Object>(RestService.URL).path(Uris.TEXTILE_PRINTINGS).pathId(code).basicAuth(token, "").clazz(Object.class).delete()
                 .build();

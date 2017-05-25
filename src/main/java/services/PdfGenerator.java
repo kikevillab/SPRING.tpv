@@ -11,8 +11,7 @@ import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 
 public abstract class PdfGenerator<T> {
-
-    protected Document pdfDocument;
+    
     protected T entity;
     
     public PdfGenerator(T entity){
@@ -40,21 +39,17 @@ public abstract class PdfGenerator<T> {
 
     protected abstract PageSize ownPageSize();
 
-    private Document getPdfDocument(String path, PageSize pageSize) throws FileNotFoundException {
-        PdfWriter pdfWriter = new PdfWriter(createPath(path));
-        PdfDocument pdfDocument = new PdfDocument(pdfWriter);
-        return new Document(pdfDocument, pageSize);
-    }
-
     public void generatePdf() throws FileNotFoundException {
         String path = ownPath();
         makeDirectories(path);
-        pdfDocument = getPdfDocument(path, ownPageSize());
-        buildPdf();
-        pdfDocument.close();
+        PdfWriter pdfWriter = new PdfWriter(createPath(path));
+        PdfDocument pdfDocument = new PdfDocument(pdfWriter);
+        Document document = new Document(pdfDocument, ownPageSize());
+        buildPdf(pdfDocument, document);
+        document.close();
     }
 
-    protected abstract void buildPdf();
+    protected abstract void buildPdf(PdfDocument pdfDocument, Document document);
     
     
 }
