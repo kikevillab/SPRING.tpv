@@ -1,0 +1,85 @@
+<div *ngIf="!loading; else spinner">
+	<div *ngIf="productDetails; else error" id="dialog-content" fxLayout="column">
+		<md-card id="product-details-container" fxHide.xs fxHide.sm>
+			<md-card-content fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayout.xs="column" fxLayoutAlign="space-between">
+				<div>
+					<img src="{{productDetails.product.image}}" width="175"/>
+				</div>
+				<md-card id="product-details-card">
+					<md-card-content>
+						<p>
+							<b>Type</b>: {{productDetails.type}}
+						</p>
+						<p>
+							<b>Reference</b>: {{productDetails.product.reference}}
+						</p>
+						<p>
+							<b>Description</b>: {{productDetails.product.description}}
+						</p>
+						<p>
+							<b>Price</b>: {{productDetails.product.retailPrice | currency:'EUR':true}}
+						</p>
+						<p>
+							<b>Discontinued</b>: {{productDetails.product.discontinued == true ? 'Yes' : 'No'}}
+						</p>
+					</md-card-content>
+				</md-card>
+			</md-card-content>
+		</md-card>
+		<md-card fxHide fxShow.xs fxShow.sm>
+			<md-card-content>
+				<p>
+					<b>Type</b>: {{productDetails.type}}
+				</p>
+				<p>
+					<b>Reference</b>: {{productDetails.product.reference}}
+				</p>
+				<p>
+					<b>Description</b>: {{productDetails.product.description}}
+				</p>
+				<p>
+					<b>Price</b>: {{productDetails.product.retailPrice | currency:'EUR':true}}
+				</p>
+				<p>
+					<b>Discontinued</b>: {{productDetails.product.discontinued == true ? 'Yes' : 'No'}}
+				</p>
+			</md-card-content>
+		</md-card>
+		<md-card>
+			<div *ngIf="productDetails.article" fxLayout="row" fxLayout.xs="column" fxLayoutGap="1em" fxLayoutAlign="space-around">
+				<div>
+					<b>Stock</b>: {{productDetails.article.stock}}
+				</div>
+				<div>
+					<b>Wholesale price</b>: {{productDetails.article.wholesalePrice | currency:'EUR':true}}
+				</div>
+			</div>
+			<div *ngIf="productDetails.embroidery" fxLayout="row" fxLayout.xs="column" fxLayoutGap="1em" fxLayoutAlign="space-around">
+				<div>
+					<b>Stitches</b>: {{productDetails.embroidery.stitches}}
+				</div>
+				<div>
+					<b>Colors</b>: {{productDetails.embroidery.colors}}
+				</div>
+				<div>
+					<b>Square millimeters</b>: {{productDetails.embroidery.squareMillimeters}}
+				</div>
+			</div>
+			<div *ngIf="productDetails.textilePrinting">
+				<div>
+					<b>Type</b>: {{productDetails.textilePrinting.type}}
+				</div>
+			</div>
+		</md-card>
+		<button fxHide.xl fxHide.lg fxHide.md md-raised-button color="accent" (click)="addToCart()">Add to cart</button>
+		<div id="button-container">
+			<button fxHide.xs fxHide.sm md-raised-button color="accent" (click)="addToCart()">Add to cart</button>
+		</div>
+	</div>
+	<ng-template #error>
+		<b>Error loading product</b>
+	</ng-template>
+</div>
+<ng-template #spinner>
+	<md-spinner></md-spinner>
+</ng-template>
