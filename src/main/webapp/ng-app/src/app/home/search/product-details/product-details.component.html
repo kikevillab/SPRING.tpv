@@ -1,5 +1,5 @@
 <div *ngIf="!loading; else spinner">
-	<div *ngIf="productDetails; else error" id="dialog-content" fxLayout="column">
+	<div *ngIf="productDetails; else error" id="dialog-content" fxLayout="column" fxLayoutGap="1em">
 		<md-card id="product-details-container" fxHide.xs fxHide.sm>
 			<md-card-content fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayout.xs="column" fxLayoutAlign="space-between">
 				<div>

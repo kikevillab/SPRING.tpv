@@ -15,9 +15,7 @@ import { ToastService } from '../../shared/services/toast.service';
   template: `
     <h1 id="pageTitle">Purchase</h1>
     <router-outlet></router-outlet>
-  `,
-  styles: [`
-  `]
+  `
 })
 
 export class PurchaseComponent implements OnInit, OnDestroy {

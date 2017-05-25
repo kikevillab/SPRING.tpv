@@ -1,5 +1,5 @@
 <form (ngSubmit)="create($event)" #voucherCreationForm="ngForm">
-	<div class="form-group" fxLayout="column">
+	<div class="form-group" fxLayout="column" fxLayoutGap="1em">
 	  <md-input-container >
 	    <input mdInput placeholder="Voucher value" type="number" class="form-control" id="inputVoucherValue" required [(ngModel)]="voucherValueInput" name="inputVoucherValue" #name="ngModel">
 	  </md-input-container>

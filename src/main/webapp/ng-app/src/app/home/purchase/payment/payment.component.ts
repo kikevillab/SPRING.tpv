@@ -19,17 +19,9 @@ import { ToastService } from '../../../shared/services/toast.service';
   selector: 'payment-view',
   templateUrl: './payment.component.html',
   styles: [`
-  md-card {
-    margin-bottom:1em;
-    margin-right:1em;
-    position:relative;
-  }
-  md-card-content > button {
-    margin-bottom:1em;
-  }
   @media only screen and (min-width: 960px) {
     #moneyReceivedContainer {
-      width:20em;
+      width: 20em;
     }
   }
   `]

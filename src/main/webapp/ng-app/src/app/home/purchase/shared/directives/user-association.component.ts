@@ -14,12 +14,9 @@ import { ToastService } from '../../../../shared/services/toast.service';
   templateUrl: 'user-association.component.html',
   styles: [`
     #disassociateUserButton {
-      position:absolute;
-      right:0px;
-      top:0px;
-    }
-    md-input-container {
-      width:100%;
+      position: absolute;
+      right: 0px;
+      top: 0px;
     }
   `]
 })

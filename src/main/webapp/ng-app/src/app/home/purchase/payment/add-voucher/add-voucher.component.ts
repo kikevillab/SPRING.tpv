@@ -12,12 +12,7 @@ import { ToastService } from '../../../../shared/services/toast.service';
 
 @Component({
   selector: 'add-voucher-view',
-  templateUrl: './add-voucher.component.html',
-  styles: [`
-    md-input-container {
-      width:100%;
-    }
-  `]
+  templateUrl: './add-voucher.component.html'
 })
 export class AddVoucherComponent implements OnInit, OnDestroy {
 

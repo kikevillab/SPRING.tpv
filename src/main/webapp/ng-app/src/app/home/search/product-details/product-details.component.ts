@@ -18,7 +18,7 @@ import { ToastService } from '../../../shared/services/toast.service';
   templateUrl: './product-details.component.html',
   styles: [`
   	@media only screen and (min-width: 768px) {
-		#dialog-content {
+		  #dialog-content {
   			width: 40em;
   		}
   		#product-details-card {
@@ -30,17 +30,13 @@ import { ToastService } from '../../../shared/services/toast.service';
   		img {
   			box-shadow: 2px 2px 3px #aaa;
   		}
-	}
-  	md-card {
-  		margin-bottom: 1em;
-  	}
+	  }
   	#button-container {
   		position: relative;
   	}
   	#button-container > button {
-  		float:right;
+  		float: right;
   	}
-
   `]
 })
 export class ProductDetailsComponent {

@@ -16,58 +16,7 @@ import { ToastService } from '../../shared/services/toast.service';
 @Component({
   selector: 'search-view',
   templateUrl: './search.component.html',
-  styles: [`
-  	@media only screen and (min-width: 600px) {
-		  .category-container {
-  			max-width: 25%; 
-  		}    
-      .margin-sides {
-        margin-right: 5em;
-        margin-left: 5em;
-        position: relative;
-      }
-	  }
-    @media only screen and (min-width: 960px) {
-      form {
-        width: 30em;
-      }
-      md-input-container {
-        width: 20em;
-      }
-      #searchResultsContainer {
-        padding-left:2em;
-      }
-      #searchResultsContainer > a {
-        font-size: 1.5em;
-      }
-      .margin-sides {
-        margin-right: 10em;
-        margin-left: 10em;
-        position: relative;
-      }
-    }
-    .image-container {
-      padding: 0.5em;
-    }
-  	.category-container {
-  		padding: 0.5em;
-      position: relative;
-  	}
-    .category-card {
-      cursor: pointer;
-    }
-  	.addToCartButton {
-  		position: absolute;
-	    right: 0px;
-	    top: 0px;
-  	}
-    #resetSearchButton {
-      position: absolute;
-      right: 0px;
-      top: 0px;
-      z-index: 3;
-    }
-  `]
+  styleUrls: ['./search.component.css']
 })
 
 export class SearchComponent implements OnInit {

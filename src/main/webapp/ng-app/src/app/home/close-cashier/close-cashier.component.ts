@@ -16,14 +16,11 @@ import { ToastService } from '../../shared/services/toast.service';
   selector: 'close-cashier-view',
   templateUrl: './close-cashier.component.html',
   styles: [`
-  md-card {
-    margin-bottom: 1em;
-  }
-  @media only screen and (min-width: 768px) {
-    md-card {
-      width:30em;
+    @media only screen and (min-width: 768px) {
+      md-card {
+        width:30em;
+      }
     }
-  }
   `]
 })
 
