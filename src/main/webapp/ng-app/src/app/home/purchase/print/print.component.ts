@@ -17,12 +17,9 @@ import { ToastService } from '../../../shared/services/toast.service';
   selector: 'print-view',
   templateUrl: 'print.component.html',
   styles: [`
-    md-card, button {
-      margin-bottom:1em;
-    }
     @media only screen and (min-width: 768px) {
       md-card {
-        width:20em;
+        width: 20em;
       }
     }
   `]

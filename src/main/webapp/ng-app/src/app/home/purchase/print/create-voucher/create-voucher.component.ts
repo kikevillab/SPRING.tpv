@@ -11,12 +11,7 @@ import { ToastService } from '../../../../shared/services/toast.service';
 
 @Component({
   selector: 'create-voucher-view',
-  templateUrl: 'create-voucher.component.html',
-  styles: [`
-    button, md-select {
-      margin-top: 1em;
-    }
-  `]
+  templateUrl: 'create-voucher.component.html'
 })
 export class CreateVoucherComponent {
 

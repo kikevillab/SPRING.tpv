@@ -38,7 +38,6 @@ import { ShoppingService } from '../shared/services/shopping.service';
 	  PrintModule
   ],
   declarations: [ PurchaseComponent ],
-  providers: [ HTTPService, LocalStorageService, ToastService, ShoppingService ],
-  entryComponents: []
+  providers: [ HTTPService, LocalStorageService, ToastService, ShoppingService ]
 })
 export class PurchaseModule { }

@@ -1,13 +1,13 @@
 <h1 id="pageTitle">Money movement</h1>
-<div fxLayout="column" fxLayoutAlign="space-around center">
-	<md-card class="margin-bottom">
+<div fxLayout="column" fxLayoutAlign=" center" fxLayoutGap="1em">
+	<md-card >
 		<md-card-title>Cash flow</md-card-title>
 		<md-card-content fxLayout="column">
 			<div>
 				<h3 *ngIf="cashier">Money in cashier: <span class="text-primary">{{cashier.amount | currency:'EUR':true}}</span></h3>
 			</div>
-			<div fxLayout="row" fxLayout.xs="column">
-				<md-card class="margin-botton margin-right" fxLayout="column">
+			<div fxLayout="row" fxLayout.xs="column" fxLayoutGap="1em">
+				<md-card fxLayout="column">
 					<md-select placeholder="Operation" [(ngModel)]="operation" (change)="onChangeOperation()">
 					  <md-option value="Withdraw">
 					  	Withdraw
@@ -25,11 +25,11 @@
 			</div>
 		</md-card-content>
 	</md-card>
-	<div fxLayout="row" fxLayout.xs="column" class="margin-bottom">
+	<div fxLayout="row" fxLayout.xs="column">
 		<md-card>
 			<md-card-title>Reason of the movement</md-card-title>
-			<md-card-content fxLayout="row" fxLayout.xs="column">
-				<md-card class="margin-right">
+			<md-card-content fxLayout="row" fxLayout.xs="column" fxLayoutGap="1em">
+				<md-card>
 					<md-radio-group fxLayout="column">
 						  <md-radio-button name="reason" [checked]="selectedCommentOption == 'Cashier closing'" (click)="selectCommentOption('Cashier closing')" value="Cashier closing" id="cashierClosureRadioButton">Cashier closing</md-radio-button>
 						  <md-radio-button name="reason" *ngIf="operation=='Withdraw'" [checked]="selectedCommentOption =='Payment to suppliers'" (click)="selectCommentOption('Payment to suppliers')" value="Payment to suppliers">Payment to suppliers</md-radio-button>
@@ -45,8 +45,8 @@
 		</md-card>
 	</div>
 	<md-card >
-		<md-card-content fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-around center">
-			<md-card fxLayout="column" class="margin-right">
+		<md-card-content fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-around center" fxLayoutGap="1em">
+			<md-card fxLayout="column">
 				<button md-raised-button (click)="cancel()" color="warn">Cancel</button>
 			</md-card>
 			<md-card fxLayout="column">

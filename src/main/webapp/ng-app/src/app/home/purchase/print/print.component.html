@@ -1,14 +1,14 @@
-<div fxLayout="column" fxLayout.xs="column" fxLayoutAlign="space-around center">
+<div fxLayout="column" fxLayoutAlign="space-around center">
 	<md-card id="printOptionsContainer" *ngIf="!printInvoiceSelected">
-			<md-card-title>Print options</md-card-title>
-			<md-card-content fxLayout="column" fxLayoutAlign="center">
-				<button md-raised-button color="primary" (click)="printInvoice()">Print invoice</button>
-				<button md-raised-button color="primary" (click)="createVoucher()">Print voucher</button>
-				<button md-raised-button color="warn" routerLink="/home">Finish</button>
-			</md-card-content>
+		<md-card-title>Print options</md-card-title>
+		<md-card-content fxLayout="column" fxLayoutAlign="center" fxLayoutGap="1em">
+			<button md-raised-button color="primary" (click)="printInvoice()">Print invoice</button>
+			<button md-raised-button color="primary" (click)="createVoucher()">Print voucher</button>
+			<button md-raised-button color="warn" routerLink="/home">Finish</button>
+		</md-card-content>
 	</md-card>
 	<md-card *ngIf="printInvoiceSelected">
-		<md-card-content fxLayout="column">
+		<md-card-content fxLayout="column" fxLayoutGap="1em">
 			<md-card>
 				<user-association-view></user-association-view>
 			</md-card>

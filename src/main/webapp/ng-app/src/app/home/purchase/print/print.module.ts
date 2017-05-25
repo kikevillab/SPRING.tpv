@@ -11,7 +11,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '@angular/material';
 import { ToastyModule } from 'ng2-toasty';
-import { MomentModule } from 'angular2-moment';
 import 'hammerjs';
 
 import { PrintComponent } from './print.component';
@@ -34,7 +33,6 @@ import { ShoppingService } from '../../shared/services/shopping.service';
     BrowserAnimationsModule,
     FlexLayoutModule,
     MaterialModule,
-    MomentModule,
     ToastyModule,
     SharedModule
   ],

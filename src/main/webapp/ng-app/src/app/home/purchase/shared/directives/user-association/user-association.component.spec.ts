@@ -13,11 +13,12 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import 'hammerjs';
 import { ToastyService, ToastyConfig, ToastOptions, ToastData } from 'ng2-toasty';
 
+import { UserService } from './user.service';
 import { UserAssociationComponent } from './user-association.component';
-import { ToastService } from '../../../../shared/services/toast.service';
-import { ShoppingService } from '../../../shared/services/shopping.service';
-import { LocalStorageService } from '../../../../shared/services/local-storage.service';
-import { HTTPService } from '../../../../shared/services/http.service';
+import { ToastService } from '../../../../../shared/services/toast.service';
+import { ShoppingService } from '../../../../shared/services/shopping.service';
+import { LocalStorageService } from '../../../../../shared/services/local-storage.service';
+import { HTTPService } from '../../../../../shared/services/http.service';
 
 
 export const UserMock = {
@@ -37,6 +38,7 @@ describe('Component: UserAssociation', () => {
       declarations: [ UserAssociationComponent ],
       providers: [
         { provide: Router },
+        UserService,
         ToastService,
         ShoppingService,
         LocalStorageService,
