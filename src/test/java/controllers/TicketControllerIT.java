@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -26,11 +27,12 @@ import entities.core.Article;
 import entities.core.Shopping;
 import entities.core.ShoppingState;
 import entities.core.Ticket;
-import wrappers.DayTicketWrapper;
 import entities.core.TicketPK;
+import wrappers.DayTicketWrapper;
 import wrappers.ShoppingCreationWrapper;
 import wrappers.ShoppingTrackingWrapper;
 import wrappers.ShoppingUpdateWrapper;
+import wrappers.TicketCreationResponseWrapper;
 import wrappers.TicketCreationWrapper;
 import wrappers.TicketIdWrapper;
 
@@ -48,7 +50,7 @@ public class TicketControllerIT {
     private ArticleDao articleDao;
 
     @Test
-    public void testCreateTicketWithoutUser() {
+    public void testCreateTicketWithoutUser() throws IOException {
         TicketCreationWrapper ticketCreationWrapper = new TicketCreationWrapper();
 
         List<ShoppingCreationWrapper> shoppingCreationWrapperList = new ArrayList<>();
@@ -62,7 +64,8 @@ public class TicketControllerIT {
 
         long lastTicketId = ticketDao.findFirstByOrderByCreatedDescIdDesc().getId();
 
-        Ticket ticket = ticketController.createTicket(ticketCreationWrapper);
+        TicketCreationResponseWrapper responseWrapper = ticketController.createTicket(ticketCreationWrapper);
+        Ticket ticket = ticketDao.findOne(new TicketPK(responseWrapper.getTicketId()));
         List<Shopping> shoppingList = ticket.getShoppingList();
         Shopping shopping = shoppingList.get(0);
         Article article = articleDao.findOne(shoppingCreationWrapper.getProductCode());
@@ -81,7 +84,7 @@ public class TicketControllerIT {
     }
 
     @Test
-    public void testCreateTicketWithUser() {
+    public void testCreateTicketWithUser() throws IOException {
         TicketCreationWrapper ticketCreationWrapper = new TicketCreationWrapper();
         Long userMobile = 666000000L;
         ticketCreationWrapper.setUserMobile(userMobile);
@@ -97,7 +100,8 @@ public class TicketControllerIT {
 
         long lastTicketId = ticketDao.findFirstByOrderByCreatedDescIdDesc().getId();
 
-        Ticket ticket = ticketController.createTicket(ticketCreationWrapper);
+        TicketCreationResponseWrapper responseWrapper = ticketController.createTicket(ticketCreationWrapper);
+        Ticket ticket = ticketDao.findOne(new TicketPK(responseWrapper.getTicketId()));
         List<Shopping> shoppingList = ticket.getShoppingList();
         Shopping shopping = shoppingList.get(0);
 
@@ -113,7 +117,7 @@ public class TicketControllerIT {
     }
 
     @Test
-    public void testUpdateTicket() {
+    public void testUpdateTicket() throws IOException {
         String productCode = "8400000003333";
         TicketCreationWrapper ticketCreationWrapper = new TicketCreationWrapper();
         List<ShoppingCreationWrapper> shoppingCreationWrapperList = new ArrayList<>();
@@ -124,7 +128,8 @@ public class TicketControllerIT {
         shoppingCreationWrapper.setDelivered(false);
         shoppingCreationWrapperList.add(shoppingCreationWrapper);
         ticketCreationWrapper.setShoppingList(shoppingCreationWrapperList);
-        Ticket createdTicket = ticketController.createTicket(ticketCreationWrapper);
+        TicketCreationResponseWrapper responseWrapper = ticketController.createTicket(ticketCreationWrapper);
+        Ticket createdTicket = ticketDao.findOne(new TicketPK(responseWrapper.getTicketId()));
         Shopping createdShopping = createdTicket.getShoppingList().get(0);
 
         List<ShoppingUpdateWrapper> shoppingUpdateWrapperList = new ArrayList<>();
