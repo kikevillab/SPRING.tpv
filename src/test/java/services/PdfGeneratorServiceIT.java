@@ -62,7 +62,7 @@ public class PdfGeneratorServiceIT {
     private TextilePrintingDao textilePrintingDao;
 
     @Test
-    public void testGenerateInvoicePdf() throws FileNotFoundException {
+    public void testGenerateInvoicePdf() throws IOException {
         Invoice invoice = invoiceDao.findAll().get(0);
         pdfGenService.generateInvoicePdf(invoice);
         String path = PDFS_ROOT + INVOICES_PDFS_ROOT + INVOICE_PDF_FILENAME_ROOT + invoice.getId() + PDF_FILE_EXT;
@@ -73,7 +73,7 @@ public class PdfGeneratorServiceIT {
     }
 
     @Test
-    public void testGenerateTicketPdf() throws FileNotFoundException {
+    public void testGenerateTicketPdf() throws IOException {
         Ticket ticket = ticketDao.findAll().get(0);
         pdfGenService.generateTicketPdf(ticket);
         String path = PDFS_ROOT + TICKETS_PDFS_ROOT + TICKET_PDF_FILENAME_ROOT + ticket.getId() + PDF_FILE_EXT;
@@ -84,7 +84,7 @@ public class PdfGeneratorServiceIT {
     }
 
     @Test
-    public void testGenerateVoucherPdf() throws FileNotFoundException {
+    public void testGenerateVoucherPdf() throws IOException {
         Voucher voucher = voucherDao.findAll().get(0);
         pdfGenService.generateVoucherPdf(voucher);
         String path = PDFS_ROOT + VOUCHERS_PDFS_ROOT + VOUCHER_PDF_FILENAME_ROOT + voucher.getId() + PDF_FILE_EXT;
@@ -95,7 +95,7 @@ public class PdfGeneratorServiceIT {
     }
     
     @Test
-    public void testGenerateBarcodesPdf() throws FileNotFoundException {
+    public void testGenerateBarcodesPdf() throws IOException {
         List<Product> embroideryAndTextile = new ArrayList<>();
 
         List<Embroidery> embroideryList = embroideryDao.findAll();

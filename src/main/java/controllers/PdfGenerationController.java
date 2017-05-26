@@ -1,6 +1,7 @@
 package controllers;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,22 +68,22 @@ public class PdfGenerationController {
         this.textilePrintingDao = textilePrintingDao;
     }
 
-    public void generateInvoicePdf(int invoiceId) throws FileNotFoundException {
+    public void generateInvoicePdf(int invoiceId) throws IOException {
         Invoice invoice = invoiceDao.findOne(new InvoicePK(invoiceId));
         pdfGenService.generateInvoicePdf(invoice);
     }
 
-    public void generateTicketPdf(long ticketId) throws FileNotFoundException {
+    public void generateTicketPdf(long ticketId) throws IOException {
         Ticket ticket = ticketDao.findOne(new TicketPK(ticketId));
         pdfGenService.generateTicketPdf(ticket);
     }
 
-    public void generateVoucherPdf(int voucherId) throws FileNotFoundException {
+    public void generateVoucherPdf(int voucherId) throws IOException {
         Voucher voucher = voucherDao.findOne(voucherId);
         pdfGenService.generateVoucherPdf(voucher);
     }
 
-    public void generateBarcodesPdf() throws FileNotFoundException {
+    public void generateBarcodesPdf() throws IOException {
         List<Product> embroideryAndTextile = new ArrayList<>();
 
         List<Embroidery> embroideryList = embroideryDao.findAll();

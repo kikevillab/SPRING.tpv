@@ -2,8 +2,10 @@ package services;
 
 import static config.ResourceNames.PDFS_ROOT;
 import static config.ResourceNames.PDF_FILE_EXT;
+
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
 
 import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.pdf.PdfDocument;
@@ -39,7 +41,7 @@ public abstract class PdfGenerator<T> {
 
     protected abstract PageSize ownPageSize();
 
-    public void generatePdf() throws FileNotFoundException {
+    public byte[] generatePdf() throws IOException {
         String path = ownPath();
         makeDirectories(path);
         PdfWriter pdfWriter = new PdfWriter(createPath(path));
@@ -47,6 +49,7 @@ public abstract class PdfGenerator<T> {
         Document document = new Document(pdfDocument, ownPageSize());
         buildPdf(pdfDocument, document);
         document.close();
+        return Files.readAllBytes(new File(path).toPath());
     }
 
     protected abstract void buildPdf(PdfDocument pdfDocument, Document document);
