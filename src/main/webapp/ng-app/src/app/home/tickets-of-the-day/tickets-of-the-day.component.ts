@@ -13,12 +13,12 @@ import { TicketsOfTheDayService } from './tickets-of-the-day.service';
     templateUrl: './tickets-of-the-day.component.html',
     styles: [`
         md-spinner {
-            margin: 0 auto;
+          margin: 0 auto;
         }
         @media only screen and (min-width: 768px) {
           md-card {
-            margin:10em;
-            margin-top:0;
+            margin: 10em;
+            margin-top: 0;
           }
         }
     `]

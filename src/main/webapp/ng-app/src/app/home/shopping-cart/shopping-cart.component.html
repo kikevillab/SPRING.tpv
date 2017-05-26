@@ -83,11 +83,11 @@
   </md-list>
 </md-card>
 <p>Total: <b id="totalPrice">{{totalPrice | currency:'EUR':true}}</b></p>
-<div fxLayout="column" id="paddingContainer">
+<div fxLayout="column" id="paddingContainer" fxLayoutGap="1em">
   <md-card >
-    <form fxLayout="column" (ngSubmit)="onSubmit($event)" #cartForm="ngForm" class="center">
-      <div class="form-group">
-        Add product by code: 
+    <form fxLayout="column" (ngSubmit)="onSubmit($event)" #cartForm="ngForm">
+      <div fxLayout="column">
+        <div fxLayoutAlign="center">Add product by code: </div>
         <md-input-container>
           <input mdInput type="text" maxlength="255" placeholder="Product code" class="form-control" id="codeInput" required
           [(ngModel)]="codeInput" name="codeInput" #name="ngModel">

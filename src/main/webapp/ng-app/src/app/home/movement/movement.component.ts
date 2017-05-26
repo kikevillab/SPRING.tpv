@@ -14,15 +14,9 @@ import { ToastService } from '../../shared/services/toast.service';
   selector: 'movement-view',
   templateUrl: './movement.component.html',
   styles: [`
-    .margin-bottom {
-      margin-bottom:1em;
-    }
     @media only screen and (min-width: 768px) {
       md-card {
-        width:40em;
-      }
-      .margin-right {
-        margin-right:1em;
+        width: 40em;
       }
     }
   `]

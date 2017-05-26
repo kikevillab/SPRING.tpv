@@ -13,6 +13,8 @@ import 'hammerjs';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ToastyModule } from 'ng2-toasty';
 
+import { SharedModule } from '../../shared/shared.module';
+
 import { CalculatorComponent } from './calculator/calculator.component';
 
 import { HTTPService } from '../../shared/services/http.service';
@@ -20,7 +22,6 @@ import { LocalStorageService } from '../../shared/services/local-storage.service
 import { ToastService } from '../../shared/services/toast.service';
 import { ShoppingService } from '../shared/services/shopping.service';
 
-import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
   imports: [

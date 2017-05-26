@@ -22,7 +22,6 @@ import { ToastService } from '../shared/services/toast.service';
 				width: 45em;
 			}
 		}
-
 		@media only screen and (min-width: 1024px) {
 			md-sidenav {
 				width: 50em;

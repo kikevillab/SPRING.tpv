@@ -16,9 +16,9 @@ import { ToastService } from '../../../../shared/services/toast.service';
   templateUrl: './change.component.html',
   styles: [`
     #resetPaymentButton {
-      position:absolute;
-      right:0px;
-      top:0px;
+      position: absolute;
+      right: 0px;
+      top: 0px;
     }
   `]
 })

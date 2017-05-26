@@ -18,28 +18,19 @@ import { ToastService } from '../../shared/services/toast.service';
   templateUrl: './shopping-cart.component.html',
   styles: [`
     #mobileMenuButton {
-      position:absolute;
-      top:0px;
-      left:0px;
+      position: absolute;
+      top: 0px;
+      left: 0px;
     }
     @media only screen and (min-width: 480px) {
       #paddingContainer {
-        padding:10em;
-        padding-top:0em;
+        padding: 10em;
+        padding-top: 0em;
       }
     }
     #clearCartButton, #openCalculatorButton {
-      margin-left:0.4em;
-      float:right;
-    }
-    md-input-container {
-      width: 100%;
-    }
-    md-card {
-      margin-bottom:1em;
-    }
-    .center {
-      text-align:center;
+      margin-left: 0.4em;
+      float: right;
     }
   `]
 })
