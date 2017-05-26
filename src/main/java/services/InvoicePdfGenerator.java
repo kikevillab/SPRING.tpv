@@ -6,8 +6,6 @@ import static config.ResourceNames.INVOICE_PDF_FILENAME_ROOT;
 import java.text.SimpleDateFormat;
 
 import com.itextpdf.kernel.geom.PageSize;
-import com.itextpdf.kernel.pdf.PdfDocument;
-import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 
@@ -33,7 +31,7 @@ public class InvoicePdfGenerator extends PdfGenerator<Invoice> {
     }
 
     @Override
-    protected void buildPdf(PdfDocument pdfDocument, Document document) {
+    protected void buildPdf() {
         document.add(new Paragraph(INVOICE_PDF_FILENAME_ROOT + entity.getId()));
         Ticket ticket = entity.getTicket();
         document.add(new Paragraph("====================== Ticket ======================"));
