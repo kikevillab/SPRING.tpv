@@ -6,7 +6,7 @@
 */
 
 import { Injectable } from '@angular/core';
-import {Http, Response, Headers, RequestOptions, URLSearchParams} from '@angular/http';
+import {Http, Response, Headers, RequestOptions, URLSearchParams, ResponseContentType} from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
@@ -21,8 +21,14 @@ export class HTTPService {
 	}
 
 	post(endpoint:string, body?:Object, headers?:Headers, params?: URLSearchParams): Observable<any> {
-		let options = new RequestOptions({headers: headers, params: params});
+		let options = new RequestOptions({headers: headers});
 		return this.http.post(endpoint, body, options).map(this.extractData).catch(this.handleError);
+	}
+
+	borrar(endpoint:string, body?:Object, headers?:Headers, params?: URLSearchParams): Observable<any> {
+		let options = new RequestOptions({headers: headers, params: params});
+		options.responseType = ResponseContentType.Blob;
+		return this.http.post(endpoint, body, options).map(this.extractDataBorrar).catch(this.handleError);
 	}
 
 	put(endpoint:string, body?:Object, headers?:Headers, params?: URLSearchParams): Observable<any> {
@@ -35,8 +41,12 @@ export class HTTPService {
 		return this.http.delete(endpoint, options).map(this.extractData).catch(this.handleError);
 	}
 
+	private extractDataBorrar(res: Response): any {
+		return res.blob();
+	}
+
 	private extractData(res: Response): any {
-		return res.arrayBuffer().byteLength > 0 ? res.json() : {};
+		return res.arrayBuffer().byteLength > 0 ? res.json() : res;
 	}
 	private handleError (error: Response | any): any {
 		return Observable.throw(error.message || error.json());
