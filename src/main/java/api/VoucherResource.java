@@ -40,12 +40,14 @@ public class VoucherResource {
         VoucherCreationResponseWrapper responseWrapper = voucherController.createVoucher(voucherCreationWrapper);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType("application/pdf"));
-        String filename = ResourceNames.VOUCHER_PDF_FILENAME_ROOT + responseWrapper.getVoucherId() + ResourceNames.PDF_FILE_EXT;
-        headers.setContentDispositionFormData(filename, filename);
-        headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
-        ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(responseWrapper.getPdfByteArray(), headers,
+        String filename = "VOUCHER" + responseWrapper.getVoucherId() + ResourceNames.PDF_FILE_EXT;
+        headers.set(HttpHeaders.CONTENT_DISPOSITION,
+                "inline; filename=" + filename);
+        headers.setCacheControl("must-revalidate, post-check=0, pre-"
+                + "hcheck=0");
+        ResponseEntity<byte[]> voucherPdf = new ResponseEntity<byte[]>(responseWrapper.getPdfByteArray(), headers,
                 HttpStatus.OK);
-        return response;
+        return voucherPdf;
     }
 
     @RequestMapping(method = RequestMethod.GET)
