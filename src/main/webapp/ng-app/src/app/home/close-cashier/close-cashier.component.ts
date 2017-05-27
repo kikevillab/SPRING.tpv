@@ -16,9 +16,9 @@ import { ToastService } from '../../shared/services/toast.service';
   selector: 'close-cashier-view',
   templateUrl: './close-cashier.component.html',
   styles: [`
-    @media only screen and (min-width: 768px) {
+    @media only screen and (min-width: 600px) {
       md-card {
-        width:30em;
+        width: 30em;
       }
     }
   `]

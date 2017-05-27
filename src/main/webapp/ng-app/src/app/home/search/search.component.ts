@@ -35,11 +35,14 @@ export class SearchComponent implements OnInit {
   }
 
   search(): void {
-    this.filtered = true;
     if (this.nameInput){
-      this.lastNameInput = this.nameInput;
+      this.searchService.search(this.nameInput).then((categories: Category[]) => {
+        this.categories = categories;      
+        this.filtered = true;
+        this.lastNameInput = this.nameInput;
+        this.nameInput = undefined;
+      });
     }
-  	this.nameInput = undefined;
   }
 
   resetSearch(): void {

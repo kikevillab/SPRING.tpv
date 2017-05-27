@@ -15,7 +15,7 @@ import { TicketsOfTheDayService } from './tickets-of-the-day.service';
         md-spinner {
           margin: 0 auto;
         }
-        @media only screen and (min-width: 768px) {
+        @media only screen and (min-width: 960px) {
           md-card {
             margin: 10em;
             margin-top: 0;
