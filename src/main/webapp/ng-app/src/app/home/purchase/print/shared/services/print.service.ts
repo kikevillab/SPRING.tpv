@@ -36,9 +36,9 @@ export class PrintService {
     });
   }
 
-  createInvoice(reference: string): Promise<any> {
+  createInvoice(ticketId: number): Promise<any> {
     return new Promise((resolve: Function, reject: Function) => {
-        resolve(reference);
+        resolve(ticketId);
       // this.httpService.post(`${API_GENERIC_URI}/invoices`, amountWrapper).subscribe((voucher: Voucher) => {
       //   resolve(voucher);
       // },(error: TPVHTTPError) => {

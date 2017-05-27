@@ -10,6 +10,7 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { CartProduct } from '../../shared/models/cart-product.model';
 import { PrintService } from './shared/services/print.service';
+import { PDFService } from '../shared/services/pdf.service';
 import { ShoppingService } from '../../shared/services/shopping.service';
 import { ToastService } from '../../../shared/services/toast.service';
 
@@ -31,7 +32,7 @@ export class PrintComponent implements OnInit, OnDestroy {
   shoppingCartSubscription: Subscription;
   printInvoiceSelected: boolean = false;
 
-  constructor(public shoppingService: ShoppingService, public printService: PrintService, public router: Router, public dialog: MdDialog, private toastService: ToastService) {}
+  constructor(public shoppingService: ShoppingService, public printService: PrintService, private pdfService: PDFService, public router: Router, public dialog: MdDialog, private toastService: ToastService) {}
 
   ngOnInit(){
     this.userAssociatedSubscription = this.shoppingService.getUserMobileObservable().subscribe((userMobile: number) => {
@@ -40,7 +41,7 @@ export class PrintComponent implements OnInit, OnDestroy {
     this.shoppingCartSubscription = this.shoppingService.getCartProductsObservable().subscribe((cartProducts: CartProduct[]) => {
       this.router.navigate(['/home']);
     });
-    !this.shoppingService.getTicketReference() && this.router.navigate(['/home/purchase/payment']);
+    !this.shoppingService.getTicketId() && this.router.navigate(['/home/purchase/payment']);
   }
 
   createVoucher(): void {
@@ -49,8 +50,9 @@ export class PrintComponent implements OnInit, OnDestroy {
 
   printInvoice(): void {
     if (this.userMobile){
-      this.printService.createInvoice(this.shoppingService.getTicketReference()).then((invoice: any) => {
+      this.printService.createInvoice(this.shoppingService.getTicketId()).then((invoice: any) => {
         this.printInvoiceSelected = false;
+        //this.pdfService.open(pdfByteArray);
       }).catch((error: string) => {
       	this.toastService.error('Error generating invoice', error);
       });
