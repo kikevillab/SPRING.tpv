@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Random;
@@ -35,7 +36,7 @@ public class VoucherControllerIT {
     private VoucherDao voucherDao;
 
     @Test
-    public void testCreateVoucher() {
+    public void testCreateVoucher() throws IOException {
         long previousCount = voucherDao.count();
         VoucherCreationWrapper voucherCreationWrapper = new VoucherCreationWrapper();
         voucherCreationWrapper.setValue(new BigDecimal(new Random().nextDouble()));
