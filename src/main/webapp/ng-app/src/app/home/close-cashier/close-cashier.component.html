@@ -23,7 +23,7 @@
 			<md-input-container>
 				<input mdInput placeholder="Comment about the closure" [(ngModel)]="comment">
             </md-input-container>
-            <button md-raised-button color="primary" (click)="close()" [disabled]="isValidForm()" id="closeCashierButton">Close cashier</button>
+            <button md-raised-button color="primary" (click)="close()" [disabled]="isInvalidForm()" id="closeCashierButton">Close cashier</button>
         </md-card-content>
 	</md-card>
 </div>

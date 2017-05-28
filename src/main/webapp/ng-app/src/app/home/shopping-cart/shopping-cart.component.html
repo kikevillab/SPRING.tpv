@@ -9,7 +9,7 @@
     <button md-mini-fab color="warn" mdTooltip="Clear" mdTooltipPosition="below" (click)="clearCart()" [disabled]="cartProducts.length==0" id="clearCartButton">
       <md-icon>clear</md-icon>
     </button>
-    <button id="openCalculatorButton" md-mini-fab color="primary" mdTooltip="Open calculator" mdTooltipPosition="below" (click)="openCalculator()">
+    <button id="openCalculatorButton" md-mini-fab color="primary" mdTooltip="Open calculator" mdTooltipPosition="below" (click)="openCalculator()" fxHide.xs>
       <md-icon>keyboard</md-icon>
     </button>
   </div>

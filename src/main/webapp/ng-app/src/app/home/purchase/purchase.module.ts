@@ -22,6 +22,7 @@ import { HTTPService } from '../../shared/services/http.service';
 import { LocalStorageService } from '../../shared/services/local-storage.service';
 import { ToastService } from '../../shared/services/toast.service';
 import { ShoppingService } from '../shared/services/shopping.service';
+import { PDFService } from './shared/services/pdf.service';
 
 @NgModule({
   imports: [
@@ -38,6 +39,6 @@ import { ShoppingService } from '../shared/services/shopping.service';
 	  PrintModule
   ],
   declarations: [ PurchaseComponent ],
-  providers: [ HTTPService, LocalStorageService, ToastService, ShoppingService ]
+  providers: [ HTTPService, LocalStorageService, ToastService, ShoppingService, PDFService ]
 })
 export class PurchaseModule { }

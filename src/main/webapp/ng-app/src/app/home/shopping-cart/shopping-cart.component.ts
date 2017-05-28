@@ -22,7 +22,7 @@ import { ToastService } from '../../shared/services/toast.service';
       top: 0px;
       left: 0px;
     }
-    @media only screen and (min-width: 480px) {
+    @media only screen and (min-width: 600px) {
       #paddingContainer {
         padding: 10em;
         padding-top: 0em;

@@ -20,7 +20,7 @@
 			</md-card-content>
 	</md-card>
 </div>
-<div fxLayout="row" fxLayout.xs="column" fxLayoutWrap="wrap" fxLayoutAlign="center space-around" class="margin-sides">
+<div fxLayout="row" fxLayout.xs="column" fxLayoutWrap="wrap" fxLayoutAlign="center space-around" class="margin-sides" *ngIf="categories; else spinner">
 	<div fxFlex.xs="calc(50%)" fxFlex.sm="calc(33.33%)" fxFlex.gt-md="calc(25%)" *ngFor="let category of categories" class="category-container">
 		<md-card [style.background-color]="getCategoryBackgroundColor(category.code)" (click)="openCategory(category)" class="category-card">
 			<div class="image-container">
@@ -29,7 +29,10 @@
 			<md-card-title>{{category.name | capitalize}}</md-card-title>
 		</md-card>
 		<button md-mini-fab color="accent" *ngIf="category.code" mdTooltip="Add to cart" mdTooltipPosition="below" (click)="addToCart(category.code)" class="addToCartButton">
-				<md-icon>add_shopping_cart</md-icon>
-			</button>
+			<md-icon>add_shopping_cart</md-icon>
+		</button>
 	</div>
 </div>
+<ng-template #spinner>
+	<md-spinner></md-spinner>
+</ng-template>
