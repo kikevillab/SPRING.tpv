@@ -7,9 +7,18 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class PDFService {
 
-  open(base64PDF: string): void {
-    let pdfAsDataUri: string = `data:application/pdf;base64,${base64PDF}`;
-    window.open(pdfAsDataUri);
+  openBase64(pdf: string): void {
+    let pdfAsDataUri: string = `data:application/pdf;base64,${pdf}`;
+    this.open(pdfAsDataUri);
+  }
+
+  openBlob(pdf: Blob): void {
+  	let objectUrl: string = window.URL.createObjectURL(pdf);
+  	this.open(objectUrl);
+  }
+
+  private open(url: string): void {
+  	window.open(url);
   }
 
 }

@@ -25,7 +25,7 @@ export class CreateVoucherComponent {
     event.preventDefault();
     this.printService.createVoucher(this.voucherValueInput, this.validity).then((pdf: Blob) => {
       this.toastService.success('Voucher created', `The voucher has been created`);
-      window.open(window.URL.createObjectURL(pdf));
+      this.pdfService.openBlob(pdf);
       this.dialogRef.close();
     }).catch((error: string) => {
       this.toastService.error('Error creating the voucher', error);

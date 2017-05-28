@@ -25,11 +25,11 @@ export class PrintService {
 
   createVoucher(amount: number, validity: number): Promise<any> {
     return new Promise((resolve: Function, reject: Function) => {
-      let date: Date = new Date();
-      let expirationDate: Date = moment(date).add(validity, 'M').toDate();
+      let expirationDate: Date = moment(new Date()).add(validity, 'M').toDate();
       let voucherWrapper: VoucherCreation = new VoucherCreation(amount, expirationDate);
-      let headers = new Headers([{'Accept': 'application/pdf'}]);
-      this.httpService.borrar(`${API_GENERIC_URI}/vouchers`, voucherWrapper, headers).subscribe((response: any) => {
+      let headers = new Headers();
+      headers.append('Accept', 'application/pdf');
+      this.httpService.post(`${API_GENERIC_URI}/vouchers`, voucherWrapper, headers).subscribe((response: any) => {
         resolve(response);
       },(error: TPVHTTPError) => {
         reject(error.description);
@@ -40,7 +40,9 @@ export class PrintService {
   createInvoice(ticketId: number): Promise<any> {
     return new Promise((resolve: Function, reject: Function) => {
         resolve(ticketId);
-      // this.httpService.post(`${API_GENERIC_URI}/invoices`, amountWrapper).subscribe((voucher: Voucher) => {
+      // let headers = new Headers();
+      // headers.append('Accept', 'application/pdf');
+      // this.httpService.post(`${API_GENERIC_URI}/invoices`, amountWrapper, headers).subscribe((voucher: Voucher) => {
       //   resolve(voucher);
       // },(error: TPVHTTPError) => {
       //   reject(error.description);

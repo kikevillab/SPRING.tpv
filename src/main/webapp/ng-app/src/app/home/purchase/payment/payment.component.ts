@@ -70,7 +70,7 @@ export class PaymentComponent implements OnInit, OnDestroy{
   submitOrder(): void {
     this.shoppingService.submitOrder().then((ticketCreated: NewTicketResponse) => {
       this.toastService.success('Checkout done', 'The ticket has been created');
-      this.pdfService.open(ticketCreated.pdfByteArray);
+      this.pdfService.openBase64(ticketCreated.pdfByteArray);
     }).catch((error: string) => {
       this.toastService.error('Error in checkout', error);
     });

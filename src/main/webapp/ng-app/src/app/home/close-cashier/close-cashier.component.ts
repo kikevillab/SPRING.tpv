@@ -3,7 +3,7 @@
   * Github: https://github.com/sergiobanegas 
 */
 
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -24,7 +24,7 @@ import { ToastService } from '../../shared/services/toast.service';
   `]
 })
 
-export class CloseCashierComponent implements OnDestroy {
+export class CloseCashierComponent implements OnInit, OnDestroy {
 
   countedMoney: number;
   selectedOption: string = 'I agree';
@@ -32,7 +32,9 @@ export class CloseCashierComponent implements OnDestroy {
   cashier: CashierClosure;
   cashierSubscription: Subscription;
 
-  constructor(private cashierService: CashierService, private router: Router, private toastService: ToastService){
+  constructor(private cashierService: CashierService, private router: Router, private toastService: ToastService){}
+
+  ngOnInit(){
     this.cashier = this.cashierService.getCurrentCashier();
     this.cashierSubscription = this.cashierService.getCurrentCashierObservable().subscribe((cashier: CashierClosure) => {
       this.cashier = cashier;

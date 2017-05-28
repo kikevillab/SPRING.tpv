@@ -22,13 +22,10 @@ export class HTTPService {
 
 	post(endpoint:string, body?:Object, headers?:Headers, params?: URLSearchParams): Observable<any> {
 		let options = new RequestOptions({headers: headers});
+		if (headers && headers.has('accept') && headers.get('accept') === 'application/pdf'){
+			options.responseType = ResponseContentType.Blob;
+		}
 		return this.http.post(endpoint, body, options).map(this.extractData).catch(this.handleError);
-	}
-
-	borrar(endpoint:string, body?:Object, headers?:Headers, params?: URLSearchParams): Observable<any> {
-		let options = new RequestOptions({headers: headers, params: params});
-		options.responseType = ResponseContentType.Blob;
-		return this.http.post(endpoint, body, options).map(this.extractDataBorrar).catch(this.handleError);
 	}
 
 	put(endpoint:string, body?:Object, headers?:Headers, params?: URLSearchParams): Observable<any> {
@@ -41,12 +38,16 @@ export class HTTPService {
 		return this.http.delete(endpoint, options).map(this.extractData).catch(this.handleError);
 	}
 
-	private extractDataBorrar(res: Response): any {
-		return res.blob();
-	}
-
 	private extractData(res: Response): any {
-		return res.arrayBuffer().byteLength > 0 ? res.json() : res;
+		if (res.text()){
+			if (res.headers.get('content-type').indexOf('application/pdf') !== -1){
+				return res.blob();
+			} else if (res.headers.get('content-type').indexOf('application/json') !== -1){
+				return res.json();
+			}
+		} else {
+			return res;
+		}
 	}
 	private handleError (error: Response | any): any {
 		return Observable.throw(error.message || error.json());
