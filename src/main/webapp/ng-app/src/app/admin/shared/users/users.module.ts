@@ -12,7 +12,7 @@ import {UsersComponent} from './users.component';
 import {FilterComponent} from './filter/filter.component';
 import {ResultsComponent} from './results/results.component';
 import {NewUserDialog} from './new-user/new-user.component';
-import {CapitalizePipe} from './capitalize.pipe';
+import {SharedModule} from '../../../shared/shared.module';
 import {NgxDatatableModule} from '@swimlane/ngx-datatable';
 import {AngularMaterialModule} from '../../../shared/angular-material.module';
 import {HTTPService} from '../../../shared/services/http.service';
@@ -31,14 +31,14 @@ import {InMemoryDataService} from '../../../shared/services/in-memory-data.servi
         NgxDatatableModule,
         AngularMaterialModule,
         FormsModule,
+        SharedModule,
         InMemoryWebApiModule.forRoot(InMemoryDataService, {passThruUnknownUrl: true})
     ],
     declarations: [
         UsersComponent,
         FilterComponent,
         ResultsComponent,
-        NewUserDialog,
-        CapitalizePipe
+        NewUserDialog
     ],
     providers: [
         HTTPService,
@@ -50,8 +50,7 @@ import {InMemoryDataService} from '../../../shared/services/in-memory-data.servi
         UsersComponent,
         FilterComponent,
         ResultsComponent,
-        NewUserDialog,
-        CapitalizePipe
+        NewUserDialog
     ],
     entryComponents: [
         NewUserDialog
