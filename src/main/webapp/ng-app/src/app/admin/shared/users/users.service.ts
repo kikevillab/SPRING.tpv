@@ -68,7 +68,7 @@ export class UsersService {
 
     findAll(): Observable<any> {
         if (!isNull(this.headers) && !isNull(this.endpoint))
-            return this.httpService.get(this.endpoint, this.headers,);
+            return this.httpService.get(this.endpoint, this.headers);
 
         return Observable.throw(NOT_AUTHENTICATED_MESSAGE);
     }
