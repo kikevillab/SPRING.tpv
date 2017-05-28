@@ -87,7 +87,6 @@ public class UserController {
     }
     
     public UserWrapper getByEmailAndRole (String email, Role role){
-        String emailCustomer = "user2@user2.com";
         User user = userDao.findByEmailAndRole(role,email);
         UserWrapper userRetorno= null;
         if (user!=null)
