@@ -3,7 +3,7 @@
   * Github: https://github.com/sergiobanegas 
 */
 import { Injectable } from '@angular/core';
-import { Headers, ResponseContentType, Http, RequestOptions } from '@angular/http';
+import { Headers } from '@angular/http';
 import { Observable } from 'rxjs';
 import { Subject } from 'rxjs/Subject';
 import * as moment from 'moment/moment';
@@ -21,7 +21,7 @@ import { LocalStorageService } from '../../../../../shared/services/local-storag
 @Injectable()
 export class PrintService {
 
-  constructor (private httpService: HTTPService, private http: Http) {}
+  constructor (private httpService: HTTPService) {}
 
   createVoucher(amount: number, validity: number): Promise<any> {
     return new Promise((resolve: Function, reject: Function) => {
