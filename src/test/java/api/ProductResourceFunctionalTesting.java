@@ -37,7 +37,7 @@ public class ProductResourceFunctionalTesting {
 
     @Test
     public void testGetProductByCode() {
-        String productCode = "84000001111";
+        String productCode = "8400000001111";
         String token = new RestService().loginAdmin();
         ProductWrapper product = new RestBuilder<ProductWrapper>(RestService.URL).path(Uris.PRODUCTS).pathId(productCode)
                 .basicAuth(token, "").clazz(ProductWrapper.class).get().build();
@@ -56,7 +56,7 @@ public class ProductResourceFunctionalTesting {
     
     @Test
     public void testSetProductAsDiscontinued(){
-        String productCode = "84000002223";
+        String productCode = "8400000002223";
         String token = new RestService().loginAdmin();
         PatchChangeDescriptionWrapper patchChangeDescription = new PatchChangeDescriptionWrapper();
         patchChangeDescription.setOp(PatchOperations.REPLACE);

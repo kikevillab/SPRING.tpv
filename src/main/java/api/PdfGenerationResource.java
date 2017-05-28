@@ -1,6 +1,6 @@
 package api;
 
-import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,39 +21,44 @@ import wrappers.VoucherIdWrapper;
 public class PdfGenerationResource {
 
     private PdfGenerationController pdfGenController;
-    
+
     @Autowired
-    public void setPdfGenerationController(PdfGenerationController pdfGenController){
+    public void setPdfGenerationController(PdfGenerationController pdfGenController) {
         this.pdfGenController = pdfGenController;
     }
-    
+
     @RequestMapping(value = Uris.INVOICES, method = RequestMethod.POST)
-    public void generateInvoicePdf(@RequestBody InvoiceIdWrapper invoiceIdWrapper) throws FileNotFoundException, InvoiceNotFoundException{
+    public void generateInvoicePdf(@RequestBody InvoiceIdWrapper invoiceIdWrapper) throws IOException, InvoiceNotFoundException {
         int invoiceId = invoiceIdWrapper.getId();
-        if(pdfGenController.invoiceExists(invoiceId)){
+        if (pdfGenController.invoiceExists(invoiceId)) {
             pdfGenController.generateInvoicePdf(invoiceId);
         } else {
             throw new InvoiceNotFoundException("Invoice: " + invoiceId);
-        }   
+        }
     }
-    
+
     @RequestMapping(value = Uris.TICKETS, method = RequestMethod.POST)
-    public void generateTicketPdf(@RequestBody TicketIdWrapper ticketIdWrapper) throws FileNotFoundException, TicketNotFoundException{
+    public void generateTicketPdf(@RequestBody TicketIdWrapper ticketIdWrapper) throws IOException, TicketNotFoundException {
         long ticketId = ticketIdWrapper.getId();
-        if(pdfGenController.ticketExists(ticketId)){
+        if (pdfGenController.ticketExists(ticketId)) {
             pdfGenController.generateTicketPdf(ticketId);
         } else {
             throw new TicketNotFoundException("Ticket: " + ticketId);
         }
     }
-    
+
     @RequestMapping(value = Uris.VOUCHERS, method = RequestMethod.POST)
-    public void generateVoucherPdf(@RequestBody VoucherIdWrapper voucherIdWrapper) throws FileNotFoundException, VoucherNotFoundException{
+    public void generateVoucherPdf(@RequestBody VoucherIdWrapper voucherIdWrapper) throws IOException, VoucherNotFoundException {
         int voucherId = voucherIdWrapper.getId();
-        if(pdfGenController.voucherExists(voucherId)){
+        if (pdfGenController.voucherExists(voucherId)) {
             pdfGenController.generateVoucherPdf(voucherId);
         } else {
             throw new VoucherNotFoundException("Voucher: " + voucherId);
         }
+    }
+
+    @RequestMapping(value = Uris.BARCODES, method = RequestMethod.POST)
+    public void generateBarcodesPdf() throws IOException {
+        pdfGenController.generateBarcodesPdf();
     }
 }

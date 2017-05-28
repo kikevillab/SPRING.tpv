@@ -1,8 +1,13 @@
 package api;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,9 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 import api.exceptions.VoucherAlreadyConsumedException;
 import api.exceptions.VoucherHasExpiredException;
 import api.exceptions.VoucherNotFoundException;
+import config.ResourceNames;
 import controllers.VoucherController;
 import entities.core.Voucher;
 import wrappers.ActiveVouchersTotalValueWrapper;
+import wrappers.VoucherCreationResponseWrapper;
 import wrappers.VoucherCreationWrapper;
 
 @RestController
@@ -29,8 +36,18 @@ public class VoucherResource {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public void createVoucher(@RequestBody VoucherCreationWrapper voucherCreationWrapper) {
-        voucherController.createVoucher(voucherCreationWrapper);
+    public ResponseEntity<byte[]> createVoucher(@RequestBody VoucherCreationWrapper voucherCreationWrapper) throws IOException {
+        VoucherCreationResponseWrapper responseWrapper = voucherController.createVoucher(voucherCreationWrapper);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.parseMediaType("application/pdf"));
+        String filename = "VOUCHER" + responseWrapper.getVoucherId() + ResourceNames.PDF_FILE_EXT;
+        headers.set(HttpHeaders.CONTENT_DISPOSITION,
+                "inline; filename=" + filename);
+        headers.setCacheControl("must-revalidate, post-check=0, pre-"
+                + "hcheck=0");
+        ResponseEntity<byte[]> voucherPdf = new ResponseEntity<byte[]>(responseWrapper.getPdfByteArray(), headers,
+                HttpStatus.OK);
+        return voucherPdf;
     }
 
     @RequestMapping(method = RequestMethod.GET)

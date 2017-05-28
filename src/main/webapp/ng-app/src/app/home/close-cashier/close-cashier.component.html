@@ -1,5 +1,5 @@
 <h1 id="pageTitle">Close Cashier</h1>
-<div fxLayout="column" fxLayoutAlign="space-around center">
+<div fxLayout="column" fxLayoutAlign="space-around center" fxLayoutGap="1em">
 	<md-card>
 		<md-card-title>Money count</md-card-title>
 		<md-card-content fxLayout="column">
@@ -23,7 +23,7 @@
 			<md-input-container>
 				<input mdInput placeholder="Comment about the closure" [(ngModel)]="comment">
             </md-input-container>
-            <button md-raised-button color="primary" (click)="close()" [disabled]="isValidForm()" id="closeCashierButton">Close cashier</button>
+            <button md-raised-button color="primary" (click)="close()" [disabled]="isInvalidForm()" id="closeCashierButton">Close cashier</button>
         </md-card-content>
 	</md-card>
 </div>

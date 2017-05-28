@@ -14,15 +14,15 @@ import { ToastService } from '../../shared/services/toast.service';
   selector: 'movement-view',
   templateUrl: './movement.component.html',
   styles: [`
-    .margin-bottom {
-      margin-bottom:1em;
-    }
-    @media only screen and (min-width: 768px) {
-      md-card {
-        width:40em;
+    @media only screen and (min-width: 960px) {
+      #cash-flow-container > md-card, button, #comment-box {
+        width: 50%;
       }
-      .margin-right {
-        margin-right:1em;
+    }
+    @media only screen and (min-width: 1280px) {
+      #container {
+        margin-right: 25em;
+        margin-left: 25em;
       }
     }
   `]

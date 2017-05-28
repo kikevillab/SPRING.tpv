@@ -1,5 +1,6 @@
 package api;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -35,6 +36,7 @@ import wrappers.DayTicketWrapper;
 import wrappers.ShoppingCreationWrapper;
 import wrappers.ShoppingTrackingWrapper;
 import wrappers.ShoppingUpdateWrapper;
+import wrappers.TicketCreationResponseWrapper;
 import wrappers.TicketCreationWrapper;
 import wrappers.TicketReferenceWrapper;
 import wrappers.TicketWrapper;
@@ -77,9 +79,9 @@ public class TicketResource {
 
     // @PreAuthorize("hasRole('ADMIN')or hasRole('MANAGER') or hasRole('OPERATOR')")
     @RequestMapping(method = RequestMethod.POST)
-    public TicketReferenceWrapper createTicket(@RequestBody TicketCreationWrapper ticketCreationWrapper)
+    public TicketCreationResponseWrapper createTicket(@RequestBody TicketCreationWrapper ticketCreationWrapper)
             throws EmptyShoppingListException, NotFoundProductCodeException, NotFoundUserMobileException, NotEnoughStockException,
-            InvalidProductAmountInNewTicketException, InvalidProductDiscountException {
+            InvalidProductAmountInNewTicketException, InvalidProductDiscountException, IOException {
         Long userMobile = ticketCreationWrapper.getUserMobile();
         if (userMobile != null && !userController.userExists(userMobile)) {
             throw new NotFoundUserMobileException();
@@ -115,9 +117,7 @@ public class TicketResource {
                 articleController.consumeArticle(productCode, shoppingCreationWrapper.getAmount());
             }
         }
-
-        Ticket ticket = ticketController.createTicket(ticketCreationWrapper);
-        return new TicketReferenceWrapper(ticket.getReference());
+        return ticketController.createTicket(ticketCreationWrapper);
     }
 
     @RequestMapping(value = Uris.REFERENCE, method = RequestMethod.PATCH)

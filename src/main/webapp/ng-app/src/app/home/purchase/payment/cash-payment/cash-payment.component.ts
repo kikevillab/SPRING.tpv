@@ -11,18 +11,18 @@ import { ShoppingService } from '../../../shared/services/shopping.service';
   selector: 'cash-payment-view',
   templateUrl: './cash-payment.component.html',
   styles: [`
-  div, md-card {
-    margin-bottom:1em;
-    position:relative;
-  }
-  img {
-    cursor:pointer;
-    width:100%;
-  }
-  div > div > button {
-    position:absolute;
-    right:0px;
-  }
+    .money-container {
+      margin-bottom: 1em;
+      position: relative;
+    }
+    .money-container > img {
+      cursor: pointer;
+      width: 100%;
+    }
+    .money-container > button {
+      position: absolute;
+      right: 0px;
+    }
   `]
 })
 
