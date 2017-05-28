@@ -64,41 +64,47 @@ describe('Service: ShoppingService', () => {
     shoppingService.clear();
   });
 
+
   it(`Should add product to cart when 'addProduct()' is called`, () => {
     mockBackend.connections.subscribe((conn: MockConnection) => {
       conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(MockProduct) })));
     });
-    shoppingService.addProduct(product_code);
-    expect(shoppingService.getCartProducts()).toContain(new CartProduct('12341234', 'article6', 20));
+    shoppingService.addProduct(product_code).then(() => {
+          expect(shoppingService.getCartProducts()).toContain(new CartProduct('12341234', 'article6', 20));
+    });
   });
 
   it(`Should remove product with code '${product_code}' of cart`, () => {
     mockBackend.connections.subscribe((conn: MockConnection) => {
       conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(MockProduct) })));
     });
-    shoppingService.addProduct(product_code);
-    shoppingService.removeProduct(new CartProduct(product_code, 'DESCRIPTION1', 12.21));
-    let found: boolean = false;
-    shoppingService.getCartProducts().forEach((cartProduct: CartProduct) => {
-      if (cartProduct.productCode === product_code) found = true;
-    });
-    expect(found).toBe(false);
+    shoppingService.addProduct(product_code).then(() => {
+      shoppingService.removeProduct(new CartProduct(product_code, 'DESCRIPTION1', 12.21));
+      let found: boolean = false;
+      shoppingService.getCartProducts().forEach((cartProduct: CartProduct) => {
+        if (cartProduct.productCode === product_code) found = true;
+      });
+      expect(found).toBe(false);
+      });
   });
 
   it(`Should update the product data when 'updateProduct()' method is called`, () => {
     mockBackend.connections.subscribe((conn: MockConnection) => {
       conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(MockProduct) })));
     });
-    shoppingService.addProduct(product_code);
-    let cartProduct: CartProduct = new CartProduct(product_code, 'DESCRIPTION1', 12.21);
-    cartProduct.delivered = false;
-    shoppingService.updateProduct(cartProduct);
-    expect(shoppingService.getCartProducts()[0].delivered).toBe(false);
+    shoppingService.addProduct(product_code).then(() => {
+      let cartProduct: CartProduct = new CartProduct(product_code, 'DESCRIPTION1', 12.21);
+      cartProduct.delivered = false;
+      shoppingService.updateProduct(cartProduct);
+      expect(shoppingService.getCartProducts()[0].delivered).toBe(false);
+    });
   });
 
   it(`Should obtain the total price when 'getTotalPrice()' method is called`, () => {
     let totalPrice:number = shoppingService.getTotalPrice();
-    expect(totalPrice).toBe(12.21);
+    shoppingService.addProduct(product_code).then(() => {
+      expect(totalPrice).toBe(12.21);
+    });
   });
 
   it(`Should clear the cart when 'clear()' method is called`,() => {

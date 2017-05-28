@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Subject } from 'rxjs/Subject';
 
-import { API_GENERIC_URI } from '../../../app.config';
+import { API_GENERIC_URI, URI_PRODUCTS, URI_TICKETS, URI_USERS, URI_VOUCHERS } from '../../../app.config';
 
 import { CartProduct } from '../models/cart-product.model';
 import { Product } from '../../../shared/models/product.model';
@@ -42,7 +42,7 @@ export class ShoppingService {
 
   addProduct(productCode: string): Promise<any> {
     return new Promise((resolve: Function, reject: Function) => {
-      this.httpService.get(`${API_GENERIC_URI}/products/${productCode}`).subscribe((productDetails: Product) => {
+      this.httpService.get(`${API_GENERIC_URI}${URI_PRODUCTS}/${productCode}`).subscribe((productDetails: Product) => {
         let index: number = this.cartProducts.findIndex((cp: CartProduct) => cp.productCode == productCode);
         index > -1 
           ? this.cartProducts[index].amount++
@@ -75,7 +75,7 @@ export class ShoppingService {
   submitOrder(): Promise<any> {
     return new Promise((resolve: Function, reject: Function) => {
       let newTicket: TicketCheckout = new TicketCheckout(this.cartProducts, this.vouchers, this.userMobile);
-      this.httpService.post(`${API_GENERIC_URI}/tickets`, newTicket).subscribe((ticketCreated: NewTicketResponse) => {
+      this.httpService.post(`${API_GENERIC_URI}${URI_TICKETS}`, newTicket).subscribe((ticketCreated: NewTicketResponse) => {
         this.submitted = true;
         this.submittedSubject.next(this.submitted);
         this.ticketId = ticketCreated.ticketId;
@@ -87,7 +87,7 @@ export class ShoppingService {
 
   associateUser(userMobile: number): Promise<User> {
     return new Promise((resolve: Function,reject: Function) => {
-      this.httpService.get(`${API_GENERIC_URI}/users/${userMobile}`).subscribe((associatedUser: User) => {
+      this.httpService.get(`${API_GENERIC_URI}${URI_USERS}/${userMobile}`).subscribe((associatedUser: User) => {
         this.userMobile = associatedUser.mobile;
         this.userMobileSubject.next(this.userMobile);
         resolve(associatedUser);
@@ -102,7 +102,7 @@ export class ShoppingService {
 
   addVoucher(reference: string): Promise<any> {
     return new Promise((resolve: Function, reject: Function) => {
-      this.httpService.get(`${API_GENERIC_URI}/vouchers/${reference}`).subscribe((voucher: Voucher) => {
+      this.httpService.get(`${API_GENERIC_URI}${URI_VOUCHERS}/${reference}`).subscribe((voucher: Voucher) => {
         let today: Date = new Date();
         if (voucher.expiration < today.getTime()){
           reject('The voucher entered is expired');

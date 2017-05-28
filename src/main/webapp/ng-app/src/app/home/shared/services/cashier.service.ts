@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Subject } from 'rxjs/Subject';
 
-import { API_GENERIC_URI } from '../../../app.config';
+import { API_GENERIC_URI, URI_CASHIERCLOSURES } from '../../../app.config';
 
 import { CashierClosure } from '../models/cashier-closure.model';
 import { Amount } from '../models/amount.model';
@@ -26,7 +26,7 @@ export class CashierService {
   constructor (private httpService: HTTPService) {}
 
   initialize(): void {
-      this.httpService.get(`${API_GENERIC_URI}/cashierclosures/last`).subscribe((cashier: CashierClosure) => {
+      this.httpService.get(`${API_GENERIC_URI}${URI_CASHIERCLOSURES}/last`).subscribe((cashier: CashierClosure) => {
         this.currentCashier = cashier;
         this.currentCashierSubject.next(this.currentCashier);
       },(error: TPVHTTPError) => {
@@ -49,7 +49,7 @@ export class CashierService {
 
   openCashier(): Promise<any> {
     return new Promise((resolve: Function, reject: Function) => {
-       this.httpService.post(`${API_GENERIC_URI}/cashierclosures`).subscribe((cashier: CashierClosure) => {
+       this.httpService.post(`${API_GENERIC_URI}${URI_CASHIERCLOSURES}`).subscribe((cashier: CashierClosure) => {
            this.currentCashier = cashier;
            this.currentCashierSubject.next(this.currentCashier);
            resolve(this.currentCashier);
@@ -62,7 +62,7 @@ export class CashierService {
   closeCashier(countedMoney: number, comment: string): Promise<any> {
     return new Promise((resolve: Function, reject: Function) => {
       let closureData: CashierClosingData = new CashierClosingData(countedMoney, comment);
-      this.httpService.put(`${API_GENERIC_URI}/cashierclosures/close`, closureData).subscribe((cashier: CashierClosure) => {
+      this.httpService.put(`${API_GENERIC_URI}${URI_CASHIERCLOSURES}/close`, closureData).subscribe((cashier: CashierClosure) => {
         this.currentCashier = cashier;
         this.currentCashierSubject.next(this.currentCashier);
         resolve(this.currentCashier);
@@ -75,7 +75,7 @@ export class CashierService {
   withdraw(amount: number): Promise<any> {
     return new Promise((resolve: Function, reject: Function) => {
       let amountWrapper: Amount = new Amount(amount);
-      this.httpService.put(`${API_GENERIC_URI}/cashierclosures/withdraw`, amountWrapper).subscribe((cashier: CashierClosure) => {
+      this.httpService.put(`${API_GENERIC_URI}${URI_CASHIERCLOSURES}/withdraw`, amountWrapper).subscribe((cashier: CashierClosure) => {
         this.currentCashier = cashier;
         this.currentCashierSubject.next(this.currentCashier);
         resolve(cashier)
@@ -88,7 +88,7 @@ export class CashierService {
   deposit(amount: number): Promise<any> {
     let amountWrapper: Amount = new Amount(amount);
     return new Promise((resolve: Function, reject: Function) => {
-        this.httpService.put(`${API_GENERIC_URI}/cashierclosures/deposit`, amountWrapper).subscribe((cashier: CashierClosure) => {
+        this.httpService.put(`${API_GENERIC_URI}${URI_CASHIERCLOSURES}/deposit`, amountWrapper).subscribe((cashier: CashierClosure) => {
           this.currentCashier = cashier;
           this.currentCashierSubject.next(this.currentCashier);
           resolve(cashier)
