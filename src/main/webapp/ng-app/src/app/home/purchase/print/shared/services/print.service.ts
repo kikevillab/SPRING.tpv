@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 import { Subject } from 'rxjs/Subject';
 import * as moment from 'moment/moment';
 
-import { API_GENERIC_URI } from '../../../../../app.config';
+import { API_GENERIC_URI, URI_VOUCHERS, URI_INVOICES } from '../../../../../app.config';
 
 import { VoucherCreation } from '../../../../shared/models/voucher-creation.model';
 import { Voucher } from '../../../../shared/models/voucher.model';
@@ -29,7 +29,7 @@ export class PrintService {
       let voucherWrapper: VoucherCreation = new VoucherCreation(amount, expirationDate);
       let headers = new Headers();
       headers.append('Accept', 'application/pdf');
-      this.httpService.post(`${API_GENERIC_URI}/vouchers`, voucherWrapper, headers).subscribe((response: any) => {
+      this.httpService.post(`${API_GENERIC_URI}${URI_VOUCHERS}`, voucherWrapper, headers).subscribe((response: any) => {
         resolve(response);
       },(error: TPVHTTPError) => {
         reject(error.description);
@@ -42,7 +42,7 @@ export class PrintService {
         resolve(ticketId);
       // let headers = new Headers();
       // headers.append('Accept', 'application/pdf');
-      // this.httpService.post(`${API_GENERIC_URI}/invoices`, amountWrapper, headers).subscribe((voucher: Voucher) => {
+      // this.httpService.post(`${API_GENERIC_URI}${URI_INVOICES}`, amountWrapper, headers).subscribe((voucher: Voucher) => {
       //   resolve(voucher);
       // },(error: TPVHTTPError) => {
       //   reject(error.description);
