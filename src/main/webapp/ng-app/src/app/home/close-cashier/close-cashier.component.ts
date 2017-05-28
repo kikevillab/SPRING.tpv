@@ -44,13 +44,13 @@ export class CloseCashierComponent implements OnDestroy {
   }
 
   formatCountedMoney(): void {
-    this.countedMoney = Math.round(this.countedMoney * 100) / 100;
+    this.countedMoney = this.countedMoney !== undefined ? Math.round(this.countedMoney * 100) / 100 : undefined;  
   }
 
   close(): void {
     let comment: string = this.selectedOption;
     if (this.comment != ''){
-      comment+=`. ${this.comment}`;
+      comment += `. ${this.comment}`;
     }
     this.cashierService.closeCashier(this.countedMoney, comment).then((cashier: CashierClosure) => {
       this.toastService.info('Cashier closed', 'The cashier has been closed');
@@ -69,8 +69,8 @@ export class CloseCashierComponent implements OnDestroy {
      } else return 0;
   }
 
-  isValidForm(): boolean {
-    return this.countedMoney == 0 || this.countedMoney == undefined;
+  isInvalidForm(): boolean {
+    return this.countedMoney < 0 || this.countedMoney == undefined;
   }
 
   ngOnDestroy(){
