@@ -3,7 +3,7 @@
   * Github: https://github.com/sergiobanegas 
 */
 
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -16,15 +16,15 @@ import { ToastService } from '../../shared/services/toast.service';
   selector: 'close-cashier-view',
   templateUrl: './close-cashier.component.html',
   styles: [`
-    @media only screen and (min-width: 768px) {
+    @media only screen and (min-width: 600px) {
       md-card {
-        width:30em;
+        width: 30em;
       }
     }
   `]
 })
 
-export class CloseCashierComponent implements OnDestroy {
+export class CloseCashierComponent implements OnInit, OnDestroy {
 
   countedMoney: number;
   selectedOption: string = 'I agree';
@@ -32,7 +32,9 @@ export class CloseCashierComponent implements OnDestroy {
   cashier: CashierClosure;
   cashierSubscription: Subscription;
 
-  constructor(private cashierService: CashierService, private router: Router, private toastService: ToastService){
+  constructor(private cashierService: CashierService, private router: Router, private toastService: ToastService){}
+
+  ngOnInit(){
     this.cashier = this.cashierService.getCurrentCashier();
     this.cashierSubscription = this.cashierService.getCurrentCashierObservable().subscribe((cashier: CashierClosure) => {
       this.cashier = cashier;
@@ -44,13 +46,13 @@ export class CloseCashierComponent implements OnDestroy {
   }
 
   formatCountedMoney(): void {
-    this.countedMoney = Math.round(this.countedMoney * 100) / 100;
+    this.countedMoney = this.countedMoney !== undefined ? Math.round(this.countedMoney * 100) / 100 : undefined;  
   }
 
   close(): void {
     let comment: string = this.selectedOption;
     if (this.comment != ''){
-      comment+=`. ${this.comment}`;
+      comment += `. ${this.comment}`;
     }
     this.cashierService.closeCashier(this.countedMoney, comment).then((cashier: CashierClosure) => {
       this.toastService.info('Cashier closed', 'The cashier has been closed');
@@ -69,8 +71,8 @@ export class CloseCashierComponent implements OnDestroy {
      } else return 0;
   }
 
-  isValidForm(): boolean {
-    return this.countedMoney == 0 || this.countedMoney == undefined;
+  isInvalidForm(): boolean {
+    return this.countedMoney < 0 || this.countedMoney == undefined;
   }
 
   ngOnDestroy(){

@@ -56,6 +56,17 @@ export class SearchService {
     });
   }
 
+  search(name: string): Promise<any> {
+    return new Promise((resolve: Function, reject: Function) => {
+    resolve(this.categories);
+    // this.httpService.get(`${API_GENERIC_URI}/categories?parent=${this.rootCategory}?name=${name}`).subscribe((categories: Category[]) => {
+      //   resolve(categories);
+      // },(error: TPVHTTPError) => {
+      //   reject(error.description);
+      // });
+    });
+  }
+
   getProductDetails(code: string): Promise<any> {
     return new Promise((resolve: Function, reject: Function) => {
       let productDetails: ProductDetails = new ProductDetails();

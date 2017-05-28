@@ -20,7 +20,7 @@ import { ToastService } from '../../../../../shared/services/toast.service';
       right: 0px;
       top: 0px;
     }
-    @media only screen and (min-width: 768px) {
+    @media only screen and (min-width: 960px) {
       #button-container > button {
         width: 50%;
       }
