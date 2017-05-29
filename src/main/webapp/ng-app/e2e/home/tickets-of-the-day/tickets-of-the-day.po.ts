@@ -7,7 +7,7 @@ import { browser } from 'protractor';
 export class TicketsOfTheDayView {
 
   navigateTo() {
-    return browser.get('/home/ticketsoftheday');
+    return browser.get('/home/tickets-of-the-day');
   }
   
 }

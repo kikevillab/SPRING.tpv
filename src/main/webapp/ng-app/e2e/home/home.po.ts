@@ -11,17 +11,17 @@ export class HomePage {
 	}
 
 	openCashier() {
-		element.all(by.id('openCashierButton')).then(items => {
-		    items.length > 0 && element(by.id('openCashierButton')).click();
+		element.all(by.id('open-cashier-button')).then(items => {
+		    items.length > 0 && element(by.id('open-cashier-button')).click();
 		});
 	}
 	
 	getPageTitleText() {
-		return element(by.id('pageTitle')).getText();
+		return element(by.id('page-title')).getText();
 	}
 
 	clickCartButton() {
-		return element(by.id('cartButton')).click(); 
+		return element(by.id('cart-button')).click(); 
 	}
 
 }

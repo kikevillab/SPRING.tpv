@@ -7,25 +7,25 @@ import { element, by } from 'protractor';
 export class CartView {
 
   clickClearCartButton() {
-    return element(by.id('clearCartButton')).click();
+    return element(by.id('clear-cart-button')).click();
   }
 
   getTotalValueText() {
-  	return element(by.id('totalPrice')).getText(); 
+  	return element(by.id('total-price')).getText(); 
   }
 
   clickOpenCalculatorButton() {
-    return element(by.id('openCalculatorButton')).click();
+    return element(by.id('open-calculator-button')).click();
   }
 
   clickCheckoutButton() {
-    return element(by.id('checkoutButton')).click();
+    return element(by.id('checkout-button')).click();
   }
 
   submitProductCode(code:string) {
-  	let codeInput = element(by.id('codeInput'));
+  	let codeInput = element(by.id('code-input'));
   	codeInput.sendKeys(code);
-  	return element(by.id('submitCodeInputButton')).click();
+  	return element(by.id('submit-code-input-button')).click();
   }
 
   getProductsTable() {
