@@ -42,10 +42,10 @@ describe('Page: Home', () => {
 		expect(page.getPageTitleText()).toContain('Tickets of the day');
 	});
 
-	it(`should display the product with code '84000001113' when submitted`, () => {
+	it(`should display the product with code '8400000001114' when submitted`, () => {
 		page.clickCartButton();
 		let totalPriceBefore = cartView.getTotalValueText();
-		cartView.submitProductCode('84000001113');
+		cartView.submitProductCode('8400000001114');
 		let totalPriceAfter = cartView.getTotalValueText();
 		expect(totalPriceBefore).not.toBe(totalPriceAfter);
 	});
@@ -65,7 +65,7 @@ describe('Page: Home', () => {
 	it(`should empty the cart when 'X' button is clicked`, () => {
 		page.navigateTo();
 		page.clickCartButton();
-		cartView.submitProductCode('84000001113');
+		cartView.submitProductCode('8400000001114');
 		cartView.clickClearCartButton();
 		expect(cartView.getCartInputs()).toBe(0);
 	});
