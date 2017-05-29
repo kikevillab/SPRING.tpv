@@ -57,9 +57,8 @@ public class InvoiceResourceFunctionalTesting {
     public void testCreateInvoice() {
         TicketIdWrapper ticketIdWrapper = new TicketIdWrapper(6L);
         String token = new RestService().loginAdmin();
-        InvoiceWrapper invoiceWrapper = new RestBuilder<InvoiceWrapper>(RestService.URL).path(Uris.INVOICES).body(ticketIdWrapper).basicAuth(token, "")
-                .clazz(InvoiceWrapper.class).post().build();
-        assertNotNull(invoiceWrapper);
+        new RestBuilder<Object>(RestService.URL).path(Uris.INVOICES).body(ticketIdWrapper).basicAuth(token, "")
+                .clazz(Object.class).post().build();
     }
 
     @Test

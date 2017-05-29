@@ -3,6 +3,7 @@ package api;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import api.exceptions.NotFoundProductCodeException;
 import controllers.ProductController;
 import entities.core.Product;
 import wrappers.PatchChangeDescriptionWrapper;
+import wrappers.ProductBarcodeWrapper;
 import wrappers.ProductWrapper;
 
 @RestController
@@ -46,6 +48,14 @@ public class ProductResource {
                 }
             }
         }
+    }
+    
+    @RequestMapping(value = Uris.BARCODES, method = RequestMethod.POST)
+    public byte[] generateBarcodesPdf(@RequestBody List<ProductBarcodeWrapper> productBarcodeWrappers) throws NotFoundProductCodeException{
+        for(ProductBarcodeWrapper productBarcodeWrapper : productBarcodeWrappers){
+            throwExceptionIfProductDoesNotExists(productBarcodeWrapper.getBarcode());
+        }     
+        return productController.generateBarcodesPdf(productBarcodeWrappers);
     }
     
     private void throwExceptionIfProductDoesNotExists(String code) throws NotFoundProductCodeException{
