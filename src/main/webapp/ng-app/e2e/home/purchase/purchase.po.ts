@@ -11,19 +11,19 @@ export class PurchaseView {
   }
 
   clickCashPaymentButton() {
-    return element(by.id('cashPaymentButton')).click();
+    return element(by.id('cash-paymentButton')).click();
   }
 
   clickMoneyButton(quantity:number) {
-    return element(by.id(`number${quantity}`)).click();
+    return element(by.id(`number-${quantity}`)).click();
   }
 
   clickRemoveMoneyButton(quantity:number) {
-    return element(by.id(`remove${quantity}`)).click();
+    return element(by.id(`remove-${quantity}`)).click();
   }
 
   getMoneyChargedText() {
-    return element(by.id(`moneyCharged`)).getText();
+    return element(by.id(`money-charged`)).getText();
   }
 
 }

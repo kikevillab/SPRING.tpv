@@ -7,19 +7,19 @@ import { browser, element, by } from 'protractor';
 export class CloseCashierView {
 
   navigateTo() {
-    return browser.get('/home/closecashier');
+    return browser.get('/home/close-cashier');
   }
 
   fillForm() {
-    element(by.id('balanceCountedInput')).sendKeys(1120);
+    element(by.id('balance-counted-input')).sendKeys(1120);
   }
 
   getCloseCashierButton() {
-    return element(by.id('closeCashierButton'));
+    return element(by.id('close-cashier-button'));
   }
 
   clickCloseCashierButton() {
-    return element(by.id('closeCashierButton')).click();
+    return element(by.id('close-cashier-button')).click();
   }
 
 }
