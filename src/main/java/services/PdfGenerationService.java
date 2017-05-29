@@ -24,7 +24,7 @@ public class PdfGenerationService {
         return new VoucherPdfGenerator(voucher).generatePdf();
     }
     
-    public byte[] generateBarcodesPdf(List<Product> embroideryAndTextile) throws IOException {
-        return new BarcodesPdfGenerator(embroideryAndTextile).generatePdf();
+    public byte[] generateBarcodesPdf(List<Product> productList) throws IOException {
+        return new BarcodesPdfGenerator(productList).generatePdf();
     }
 }

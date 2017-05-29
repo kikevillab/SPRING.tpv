@@ -1,22 +1,18 @@
 package controllers;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import daos.core.EmbroideryDao;
 import daos.core.InvoiceDao;
-import daos.core.TextilePrintingDao;
+import daos.core.ProductDao;
 import daos.core.TicketDao;
 import daos.core.VoucherDao;
-import entities.core.Embroidery;
 import entities.core.Invoice;
 import entities.core.InvoicePK;
 import entities.core.Product;
-import entities.core.TextilePrinting;
 import entities.core.Ticket;
 import entities.core.TicketPK;
 import entities.core.Voucher;
@@ -33,9 +29,7 @@ public class PdfGenerationController {
 
     private VoucherDao voucherDao;
 
-    private EmbroideryDao embroideryDao;
-
-    private TextilePrintingDao textilePrintingDao;
+    private ProductDao productDao;
 
     @Autowired
     public void setPdfGenerationService(PdfGenerationService pdfGenService) {
@@ -58,13 +52,8 @@ public class PdfGenerationController {
     }
 
     @Autowired
-    public void setEmbroideryDao(EmbroideryDao embroideryDao) {
-        this.embroideryDao = embroideryDao;
-    }
-
-    @Autowired
-    public void setTextilePrintingDao(TextilePrintingDao textilePrintingDao) {
-        this.textilePrintingDao = textilePrintingDao;
+    public void setProductDao(ProductDao productDao) {
+        this.productDao = productDao;
     }
 
     public void generateInvoicePdf(int invoiceId) throws IOException {
@@ -82,16 +71,9 @@ public class PdfGenerationController {
         pdfGenService.generateVoucherPdf(voucher);
     }
 
-    public void generateBarcodesPdf() throws IOException {
-        List<Product> embroideryAndTextile = new ArrayList<>();
-
-        List<Embroidery> embroideryList = embroideryDao.findAll();
-        embroideryAndTextile.addAll(embroideryList);
-        
-        List<TextilePrinting> textilePrintingList = textilePrintingDao.findAll();
-        embroideryAndTextile.addAll(textilePrintingList);
-
-        pdfGenService.generateBarcodesPdf(embroideryAndTextile);
+    public void generateBarcodesPdf(List<String> productCodeList) throws IOException {
+        List<Product> productList = productDao.findAll(productCodeList);
+        pdfGenService.generateBarcodesPdf(productList);
     }
 
     public boolean ticketExists(long ticketId) {
@@ -104,6 +86,10 @@ public class PdfGenerationController {
 
     public boolean voucherExists(int voucherId) {
         return voucherDao.exists(voucherId);
+    }
+
+    public boolean productExists(String code) {
+        return productDao.exists(code);
     }
 
 }
