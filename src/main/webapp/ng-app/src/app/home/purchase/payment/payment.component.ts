@@ -22,7 +22,7 @@ import { ToastService } from '../../../shared/services/toast.service';
   templateUrl: './payment.component.html',
   styles: [`
 	  @media only screen and (min-width: 960px) {
-	    #moneyReceivedContainer {
+	    #money-received-container {
 	      width: 20em;
 	    }
 	  }

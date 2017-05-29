@@ -1,6 +1,6 @@
 <div *ngIf="userAssociated==null">
 	<div *ngIf="!newClientOpened; else newClient">
-		<button md-mini-fab color="primary" mdTooltip="New client" mdTooltipPosition="below" (click)="openNewClient()" id="newClientButton">
+		<button md-mini-fab color="primary" mdTooltip="New client" mdTooltipPosition="below" (click)="openNewClient()" id="new-client-button">
 			<md-icon>add</md-icon>
 		</button>
 		<md-card-title>Client</md-card-title>
@@ -9,11 +9,11 @@
 				<div class="form-group" fxLayout="column">
 					<p>Associate a client by entering his number: </p>
 					<md-input-container >
-						<input mdInput type="number" step="1" min="13" max="111" max="9999999999999" class="form-control" id="mobileNumberInput" required placeholder="Mobile number"
+						<input mdInput type="number" step="1" min="13" max="111" max="9999999999999" class="form-control" id="mobile-number-input" required placeholder="Mobile number"
 						[(ngModel)]="mobileNumberInput" name="mobileNumberInput" #name="ngModel">
 					</md-input-container>				
 				</div>
-				<button md-raised-button color="primary" type="submit" [disabled]="!mobileNumberForm.form.valid" id="submitMobileNumberInputButton">OK</button >
+				<button md-raised-button color="primary" type="submit" [disabled]="!mobileNumberForm.form.valid" id="submit-mobile-numbe-input-button">OK</button >
 			</form>
 		</md-card-content>
 	</div>
@@ -51,7 +51,7 @@
 	</ng-template>
 </div>
 <div *ngIf="userAssociated!=null">
-	<button md-mini-fab color="warn" mdTooltip="Disassociate client" mdTooltipPosition="below" (click)="disassociate()" id="disassociateUserButton">
+	<button md-mini-fab color="warn" mdTooltip="Disassociate client" mdTooltipPosition="below" (click)="disassociate()" id="disassociate-user-button">
 		<md-icon>clear</md-icon>
 	</button>
 	<md-card-title>Client data</md-card-title>
