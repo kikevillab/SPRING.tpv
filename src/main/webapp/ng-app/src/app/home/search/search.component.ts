@@ -2,7 +2,7 @@
   * @author Sergio Banegas Cortijo
   * Github: https://github.com/sergiobanegas
 */
-import { Component, OnInit, HostListener, Inject } from '@angular/core';
+import { Component, OnInit, HostListener, ViewChild, ElementRef } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
 
 import { ProductDetailsComponent } from './product-details/product-details.component';
@@ -18,7 +18,6 @@ import { ToastService } from '../../shared/services/toast.service';
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.css']
 })
-
 export class SearchComponent implements OnInit {
 
   categories: Category[];
@@ -28,6 +27,8 @@ export class SearchComponent implements OnInit {
   filtered: boolean = false;
   displayNumber: number = 20;
   index: number = 0;
+  pxScrolled: number = 0;
+  @ViewChild('scrollContainer') scrollContainer: ElementRef;
 
   constructor (private searchService: SearchService, private shoppingService: ShoppingService, private toastService: ToastService, private dialog: MdDialog){}
 
@@ -43,7 +44,7 @@ export class SearchComponent implements OnInit {
   	});
   }
 
-  addItems(startIndex: number, endIndex: number) {
+  addItems(startIndex: number, endIndex: number): void {
     if (this.categories.length < endIndex){
       endIndex = this.categories.length;
     }
@@ -52,11 +53,24 @@ export class SearchComponent implements OnInit {
     }
   }
 
-  @HostListener('window:scroll', ['$event'])
-  scrollHandler(event: any){
-    let tracker = event.target;
-    let limit = tracker.scrollHeight - tracker.clientHeight;
-    if (event.target.scrollTop === limit && this.categoriesRendered.length < this.categories.length) {
+  scrollToTop(): void {
+    this.scrollContainer.nativeElement.scrollTop = 0;
+  }
+
+  getScrollToTopButtonTopPx(): number {
+    return this.pxScrolled + 5;
+  }
+
+  calculateContainerHeight(): number {
+    return window.innerHeight - this.scrollContainer.nativeElement.offsetTop - 16;
+  }
+
+  @HostListener('window:scroll', [])
+  scrollHandler(event: any): void {
+    let tracker: any = event.target;
+    let limit: number = tracker.scrollHeight - tracker.clientHeight;
+    this.pxScrolled = event.target.scrollTop;
+    if (tracker.scrollTop === limit && this.categoriesRendered.length < this.categories.length) {
         let start: number = this.index;
         this.index += this.displayNumber;
         this.addItems(start, this.index);
@@ -64,14 +78,12 @@ export class SearchComponent implements OnInit {
   }
 
   search(): void {
-    if (this.nameInput){
-      this.searchService.search(this.nameInput).then((categories: Category[]) => {
-        this.categories = categories;      
-        this.filtered = true;
-        this.lastNameInput = this.nameInput;
-        this.nameInput = undefined;
-      });
-    }
+    this.nameInput && this.searchService.search(this.nameInput).then((categories: Category[]) => {
+      this.categories = categories;      
+      this.filtered = true;
+      this.lastNameInput = this.nameInput;
+      this.nameInput = undefined;
+    });
   }
 
   resetSearch(): void {
