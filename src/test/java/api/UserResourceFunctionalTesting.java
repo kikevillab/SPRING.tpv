@@ -102,7 +102,7 @@ public class UserResourceFunctionalTesting {
     public void  testUserList(){
         String token = new RestService().loginAdmin();
 
-        UserPageWrapper userPage = new RestBuilder<UserPageWrapper>(RestService.URL).path(Uris.USERS+Uris.SEARCH)
+        UserPageWrapper userPage = new RestBuilder<UserPageWrapper>(RestService.URL).path(Uris.USERS)
                 .param("size", "4").param("page", "0").param("role","CUSTOMER").basicAuth(token, "")
                 .clazz(UserPageWrapper.class).get().build();
         assertNotNull(userPage);

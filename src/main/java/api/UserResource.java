@@ -1,7 +1,5 @@
 package api;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,9 +14,9 @@ import api.exceptions.InvalidUserFieldException;
 import api.exceptions.NotFoundUserIdException;
 import controllers.UserController;
 import entities.users.Role;
-import wrappers.UserDetailsWrapper;
 import wrappers.UserUpdateWrapper;
 import wrappers.UserWrapper;
+
 
 @RestController
 @RequestMapping(Uris.VERSION)
@@ -31,10 +29,6 @@ public class UserResource {
         this.userController = userController;
     }
 
-    @RequestMapping(value = Uris.USERS, method = RequestMethod.GET)
-    public List<UserDetailsWrapper> findAllUsers() {
-        return userController.findAllUsers();
-    }
 
     @RequestMapping(value = Uris.USERS, method = RequestMethod.PUT)
     public void updateUser(@RequestBody UserUpdateWrapper userUpdateWrapper) throws NotFoundUserIdException {
@@ -44,7 +38,7 @@ public class UserResource {
         userController.updateUser(userUpdateWrapper);
     }
 
-    @RequestMapping(value = Uris.USERS+Uris.SEARCH , method = RequestMethod.GET)
+    @RequestMapping(value = Uris.USERS , method = RequestMethod.GET)
     // @PreAuthorize("hasRole('ADMIN')")
     public Page<UserWrapper> userList(Pageable pageable, String role) throws InvalidUserFieldException {
         this.validateFieldObject(pageable, "Pageable: objeto para paginar");
