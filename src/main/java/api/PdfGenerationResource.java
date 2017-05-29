@@ -1,6 +1,7 @@
 package api;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import api.exceptions.InvoiceNotFoundException;
+import api.exceptions.NotFoundProductCodeException;
 import api.exceptions.TicketNotFoundException;
 import api.exceptions.VoucherNotFoundException;
 import controllers.PdfGenerationController;
@@ -58,7 +60,12 @@ public class PdfGenerationResource {
     }
 
     @RequestMapping(value = Uris.BARCODES, method = RequestMethod.POST)
-    public void generateBarcodesPdf() throws IOException {
-        pdfGenController.generateBarcodesPdf();
+    public void generateBarcodesPdf(@RequestBody List<String> productCodeList) throws IOException, NotFoundProductCodeException {
+        for (String productCode : productCodeList) {
+            if (!pdfGenController.productExists(productCode)) {
+                throw new NotFoundProductCodeException("Product code: " + productCode);
+            }
+        }
+        pdfGenController.generateBarcodesPdf(productCodeList);
     }
 }
