@@ -42,7 +42,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 	ngOnInit(){
 		this.cashierSubscription = this.cashierService.getCurrentCashierObservable().subscribe((currentCashier: CashierClosure) => {
 	      this.openedCashier = currentCashier.closureDate == null;
-	      (!this.openedCashier || currentCashier.openingDate == null) && this.router.navigate(['/home/opencashier']);
+	      (!this.openedCashier || currentCashier.openingDate == null) && this.router.navigate(['/home/open-cashier']);
     	});
     	this.cashierService.initialize();
 	}
@@ -94,7 +94,7 @@ export class OrderTrackingDialog {
   submitTicketReference(event: Event): void {
   	event.preventDefault();
   	this.dialogRef.close();
-  	this.router.navigate(['/ordertracking', this.ticketReferenceInput]);
+  	this.router.navigate(['/order-tracking', this.ticketReferenceInput]);
   }
 
 }
