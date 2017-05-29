@@ -9,11 +9,11 @@ import { OrderTrackingComponent } from './order-tracking.component';
 
 const routes: Routes = [
 	{ 
-        path: 'ordertracking/:reference', 
+        path: 'order-tracking/:reference', 
         component: OrderTrackingComponent 
     },
     { 
-        path: 'ordertracking', 
+        path: 'order-tracking', 
         redirectTo: 'home' 
     }
 ];

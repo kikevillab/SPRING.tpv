@@ -15,7 +15,7 @@ import { ToastService } from '../../../../../shared/services/toast.service';
   selector: 'user-association-view',
   templateUrl: './user-association.component.html',
   styles: [`
-    #disassociateUserButton, #newClientButton {
+    #disassociate-user-button, #new-client-button {
       position: absolute;
       right: 0px;
       top: 0px;

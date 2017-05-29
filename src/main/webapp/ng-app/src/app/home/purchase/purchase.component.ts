@@ -13,7 +13,7 @@ import { ToastService } from '../../shared/services/toast.service';
 @Component({
   selector: 'purchase-view',
   template: `
-    <h1 id="pageTitle">Purchase</h1>
+    <h1 id="page-title">Purchase</h1>
     <router-outlet></router-outlet>
   `
 })
