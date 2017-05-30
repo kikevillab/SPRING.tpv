@@ -23,8 +23,7 @@
 			  <p>Fill the form in order to create the a client:</p>
 			  <div fxLayout="column" fxLayout.gt-md="row" fxLayoutGap="1em">
 				 <md-input-container>
-				    <input mdInput placeholder="Mobile" type="tel" class="form-control" required [(ngModel)]="newUserInput.mobile" name="inputUserMobile" #mobileInput min="5" maxlength="15">
-				    <md-hint align="end">{{mobileInput.value.length}} / 15</md-hint>
+				    <input mdInput placeholder="Mobile" type="number" class="form-control" required [(ngModel)]="newUserInput.mobile" name="inputUserMobile" #mobileInput>
 				 </md-input-container>
 				 <md-input-container>
 				    <input mdInput placeholder="User name" type="text" class="form-control" required [(ngModel)]="newUserInput.username" name="inputUserUsername" #usernameInput maxLength="10">

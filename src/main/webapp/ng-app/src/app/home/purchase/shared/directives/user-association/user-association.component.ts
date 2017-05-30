@@ -65,8 +65,9 @@ export class UserAssociationComponent {
   newUser(event: Event): void {
     event.preventDefault();
     this.userService.newUser(this.newUserInput).then(() => {
-      this.shoppingService.associateUser(this.newUserInput.mobile).then(() => {
-        this.toastService.success('Client created', `The client with the mobile ${this.newUserInput.mobile} has been created`);
+      this.shoppingService.associateUser(this.newUserInput.mobile).then((user: User) => {
+        this.toastService.success('Client created', `The client with the mobile ${user.mobile} has been created`);
+        this.userAssociated = user;
         this.newClientOpened = false;
       }).catch((error: string) => {
         this.toastService.error('Error associating the client created', error);
