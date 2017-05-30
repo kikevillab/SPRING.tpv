@@ -5,8 +5,9 @@
 import { Injectable } from '@angular/core';
 import { Headers } from '@angular/http';
 
-import { API_GENERIC_URI, LOCAL_STORAGE_TOKEN_ATTRIBUTE } from '../../../../../app.config';
+import { API_GENERIC_URI, LOCAL_STORAGE_TOKEN_ATTRIBUTE, URI_USERS, ROLE_CUSTOMER } from '../../../../../app.config';
 
+import { ClientCreation } from '../../models/client-creation.model';
 import { User } from '../../../../shared/models/user.model';
 
 import { HTTPService } from '../../../../../shared/services/http.service';
@@ -21,12 +22,11 @@ export class UserService {
   newUser(user: User): Promise<any> {
     let sessionString: string = this.localStorageService.getItem(LOCAL_STORAGE_TOKEN_ATTRIBUTE);
     let parsedSession = JSON.parse(sessionString);
-    console.log(parsedSession.token);
     let headers = new Headers();
     headers.append('Authorization', 'Basic ' + btoa(parsedSession.token + ':'));
     return new Promise((resolve: Function, reject: Function) => {
-      this.httpService.post(`${API_GENERIC_URI}/customers`, user, headers).subscribe(
-        () => resolve(),
+      this.httpService.post(`${API_GENERIC_URI}${URI_USERS}?role=${ROLE_CUSTOMER}`, user, headers).subscribe(
+        () => resolve(user),
         (error: TPVHTTPError) => {reject(error.description);}
       );
     });

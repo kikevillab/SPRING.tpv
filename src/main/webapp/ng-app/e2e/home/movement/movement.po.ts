@@ -11,12 +11,12 @@ export class MovementView {
   }
 
   fillForm() {
-    element(by.id('amountInput')).sendKeys(1);
-    element(by.id('cashierClosureRadioButton')).click();
+    element(by.id('amount-input')).sendKeys(1);
+    element(by.id('cashier-closure-radio-button')).click();
   }
 
   getSubmitButton() {
-    return element(by.id('submitButton'));
+    return element(by.id('submit-button'));
   }
 
 }
