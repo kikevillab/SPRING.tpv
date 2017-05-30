@@ -1,5 +1,6 @@
 package controllers;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -44,9 +45,11 @@ public class ProductController {
         productDao.saveAndFlush(product);
     }
 
-    public byte[] generateBarcodesPdf(List<ProductBarcodeWrapper> productBarcodeWrappers) {
+    public byte[] generateBarcodesPdf(List<ProductBarcodeWrapper> productBarcodeWrappers) throws IOException {
         List<String> productBarcodes = productBarcodeWrappers.stream().map(ProductBarcodeWrapper::getBarcode)
                 .filter(barcode -> barcode != null && !barcode.isEmpty()).collect(Collectors.toList());
-        return pdfGenService.generateBarcodesPdf(productBarcodes);
+        List<Product> products = new ArrayList<>();
+        productBarcodes.forEach(barcode -> products.add(getProductByCode(barcode)));
+        return pdfGenService.generateBarcodesPdf(products);
     }
 }
