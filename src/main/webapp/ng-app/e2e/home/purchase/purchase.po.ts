@@ -10,20 +10,12 @@ export class PurchaseView {
     return browser.get('/home/purchase/payment');
   }
 
-  clickCashPaymentButton() {
-    return element(by.id('cash-paymentButton')).click();
+  fillUserAssociationForm() {
+    return element(by.id('mobile-number-input')).sendKeys(123456789);
   }
 
-  clickMoneyButton(quantity:number) {
-    return element(by.id(`number-${quantity}`)).click();
-  }
-
-  clickRemoveMoneyButton(quantity:number) {
-    return element(by.id(`remove-${quantity}`)).click();
-  }
-
-  getMoneyChargedText() {
-    return element(by.id(`money-charged`)).getText();
+  getUserAssociationButton() {
+    return element(by.id('submit-mobile-numbe-input-button'));
   }
 
 }

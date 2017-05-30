@@ -1,4 +1,4 @@
-<div id="scroll-container" (scroll)="scrollHandler($event)">
+<div id="scroll-container" [style.height.px]="calculateContainerHeight()" (scroll)="scrollHandler($event)" #scrollContainer >
 	<h1 id="page-title">Products</h1>
 	<div class="margin-sides">
 		<button md-mini-fab color="warn" mdTooltip="Reset search" mdTooltipPosition="below" (click)="resetSearch()" id="reset-search-button" *ngIf="filtered">
@@ -9,7 +9,7 @@
 				<md-card-content fxLayout="row" fxLayout.xs="column" fxLayout.sm="column">
 					<form (ngSubmit)="search($event)" #searchForm="ngForm" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-around" id="search-container">
 						<md-input-container>
-							<input mdInput type="text" maxLength="255" class="form-control" id="nameInput" required placeholder="Name"
+							<input mdInput type="text" maxLength="255" class="form-control" id="name-input" required placeholder="Name"
 							[(ngModel)]="nameInput" name="nameInput" #name="ngModel">
 						</md-input-container>	
 						<div fxLayout="column">		
@@ -37,4 +37,7 @@
 	<ng-template #spinner>
 		<md-spinner></md-spinner>
 	</ng-template>
+	<button md-mini-fab color="primary" [style.top.px]="getScrollToTopButtonTopPx()" *ngIf="pxScrolled > 50" mdTooltip="Scroll to top" mdTooltipPosition="below" (click)="scrollToTop()" id="scroll-to-top-button">
+		<md-icon>keyboard_arrow_up</md-icon>
+	</button>
 </div>
