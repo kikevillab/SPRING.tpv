@@ -100,13 +100,10 @@ public class PdfGeneratorServiceIT {
     @Test
     public void testGenerateBarcodesPdf() throws IOException {
         List<Product> embroideryAndTextile = new ArrayList<>();
-
         List<Embroidery> embroideryList = embroideryDao.findAll();
         embroideryAndTextile.addAll(embroideryList);
-
         List<TextilePrinting> textilePrintingList = textilePrintingDao.findAll();
         embroideryAndTextile.addAll(textilePrintingList);
-
         byte[] pdfByteArray = pdfGenService.generateBarcodesPdf(embroideryAndTextile);
         String path = PDFS_ROOT + BARCODES_PDFS_ROOT + BARCODE_PDF + PDF_FILE_EXT;
         File pdfFile = new File(path);
