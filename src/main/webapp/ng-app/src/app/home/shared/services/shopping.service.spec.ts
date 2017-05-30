@@ -9,8 +9,10 @@ import 'rxjs/add/observable/of';
 
 import { CartProduct } from '../models/cart-product.model';
 import { User } from '../models/user.model';
+import { Voucher } from '../models/voucher.model';
 
 import { ShoppingService } from './shopping.service';
+import { CashierService } from './cashier.service';
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
 import { HTTPService } from '../../../shared/services/http.service';
 
@@ -53,7 +55,8 @@ describe('Service: ShoppingService', () => {
         provide: Http,
         useFactory: (backend, options) => new Http(backend, options),
         deps: [MockBackend, BaseRequestOptions]
-      }
+      },
+      CashierService
       ]
     });
     shoppingService = TestBed.get(ShoppingService);
@@ -105,6 +108,18 @@ describe('Service: ShoppingService', () => {
     shoppingService.addProduct(product_code).then(() => {
       expect(totalPrice).toBe(12.21);
     });
+  });
+
+  it(`Should add a voucher when 'addVoucher()' method is called`, () => {
+    shoppingService.addVoucher('reference').then((voucher: Voucher) => {
+      expect(shoppingService.getVouchers()).toContain(voucher);
+    });
+  });
+
+  it(`Should remove a voucher from the list when 'removeVoucher()' method is called`, () => {
+    let voucher: Voucher = new Voucher('reference', 12, 0, 0, 0);
+    shoppingService.removeVoucher(voucher);
+    expect(shoppingService.getVouchers()).not.toContain(voucher);
   });
 
   it(`Should clear the cart when 'clear()' method is called`,() => {

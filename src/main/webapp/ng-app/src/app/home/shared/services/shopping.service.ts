@@ -14,6 +14,7 @@ import { User } from '../models/user.model';
 import { TicketCheckout } from '../models/ticket-checkout.model';
 import { Voucher } from '../models/voucher.model';
 import { NewTicketResponse } from '../models/new-ticket-response.model';
+import { CashierService } from './cashier.service';
 
 import { HTTPService } from '../../../shared/services/http.service';
 import { TPVHTTPError } from '../../../shared/models/tpv-http-error.model';
@@ -36,7 +37,7 @@ export class ShoppingService {
   private submitted: boolean = false;
   private ticketId: number;
 
-  constructor (private storageService: LocalStorageService, private httpService: HTTPService) {
+  constructor (private storageService: LocalStorageService, private httpService: HTTPService, private cashierService: CashierService) {
     this.updateCart();
   }
 
@@ -74,12 +75,14 @@ export class ShoppingService {
 
   submitOrder(): Promise<any> {
     return new Promise((resolve: Function, reject: Function) => {
-      let newTicket: TicketCheckout = new TicketCheckout(this.cartProducts, this.vouchers, this.userMobile);
+      let vouchersReferences: string[] = this.vouchers.map((voucher: Voucher) => voucher.reference);
+      let newTicket: TicketCheckout = new TicketCheckout(this.cartProducts, vouchersReferences, this.userMobile);
       this.httpService.post(`${API_GENERIC_URI}${URI_TICKETS}`, newTicket).subscribe((ticketCreated: NewTicketResponse) => {
         this.submitted = true;
         this.submittedSubject.next(this.submitted);
         this.ticketId = ticketCreated.ticketId;
         this.clear();
+        this.cashierService.initialize();
         resolve(ticketCreated);
       }, (error: TPVHTTPError) => reject(error.description));
     });
