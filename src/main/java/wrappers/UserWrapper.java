@@ -3,6 +3,8 @@ package wrappers;
 import entities.users.User;
 
 public class UserWrapper {
+    
+    private int id;
 
     private long mobile;
 
@@ -29,6 +31,7 @@ public class UserWrapper {
         this.email = user.getEmail();
         this.address=user.getAddress();
         this.active=user.isActive();
+        this.id=user.getId();
     }
 
     public UserWrapper(long mobile, String username, String password) {
@@ -37,17 +40,31 @@ public class UserWrapper {
         this.password = password;
     }
     
-    public UserWrapper(long mobile, String username, String password, String dni, String address, String email,
-            boolean active) {
+    
+
+    public UserWrapper(int id, long mobile, String username, String password, String dni, String email, String address, boolean active) {
+        super();
+        this.id = id;
         this.mobile = mobile;
         this.username = username;
         this.password = password;
         this.dni = dni;
-        this.address = address;
         this.email = email;
+        this.address = address;
         this.active = active;
     }
 
+    public UserWrapper(long mobile, String username, String password, String dni, String email, String address, boolean active) {
+        super();
+        this.mobile = mobile;
+        this.username = username;
+        this.password = password;
+        this.dni = dni;
+        this.email = email;
+        this.address = address;
+        this.active = active;
+    }
+    
     public long getMobile() {
         return mobile;
     }
@@ -106,10 +123,18 @@ public class UserWrapper {
         this.active = active;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
-        return "UserWrapper [mobile=" + mobile + ", username=" + username + ", password=" + password + ", dni=" + dni + ", email=" + email
-                + ", address=" + address + ", active=" + active + "]";
+        return "UserWrapper [id=" + id + ", mobile=" + mobile + ", username=" + username + ", password=" + password + ", dni=" + dni
+                + ", email=" + email + ", address=" + address + ", active=" + active + "]";
     }
 
     @Override
@@ -120,6 +145,7 @@ public class UserWrapper {
         result = prime * result + ((address == null) ? 0 : address.hashCode());
         result = prime * result + ((dni == null) ? 0 : dni.hashCode());
         result = prime * result + ((email == null) ? 0 : email.hashCode());
+        result = prime * result + id;
         result = prime * result + (int) (mobile ^ (mobile >>> 32));
         result = prime * result + ((password == null) ? 0 : password.hashCode());
         result = prime * result + ((username == null) ? 0 : username.hashCode());
@@ -152,6 +178,8 @@ public class UserWrapper {
                 return false;
         } else if (!email.equals(other.email))
             return false;
+        if (id != other.id)
+            return false;
         if (mobile != other.mobile)
             return false;
         if (password == null) {
@@ -168,7 +196,4 @@ public class UserWrapper {
     }
 
     
-
-    
-
 }

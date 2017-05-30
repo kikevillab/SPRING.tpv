@@ -15,7 +15,6 @@ import entities.users.Authorization;
 import entities.users.Role;
 import entities.users.User;
 import wrappers.UserDetailsWrapper;
-import wrappers.UserUpdateWrapper;
 import wrappers.UserWrapper;
 
 @Controller
@@ -136,13 +135,14 @@ public class UserController {
         return userDetailsWrapper;
     }
 
-    public void updateUser(UserUpdateWrapper userUpdateWrapper) {
-        User user = userDao.findOne(userUpdateWrapper.getId());
-        user.setAddress(userUpdateWrapper.getAddress());
-        user.setDni(userUpdateWrapper.getDni());
-        user.setEmail(userUpdateWrapper.getEmail());
-        user.setUsername(userUpdateWrapper.getUsername());
-        user.setMobile(userUpdateWrapper.getMobile());
+    public void updateUser(UserWrapper UserWrapper) {
+        User user = userDao.findOne(UserWrapper.getId());
+        user.setAddress(UserWrapper.getAddress());
+        user.setDni(UserWrapper.getDni());
+        user.setEmail(UserWrapper.getEmail());
+        user.setUsername(UserWrapper.getUsername());
+        user.setMobile(UserWrapper.getMobile());
+        user.setActive(UserWrapper.isActive());
         userDao.save(user);
     }
 

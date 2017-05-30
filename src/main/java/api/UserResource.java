@@ -14,7 +14,6 @@ import api.exceptions.InvalidUserFieldException;
 import api.exceptions.NotFoundUserIdException;
 import controllers.UserController;
 import entities.users.Role;
-import wrappers.UserUpdateWrapper;
 import wrappers.UserWrapper;
 
 
@@ -31,11 +30,11 @@ public class UserResource {
 
 
     @RequestMapping(value = Uris.USERS, method = RequestMethod.PUT)
-    public void updateUser(@RequestBody UserUpdateWrapper userUpdateWrapper) throws NotFoundUserIdException {
-        if (!userController.userExists(userUpdateWrapper.getId())) {
-            throw new NotFoundUserIdException("User id: " + userUpdateWrapper.getId());
+    public void updateUser(@RequestBody UserWrapper userWrapper) throws NotFoundUserIdException {
+        if (!userController.userExists(userWrapper.getId())) {
+            throw new NotFoundUserIdException("User id: " + userWrapper.getId());
         }
-        userController.updateUser(userUpdateWrapper);
+        userController.updateUser(userWrapper);
     }
 
     @RequestMapping(value = Uris.USERS , method = RequestMethod.GET)

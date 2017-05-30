@@ -10,9 +10,9 @@ import * as moment from 'moment/moment';
 
 import { API_GENERIC_URI, URI_VOUCHERS, URI_INVOICES } from '../../../../../app.config';
 
+import { InvoiceCreation } from '../models/invoice-creation.model';
 import { VoucherCreation } from '../../../../shared/models/voucher-creation.model';
 import { Voucher } from '../../../../shared/models/voucher.model';
-
 import { Amount } from '../../../../shared/models/amount.model';
 import { HTTPService } from '../../../../../shared/services/http.service';
 import { TPVHTTPError } from '../../../../../shared/models/tpv-http-error.model';
@@ -29,7 +29,7 @@ export class PrintService {
       let voucherWrapper: VoucherCreation = new VoucherCreation(amount, expirationDate);
       let headers = new Headers();
       headers.append('Accept', 'application/pdf');
-      this.httpService.post(`${API_GENERIC_URI}${URI_VOUCHERS}`, voucherWrapper, headers).subscribe((response: any) => {
+      this.httpService.post(`${API_GENERIC_URI}${URI_VOUCHERS}`, voucherWrapper, headers).subscribe((response: Blob) => {
         resolve(response);
       },(error: TPVHTTPError) => {
         reject(error.description);
@@ -37,16 +37,16 @@ export class PrintService {
     });
   }
 
-  createInvoice(ticketId: number): Promise<any> {
+  createInvoice(ticketId: number, userMobile: number): Promise<any> {
     return new Promise((resolve: Function, reject: Function) => {
-        resolve(ticketId);
-      // let headers = new Headers();
-      // headers.append('Accept', 'application/pdf');
-      // this.httpService.post(`${API_GENERIC_URI}${URI_INVOICES}`, amountWrapper, headers).subscribe((voucher: Voucher) => {
-      //   resolve(voucher);
-      // },(error: TPVHTTPError) => {
-      //   reject(error.description);
-      // });
+      let invoiceCreationWrapper: InvoiceCreation = new InvoiceCreation(ticketId, userMobile);
+      let headers = new Headers();
+      headers.append('Accept', 'application/pdf');
+      this.httpService.post(`${API_GENERIC_URI}${URI_INVOICES}`, invoiceCreationWrapper, headers).subscribe((response: Blob) => {
+        resolve(response);
+      },(error: TPVHTTPError) => {
+        reject(error.description);
+      });
     });
   }
 
