@@ -6,8 +6,6 @@ import static config.ResourceNames.TICKET_PDF_FILENAME_ROOT;
 import java.text.SimpleDateFormat;
 
 import com.itextpdf.kernel.geom.PageSize;
-import com.itextpdf.kernel.pdf.PdfDocument;
-import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 
@@ -32,7 +30,7 @@ public class TicketPdfGenerator extends PdfGenerator<Ticket> {
     }
 
     @Override
-    protected void buildPdf(PdfDocument pdfDocument, Document document) {
+    protected void buildPdf() {
         document.setFontSize(3.0f);
         document.add(new Paragraph("Reference: " + entity.getReference()));
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");

@@ -16,12 +16,13 @@
 
 body{
 	background-color: #f1f1f1;
-	margin:0;
+	margin: 0;
 	font-family: 'Roboto', sans-serif;
 }
 
 .content {
-	padding:1em;
+	padding: 1em;
+	padding-bottom: -1em;
 }
 
 .align-right {
@@ -40,12 +41,11 @@ body{
 	flex: 1 1 auto;
 }
 
-.datatable-body-row{
-	border-top-style:solid;
-	border-top-color:lightgrey;
+.datatable-body-row {
+	border-top-style: solid;
+	border-top-color: lightgrey;
 	border-top-width: 0.5px;
 }
-
 /*Chrome yellow inputs bug fix*/
 input:-webkit-autofill {
 	-webkit-box-shadow: 0 0 0px 1000px white inset;
@@ -60,7 +60,7 @@ input:-webkit-autofill {
 }
 
 a {
-    text-decoration: none;
+	text-decoration: none;
 }
 
 a, a:visited {

@@ -22,15 +22,15 @@ const routes: Routes = [
 	    children: [
 	   		{ path: '', redirectTo: 'search', pathMatch: 'full' },
 	   		{ path: 'search', component: SearchComponent },
-	    	{ path: 'opencashier', component: OpenCashierComponent },
-	    	{ path: 'closecashier', component: CloseCashierComponent },
+	    	{ path: 'open-cashier', component: OpenCashierComponent },
+	    	{ path: 'close-cashier', component: CloseCashierComponent },
 	    	{ path: 'movement', component: MovementComponent },
 	    	{ path: 'purchase', component: PurchaseComponent, children: [
 		   		{ path: '', redirectTo: 'payment', pathMatch: 'full' },
 		    	{ path: 'payment', component: PaymentComponent },
 		    	{ path: 'print', component: PrintComponent }
 	    	] },
-	    	{ path: 'ticketsoftheday', component: TicketsOfTheDayComponent }
+	    	{ path: 'tickets-of-the-day', component: TicketsOfTheDayComponent }
 	    ]
 	},
 ];

@@ -1,22 +1,18 @@
 package controllers;
 
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import daos.core.EmbroideryDao;
 import daos.core.InvoiceDao;
-import daos.core.TextilePrintingDao;
+import daos.core.ProductDao;
 import daos.core.TicketDao;
 import daos.core.VoucherDao;
-import entities.core.Embroidery;
 import entities.core.Invoice;
 import entities.core.InvoicePK;
 import entities.core.Product;
-import entities.core.TextilePrinting;
 import entities.core.Ticket;
 import entities.core.TicketPK;
 import entities.core.Voucher;
@@ -33,9 +29,7 @@ public class PdfGenerationController {
 
     private VoucherDao voucherDao;
 
-    private EmbroideryDao embroideryDao;
-
-    private TextilePrintingDao textilePrintingDao;
+    private ProductDao productDao;
 
     @Autowired
     public void setPdfGenerationService(PdfGenerationService pdfGenService) {
@@ -58,40 +52,28 @@ public class PdfGenerationController {
     }
 
     @Autowired
-    public void setEmbroideryDao(EmbroideryDao embroideryDao) {
-        this.embroideryDao = embroideryDao;
+    public void setProductDao(ProductDao productDao) {
+        this.productDao = productDao;
     }
 
-    @Autowired
-    public void setTextilePrintingDao(TextilePrintingDao textilePrintingDao) {
-        this.textilePrintingDao = textilePrintingDao;
-    }
-
-    public void generateInvoicePdf(int invoiceId) throws FileNotFoundException {
+    public void generateInvoicePdf(int invoiceId) throws IOException {
         Invoice invoice = invoiceDao.findOne(new InvoicePK(invoiceId));
         pdfGenService.generateInvoicePdf(invoice);
     }
 
-    public void generateTicketPdf(long ticketId) throws FileNotFoundException {
+    public void generateTicketPdf(long ticketId) throws IOException {
         Ticket ticket = ticketDao.findOne(new TicketPK(ticketId));
         pdfGenService.generateTicketPdf(ticket);
     }
 
-    public void generateVoucherPdf(int voucherId) throws FileNotFoundException {
+    public void generateVoucherPdf(int voucherId) throws IOException {
         Voucher voucher = voucherDao.findOne(voucherId);
         pdfGenService.generateVoucherPdf(voucher);
     }
 
-    public void generateBarcodesPdf() throws FileNotFoundException {
-        List<Product> embroideryAndTextile = new ArrayList<>();
-
-        List<Embroidery> embroideryList = embroideryDao.findAll();
-        embroideryAndTextile.addAll(embroideryList);
-        
-        List<TextilePrinting> textilePrintingList = textilePrintingDao.findAll();
-        embroideryAndTextile.addAll(textilePrintingList);
-
-        pdfGenService.generateBarcodesPdf(embroideryAndTextile);
+    public void generateBarcodesPdf(List<String> productCodeList) throws IOException {
+        List<Product> productList = productDao.findAll(productCodeList);
+        pdfGenService.generateBarcodesPdf(productList);
     }
 
     public boolean ticketExists(long ticketId) {
@@ -104,6 +86,10 @@ public class PdfGenerationController {
 
     public boolean voucherExists(int voucherId) {
         return voucherDao.exists(voucherId);
+    }
+
+    public boolean productExists(String code) {
+        return productDao.exists(code);
     }
 
 }

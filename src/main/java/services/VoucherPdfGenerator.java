@@ -6,8 +6,6 @@ import static config.ResourceNames.VOUCHER_PDF_FILENAME_ROOT;
 import java.text.SimpleDateFormat;
 
 import com.itextpdf.kernel.geom.PageSize;
-import com.itextpdf.kernel.pdf.PdfDocument;
-import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
 
 import entities.core.Voucher;
@@ -29,7 +27,7 @@ public class VoucherPdfGenerator extends PdfGenerator<Voucher> {
     }
 
     @Override
-    protected void buildPdf(PdfDocument pdfDocument, Document document) {
+    protected void buildPdf() {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         document.add(new Paragraph("Referencia: " + entity.getReference()));
         document.add(new Paragraph("Valor: " + entity.getValue().toPlainString()));

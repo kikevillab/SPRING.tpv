@@ -17,18 +17,18 @@ import { ToastService } from '../../shared/services/toast.service';
   selector: 'shopping-cart-view',
   templateUrl: './shopping-cart.component.html',
   styles: [`
-    #mobileMenuButton {
+    #mobile-menu-button {
       position: absolute;
       top: 0px;
       left: 0px;
     }
-    @media only screen and (min-width: 480px) {
-      #paddingContainer {
+    @media only screen and (min-width: 600px) {
+      #padding-container {
         padding: 10em;
         padding-top: 0em;
       }
     }
-    #clearCartButton, #openCalculatorButton {
+    #clear-cart-button, #open-calculator-button {
       margin-left: 0.4em;
       float: right;
     }

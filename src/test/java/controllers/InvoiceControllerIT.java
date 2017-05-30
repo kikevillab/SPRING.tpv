@@ -3,6 +3,7 @@ package controllers;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.io.IOException;
 import java.util.Calendar;
 
 import org.junit.Test;
@@ -20,7 +21,7 @@ import entities.core.Invoice;
 import entities.core.InvoicePK;
 import entities.core.Ticket;
 import entities.core.TicketPK;
-import wrappers.InvoiceWrapper;
+import wrappers.InvoiceCreationResponseWrapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {PersistenceConfig.class, TestsPersistenceConfig.class, TestsControllerConfig.class})
@@ -41,22 +42,22 @@ public class InvoiceControllerIT {
     }
 
     @Test
-    public void testCreateInvoiceWithAtLeastOneInvoiceThisYear() {
+    public void testCreateInvoiceWithAtLeastOneInvoiceThisYear() throws IOException {
         Ticket ticket = ticketDao.findOne(new TicketPK(2L));
         Invoice latestInvoice = invoiceDao.findFirstByOrderByCreatedDescIdDesc();
-        InvoiceWrapper invoice = invoiceController.createInvoice(ticket);
-        assertNotNull(invoice);
-        assertEquals(Calendar.getInstance().get(Calendar.YEAR) + latestInvoice.getId() + 1, invoice.getId());
-        invoiceDao.delete(new InvoicePK(invoice.getId()));
+        InvoiceCreationResponseWrapper responseWrapper = invoiceController.createInvoice(ticket);
+        assertNotNull(responseWrapper);
+        assertEquals(Calendar.getInstance().get(Calendar.YEAR) + latestInvoice.getId() + 1, responseWrapper.getInvoiceId());
+        invoiceDao.delete(new InvoicePK(responseWrapper.getInvoiceId()));
     }
 
     @Test
-    public void testCreateInvoiceWithNoInvoicesThisYear() {
+    public void testCreateInvoiceWithNoInvoicesThisYear() throws IOException {
         invoiceDao.deleteAll();
         Ticket ticket = ticketDao.findOne(new TicketPK(2L));
-        InvoiceWrapper invoice = invoiceController.createInvoice(ticket);
-        assertNotNull(invoice);
-        assertEquals(Calendar.getInstance().get(Calendar.YEAR) + 1, invoice.getId());
-        invoiceDao.delete(new InvoicePK(invoice.getId()));
+        InvoiceCreationResponseWrapper responseWrapper = invoiceController.createInvoice(ticket);
+        assertNotNull(responseWrapper);
+        assertEquals(Calendar.getInstance().get(Calendar.YEAR) + 1, responseWrapper.getInvoiceId());
+        invoiceDao.delete(new InvoicePK(responseWrapper.getInvoiceId()));
     }
 }

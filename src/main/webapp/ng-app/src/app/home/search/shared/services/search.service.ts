@@ -27,20 +27,10 @@ export class SearchService {
       let image: string = `http://localhost:8080/SPRING.tpv.1.2.0-SNAPSHOT/assets/img/products/img-product-${number}.png`;
       this.categories.push(new Category(i, "category"+i, null, image));
     }
-    for (let i = 1; i < 8; i++){
+    for (let i = 1; i < 50; i++){
       let number = (i <= 6) ? i : (i%6 +1);
       let image: string = `http://localhost:8080/SPRING.tpv.1.2.0-SNAPSHOT/assets/img/products/img-product-${number}.png`;
       this.categories.push(new Category(i, "article"+i, "8400000111"+i, image));
-    }
-    for (let i = 1; i < 8; i++){
-      let number = (i <= 6) ? i : (i%6 +1);
-      let image: string = `http://localhost:8080/SPRING.tpv.1.2.0-SNAPSHOT/assets/img/products/img-product-${number}.png`;
-      this.categories.push(new Category(i, "product"+i, "8400000222"+i, image));
-    }
-    for (let i = 1; i < 8; i++){
-      let number = (i <= 6) ? i : (i%6 +1);
-      let image: string = `http://localhost:8080/SPRING.tpv.1.2.0-SNAPSHOT/assets/img/products/img-product-${number}.png`;
-      this.categories.push(new Category(i, "product"+i, "8400000333"+i, image));
     }
   }
 
@@ -48,7 +38,18 @@ export class SearchService {
     this.parentCategory = id ? id : undefined;
     return new Promise((resolve: Function, reject: Function) => {
       resolve(this.categories);
-      // this.httpService.get(`${API_GENERIC_URI}/categories?parent=${this.rootCategory}`).subscribe((categories: Category[]) => {
+      // this.httpService.get(`${API_GENERIC_URI}/categories?parent=${this.parentCategory}`).subscribe((categories: Category[]) => {
+      //   resolve(categories);
+      // },(error: TPVHTTPError) => {
+      //   reject(error.description);
+      // });
+    });
+  }
+
+  search(name: string): Promise<any> {
+    return new Promise((resolve: Function, reject: Function) => {
+    resolve(this.categories);
+    // this.httpService.get(`${API_GENERIC_URI}/categories?parent=${this.rootCategory}?name=${name}`).subscribe((categories: Category[]) => {
       //   resolve(categories);
       // },(error: TPVHTTPError) => {
       //   reject(error.description);
@@ -70,6 +71,10 @@ export class SearchService {
       //   reject(error.description);
       // });
     });
+  }
+
+  getParentCategory(): number {
+  	return this.parentCategory;
   }
 
  

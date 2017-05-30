@@ -6,13 +6,15 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Subject } from 'rxjs/Subject';
 
-import { API_GENERIC_URI } from '../../../app.config';
+import { API_GENERIC_URI, URI_PRODUCTS, URI_TICKETS, URI_USERS, URI_VOUCHERS } from '../../../app.config';
 
 import { CartProduct } from '../models/cart-product.model';
 import { Product } from '../../../shared/models/product.model';
 import { User } from '../models/user.model';
 import { TicketCheckout } from '../models/ticket-checkout.model';
 import { Voucher } from '../models/voucher.model';
+import { NewTicketResponse } from '../models/new-ticket-response.model';
+import { CashierService } from './cashier.service';
 
 import { HTTPService } from '../../../shared/services/http.service';
 import { TPVHTTPError } from '../../../shared/models/tpv-http-error.model';
@@ -33,15 +35,15 @@ export class ShoppingService {
   private cashReceived: number = 0;
   private vouchers: Voucher[] = [];
   private submitted: boolean = false;
-  private ticketReference: string;
+  private ticketId: number;
 
-  constructor (private storageService: LocalStorageService, private httpService: HTTPService) {
+  constructor (private storageService: LocalStorageService, private httpService: HTTPService, private cashierService: CashierService) {
     this.updateCart();
   }
 
   addProduct(productCode: string): Promise<any> {
     return new Promise((resolve: Function, reject: Function) => {
-      this.httpService.get(`${API_GENERIC_URI}/products/${productCode}`).subscribe((productDetails: Product) => {
+      this.httpService.get(`${API_GENERIC_URI}${URI_PRODUCTS}/${productCode}`).subscribe((productDetails: Product) => {
         let index: number = this.cartProducts.findIndex((cp: CartProduct) => cp.productCode == productCode);
         index > -1 
           ? this.cartProducts[index].amount++
@@ -73,12 +75,14 @@ export class ShoppingService {
 
   submitOrder(): Promise<any> {
     return new Promise((resolve: Function, reject: Function) => {
-      let newTicket: TicketCheckout = new TicketCheckout(this.cartProducts, this.vouchers, this.userMobile);
-      this.httpService.post(`${API_GENERIC_URI}/tickets`, newTicket).subscribe((ticketCreated: any) => {
+      let vouchersReferences: string[] = this.vouchers.map((voucher: Voucher) => voucher.reference);
+      let newTicket: TicketCheckout = new TicketCheckout(this.cartProducts, vouchersReferences, this.userMobile);
+      this.httpService.post(`${API_GENERIC_URI}${URI_TICKETS}`, newTicket).subscribe((ticketCreated: NewTicketResponse) => {
         this.submitted = true;
         this.submittedSubject.next(this.submitted);
-        this.ticketReference = ticketCreated.ticketReference;
+        this.ticketId = ticketCreated.ticketId;
         this.clear();
+        this.cashierService.initialize();
         resolve(ticketCreated);
       }, (error: TPVHTTPError) => reject(error.description));
     });
@@ -86,7 +90,7 @@ export class ShoppingService {
 
   associateUser(userMobile: number): Promise<User> {
     return new Promise((resolve: Function,reject: Function) => {
-      this.httpService.get(`${API_GENERIC_URI}/users/${userMobile}`).subscribe((associatedUser: User) => {
+      this.httpService.get(`${API_GENERIC_URI}${URI_USERS}/${userMobile}`).subscribe((associatedUser: User) => {
         this.userMobile = associatedUser.mobile;
         this.userMobileSubject.next(this.userMobile);
         resolve(associatedUser);
@@ -101,7 +105,7 @@ export class ShoppingService {
 
   addVoucher(reference: string): Promise<any> {
     return new Promise((resolve: Function, reject: Function) => {
-      this.httpService.get(`${API_GENERIC_URI}/vouchers/${reference}`).subscribe((voucher: Voucher) => {
+      this.httpService.get(`${API_GENERIC_URI}${URI_VOUCHERS}/${reference}`).subscribe((voucher: Voucher) => {
         let today: Date = new Date();
         if (voucher.expiration < today.getTime()){
           reject('The voucher entered is expired');
@@ -201,8 +205,8 @@ export class ShoppingService {
     return this.cashReceivedSubject.asObservable();
   }
 
-  getTicketReference(): string {
-    return this.ticketReference;
+  getTicketId(): number {
+    return this.ticketId;
   }
 
   isShoppingCartEmpty(): boolean {

@@ -8,7 +8,6 @@ import java.util.List;
 import com.itextpdf.barcodes.BarcodeEAN;
 import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.pdf.PdfDocument;
-import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
@@ -26,8 +25,8 @@ public class BarcodesPdfGenerator extends PdfGenerator<List<Product>> {
 
     private final static float[] BARCODE_COLUMN_WIDTH = new float[] {50.0f, 50.0f, 50.0f, 50.0f};
 
-    public BarcodesPdfGenerator(List<Product> embroideryAndTextile) {
-        super(embroideryAndTextile);
+    public BarcodesPdfGenerator(List<Product> productList) {
+        super(productList);
     }
 
     @Override
@@ -41,17 +40,15 @@ public class BarcodesPdfGenerator extends PdfGenerator<List<Product>> {
     }
 
     @Override
-    protected void buildPdf(PdfDocument pdfDocument, Document document) {
+    protected void buildPdf() {
         Table table = new Table(BARCODE_COLUMN_WIDTH);
-        for (int i = 0; i < entity.size(); i++) {
-            Product product = entity.get(i);
-            table.addCell(createBarcode(product, pdfDocument));
+        for (Product product : entity) {
+            table.addCell(createBarcode(product, document.getPdfDocument()));
         }
         document.add(table);
-        document.close();
     }
 
-    public static Cell createBarcode(Product product, PdfDocument pdfDocument) {
+    private Cell createBarcode(Product product, PdfDocument pdfDocument) {
         BarcodeEAN barcode = new BarcodeEAN(pdfDocument);
         barcode.setCodeType(BarcodeEAN.EAN13);
         barcode.setCode(product.getCode());

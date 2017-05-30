@@ -15,12 +15,12 @@ import { ToastService } from '../../../../../shared/services/toast.service';
   selector: 'user-association-view',
   templateUrl: './user-association.component.html',
   styles: [`
-    #disassociateUserButton, #newClientButton {
+    #disassociate-user-button, #new-client-button {
       position: absolute;
       right: 0px;
       top: 0px;
     }
-    @media only screen and (min-width: 768px) {
+    @media only screen and (min-width: 960px) {
       #button-container > button {
         width: 50%;
       }
@@ -65,8 +65,9 @@ export class UserAssociationComponent {
   newUser(event: Event): void {
     event.preventDefault();
     this.userService.newUser(this.newUserInput).then(() => {
-      this.shoppingService.associateUser(this.newUserInput.mobile).then(() => {
-        this.toastService.success('Client created', `The client with the mobile ${this.newUserInput.mobile} has been created`);
+      this.shoppingService.associateUser(this.newUserInput.mobile).then((user: User) => {
+        this.toastService.success('Client created', `The client with the mobile ${user.mobile} has been created`);
+        this.userAssociated = user;
         this.newClientOpened = false;
       }).catch((error: string) => {
         this.toastService.error('Error associating the client created', error);

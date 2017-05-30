@@ -17,7 +17,7 @@ import { ToastService } from '../../../shared/services/toast.service';
   selector: 'product-details-view',
   templateUrl: './product-details.component.html',
   styles: [`
-  	@media only screen and (min-width: 768px) {
+  	@media only screen and (min-width: 960px) {
 		  #dialog-content {
   			width: 40em;
   		}
