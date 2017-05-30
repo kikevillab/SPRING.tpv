@@ -24,7 +24,6 @@ import daos.users.UserDao;
 import entities.users.Role;
 import entities.users.User;
 import wrappers.UserDetailsWrapper;
-import wrappers.UserUpdateWrapper;
 import wrappers.UserWrapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -67,7 +66,7 @@ public class UserControllerIT {
     @Test
     public void testUpdateUser() {
         User user = userDao.findOne(1);
-        UserUpdateWrapper userWrapper = new UserUpdateWrapper();
+        UserWrapper userWrapper = new UserWrapper();
         userWrapper.setId(user.getId());
         userWrapper.setAddress("address");
         userWrapper.setDni(user.getDni());
@@ -75,6 +74,7 @@ public class UserControllerIT {
         userWrapper.setMobile(user.getMobile());
         userWrapper.setUsername(user.getUsername());
         userWrapper.setPassword(user.getPassword());
+        userWrapper.setActive(user.isActive());
         userController.updateUser(userWrapper);
         user = userDao.findOne(1);
         assertEquals("address", user.getAddress());
