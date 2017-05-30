@@ -37,9 +37,9 @@ export class PrintService {
     });
   }
 
-  createInvoice(ticketId: number): Promise<any> {
+  createInvoice(ticketId: number, userMobile: number): Promise<any> {
     return new Promise((resolve: Function, reject: Function) => {
-      let invoiceCreationWrapper: InvoiceCreation = new InvoiceCreation(ticketId);
+      let invoiceCreationWrapper: InvoiceCreation = new InvoiceCreation(ticketId, userMobile);
       let headers = new Headers();
       headers.append('Accept', 'application/pdf');
       this.httpService.post(`${API_GENERIC_URI}${URI_INVOICES}`, invoiceCreationWrapper, headers).subscribe((response: Blob) => {
