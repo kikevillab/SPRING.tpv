@@ -46,7 +46,6 @@ public class BarcodesPdfGenerator extends PdfGenerator<List<Product>> {
             table.addCell(createBarcode(product, document.getPdfDocument()));
         }
         document.add(table);
-        document.close();
     }
 
     private Cell createBarcode(Product product, PdfDocument pdfDocument) {
