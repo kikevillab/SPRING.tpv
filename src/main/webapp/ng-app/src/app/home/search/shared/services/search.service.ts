@@ -38,7 +38,7 @@ export class SearchService {
     this.parentCategory = id ? id : undefined;
     return new Promise((resolve: Function, reject: Function) => {
       resolve(this.categories);
-      // this.httpService.get(`${API_GENERIC_URI}/categories?parent=${this.rootCategory}`).subscribe((categories: Category[]) => {
+      // this.httpService.get(`${API_GENERIC_URI}/categories?parent=${this.parentCategory}`).subscribe((categories: Category[]) => {
       //   resolve(categories);
       // },(error: TPVHTTPError) => {
       //   reject(error.description);
@@ -71,6 +71,10 @@ export class SearchService {
       //   reject(error.description);
       // });
     });
+  }
+
+  getParentCategory(): number {
+  	return this.parentCategory;
   }
 
  
