@@ -11,6 +11,7 @@ import org.junit.rules.ExpectedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.HttpClientErrorException;
 
+import wrappers.UserDetailsWrapper;
 import wrappers.UserPageWrapper;
 import wrappers.UserWrapper;
 
@@ -141,6 +142,22 @@ public class UserResourceFunctionalTesting {
 
         assertNotNull(userEmail);
        
+    }
+    
+    @Test
+    public void testFindUserByMobilePhoneWithNonExistentPhone() {
+        thrown.expect(new HttpMatcher(HttpStatus.NOT_FOUND));
+        String token = new RestService().loginAdmin();
+        String mobilePhone = "555000000";
+        new RestBuilder<UserDetailsWrapper>(RestService.URL).path(Uris.USERS).pathId(mobilePhone).basicAuth(token, "").clazz(UserDetailsWrapper.class).get().build();
+    }
+    
+    @Test
+    public void testFindUserByMobilePhoneWithExistentPhone() {
+        String token = new RestService().loginAdmin();
+        String mobilePhone = String.valueOf(123456789L);
+        UserDetailsWrapper user = new RestBuilder<UserDetailsWrapper>(RestService.URL).path(Uris.USERS).pathId(mobilePhone).basicAuth(token, "").clazz(UserDetailsWrapper.class).get().build();
+        assertNotNull(user);
     }
     
 
