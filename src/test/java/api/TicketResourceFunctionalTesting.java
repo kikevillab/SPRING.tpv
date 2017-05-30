@@ -185,6 +185,50 @@ public class TicketResourceFunctionalTesting {
         assertNotNull(ticketReference);
         assertFalse(ticketReference.getTicketReference().isEmpty());
     }
+    
+    @Test
+    public void testCreateTicketNonexistentVoucher() {
+        thrown.expect(new HttpMatcher(HttpStatus.NOT_FOUND));
+        String token = new RestService().loginAdmin();
+
+        TicketCreationWrapper ticketCreationWrapper = new TicketCreationWrapper();
+
+        List<ShoppingCreationWrapper> shoppingCreationWrapperList = new ArrayList<>();
+        ShoppingCreationWrapper shoppingCreationWrapper = new ShoppingCreationWrapper();
+        shoppingCreationWrapper.setProductCode("8400000001111");
+        shoppingCreationWrapper.setAmount(2);
+        shoppingCreationWrapper.setDiscount(0);
+        shoppingCreationWrapper.setDelivered(true);
+        shoppingCreationWrapperList.add(shoppingCreationWrapper);
+        ticketCreationWrapper.setShoppingList(shoppingCreationWrapperList);
+        
+        ticketCreationWrapper.setVouchers(Arrays.asList(new String[]{"asdas"}));
+
+        new RestBuilder<TicketReferenceWrapper>(RestService.URL).path(Uris.TICKETS)
+                .body(ticketCreationWrapper).basicAuth(token, "").clazz(TicketReferenceWrapper.class).post().build();
+    }
+    
+    @Test
+    public void testCreateTicketExpiredVoucher() {
+        thrown.expect(new HttpMatcher(HttpStatus.NOT_FOUND));
+        String token = new RestService().loginAdmin();
+
+        TicketCreationWrapper ticketCreationWrapper = new TicketCreationWrapper();
+
+        List<ShoppingCreationWrapper> shoppingCreationWrapperList = new ArrayList<>();
+        ShoppingCreationWrapper shoppingCreationWrapper = new ShoppingCreationWrapper();
+        shoppingCreationWrapper.setProductCode("8400000001111");
+        shoppingCreationWrapper.setAmount(2);
+        shoppingCreationWrapper.setDiscount(0);
+        shoppingCreationWrapper.setDelivered(true);
+        shoppingCreationWrapperList.add(shoppingCreationWrapper);
+        ticketCreationWrapper.setShoppingList(shoppingCreationWrapperList);
+        
+        ticketCreationWrapper.setVouchers(Arrays.asList(new String[]{"asdas"}));
+
+        new RestBuilder<TicketReferenceWrapper>(RestService.URL).path(Uris.TICKETS)
+                .body(ticketCreationWrapper).basicAuth(token, "").clazz(TicketReferenceWrapper.class).post().build();
+    }
 
     @Test
     public void testUpdateTicketNonexistentReference() {

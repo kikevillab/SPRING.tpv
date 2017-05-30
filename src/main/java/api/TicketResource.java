@@ -24,10 +24,15 @@ import api.exceptions.NotFoundProductCodeException;
 import api.exceptions.NotFoundProductCodeInTicketException;
 import api.exceptions.NotFoundTicketReferenceException;
 import api.exceptions.NotFoundUserMobileException;
+import api.exceptions.VoucherAlreadyConsumedException;
+import api.exceptions.VoucherHasExpiredException;
+import api.exceptions.VoucherNotFoundException;
 import controllers.ArticleController;
+import controllers.CashierClosuresController;
 import controllers.ProductController;
 import controllers.TicketController;
 import controllers.UserController;
+import controllers.VoucherController;
 import entities.core.Article;
 import entities.core.Product;
 import entities.core.Shopping;
@@ -57,6 +62,10 @@ public class TicketResource {
 
     private ArticleController articleController;
 
+    private VoucherController voucherController;
+
+    private CashierClosuresController cashierClosuresController;
+
     @Autowired
     public void setTicketController(TicketController ticketController) {
         this.ticketController = ticketController;
@@ -77,11 +86,23 @@ public class TicketResource {
         this.articleController = articleController;
     }
 
+    @Autowired
+    public void setVoucherController(VoucherController voucherController) {
+        this.voucherController = voucherController;
+    }
+
+    @Autowired
+    public void setCashierClosuresController(CashierClosuresController cashierClosuresController) {
+        this.cashierClosuresController = cashierClosuresController;
+    }
+
     // @PreAuthorize("hasRole('ADMIN')or hasRole('MANAGER') or hasRole('OPERATOR')")
     @RequestMapping(method = RequestMethod.POST)
     public TicketCreationResponseWrapper createTicket(@RequestBody TicketCreationWrapper ticketCreationWrapper)
             throws EmptyShoppingListException, NotFoundProductCodeException, NotFoundUserMobileException, NotEnoughStockException,
-            InvalidProductAmountInNewTicketException, InvalidProductDiscountException, IOException {
+            InvalidProductAmountInNewTicketException, InvalidProductDiscountException, IOException, VoucherNotFoundException,
+            VoucherHasExpiredException, VoucherAlreadyConsumedException {
+
         Long userMobile = ticketCreationWrapper.getUserMobile();
         if (userMobile != null && !userController.userExists(userMobile)) {
             throw new NotFoundUserMobileException();
@@ -90,6 +111,19 @@ public class TicketResource {
         List<ShoppingCreationWrapper> shoppingCreationWrapperList = ticketCreationWrapper.getShoppingList();
         if (shoppingCreationWrapperList.isEmpty()) {
             throw new EmptyShoppingListException();
+        }
+
+        List<String> voucherReferences = ticketCreationWrapper.getVouchers();
+        for (String reference : voucherReferences) {
+            if (!voucherController.voucherExists(reference)) {
+                throw new VoucherNotFoundException("Voucher reference: " + reference);
+            }
+            if (voucherController.voucherHasExpired(reference)) {
+                throw new VoucherHasExpiredException("Voucher reference: " + reference);
+            }
+            if (voucherController.isVoucherConsumed(reference)) {
+                throw new VoucherAlreadyConsumedException("Voucher reference: " + reference);
+            }
         }
 
         for (ShoppingCreationWrapper shoppingCreationWrapper : shoppingCreationWrapperList) {
@@ -117,6 +151,13 @@ public class TicketResource {
                 articleController.consumeArticle(productCode, shoppingCreationWrapper.getAmount());
             }
         }
+
+        // Consume vouchers and add given cash to cashierClosure
+        for (String voucherReference : voucherReferences) {
+            voucherController.consumeVoucher(voucherReference);
+        }
+        cashierClosuresController.depositCashierRequest(ticketCreationWrapper.getCash());
+
         return ticketController.createTicket(ticketCreationWrapper);
     }
 
