@@ -34,7 +34,6 @@ import wrappers.ShoppingTrackingWrapper;
 import wrappers.ShoppingUpdateWrapper;
 import wrappers.TicketCreationResponseWrapper;
 import wrappers.TicketCreationWrapper;
-import wrappers.TicketIdWrapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {PersistenceConfig.class, TestsPersistenceConfig.class, TestsControllerConfig.class})
@@ -65,7 +64,7 @@ public class TicketControllerIT {
         long lastTicketId = ticketDao.findFirstByOrderByCreatedDescIdDesc().getId();
 
         TicketCreationResponseWrapper responseWrapper = ticketController.createTicket(ticketCreationWrapper);
-        Ticket ticket = ticketDao.findOne(new TicketPK(responseWrapper.getTicketId()));
+        Ticket ticket = ticketDao.findFirstByReference(responseWrapper.getTicketReference());
         List<Shopping> shoppingList = ticket.getShoppingList();
         Shopping shopping = shoppingList.get(0);
         Article article = articleDao.findOne(shoppingCreationWrapper.getProductCode());
@@ -101,7 +100,7 @@ public class TicketControllerIT {
         long lastTicketId = ticketDao.findFirstByOrderByCreatedDescIdDesc().getId();
 
         TicketCreationResponseWrapper responseWrapper = ticketController.createTicket(ticketCreationWrapper);
-        Ticket ticket = ticketDao.findOne(new TicketPK(responseWrapper.getTicketId()));
+        Ticket ticket = ticketDao.findFirstByReference(responseWrapper.getTicketReference());
         List<Shopping> shoppingList = ticket.getShoppingList();
         Shopping shopping = shoppingList.get(0);
 
@@ -129,7 +128,7 @@ public class TicketControllerIT {
         shoppingCreationWrapperList.add(shoppingCreationWrapper);
         ticketCreationWrapper.setShoppingList(shoppingCreationWrapperList);
         TicketCreationResponseWrapper responseWrapper = ticketController.createTicket(ticketCreationWrapper);
-        Ticket createdTicket = ticketDao.findOne(new TicketPK(responseWrapper.getTicketId()));
+        Ticket createdTicket = ticketDao.findFirstByReference(responseWrapper.getTicketReference());
         Shopping createdShopping = createdTicket.getShoppingList().get(0);
 
         List<ShoppingUpdateWrapper> shoppingUpdateWrapperList = new ArrayList<>();
@@ -197,12 +196,7 @@ public class TicketControllerIT {
             assertEquals(shopping.getShoppingState(), shoppingTrackingWrapper.getShoppingState());
         }
     }
-    
-    @Test
-    public void testFindOneTicket(){
-        assertNotNull(ticketController.findOneTicket(new TicketIdWrapper(1L)));
-    }
-    
+       
     @Test
     public void testTicketIsClosedWithATicketWithAllShoppingsClosed(){
         Ticket ticketWithAllShoppingsClosed = new Ticket();
