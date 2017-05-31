@@ -46,8 +46,7 @@ public class ProductController {
     }
 
     public byte[] generateBarcodesPdf(List<ProductBarcodeWrapper> productBarcodeWrappers) throws IOException {
-        List<String> productBarcodes = productBarcodeWrappers.stream().map(ProductBarcodeWrapper::getBarcode)
-                .filter(barcode -> barcode != null && !barcode.isEmpty()).collect(Collectors.toList());
+        List<String> productBarcodes = productBarcodeWrappers.stream().map(ProductBarcodeWrapper::getBarcode).collect(Collectors.toList());
         List<Product> products = new ArrayList<>();
         productBarcodes.forEach(barcode -> products.add(getProductByCode(barcode)));
         return pdfGenService.generateBarcodesPdf(products);

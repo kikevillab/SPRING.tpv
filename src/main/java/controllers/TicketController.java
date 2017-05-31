@@ -89,7 +89,7 @@ public class TicketController {
         ticketDao.save(ticket);
         ticket = ticketDao.findFirstByReference(ticket.getReference());
         byte[] ticketPdfByteArray = pdfGenService.generateTicketPdf(ticket);
-        return new TicketCreationResponseWrapper(ticketPdfByteArray, ticket.getId());
+        return new TicketCreationResponseWrapper(ticketPdfByteArray, ticket.getReference());
     }
 
     private long getNextId() {
