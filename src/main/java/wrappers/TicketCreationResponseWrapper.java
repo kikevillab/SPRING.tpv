@@ -22,7 +22,7 @@ public class TicketCreationResponseWrapper {
         this.pdfByteArray = pdfByteArray;
     }
 
-    public String getTicketId() {
+    public String getTicketReference() {
         return ticketReference;
     }
 
