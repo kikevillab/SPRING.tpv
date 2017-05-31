@@ -74,9 +74,17 @@ export class UsersService {
     }
 
     create(user: User): Observable<any> {
-        if (!isNull(this.headers) )
+        if (!isNull(this.headers))
             return this.httpService.post(this.endpoint, user, this.headers);
 
         return Observable.throw(NOT_AUTHENTICATED_MESSAGE);
     }
+
+    delete(mobile: number): Observable<any> {
+        if (!isNull(this.headers))
+            return this.httpService.delete(this.endpoint + '/' + mobile, this.headers);
+
+        return Observable.throw(NOT_AUTHENTICATED_MESSAGE);
+    }
+
 }
