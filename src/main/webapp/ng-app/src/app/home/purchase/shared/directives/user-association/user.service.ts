@@ -7,9 +7,7 @@ import { Headers } from '@angular/http';
 
 import { API_GENERIC_URI, LOCAL_STORAGE_TOKEN_ATTRIBUTE, URI_USERS, ROLE_CUSTOMER } from '../../../../../app.config';
 
-import { ClientCreation } from '../../models/client-creation.model';
 import { User } from '../../../../shared/models/user.model';
-
 import { HTTPService } from '../../../../../shared/services/http.service';
 import { TPVHTTPError } from '../../../../../shared/models/tpv-http-error.model';
 import { LocalStorageService } from '../../../../../shared/services/local-storage.service';
