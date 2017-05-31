@@ -247,7 +247,8 @@ public class UserControllerIT {
     @Test
     public void testDeleteUser() {
         try {
-            long mobile=666000004;
+            long mobile=666000099;
+            userController.registration(new UserWrapper(mobile, "usuarioDelete", "passDelete"), Role.CUSTOMER);
             this.userController.deleteUser(mobile);
             assertFalse(this.userController.userMobileExists(mobile));
         } catch (NotFoundUserMobileException exception) {
