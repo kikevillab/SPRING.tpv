@@ -1,5 +1,31 @@
 package entities.core;
 
-public class ProductCategory extends CategoryComponent{
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
+public class ProductCategory extends CategoryComponent {
+    
+    @OneToOne
+    @JoinColumn
+    private Product product;
+    
+    public ProductCategory(Product product){
+        super(product.getCode(), product.getDescription());
+        this.product = product;     
+    }
+    
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    @Override
+    protected String print() {
+        return product.toString();
+    }
+
+    
 }
