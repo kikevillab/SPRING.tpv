@@ -444,6 +444,217 @@ export class InMemoryDataService implements InMemoryDbService {
                 active: true
             },
         ];
-        return {customers, operators, managers};
+        let tickets = [
+            {
+                created: "12/12/2016",
+                reference: "dsfa23df1sa1f3da",
+                mobile: 600000000
+            },
+            {
+                created: "11/12/2016",
+                reference: "dsf923df1sa1f3da",
+                mobile: 600000000
+            },
+            {
+                created: "10/12/2016",
+                reference: "dsfb23df1sa1f3da",
+                mobile: 600000000
+            },
+            {
+                created: "12/12/2016",
+                reference: "dsfa23df1sa1f3da",
+                mobile: 600000001
+            },
+            {
+                created: "11/12/2016",
+                reference: "dsf923df1sa1f3da",
+                mobile: 600000001
+            },
+            {
+                created: "10/12/2016",
+                reference: "dsfb23df1sa1f3da",
+                mobile: 600000001
+            },
+            {
+                created: "12/12/2016",
+                reference: "dsfa23df1sa1f3da",
+                mobile: 600000002
+            },
+            {
+                created: "11/12/2016",
+                reference: "dsf923df1sa1f3da",
+                mobile: 600000002
+            },
+            {
+                created: "10/12/2016",
+                reference: "dsfb23df1sa1f3da",
+                mobile: 600000002
+            },
+            {
+                created: "12/12/2016",
+                reference: "dsfa23df1sa1f3da",
+                mobile: 600000003
+            },
+            {
+                created: "11/12/2016",
+                reference: "dsf923df1sa1f3da",
+                mobile: 600000003
+            },
+            {
+                created: "10/12/2016",
+                reference: "dsfb23df1sa1f3da",
+                mobile: 600000003
+            },
+            {
+                created: "12/12/2016",
+                reference: "dsfa23df1sa1f3da",
+                mobile: 600000004
+            },
+            {
+                created: "11/12/2016",
+                reference: "dsf923df1sa1f3da",
+                mobile: 600000004
+            },
+            {
+                created: "10/12/2016",
+                reference: "dsfb23df1sa1f3da",
+                mobile: 600000004
+            },
+            {
+                created: "12/12/2016",
+                reference: "dsfa23df1sa1f3da",
+                mobile: 600000005
+            },
+            {
+                created: "11/12/2016",
+                reference: "dsf923df1sa1f3da",
+                mobile: 600000005
+            },
+            {
+                created: "10/12/2016",
+                reference: "dsfb23df1sa1f3da",
+                mobile: 600000005
+            },
+            {
+                created: "12/12/2016",
+                reference: "dsfa23df1sa1f3da",
+                mobile: 600000006
+            },
+            {
+                created: "11/12/2016",
+                reference: "dsf923df1sa1f3da",
+                mobile: 600000007
+            },
+            {
+                created: "10/12/2016",
+                reference: "dsfb23df1sa1f3da",
+                mobile: 600000008
+            },
+            {
+                created: "12/12/2016",
+                reference: "dsfa23df1sa1f3da",
+                mobile: 600000009
+            },
+            {
+                created: "11/12/2016",
+                reference: "dsf923df1sa1f3da",
+                mobile: 600000009
+            },
+            {
+                created: "10/12/2016",
+                reference: "dsfb23df1sa1f3da",
+                mobile: 600000009
+            },
+            {
+                created: "12/12/2016",
+                reference: "dsfa23df1sa1f3da",
+                mobile: 600000010
+            },
+            {
+                created: "11/12/2016",
+                reference: "dsf923df1sa1f3da",
+                mobile: 600000010
+            },
+            {
+                created: "10/12/2016",
+                reference: "dsfb23df1sa1f3da",
+                mobile: 600000010
+            },
+            {
+                created: "12/12/2016",
+                reference: "dsfa23df1sa1f3da",
+                mobile: 600000011
+            },
+            {
+                created: "11/12/2016",
+                reference: "dsf923df1sa1f3da",
+                mobile: 600000011
+            },
+            {
+                created: "10/12/2016",
+                reference: "dsfb23df1sa1f3da",
+                mobile: 600000011
+            },
+            {
+                created: "12/12/2016",
+                reference: "dsfa23df1sa1f3da",
+                mobile: 600000012
+            },
+            {
+                created: "11/12/2016",
+                reference: "dsf923df1sa1f3da",
+                mobile: 600000012
+            },
+            {
+                created: "10/12/2016",
+                reference: "dsfb23df1sa1f3da",
+                mobile: 600000012
+            },
+            {
+                created: "12/12/2016",
+                reference: "dsfa23df1sa1f3da",
+                mobile: 600000013
+            },
+            {
+                created: "11/12/2016",
+                reference: "dsf923df1sa1f3da",
+                mobile: 600000013
+            },
+            {
+                created: "10/12/2016",
+                reference: "dsfb23df1sa1f3da",
+                mobile: 600000013
+            },
+            {
+                created: "12/12/2016",
+                reference: "dsfa23df1sa1f3da",
+                mobile: 600000014
+            },
+            {
+                created: "11/12/2016",
+                reference: "dsf923df1sa1f3da",
+                mobile: 600000014
+            },
+            {
+                created: "10/12/2016",
+                reference: "dsfb23df1sa1f3da",
+                mobile: 600000014
+            },
+            {
+                created: "12/12/2016",
+                reference: "dsfa23df1sa1f3da",
+                mobile: 600000015
+            },
+            {
+                created: "11/12/2016",
+                reference: "dsf923df1sa1f3da",
+                mobile: 600000015
+            },
+            {
+                created: "10/12/2016",
+                reference: "dsfb23df1sa1f3da",
+                mobile: 600000015
+            }];
+        return {customers, operators, managers, tickets};
     }
 }
