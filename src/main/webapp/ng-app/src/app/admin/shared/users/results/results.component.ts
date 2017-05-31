@@ -11,7 +11,7 @@ import {UserDetailsDialog} from '../details/details.component';
 @Component({
     selector: 'results',
     inputs: ['results'],
-    outputs: ['onInformationModified'],
+    outputs: ['onSelectedUser', 'onModifiedUser'],
     templateUrl: './results.component.html',
     styleUrls: ['./results.component.css']
 })
@@ -19,18 +19,22 @@ export class ResultsComponent {
     results: User[];
     headers: Object = [{name: 'Mobile'}, {name: 'Username'}, {name: 'DNI'}, {name: 'Email'}];
     dialogConfig: MdDialogConfig;
-    onInformationModified: EventEmitter<boolean>;
+    onSelectedUser: EventEmitter<User>;
+    onModifiedUser: EventEmitter<User>;
 
     constructor(private userDetailsDialog: MdDialog) {
         this.dialogConfig = new MdDialogConfig();
-        this.onInformationModified = new EventEmitter();
+        this.onSelectedUser = new EventEmitter();
+        this.onModifiedUser = new EventEmitter();
     }
 
     onActivate(selection: TableRecord) {
         this.dialogConfig.data = selection.row;
+        this.onSelectedUser.emit(selection.row);
+
         let dialogRef = this.userDetailsDialog.open(UserDetailsDialog, this.dialogConfig);
-        dialogRef.afterClosed().subscribe(informationWasModified => {
-            this.onInformationModified.emit(informationWasModified);
+        dialogRef.afterClosed().subscribe(user => {
+            this.onModifiedUser.emit(user);
         });
     }
 }

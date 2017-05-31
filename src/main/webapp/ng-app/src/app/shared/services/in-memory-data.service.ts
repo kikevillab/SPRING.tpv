@@ -8,6 +8,7 @@ export class InMemoryDataService implements InMemoryDbService {
     createDb() {
         let customers = [
             {
+                id: 600000000,
                 mobile: 600000000,
                 username: 'customer1',
                 dni: '66666666A',
@@ -17,6 +18,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 active: true
             },
             {
+                id: 600000001,
                 mobile: 600000001,
                 username: 'customer2',
                 dni: '66666666B',
@@ -26,6 +28,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 active: false
             },
             {
+                id: 600000002,
                 mobile: 600000002,
                 username: 'customer3',
                 dni: '66666666C',
@@ -35,6 +38,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 active: false
             },
             {
+                id: 600000003,
                 mobile: 600000003,
                 username: 'customer4',
                 dni: '66666666D',
@@ -44,6 +48,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 active: true
             },
             {
+                id: 600000004,
                 mobile: 600000004,
                 username: 'customer5',
                 dni: '66666666E',
@@ -53,6 +58,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 active: false
             },
             {
+                id: 600000005,
                 mobile: 600000005,
                 username: 'customer6',
                 dni: '66666666F',
@@ -62,6 +68,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 active: true
             },
             {
+                id: 600000006,
                 mobile: 600000006,
                 username: 'customer7',
                 dni: '66666666G',
@@ -71,6 +78,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 active: true
             },
             {
+                id: 600000007,
                 mobile: 600000007,
                 username: 'customer8',
                 dni: '66666666H',
@@ -80,6 +88,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 active: true
             },
             {
+                id: 600000008,
                 mobile: 600000008,
                 username: 'customer9',
                 dni: '66666666I',
@@ -89,6 +98,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 active: true
             },
             {
+                id: 600000009,
                 mobile: 600000009,
                 username: 'customer10',
                 dni: '66666666J',
@@ -98,6 +108,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 active: true
             },
             {
+                id: 600000010,
                 mobile: 600000010,
                 username: 'customer11',
                 dni: '66666666K',
@@ -107,6 +118,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 active: true
             },
             {
+                id: 600000011,
                 mobile: 600000011,
                 username: 'customer12',
                 dni: '66666666L',
@@ -116,6 +128,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 active: true
             },
             {
+                id: 600000012,
                 mobile: 600000012,
                 username: 'customer13',
                 dni: '66666666M',
@@ -125,6 +138,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 active: true
             },
             {
+                id: 600000013,
                 mobile: 600000013,
                 username: 'customer14',
                 dni: '66666666N',
@@ -134,6 +148,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 active: true
             },
             {
+                id: 600000014,
                 mobile: 600000014,
                 username: 'customer15',
                 dni: '66666666O',
@@ -143,6 +158,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 active: true
             },
             {
+                id: 600000015,
                 mobile: 600000015,
                 username: 'customer16',
                 dni: '66666666P',
@@ -154,6 +170,7 @@ export class InMemoryDataService implements InMemoryDbService {
         ];
         let operators = [
             {
+                id: 600000000,
                 mobile: 600000000,
                 username: 'operator1',
                 dni: '66666666A',
@@ -163,6 +180,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 active: true
             },
             {
+                id: 600000001,
                 mobile: 600000001,
                 username: 'operator2',
                 dni: '66666666B',
@@ -172,6 +190,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 active: false
             },
             {
+                id: 600000002,
                 mobile: 600000002,
                 username: 'operator3',
                 dni: '66666666C',
@@ -181,6 +200,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 active: false
             },
             {
+                id: 600000003,
                 mobile: 600000003,
                 username: 'operator4',
                 dni: '66666666D',
@@ -190,6 +210,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 active: true
             },
             {
+                id: 600000004,
                 mobile: 600000004,
                 username: 'operator5',
                 dni: '66666666E',
@@ -199,6 +220,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 active: false
             },
             {
+                id: 600000005,
                 mobile: 600000005,
                 username: 'operator6',
                 dni: '66666666F',
@@ -208,6 +230,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 active: true
             },
             {
+                id: 600000006,
                 mobile: 600000006,
                 username: 'operator7',
                 dni: '66666666G',
@@ -217,6 +240,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 active: true
             },
             {
+                id: 600000007,
                 mobile: 600000007,
                 username: 'operator8',
                 dni: '66666666H',
@@ -226,6 +250,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 active: true
             },
             {
+                id: 600000008,
                 mobile: 600000008,
                 username: 'operator9',
                 dni: '66666666I',
@@ -235,6 +260,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 active: true
             },
             {
+                id: 600000009,
                 mobile: 600000009,
                 username: 'operator10',
                 dni: '66666666J',
@@ -244,6 +270,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 active: true
             },
             {
+                id: 600000010,
                 mobile: 600000010,
                 username: 'operator11',
                 dni: '66666666K',
@@ -253,6 +280,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 active: true
             },
             {
+                id: 600000011,
                 mobile: 600000011,
                 username: 'operator12',
                 dni: '66666666L',
@@ -262,6 +290,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 active: true
             },
             {
+                id: 600000012,
                 mobile: 600000012,
                 username: 'operator13',
                 dni: '66666666M',
@@ -271,6 +300,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 active: true
             },
             {
+                id: 600000013,
                 mobile: 600000013,
                 username: 'operator14',
                 dni: '66666666N',
@@ -280,6 +310,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 active: true
             },
             {
+                id: 600000014,
                 mobile: 600000014,
                 username: 'operator15',
                 dni: '66666666O',
@@ -289,6 +320,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 active: true
             },
             {
+                id: 600000015,
                 mobile: 600000015,
                 username: 'operator16',
                 dni: '66666666P',
@@ -300,6 +332,7 @@ export class InMemoryDataService implements InMemoryDbService {
         ];
         let managers = [
             {
+                id: 600000000,
                 mobile: 600000000,
                 username: 'manager1',
                 dni: '66666666A',
@@ -309,6 +342,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 active: true
             },
             {
+                id: 600000001,
                 mobile: 600000001,
                 username: 'manager2',
                 dni: '66666666B',
@@ -318,6 +352,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 active: false
             },
             {
+                id: 600000002,
                 mobile: 600000002,
                 username: 'manager3',
                 dni: '66666666C',
@@ -327,6 +362,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 active: false
             },
             {
+                id: 600000003,
                 mobile: 600000003,
                 username: 'manager4',
                 dni: '66666666D',
@@ -336,6 +372,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 active: true
             },
             {
+                id: 600000004,
                 mobile: 600000004,
                 username: 'manager5',
                 dni: '66666666E',
@@ -345,6 +382,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 active: false
             },
             {
+                id: 600000005,
                 mobile: 600000005,
                 username: 'manager6',
                 dni: '66666666F',
@@ -354,6 +392,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 active: true
             },
             {
+                id: 600000006,
                 mobile: 600000006,
                 username: 'manager7',
                 dni: '66666666G',
@@ -363,6 +402,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 active: true
             },
             {
+                id: 600000007,
                 mobile: 600000007,
                 username: 'manager8',
                 dni: '66666666H',
@@ -372,6 +412,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 active: true
             },
             {
+                id: 600000008,
                 mobile: 600000008,
                 username: 'manager9',
                 dni: '66666666I',
@@ -381,6 +422,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 active: true
             },
             {
+                id: 600000009,
                 mobile: 600000009,
                 username: 'manager10',
                 dni: '66666666J',
@@ -390,6 +432,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 active: true
             },
             {
+                id: 600000010,
                 mobile: 600000010,
                 username: 'manager11',
                 dni: '66666666K',
@@ -399,6 +442,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 active: true
             },
             {
+                id: 600000011,
                 mobile: 600000011,
                 username: 'manager12',
                 dni: '66666666L',
@@ -408,6 +452,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 active: true
             },
             {
+                id: 600000012,
                 mobile: 600000012,
                 username: 'manager13',
                 dni: '66666666M',
@@ -417,6 +462,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 active: true
             },
             {
+                id: 600000013,
                 mobile: 600000013,
                 username: 'manager14',
                 dni: '66666666N',
@@ -426,6 +472,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 active: true
             },
             {
+                id: 600000014,
                 mobile: 600000014,
                 username: 'manager15',
                 dni: '66666666O',
@@ -435,6 +482,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 active: true
             },
             {
+                id: 600000015,
                 mobile: 600000015,
                 username: 'manager16',
                 dni: '66666666P',
