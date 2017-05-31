@@ -41,7 +41,7 @@ export class PrintComponent implements OnInit, OnDestroy {
     this.shoppingCartSubscription = this.shoppingService.getCartProductsObservable().subscribe((cartProducts: CartProduct[]) => {
       this.router.navigate(['/home']);
     });
-    !this.shoppingService.getTicketId() && this.router.navigate(['/home/purchase/payment']);
+    !this.shoppingService.getTicketReference() && this.router.navigate(['/home/purchase/payment']);
   }
 
   createVoucher(): void {
@@ -50,7 +50,7 @@ export class PrintComponent implements OnInit, OnDestroy {
 
   printInvoice(): void {
     if (this.userMobile){
-      this.printService.createInvoice(this.shoppingService.getTicketId()).then((pdf: Blob) => {
+      this.printService.createInvoice(this.shoppingService.getTicketReference()).then((pdf: Blob) => {
         this.printInvoiceSelected = false;
         this.pdfService.openBlob(pdf);
       }).catch((error: string) => {
