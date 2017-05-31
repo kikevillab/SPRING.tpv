@@ -3,6 +3,7 @@ package api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,8 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 import api.exceptions.AlreadyExistUserFieldException;
 import api.exceptions.InvalidUserFieldException;
 import api.exceptions.NotFoundUserIdException;
+import api.exceptions.NotFoundUserMobileException;
 import controllers.UserController;
 import entities.users.Role;
+import wrappers.UserDetailsWrapper;
 import wrappers.UserWrapper;
 
 
@@ -28,7 +31,13 @@ public class UserResource {
         this.userController = userController;
     }
 
-
+    @RequestMapping(value = Uris.USERS + Uris.PHONE, method = RequestMethod.GET)
+    public UserDetailsWrapper findUserByMobilePhone(@PathVariable long mobilePhone) throws NotFoundUserMobileException{
+        if(!userController.userExists(mobilePhone)){
+            throw new NotFoundUserMobileException();
+        }
+        return userController.findUserByMobilePhone(mobilePhone);
+    }
     @RequestMapping(value = Uris.USERS, method = RequestMethod.PUT)
     public void updateUser(@RequestBody UserWrapper userWrapper) throws NotFoundUserIdException {
         if (!userController.userExists(userWrapper.getId())) {
