@@ -36,4 +36,8 @@ export class UserDetailsDialog implements OnInit {
     handleError(httpError: TPVHTTPError) {
         this.toastService.info('ERROR getting tickets from server', httpError.error);
     }
+
+    deleteUser() {
+        this.dialogRef.close(null);
+    }
 }
