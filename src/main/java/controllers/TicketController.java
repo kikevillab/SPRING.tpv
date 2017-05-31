@@ -18,7 +18,6 @@ import entities.core.Product;
 import entities.core.Shopping;
 import entities.core.ShoppingState;
 import entities.core.Ticket;
-import entities.core.TicketPK;
 import entities.users.User;
 import services.PdfGenerationService;
 import wrappers.DayTicketWrapper;
@@ -27,7 +26,7 @@ import wrappers.ShoppingTrackingWrapper;
 import wrappers.ShoppingUpdateWrapper;
 import wrappers.TicketCreationResponseWrapper;
 import wrappers.TicketCreationWrapper;
-import wrappers.TicketIdWrapper;
+import wrappers.TicketReferenceWrapper;
 
 @Controller
 public class TicketController {
@@ -157,9 +156,9 @@ public class TicketController {
         }
         return dayTicketsList;
     }
-    
-    public Ticket findOneTicket(TicketIdWrapper ticketIdWrapper) {
-        return ticketDao.findOne(new TicketPK(ticketIdWrapper.getId()));
+       
+    public Ticket findOneTicket(TicketReferenceWrapper ticketReferenceWrapper) {
+        return ticketDao.findFirstByReference(ticketReferenceWrapper.getTicketReference());
     }
 
     public boolean ticketIsAlreadyAssignedToInvoice(Ticket ticket) {
