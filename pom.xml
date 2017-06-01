@@ -73,13 +73,13 @@
 			<properties>
 				<logs.level>error</logs.level>
 				<logs.path>../logs</logs.path>
-				<database.url>jdbc:mysql://localhost:3306/tpv</database.url>
-				<database.user>root</database.user>
-				<database.password></database.password>
+				<database.url>jdbc:mysql://eu-cdbr-west-01.cleardb.com/heroku_cc11b3c5ea5e191?reconnect=true</database.url>
+				<database.user>bb658e33ae0833</database.user>
+				<database.password>211be10b</database.password>
 				<!-- validate, create sólo una vez, cada vez que cambie la estructura 
 					de las tablas -->
 				<hibernate.hbm2ddl.auto>validate</hibernate.hbm2ddl.auto>
-				<tomcat.url>http://localhost:8080/manager/text</tomcat.url>
+				<tomcat.url>https://tpv-miw.herokuapp.com/manager/text</tomcat.url>
 			</properties>
 		</profile>
 		<!-- mvn install -Denvironment.type=production -->
@@ -307,6 +307,28 @@
 					<password>pass</password>
 				</configuration>
 			</plugin>
+			<!-- Web app runner for heroku deployment version tomcat 8.0.33.0-->
+			<plugin>
+		          <groupId>org.apache.maven.plugins</groupId>
+		          <artifactId>maven-dependency-plugin</artifactId>
+		          <version>2.3</version>
+		          <executions>
+		              <execution>
+		                  <phase>package</phase>
+		                  <goals><goal>copy</goal></goals>
+		                  <configuration>
+		                      <artifactItems>
+		                          <artifactItem>
+		                              <groupId>com.github.jsimone</groupId>
+		                              <artifactId>webapp-runner</artifactId>
+		                              <version>8.0.33.0</version>
+		                              <destFileName>webapp-runner.jar</destFileName>
+		                          </artifactItem>
+		                      </artifactItems>
+		                  </configuration>
+		              </execution>
+		          </executions>
+		      </plugin>
 		</plugins>
 	</build>
 
