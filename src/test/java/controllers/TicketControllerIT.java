@@ -34,7 +34,6 @@ import wrappers.ShoppingTrackingWrapper;
 import wrappers.ShoppingUpdateWrapper;
 import wrappers.TicketCreationResponseWrapper;
 import wrappers.TicketCreationWrapper;
-import wrappers.TicketIdWrapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {PersistenceConfig.class, TestsPersistenceConfig.class, TestsControllerConfig.class})
@@ -197,12 +196,7 @@ public class TicketControllerIT {
             assertEquals(shopping.getShoppingState(), shoppingTrackingWrapper.getShoppingState());
         }
     }
-    
-    @Test
-    public void testFindOneTicket(){
-        assertNotNull(ticketController.findOneTicket(new TicketIdWrapper(1L)));
-    }
-    
+       
     @Test
     public void testTicketIsClosedWithATicketWithAllShoppingsClosed(){
         Ticket ticketWithAllShoppingsClosed = new Ticket();

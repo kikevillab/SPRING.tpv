@@ -1,37 +1,33 @@
 /**
- * Created by fran lopez on 04/05/2017.
+ * Created by fran lopez on 30/05/2017.
  */
 
 import {Injectable} from '@angular/core';
 import {Headers, URLSearchParams} from '@angular/http';
-import {Session} from '../../../shared/models/session.model';
+import {Session} from '../../../../shared/models/session.model';
 import {
     LOCAL_STORAGE_TOKEN_ATTRIBUTE,
     NOT_AUTHENTICATED_MESSAGE,
     ADMIN_ROLE
-} from '../../../app.config';
-import {User} from '../../../shared/models/user.model';
+} from '../../../../app.config';
 import {Observable} from 'rxjs/Observable';
-import {HTTPService} from '../../../shared/services/http.service';
-import {LocalStorageService} from '../../../shared/services/local-storage.service';
+import {HTTPService} from '../../../../shared/services/http.service';
+import {LocalStorageService} from '../../../../shared/services/local-storage.service';
+import {TICKETS_URI} from '../../../admin.config';
 import 'rxjs/add/operator/map';
 import {isNull} from "util";
 
 @Injectable()
-export class UsersService {
+export class TicketsService {
     private endpoint: string;
     private sessionToken: string;
     private headers: Headers;
 
     constructor(private httpService: HTTPService, private localStorageService: LocalStorageService) {
         this.headers = null;
-        this.setEndpoint(null);
+        this.endpoint = TICKETS_URI;
         this.setSessionToken('');
         this.init();
-    }
-
-    setEndpoint(endpoint: string): void {
-        this.endpoint = endpoint;
     }
 
     init(): void {
@@ -65,26 +61,4 @@ export class UsersService {
 
         return Observable.throw(NOT_AUTHENTICATED_MESSAGE);
     }
-
-    findAll(): Observable<any> {
-        if (!isNull(this.headers) && !isNull(this.endpoint))
-            return this.httpService.get(this.endpoint, this.headers);
-
-        return Observable.throw(NOT_AUTHENTICATED_MESSAGE);
-    }
-
-    create(user: User): Observable<any> {
-        if (!isNull(this.headers))
-            return this.httpService.post(this.endpoint, user, this.headers);
-
-        return Observable.throw(NOT_AUTHENTICATED_MESSAGE);
-    }
-
-    delete(mobile: number): Observable<any> {
-        if (!isNull(this.headers))
-            return this.httpService.delete(this.endpoint + '/' + mobile, this.headers);
-
-        return Observable.throw(NOT_AUTHENTICATED_MESSAGE);
-    }
-
 }

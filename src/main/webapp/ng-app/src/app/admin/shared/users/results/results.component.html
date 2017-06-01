@@ -6,5 +6,7 @@
         [headerHeight]="50"
         [footerHeight]="50"
         [rowHeight]="'auto'"
-        [limit]="10">
+        [limit]="10"
+        [selectionType]="'single'"
+        (activate)="onActivate($event)">
 </ngx-datatable>

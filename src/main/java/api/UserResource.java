@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import api.exceptions.AlreadyExistUserFieldException;
+import api.exceptions.CannotDeleteUserException;
 import api.exceptions.InvalidUserFieldException;
 import api.exceptions.NotFoundUserIdException;
 import api.exceptions.NotFoundUserMobileException;
@@ -18,7 +19,6 @@ import controllers.UserController;
 import entities.users.Role;
 import wrappers.UserDetailsWrapper;
 import wrappers.UserWrapper;
-
 
 @RestController
 @RequestMapping(Uris.VERSION)
@@ -32,12 +32,13 @@ public class UserResource {
     }
 
     @RequestMapping(value = Uris.USERS + Uris.PHONE, method = RequestMethod.GET)
-    public UserDetailsWrapper findUserByMobilePhone(@PathVariable long mobilePhone) throws NotFoundUserMobileException{
-        if(!userController.userExists(mobilePhone)){
+    public UserDetailsWrapper findUserByMobilePhone(@PathVariable long mobilePhone) throws NotFoundUserMobileException {
+        if (!userController.userExists(mobilePhone)) {
             throw new NotFoundUserMobileException();
         }
         return userController.findUserByMobilePhone(mobilePhone);
     }
+
     @RequestMapping(value = Uris.USERS, method = RequestMethod.PUT)
     public void updateUser(@RequestBody UserWrapper userWrapper) throws NotFoundUserIdException {
         if (!userController.userExists(userWrapper.getId())) {
@@ -46,7 +47,7 @@ public class UserResource {
         userController.updateUser(userWrapper);
     }
 
-    @RequestMapping(value = Uris.USERS , method = RequestMethod.GET)
+    @RequestMapping(value = Uris.USERS, method = RequestMethod.GET)
     // @PreAuthorize("hasRole('ADMIN')")
     public Page<UserWrapper> userList(Pageable pageable, String role) throws InvalidUserFieldException {
         this.validateFieldObject(pageable, "Pageable: objeto para paginar");
@@ -73,7 +74,7 @@ public class UserResource {
         return userController.getByDniAndRole(identification, Role.valueOf(Role.class, role));
     }
 
-    @RequestMapping(value = Uris.USERS +Uris.EMAIL, method = RequestMethod.GET)
+    @RequestMapping(value = Uris.USERS + Uris.EMAIL, method = RequestMethod.GET)
     // @PreAuthorize("hasRole('ADMIN')")
     public UserWrapper userEmail(@RequestParam(value = "email") String email, String role) throws InvalidUserFieldException {
         this.validateField(email, "email");
@@ -82,7 +83,7 @@ public class UserResource {
         return userController.getByEmailAndRole(email, Role.valueOf(Role.class, role));
     }
 
-    @RequestMapping(value = Uris.USERS , method = RequestMethod.POST)
+    @RequestMapping(value = Uris.USERS, method = RequestMethod.POST)
     public void customerRegistration(@RequestBody UserWrapper userWrapper, String role)
             throws InvalidUserFieldException, AlreadyExistUserFieldException {
         this.validateFieldRegiter(userWrapper, "UserWrapper:usuario");
@@ -91,6 +92,16 @@ public class UserResource {
             return;
         if (!this.userController.registration(userWrapper, Role.valueOf(Role.class, role))) {
             throw new AlreadyExistUserFieldException();
+        }
+    }
+
+    @RequestMapping(value = Uris.USERS + Uris.USER_MOBILE, method = RequestMethod.DELETE)
+    // @PreAuthorize("hasRole('ADMIN')")
+    public void deleteUser(@PathVariable long mobile) throws CannotDeleteUserException {
+        try {
+            this.userController.deleteUser(mobile);
+        } catch (Exception e) {
+            throw new CannotDeleteUserException();
         }
     }
 
