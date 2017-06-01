@@ -53,6 +53,12 @@ textilePrintingList:
     description: textilePrinting0_seed_test
     type: ploter
 
+categoryCompositeList:
+  - &categoryComposite1
+    name: categories_root
+    categoryCompositeList:
+      - name: Electronics
+
 ticketList:
   - &ticket71
     id: 71

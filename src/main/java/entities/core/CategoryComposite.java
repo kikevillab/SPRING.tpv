@@ -3,6 +3,9 @@ package entities.core;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
+
+@Entity
 public class CategoryComposite extends CategoryComponent{
     private List<CategoryComponent> categoryComponents;
     

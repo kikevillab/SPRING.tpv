@@ -1,8 +1,10 @@
 package entities.core;
 
+import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
+@Entity
 public class ProductCategory extends CategoryComponent {
     
     @OneToOne
