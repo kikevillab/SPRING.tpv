@@ -84,6 +84,6 @@ public class Uris {
 
     public static final String BARCODES = "/barcodes";
     
-    public static final String JOB = "/job";
+    public static final String BATCH = "/bacth";
 
 }

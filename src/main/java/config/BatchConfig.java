@@ -11,11 +11,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import controllers.TokenTasklet;
+import controllers.TokenBatchTasklet;
 
+/*
+ *  Componentes principales de Spring Batch:
+    JobRepository: es el componente encargado de la persistencia de metadatos relativos a los procesos tales como procesos en curso o estados de las ejecuciones.
+    JobLauncher: es el componente encargado de lanzar los procesos suministrando los parámetros de entrada deseados.
+    Job: El Job es la representación del proceso. Un proceso, a su vez, es un contenedor de pasos (steps).
+    Step: Un step (paso) es un elemento independiente dentro de un Job (un proceso) que representa una de las fases de las que está compuesto dicho proceso.
+    Un proceso (Job) debe tener, al menos, un step.
+ *   
+ */
 @Configuration
 @EnableBatchProcessing
-public class BatchConfig  {
+public class BatchConfig {
 
     @Autowired
     private JobBuilderFactory jobBuilderFactory;
@@ -35,8 +44,8 @@ public class BatchConfig  {
 
     @Bean
     public Tasklet tasklet() {
-        //Metodo necesario para que Spring reconozca el NEW TokenControllerTasklet
-        return new TokenTasklet();
+        // Metodo necesario para que Spring reconozca el NEW TokenControllerTasklet
+        return new TokenBatchTasklet();
     }
 
 }

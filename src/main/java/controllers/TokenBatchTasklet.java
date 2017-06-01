@@ -13,7 +13,7 @@ import org.springframework.core.env.Environment;
 
 import daos.users.TokenDao;
 
-public class TokenTasklet implements Tasklet {
+public class TokenBatchTasklet implements Tasklet {
     
     private Environment environment;
 
@@ -32,7 +32,7 @@ public class TokenTasklet implements Tasklet {
     @Override
     public RepeatStatus execute(StepContribution arg0, ChunkContext arg1) throws Exception {
         LogManager.getLogger().info("++++ Ejecutando task de limpieza de tokens ++++");
-        //tokenDao.deleteByCreationDateLessThan(new Date(new Date().getTime() - Integer.parseInt(environment.getProperty("tokenTime.user"))));
+        tokenDao.deleteByCreationDateLessThan(new Date(new Date().getTime() - Integer.parseInt(environment.getProperty("tokenTime.user"))));
         return RepeatStatus.FINISHED;
     }
 
