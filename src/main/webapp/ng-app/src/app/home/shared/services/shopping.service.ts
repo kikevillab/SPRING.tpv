@@ -35,7 +35,7 @@ export class ShoppingService {
   private cashReceived: number = 0;
   private vouchers: Voucher[] = [];
   private submitted: boolean = false;
-  private ticketId: number;
+  private ticketReference: number;
 
   constructor (private storageService: LocalStorageService, private httpService: HTTPService, private cashierService: CashierService) {
     this.updateCart();
@@ -76,11 +76,12 @@ export class ShoppingService {
   submitOrder(): Promise<any> {
     return new Promise((resolve: Function, reject: Function) => {
       let vouchersReferences: string[] = this.vouchers.map((voucher: Voucher) => voucher.reference);
-      let newTicket: TicketCheckout = new TicketCheckout(this.cartProducts, vouchersReferences, this.userMobile);
+      let cash: number = (this.totalPrice - this.getVouchersTotalPaid() > 0) ? (this.totalPrice - this.getVouchersTotalPaid()) : 0;
+      let newTicket: TicketCheckout = new TicketCheckout(this.cartProducts, cash, vouchersReferences, this.userMobile);
       this.httpService.post(`${API_GENERIC_URI}${URI_TICKETS}`, newTicket).subscribe((ticketCreated: NewTicketResponse) => {
         this.submitted = true;
         this.submittedSubject.next(this.submitted);
-        this.ticketId = ticketCreated.ticketId;
+        this.ticketReference = ticketCreated.ticketReference;
         this.clear();
         this.cashierService.initialize();
         resolve(ticketCreated);
@@ -205,8 +206,8 @@ export class ShoppingService {
     return this.cashReceivedSubject.asObservable();
   }
 
-  getTicketId(): number {
-    return this.ticketId;
+  getTicketReference(): number {
+    return this.ticketReference;
   }
 
   isShoppingCartEmpty(): boolean {
@@ -215,6 +216,12 @@ export class ShoppingService {
 
   getTotalPaid(): number {
     let total: number = this.cashReceived;
+    total += this.getVouchersTotalPaid();
+    return total;
+  }
+
+  private getVouchersTotalPaid(): number {
+    let total: number = 0.0;
     this.vouchers.forEach((voucher: Voucher) => {
       total += voucher.value;
     });
