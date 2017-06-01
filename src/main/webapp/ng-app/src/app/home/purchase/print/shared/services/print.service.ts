@@ -31,7 +31,7 @@ export class PrintService {
       let voucherWrapper: VoucherCreation = new VoucherCreation(amount, expirationDate);
       let headers = new Headers();
       headers.append('Accept', 'application/pdf');
-      this.httpService.post(`${API_GENERIC_URI}${URI_VOUCHERS}`, voucherWrapper, headers).subscribe((response: Blob) => {
+      this.httpService.post(`${API_GENERIC_URI + URI_VOUCHERS}`, voucherWrapper, headers).subscribe((response: Blob) => {
         resolve(response);
       },(error: TPVHTTPError) => {
         reject(error.description);
@@ -44,7 +44,7 @@ export class PrintService {
       // let userMobile: number = this.shoppingService.getUserMobile();
       // userMobile
       //   ? this.postInvoice(resolve, reject, tickeReference)
-      //   : this.httpService.patch(`${API_GENERIC_URI}${URI_TICKETS}/{ticketId}`, new UserMobile(userMobile)).subscribe((response: any) => {
+      //   : this.httpService.patch(`${API_GENERIC_URI + URI_TICKETS}/{ticketId}`, new UserMobile(userMobile)).subscribe((response: any) => {
       //       this.postInvoice(resolve, reject, ticketId);
       //     },(error: TPVHTTPError) => {
       //       reject(error.description);
@@ -56,7 +56,7 @@ export class PrintService {
     let invoiceCreationWrapper: InvoiceCreation = new InvoiceCreation(ticketReference);
       let headers = new Headers();
       headers.append('Accept', 'application/pdf');
-      this.httpService.post(`${API_GENERIC_URI}${URI_INVOICES}`, invoiceCreationWrapper, headers).subscribe((response: Blob) => {
+      this.httpService.post(`${API_GENERIC_URI + URI_INVOICES}`, invoiceCreationWrapper, headers).subscribe((response: Blob) => {
         resolve(response);
       },(error: TPVHTTPError) => {
         reject(error.description);
