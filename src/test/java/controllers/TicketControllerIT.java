@@ -15,6 +15,8 @@ import java.util.Random;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -34,6 +36,7 @@ import wrappers.ShoppingTrackingWrapper;
 import wrappers.ShoppingUpdateWrapper;
 import wrappers.TicketCreationResponseWrapper;
 import wrappers.TicketCreationWrapper;
+import wrappers.TicketReferenceCreatedWrapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {PersistenceConfig.class, TestsPersistenceConfig.class, TestsControllerConfig.class})
@@ -246,5 +249,15 @@ public class TicketControllerIT {
         assertEquals(totalNumTickets, dayTicketsList.size());
         assertEquals(totalTicketsPrice, total, 0.01);
     }
-
+    
+    @Test
+    public void testGetTicketsByUserMobile() {
+        long mobile = 666000002L;
+        int pageNumber = 1;
+        int pageSize = 1;
+        Page<TicketReferenceCreatedWrapper> ticketPage = ticketController.getTicketsByUserMobile(mobile, new PageRequest(pageNumber, pageSize));
+        assertNotNull(ticketPage);
+        assertEquals(pageSize, ticketPage.getNumberOfElements());
+    }
+    
 }

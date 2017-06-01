@@ -1,8 +1,8 @@
 package daos.core;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Calendar;
 
@@ -11,7 +11,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -52,9 +51,9 @@ public class TicketDaoIT {
     @Test
     public void testFindByUserMobile() {
         int pageNumber = 1;
-        int numberOfElements = 1;
-        Page<Ticket> ticketPage = ticketDao.findByUserMobile(666000002L, new PageRequest(pageNumber, numberOfElements, Direction.DESC, "created"));
+        int pageSize = 1;
+        Page<Ticket> ticketPage = ticketDao.findByUserMobile(666000002L, new PageRequest(pageNumber, pageSize));
         assertNotNull(ticketPage);
-        assertEquals(numberOfElements, ticketPage.getNumberOfElements());
+        assertEquals(pageSize, ticketPage.getNumberOfElements());
     }
 }
