@@ -7,6 +7,7 @@
 				</div>
 				<md-card id="product-details-card">
 					<md-card-content>
+						<h1>{{productDetails.product.description | capitalize}}</h1>
 						<p>
 							<b>Type</b>: {{productDetails.type}}
 						</p>
@@ -14,13 +15,7 @@
 							<b>Reference</b>: {{productDetails.product.reference}}
 						</p>
 						<p>
-							<b>Description</b>: {{productDetails.product.description}}
-						</p>
-						<p>
 							<b>Price</b>: {{productDetails.product.retailPrice | currency:'EUR':true}}
-						</p>
-						<p>
-							<b>Discontinued</b>: {{productDetails.product.discontinued == true ? 'Yes' : 'No'}}
 						</p>
 					</md-card-content>
 				</md-card>
@@ -28,6 +23,7 @@
 		</md-card>
 		<md-card fxHide fxShow.xs fxShow.sm>
 			<md-card-content>
+				<h2>{{productDetails.product.description | capitalize}}</h2>
 				<p>
 					<b>Type</b>: {{productDetails.type}}
 				</p>
@@ -35,13 +31,7 @@
 					<b>Reference</b>: {{productDetails.product.reference}}
 				</p>
 				<p>
-					<b>Description</b>: {{productDetails.product.description}}
-				</p>
-				<p>
 					<b>Price</b>: {{productDetails.product.retailPrice | currency:'EUR':true}}
-				</p>
-				<p>
-					<b>Discontinued</b>: {{productDetails.product.discontinued == true ? 'Yes' : 'No'}}
 				</p>
 			</md-card-content>
 		</md-card>
