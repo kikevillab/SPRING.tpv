@@ -22,7 +22,6 @@ import { ToastService } from '../../../../shared/services/toast.service';
     }
   `]
 })
-
 export class ChangeComponent implements OnInit, OnDestroy {
 
   totalPrice: number = this.shoppingService.getTotalPrice();
