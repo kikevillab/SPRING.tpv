@@ -21,3 +21,10 @@ before_install:
   - mysql -e 'CREATE DATABASE IF NOT EXISTS tpv;'
       
 script: mvn verify --settings settings.xml
+
+deploy:
+  provider: heroku
+  api_key:
+    secure: Ysq0nMpumN3wmeC0SWvjJPlnGeeSFqebM9euLB2txClOWK4xvK5owtNtVyBIyN2GeFkfejI40XXl8g1S64XjFtjJ3S19P+vKyqj2ZflXLb49pUmAvDPLes2O0FQN58zkkM9SEuN1Hn1YnzNbywbUhJMfGwBuRCQc2ruTVH+4NrOb/q/vBKgbh1RvWS8/5SmrKXjPqyhAHguRGBBkUQo3mmVv0sLdFwWzspV/BZYs6MYLQeKTJaFp4BOVUpEttBVBbzrqoUrnAWuSDlr/QFPTdncVxgdD0PQJlecJYRybnq4Pc4qtQdtZ4I+kEfHfPi09nHqkZvvwXJ3EccGvdKNkRCPRRIutFnr7WWqomRI0Dt/8xSWkmNNsIszdw5dsBZ/yoH4NZGESCIb77RghfvRnhDeUIGSYoevqY7yJ3LNxYa7477fjENkfuiNnl34dADSaC6jrU+ln8pYiarifOHuEW5xRbXO7J4oHMjUXBYCF3D+TWie2Sj17KpFAziExrrnT75o+MjrtrXxrTUjsU2hOOTr5BiWCD4fgpvgqSE3UA+8Avfg5iHOAyB9qgnc9rv5KKz5WOi2Q7x82s2u9JSjbvOeYEzZunakTG8lmDI/UiFi1kdLTqATPMGPZbCzULWWzJZCdFx97v2JUj4U7vc8/jj6NOTBDYEodhEL0mJtbn5c=
+  on: develop 
+  app: tpv-miw
