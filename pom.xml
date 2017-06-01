@@ -61,6 +61,7 @@
 				<tomcat.url>http://localhost:8080/manager/text</tomcat.url>
 			</properties>
 		</profile>
+		
 		<!-- mvn install -Denvironment.type=preproduction -->
 		<profile>
 			<id>preproduction</id>
