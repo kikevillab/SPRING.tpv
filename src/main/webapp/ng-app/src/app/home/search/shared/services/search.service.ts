@@ -4,9 +4,10 @@
 */
 import { Injectable } from '@angular/core';
 
-import { API_GENERIC_URI } from '../../../../app.config';
+import { API_GENERIC_URI, URI_PRODUCTS, URI_CATEGORIES } from '../../../../app.config';
 
-import { Category } from '../models/category.model';
+import { Category } from '../models/category.model'; // delete
+import { CategoriesPage } from '../models/categories-page.model'; // delete
 import { ProductDetails } from '../models/product-details.model';
 import { Article } from '../models/article.model'; // delete
 
@@ -16,10 +17,10 @@ import { TPVHTTPError } from '../../../../shared/models/tpv-http-error.model';
 
 @Injectable()
 export class SearchService {
-
   private parentCategory: number;
-
   private categories: Category[] = [];
+  private static pageSize: number = 20;
+  private static CATEGORIES_FULL_URI: string = `${API_GENERIC_URI + URI_CATEGORIES}?size=${SearchService.pageSize}`;
 
   constructor (private httpService: HTTPService) {
     for (let i = 1; i < 10; i++){
@@ -38,8 +39,8 @@ export class SearchService {
     this.parentCategory = id ? id : undefined;
     return new Promise((resolve: Function, reject: Function) => {
       resolve(this.categories);
-      // this.httpService.get(`${API_GENERIC_URI}/categories?parent=${this.parentCategory}`).subscribe((categories: Category[]) => {
-      //   resolve(categories);
+      // this.httpService.get(`${SearchService.CATEGORIES_FULL_URI}?parent=${this.parentCategory}`).subscribe((categoriesPage: CategoriesPage) => {
+      //   resolve(categoriesPage);
       // },(error: TPVHTTPError) => {
       //   reject(error.description);
       // });
@@ -49,8 +50,8 @@ export class SearchService {
   search(name: string): Promise<any> {
     return new Promise((resolve: Function, reject: Function) => {
     resolve(this.categories);
-    // this.httpService.get(`${API_GENERIC_URI}/categories?parent=${this.rootCategory}?name=${name}`).subscribe((categories: Category[]) => {
-      //   resolve(categories);
+    // this.httpService.get(`${SearchService.CATEGORIES_FULL_URI}?name=${name}`).subscribe((categoriesPage: CategoriesPage) => {
+      //   resolve(categoriesPage);
       // },(error: TPVHTTPError) => {
       //   reject(error.description);
       // });
@@ -65,7 +66,7 @@ export class SearchService {
       productDetails.type = "Article";
       productDetails.product = new Product(article.code, article.reference, article.description, article.retailPrice, article.discontinued, article.image);
       resolve(productDetails);
-      // this.httpService.get(`${API_GENERIC_URI}/products/details/${code}`).subscribe((productDetails: ProductDetails) => {
+      // this.httpService.get(`${API_GENERIC_URI + URI_PRODUCTS}/products/details/${code}`).subscribe((productDetails: ProductDetails) => {
       //   resolve(productDetails);
       // },(error: TPVHTTPError) => {
       //   reject(error.description);

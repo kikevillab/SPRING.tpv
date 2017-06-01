@@ -15,5 +15,6 @@ export const URI_CASHIERCLOSURES: string = '/cashierclosures';
 export const URI_TICKETS: string = '/tickets';
 export const URI_PRODUCTS: string = '/products';
 export const URI_INVOICES: string = '/invoices';
+export const URI_CATEGORIES: string = '/categories';
 
 export const ROLE_CUSTOMER: string = 'CUSTOMER';
