@@ -11,6 +11,9 @@ public class ProductCategory extends CategoryComponent {
     @JoinColumn
     private Product product;
     
+    public ProductCategory(){
+        super();
+    }
     public ProductCategory(Product product){
         super(product.getCode(), product.getDescription());
         this.product = product;     

@@ -13,6 +13,11 @@ public class CategoryComposite extends CategoryComponent {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<CategoryComponent> categoryComponents;
 
+    public CategoryComposite(){
+        super();
+        categoryComponents = new ArrayList<>();
+    }
+    
     public CategoryComposite(String code, String name) {
         super(code, name);
         categoryComponents = new ArrayList<>();
