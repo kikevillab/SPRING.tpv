@@ -10,7 +10,7 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class CategoryComposite extends CategoryComponent {
-    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER)
     private List<CategoryComponent> categoryComponents;
 
     public CategoryComposite(){
