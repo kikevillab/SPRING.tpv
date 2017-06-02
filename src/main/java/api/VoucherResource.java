@@ -52,6 +52,8 @@ public class VoucherResource {
 
     @RequestMapping(method = RequestMethod.GET)
     public List<Voucher> findAllVouchers() {
+        System.out.println(">>>>>>>>>API1: "+ voucherController.findAllVouchers());
+        System.out.println(">>>>>>>>>API2: "+ voucherController.findAllVouchers());
         return voucherController.findAllVouchers();
     }
     
