@@ -135,9 +135,18 @@ public class DatabaseSeederService {
         ProductCategory textilePrinting7400000003333 = new ProductCategory(textilePrintingDao.findAll().get(0));
         ProductCategory article7400000001111 = new ProductCategory(articleDao.findAll().get(0));
         ProductCategory embroidery7400000002222 = new ProductCategory(embroideryDao.findAll().get(0));
+        textilePrinting7400000003333 = categoryComponentDao.save(textilePrinting7400000003333);
+        article7400000001111 = categoryComponentDao.save(article7400000001111);
+        embroidery7400000002222 = categoryComponentDao.save(embroidery7400000002222);       
         embroideriesCategoryComposite.addCategoryComponent(embroidery7400000002222);
         articlesCategoryComposite.addCategoryComponent(article7400000001111);
         textilePrintingsCategoryComposite.addCategoryComponent(textilePrinting7400000003333);
+        embroideriesCategoryComposite = categoryComponentDao.save(embroideriesCategoryComposite);
+        articlesCategoryComposite = categoryComponentDao.save(articlesCategoryComposite);
+        textilePrintingsCategoryComposite = categoryComponentDao.save(textilePrintingsCategoryComposite);  
+        categoryCompositeRoot.addCategoryComponent(embroideriesCategoryComposite);
+        categoryCompositeRoot.addCategoryComponent(articlesCategoryComposite);
+        categoryCompositeRoot.addCategoryComponent(textilePrintingsCategoryComposite);
         categoryComponents.add(categoryCompositeRoot);
         return categoryComponents;
     }
