@@ -14,6 +14,7 @@ import org.junit.rules.ExpectedException;
 import org.springframework.http.HttpStatus;
 
 import wrappers.PatchChangeDescriptionWrapper;
+import wrappers.ProductBarcodeWrapper;
 import wrappers.ProductWrapper;
 
 public class ProductResourceFunctionalTesting {
@@ -69,6 +70,27 @@ public class ProductResourceFunctionalTesting {
         ProductWrapper product = new RestBuilder<ProductWrapper>(RestService.URL).path(Uris.PRODUCTS).pathId(productCode)
                 .basicAuth(token, "").clazz(ProductWrapper.class).get().build();
         assertTrue(product.isDiscontinued());
+    }
+    
+    @Test
+    public void testGenerateBarcodesPdf(){
+        ProductBarcodeWrapper productBarcode8400000001111 = new ProductBarcodeWrapper("8400000001111");
+        ProductBarcodeWrapper productBarcode8400000002223 = new ProductBarcodeWrapper("8400000002223");
+        List<ProductBarcodeWrapper> productBarcodeWrappers = new ArrayList<>();
+        productBarcodeWrappers.add(productBarcode8400000002223);
+        productBarcodeWrappers.add(productBarcode8400000001111);
+        new RestBuilder<Object>(RestService.URL).path(Uris.PRODUCTS + Uris.BARCODES).body(productBarcodeWrappers).post().build();
+    }
+    
+    @Test
+    public void testGenerateBarcodesPdfWithNonExistentBarcode(){
+        thrown.expect(new HttpMatcher(HttpStatus.NOT_FOUND));
+        ProductBarcodeWrapper productBarcode8400000001111 = new ProductBarcodeWrapper("8400000001111");
+        ProductBarcodeWrapper productBarcode8400000002223 = new ProductBarcodeWrapper("0000000000000");
+        List<ProductBarcodeWrapper> productBarcodeWrappers = new ArrayList<>();
+        productBarcodeWrappers.add(productBarcode8400000002223);
+        productBarcodeWrappers.add(productBarcode8400000001111);
+        new RestBuilder<Object>(RestService.URL).path(Uris.PRODUCTS + Uris.BARCODES).body(productBarcodeWrappers).post().build();
     }
 
     // Waiting for front-end to implement login and add roles.

@@ -249,6 +249,7 @@ textilePrintingList:
 
 ticketList:
   - id: 1
+    reference : ticket1
     shoppingList:
       - amount: 1
         discount: 0
@@ -275,6 +276,7 @@ ticketList:
         retailPrice: 23
         shoppingState: OPENED
   - id: 2
+    reference : ticket2
     shoppingList:
       - amount: 1
         discount: 0
@@ -303,6 +305,7 @@ ticketList:
     user: *user666000003
   - &ticket3
     id: 3
+    reference : ticket3
     shoppingList:
       - amount: 1
         discount: 10
@@ -331,6 +334,7 @@ ticketList:
     user: *user666000003
   - &ticket4
     id: 4
+    reference : ticket4
     shoppingList:
       - amount: 1
         discount: 10
@@ -358,6 +362,7 @@ ticketList:
         shoppingState: OPENED
     user: *user666000002
   - id: 5
+    reference : ticket5
     shoppingList:
       - amount: 1
         discount: 10
@@ -385,6 +390,7 @@ ticketList:
         shoppingState: STARTED
     user: *user666000002
   - id: 6
+    reference : ticket6
     shoppingList:
       - amount: 1
         discount: 10
