@@ -8,7 +8,7 @@ import {Session} from '../../shared/models/session.model';
 import {
     LOCAL_STORAGE_TOKEN_ATTRIBUTE,
     NOT_AUTHENTICATED_MESSAGE,
-    ADMIN_ROLE,
+    ROLE_ADMIN,
     API_GENERIC_URI
 } from '../../app.config';
 import {Observable} from 'rxjs/Observable';
@@ -36,7 +36,7 @@ export class ClearAppDataService {
             let parsedSession = JSON.parse(sessionString);
             let session = new Session(parsedSession.token, parsedSession.rol);
 
-            if (session.rol === ADMIN_ROLE) {
+            if (session.role === ROLE_ADMIN) {
                 this.setSessionToken(parsedSession.token);
                 this.setHeaders();
             }
