@@ -14,7 +14,7 @@
 		[limit]="10">
 			<ngx-datatable-column name="Reference">
 				<ng-template let-value="value" ngx-datatable-cell-template>
-					<a routerLink="/ordertracking/{{value}}">
+					<a routerLink="/order-tracking/{{value}}">
 						{{value}}
 					</a>
 				</ng-template>
@@ -30,7 +30,7 @@
 			    <md-list-item>
 			    <md-icon md-list-icon>shopping_basket</md-icon>
 			      <h4 md-line>
-			      	<a routerLink="/ordertracking/{{ticket.reference}}">
+			      	<a routerLink="/order-tracking/{{ticket.reference}}">
 			       		{{ticket.reference}}
 			        </a>
 			      </h4>

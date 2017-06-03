@@ -6,10 +6,8 @@ import { Injectable } from '@angular/core';
 
 import { API_GENERIC_URI, URI_PRODUCTS, URI_CATEGORIES } from '../../../../app.config';
 
-import { Category } from '../models/category.model'; // delete
-import { CategoriesPage } from '../models/categories-page.model'; // delete
-import { ProductDetails } from '../models/product-details.model';
-import { Article } from '../models/article.model'; // delete
+import { Category } from '../models/category.model'; // delete?
+import { CategoriesPage } from '../models/categories-page.model'; // delete?
 
 import { Product } from '../../../../shared/models/product.model';
 import { HTTPService } from '../../../../shared/services/http.service';
@@ -31,7 +29,7 @@ export class SearchService {
     for (let i = 1; i < 50; i++){
       let number = (i <= 6) ? i : (i%6 +1);
       let image: string = `http://localhost:8080/SPRING.tpv.1.2.0-SNAPSHOT/assets/img/products/img-product-${number}.png`;
-      this.categories.push(new Category(i, "article"+i, "8400000111"+i, image));
+      this.categories.push(new Category(i, "product"+i, "840000000111"+i % 8, image));
     }
   }
 
@@ -60,17 +58,11 @@ export class SearchService {
 
   getProductDetails(code: string): Promise<any> {
     return new Promise((resolve: Function, reject: Function) => {
-      let productDetails: ProductDetails = new ProductDetails();
-      let article: Article = new Article(code, 'reference', 'article1', 1234, false, "http://localhost:8080/SPRING.tpv.1.2.0-SNAPSHOT/assets/img/products/img-product-1.png", 12, 312);
-      productDetails.article = article;
-      productDetails.type = "Article";
-      productDetails.product = new Product(article.code, article.reference, article.description, article.retailPrice, article.discontinued, article.image);
-      resolve(productDetails);
-      // this.httpService.get(`${API_GENERIC_URI + URI_PRODUCTS}/products/details/${code}`).subscribe((productDetails: ProductDetails) => {
-      //   resolve(productDetails);
-      // },(error: TPVHTTPError) => {
-      //   reject(error.description);
-      // });
+      this.httpService.get(`${API_GENERIC_URI + URI_PRODUCTS}/${code}`).subscribe((product: Product) => {
+        resolve(product);
+      },(error: TPVHTTPError) => {
+        reject(error.description);
+      });
     });
   }
 

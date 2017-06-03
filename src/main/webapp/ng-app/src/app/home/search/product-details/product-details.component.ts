@@ -6,7 +6,6 @@ import { Component, OnInit } from '@angular/core';
 import { MdDialogRef } from '@angular/material';
 
 import { Product } from '../../../shared/models/product.model';
-import { ProductDetails } from '../shared/models/product-details.model';
 import { SearchService } from '../shared/services/search.service';
 import { ShoppingService } from '../../shared/services/shopping.service';
 
@@ -41,27 +40,31 @@ import { ToastService } from '../../../shared/services/toast.service';
 })
 export class ProductDetailsComponent {
 
-  productDetails: ProductDetails;
+  product: Product;
   loading: boolean = true;
   
   constructor(public dialogRef: MdDialogRef<ProductDetailsComponent>, private searchService: SearchService, private shoppingService: ShoppingService, private toastService: ToastService) {}
 
-  initialize(code: string){
-    this.searchService.getProductDetails(code).then((productDetails: ProductDetails) => {
-    	this.productDetails = productDetails;
+  initialize(code: string): void {
+    this.searchService.getProductDetails(code).then((product: Product) => {
+    	this.product = product;
     	this.loading = false;
     }).catch((error: string) => {
     	this.loading = false;
     });
   }
 
-  addToCart(){
-  	this.shoppingService.addProduct(this.productDetails.product.code).then(() => {   
+  addToCart(): void{
+  	this.shoppingService.addProduct(this.product.code).then(() => {   
   		this.toastService.info('Product added', 'The product has been added to the shopping cart');
     }).catch((error: string) => {
     	this.toastService.error('Error adding product', error);
     });
     this.dialogRef.close();
+  }
+
+  getImage(image: string): string {
+    return `http://localhost:8080/SPRING.tpv.1.2.0-SNAPSHOT${image}`;
   }
 
 }
