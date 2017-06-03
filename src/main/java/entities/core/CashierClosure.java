@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import java.util.Calendar;
 
 @Entity
-public class CashierClosures {
+public class CashierClosure {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,16 +26,16 @@ public class CashierClosures {
     @Column
     private String comment;
 
-    public CashierClosures() {
+    public CashierClosure() {
     }
 
-    public CashierClosures(long id, double amount, Calendar openingDate) {
+    public CashierClosure(long id, double amount, Calendar openingDate) {
         this.id = id;
         this.amount = amount;
         this.openingDate = openingDate;
     }
 
-    public CashierClosures(long id, double amount, Calendar openingDate, Calendar closureDate, String comment) {
+    public CashierClosure(long id, double amount, Calendar openingDate, Calendar closureDate, String comment) {
         this.id = id;
         this.amount = amount;
         this.openingDate = openingDate;
