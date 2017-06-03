@@ -66,7 +66,7 @@ public class InvoiceResource {
         InvoiceCreationResponseWrapper invoiceWrapper = invoiceController.createInvoice(ticket);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType("application/pdf"));
-        String filename = "VOUCHER" + invoiceWrapper.getInvoiceId() + ResourceNames.PDF_FILE_EXT;
+        String filename = "INVOICE" + invoiceWrapper.getInvoiceId() + ResourceNames.PDF_FILE_EXT;
         headers.set(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=" + filename);
         headers.setCacheControl("must-revalidate, post-check=0, pre-" + "hcheck=0");
         ResponseEntity<byte[]> invoicePdf = new ResponseEntity<byte[]>(invoiceWrapper.getPdfByteArray(), headers, HttpStatus.OK);
