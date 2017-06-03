@@ -21,6 +21,7 @@ import org.springframework.http.HttpStatus;
 import api.wrappers.TicketReferenceCreatedPageWrapper;
 import entities.core.ShoppingState;
 import entities.core.Ticket;
+import wrappers.CashierClosuresCreationWrapper;
 import wrappers.DayTicketWrapper;
 import wrappers.ShoppingCreationWrapper;
 import wrappers.ShoppingTrackingWrapper;
@@ -39,6 +40,11 @@ public class TicketResourceFunctionalTesting {
     @Before
     public void setUp() {
         new RestService().seedDatabase();
+
+        // Open cashier to be able to create tickets
+        String token = new RestService().loginAdmin();
+        new RestBuilder<CashierClosuresCreationWrapper>(RestService.URL).path(Uris.CASHIER_CLOSURES).basicAuth(token, "")
+                .clazz(CashierClosuresCreationWrapper.class).post().build();
     }
 
     @Test
@@ -489,7 +495,7 @@ public class TicketResourceFunctionalTesting {
         TicketReferenceCreatedPageWrapper ticketPage = new RestBuilder<TicketReferenceCreatedPageWrapper>(RestService.URL)
                 .path(Uris.TICKETS).param("mobile", userMobile).param("size", pageSize).param("page", pageNumber).basicAuth(token, "")
                 .clazz(TicketReferenceCreatedPageWrapper.class).get().build();
-        
+
         assertNotNull(ticketPage);
         assertEquals(Integer.valueOf(pageSize).intValue(), ticketPage.getNumberOfElements());
     }

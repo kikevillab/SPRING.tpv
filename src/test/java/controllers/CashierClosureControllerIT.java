@@ -10,25 +10,25 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import config.PersistenceConfig;
 import config.TestsControllerConfig;
 import config.TestsPersistenceConfig;
-import daos.core.CashierClosuresDao;
-import entities.core.CashierClosures;
+import daos.core.CashierClosureDao;
+import entities.core.CashierClosure;
 import junit.framework.TestCase;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {PersistenceConfig.class, TestsPersistenceConfig.class, TestsControllerConfig.class})
-public class CashierClosuresControllerIT extends TestCase {
+public class CashierClosureControllerIT extends TestCase {
 
     @Autowired
     private CashierClosuresController cashierClosuresController;
 
     @Autowired
-    private CashierClosuresDao cashierClosuresDao;
+    private CashierClosureDao cashierClosureDao;
     
    
     @After
     public void after()
     {
-    	cashierClosuresDao.deleteAll();
+    	cashierClosureDao.deleteAll();
     }
     
     @Test
@@ -47,12 +47,12 @@ public class CashierClosuresControllerIT extends TestCase {
     @Test
     public void shouldReturnCashierClosureWellformed()
     {
-    	CashierClosures cashierClosures = cashierClosuresController.createCashierClosures();
+    	CashierClosure cashierClosure = cashierClosuresController.createCashierClosures();
     	
-    	assertNotNull(cashierClosures);
-    	assertEquals(0.0, cashierClosures.getAmount(), 0.01);
-    	assertEquals(cashierClosures.getClosureDate(), null);
-    	assertEquals(cashierClosuresController.getLastCashierClosure().getId(), cashierClosures.getId());
+    	assertNotNull(cashierClosure);
+    	assertEquals(0.0, cashierClosure.getAmount(), 0.01);
+    	assertEquals(cashierClosure.getClosureDate(), null);
+    	assertEquals(cashierClosuresController.getLastCashierClosure().getId(), cashierClosure.getId());
     	
     }
    
@@ -64,7 +64,7 @@ public class CashierClosuresControllerIT extends TestCase {
 
     	cashierClosuresController.depositCashierRequest(5);
     	
-    	assertEquals(5.0, cashierClosuresDao.findFirstByOrderByOpeningDateDesc().getAmount(), 0.01);
+    	assertEquals(5.0, cashierClosureDao.findFirstByOrderByOpeningDateDesc().getAmount(), 0.01);
     }
     
     @Test
@@ -74,7 +74,7 @@ public class CashierClosuresControllerIT extends TestCase {
 
     	cashierClosuresController.withDrawCashierRequest(3);
     	
-    	assertEquals(-3.0, cashierClosuresDao.findFirstByOrderByOpeningDateDesc().getAmount(), 0.01);
+    	assertEquals(-3.0, cashierClosureDao.findFirstByOrderByOpeningDateDesc().getAmount(), 0.01);
 
     }
     
@@ -83,9 +83,9 @@ public class CashierClosuresControllerIT extends TestCase {
     {
     	cashierClosuresController.createCashierClosures();
 
-    	CashierClosures closesCashier = cashierClosuresController.closeCashierRequest(10, "comentario");
+    	CashierClosure closesCashier = cashierClosuresController.closeCashierRequest(10, "comentario");
     	
-    	CashierClosures lastCashierClosure = cashierClosuresController.getLastCashierClosure();
+    	CashierClosure lastCashierClosure = cashierClosuresController.getLastCashierClosure();
     	
     	assertEquals(lastCashierClosure.getId(),closesCashier.getId());
     	assertEquals(10.0, lastCashierClosure.getAmount(), 0.01);
