@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import api.exceptions.NotFoundProductCodeException;
-import config.ResourceNames;
 import controllers.ProductController;
 import entities.core.Product;
 import wrappers.PatchChangeDescriptionWrapper;
