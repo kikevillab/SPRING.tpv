@@ -4,7 +4,6 @@
  * @author Sergio Banegas Cortijo
  * Github: https://github.com/sergiobanegas 
 */
-
 import { Injectable } from '@angular/core';
 import {Http, Response, Headers, RequestOptions, URLSearchParams, ResponseContentType} from '@angular/http';
 import { Observable } from 'rxjs/Observable';
