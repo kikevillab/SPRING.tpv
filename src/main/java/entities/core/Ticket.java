@@ -60,8 +60,7 @@ public class Ticket {
 
     public Ticket(long id) {
         this();
-        setId(id);
-        updateReference();
+        setId(id);            
     }
 
     public long getId() {
@@ -70,6 +69,7 @@ public class Ticket {
 
     public void setId(long id) {
         this.id = id;
+        updateReference();
     }
 
     private void updateReference() {
