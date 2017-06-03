@@ -12,15 +12,18 @@ import {UsersComponent} from './users.component';
 import {FilterComponent} from './filter/filter.component';
 import {ResultsComponent} from './results/results.component';
 import {NewUserDialog} from './new-user/new-user.component';
+import {UserDetailsDialog} from './details/details.component';
 import {SharedModule} from '../../../shared/shared.module';
 import {NgxDatatableModule} from '@swimlane/ngx-datatable';
 import {AngularMaterialModule} from '../../../shared/angular-material.module';
 import {HTTPService} from '../../../shared/services/http.service';
 import {ToastService} from '../../../shared/services/toast.service';
 import {UsersService} from './users.service';
+import {TicketsService} from './details/tickets.service';
 import {RegExpFormValidatorService} from '../../../shared/services/reg-exp-form-validator.service';
 import {InMemoryWebApiModule} from 'angular-in-memory-web-api';
 import {InMemoryDataService} from '../../../shared/services/in-memory-data.service';
+import {BooleanToStringPipe} from './details/bool-to-str.pipe';
 
 @NgModule({
     imports: [
@@ -38,22 +41,28 @@ import {InMemoryDataService} from '../../../shared/services/in-memory-data.servi
         UsersComponent,
         FilterComponent,
         ResultsComponent,
-        NewUserDialog
+        NewUserDialog,
+        UserDetailsDialog,
+        BooleanToStringPipe
     ],
     providers: [
         HTTPService,
         ToastService,
         UsersService,
-        RegExpFormValidatorService
+        RegExpFormValidatorService,
+        TicketsService
     ],
     exports: [
         UsersComponent,
         FilterComponent,
         ResultsComponent,
-        NewUserDialog
+        NewUserDialog,
+        UserDetailsDialog,
+        BooleanToStringPipe
     ],
     entryComponents: [
-        NewUserDialog
+        NewUserDialog,
+        UserDetailsDialog
     ]
 })
 export class UsersModule {

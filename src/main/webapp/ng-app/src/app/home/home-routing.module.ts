@@ -15,10 +15,13 @@ import { CloseCashierComponent } from './close-cashier/close-cashier.component';
 import { MovementComponent } from './movement/movement.component';
 import { TicketsOfTheDayComponent } from './tickets-of-the-day/tickets-of-the-day.component';
 
+import { HomeGuard } from './home.guard';
+
 const routes: Routes = [
 	{ 
 	    path: 'home', 
 	    component: HomeComponent,
+	    canActivate: [ HomeGuard ],
 	    children: [
 	   		{ path: '', redirectTo: 'search', pathMatch: 'full' },
 	   		{ path: 'search', component: SearchComponent },

@@ -5,7 +5,7 @@
 import {Injectable} from '@angular/core';
 import {CanActivate} from '@angular/router';
 import {LocalStorageService} from '../shared/services/local-storage.service';
-import {LOCAL_STORAGE_TOKEN_ATTRIBUTE, ADMIN_ROLE} from '../app.config';
+import {LOCAL_STORAGE_TOKEN_ATTRIBUTE, ROLE_ADMIN} from '../app.config';
 import {Session} from '../shared/models/session.model';
 
 @Injectable()
@@ -21,7 +21,7 @@ export class AdminGuard implements CanActivate {
             let parsedSession = JSON.parse(sessionString);
             let session = new Session(parsedSession.token, parsedSession.rol);
 
-            return (session.rol === ADMIN_ROLE);
+            return (session.role === ROLE_ADMIN);
         }
 
         return false;

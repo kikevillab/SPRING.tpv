@@ -8,6 +8,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 
 import daos.core.InvoiceDao;
@@ -18,7 +21,6 @@ import entities.core.Product;
 import entities.core.Shopping;
 import entities.core.ShoppingState;
 import entities.core.Ticket;
-import entities.core.TicketPK;
 import entities.users.User;
 import services.PdfGenerationService;
 import wrappers.DayTicketWrapper;
@@ -27,7 +29,8 @@ import wrappers.ShoppingTrackingWrapper;
 import wrappers.ShoppingUpdateWrapper;
 import wrappers.TicketCreationResponseWrapper;
 import wrappers.TicketCreationWrapper;
-import wrappers.TicketIdWrapper;
+import wrappers.TicketReferenceCreatedWrapper;
+import wrappers.TicketReferenceWrapper;
 
 @Controller
 public class TicketController {
@@ -158,8 +161,17 @@ public class TicketController {
         return dayTicketsList;
     }
     
-    public Ticket findOneTicket(TicketIdWrapper ticketIdWrapper) {
-        return ticketDao.findOne(new TicketPK(ticketIdWrapper.getId()));
+    public Page<TicketReferenceCreatedWrapper> getTicketsByUserMobile(long mobile, Pageable pageable) {
+        Page<Ticket> ticketPage = ticketDao.findByUserMobile(mobile, pageable);
+        List<TicketReferenceCreatedWrapper> ticketWrapperList = new ArrayList<>(); 
+        for (Ticket ticket : ticketPage.getContent()) {
+            ticketWrapperList.add(new TicketReferenceCreatedWrapper(ticket));
+        }
+        return new PageImpl<TicketReferenceCreatedWrapper>(ticketWrapperList, pageable, ticketPage.getTotalElements());
+    }
+       
+    public Ticket findOneTicket(TicketReferenceWrapper ticketReferenceWrapper) {
+        return ticketDao.findFirstByReference(ticketReferenceWrapper.getTicketReference());
     }
 
     public boolean ticketIsAlreadyAssignedToInvoice(Ticket ticket) {

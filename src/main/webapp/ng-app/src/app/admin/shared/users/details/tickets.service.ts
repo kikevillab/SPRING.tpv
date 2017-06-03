@@ -1,30 +1,31 @@
 /**
- * Created by fran lopez on 04/05/2017.
+ * Created by fran lopez on 30/05/2017.
  */
 
 import {Injectable} from '@angular/core';
-import {Headers} from '@angular/http';
-import {Session} from '../../shared/models/session.model';
+import {Headers, URLSearchParams} from '@angular/http';
+import {Session} from '../../../../shared/models/session.model';
 import {
     LOCAL_STORAGE_TOKEN_ATTRIBUTE,
     NOT_AUTHENTICATED_MESSAGE,
-    ROLE_ADMIN,
-    API_GENERIC_URI
-} from '../../app.config';
+    ROLE_ADMIN
+} from '../../../../app.config';
 import {Observable} from 'rxjs/Observable';
-import {HTTPService} from '../../shared/services/http.service';
-import {LocalStorageService} from '../../shared/services/local-storage.service';
+import {HTTPService} from '../../../../shared/services/http.service';
+import {LocalStorageService} from '../../../../shared/services/local-storage.service';
+import {TICKETS_URI} from '../../../admin.config';
 import 'rxjs/add/operator/map';
 import {isNull} from "util";
 
 @Injectable()
-export class ClearAppDataService {
-    private endpoint: string = API_GENERIC_URI + '/admins';
+export class TicketsService {
+    private endpoint: string;
     private sessionToken: string;
     private headers: Headers;
 
     constructor(private httpService: HTTPService, private localStorageService: LocalStorageService) {
         this.headers = null;
+        this.endpoint = TICKETS_URI;
         this.setSessionToken('');
         this.init();
     }
@@ -51,9 +52,12 @@ export class ClearAppDataService {
         this.headers = new Headers({'Authorization': 'Basic ' + btoa(this.sessionToken + ':')});
     }
 
-    clearData(): Observable<any> {
-        if (!isNull(this.headers))
-            return this.httpService.delete(this.endpoint, this.headers);
+    search(fieldName: string, fieldValue: any): Observable<any> {
+        if (!isNull(this.headers) && !isNull(this.endpoint)) {
+            let params = new URLSearchParams();
+            params.set(fieldName, fieldValue);
+            return this.httpService.get(this.endpoint, this.headers, params);
+        }
 
         return Observable.throw(NOT_AUTHENTICATED_MESSAGE);
     }

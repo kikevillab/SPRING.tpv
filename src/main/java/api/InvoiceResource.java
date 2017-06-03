@@ -23,7 +23,7 @@ import controllers.UserController;
 import entities.core.Ticket;
 import wrappers.InvoiceCreationResponseWrapper;
 import wrappers.InvoiceWrapper;
-import wrappers.TicketIdWrapper;
+import wrappers.TicketReferenceWrapper;
 
 @RestController
 @RequestMapping(Uris.VERSION + Uris.INVOICES)
@@ -51,9 +51,9 @@ public class InvoiceResource {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<byte[]> createInvoice(@RequestBody TicketIdWrapper ticketIdWrapper) throws TicketHasInvalidUserException,
+    public ResponseEntity<byte[]> createInvoice(@RequestBody TicketReferenceWrapper ticketReferenceWrapper) throws TicketHasInvalidUserException,
             InvoiceDoesNotAllowNotClosedTicketsException, TicketIsAlreadyAssignedToInvoiceException, IOException {
-        Ticket ticket = ticketController.findOneTicket(ticketIdWrapper);
+        Ticket ticket = ticketController.findOneTicket(ticketReferenceWrapper);
         if (!userController.userIsValid(ticket.getUser())) {
             throw new TicketHasInvalidUserException("User: " + ticket.getUser());
         }
