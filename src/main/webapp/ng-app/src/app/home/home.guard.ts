@@ -1,4 +1,7 @@
-
+/**
+  * @author Sergio Banegas Cortijo
+  * Github: https://github.com/sergiobanegas 
+*/
 import { Injectable } from '@angular/core';
 import { Router, CanActivate } from '@angular/router';
 
