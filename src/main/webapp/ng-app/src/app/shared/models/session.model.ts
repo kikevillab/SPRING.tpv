@@ -3,6 +3,6 @@
  */
 
 export class Session {
-    constructor(public token: string, public rol: string) {
+    constructor(public token: string, public role: string) {
     }
 }

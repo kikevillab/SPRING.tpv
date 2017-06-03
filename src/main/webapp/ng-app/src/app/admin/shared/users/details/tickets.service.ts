@@ -8,7 +8,7 @@ import {Session} from '../../../../shared/models/session.model';
 import {
     LOCAL_STORAGE_TOKEN_ATTRIBUTE,
     NOT_AUTHENTICATED_MESSAGE,
-    ADMIN_ROLE
+    ROLE_ADMIN
 } from '../../../../app.config';
 import {Observable} from 'rxjs/Observable';
 import {HTTPService} from '../../../../shared/services/http.service';
@@ -37,7 +37,7 @@ export class TicketsService {
             let parsedSession = JSON.parse(sessionString);
             let session = new Session(parsedSession.token, parsedSession.rol);
 
-            if (session.rol === ADMIN_ROLE) {
+            if (session.role === ROLE_ADMIN) {
                 this.setSessionToken(parsedSession.token);
                 this.setHeaders();
             }
