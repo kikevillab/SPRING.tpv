@@ -18,6 +18,7 @@ import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 
 import daos.core.ArticleDao;
+import daos.core.CashierClosureDao;
 import daos.core.EmbroideryDao;
 import daos.core.InvoiceDao;
 import daos.core.ProviderDao;
@@ -68,6 +69,9 @@ public class DatabaseSeederService {
     @Autowired
     private InvoiceDao invoiceDao;
     
+    @Autowired
+    private CashierClosureDao cashierClosureDao;
+    
     @PostConstruct
     public void createDefaultAdmin() {
         Yaml adminYaml = new Yaml();
@@ -109,6 +113,7 @@ public class DatabaseSeederService {
                 textilePrintingDao.save(tpvGraph.getTextilePrintingList());
                 ticketDao.save(tpvGraph.getTicketList());
                 invoiceDao.save(tpvGraph.getInvoiceList());
+                cashierClosureDao.save(tpvGraph.getCashierClosureList());
             } catch (IOException e) {
                 System.err.println("ERROR: File " + fileName + " doesn't exist or can't be opened");
                 e.printStackTrace();
@@ -135,6 +140,8 @@ public class DatabaseSeederService {
         embroideryDao.deleteAll();
         textilePrintingDao.deleteAll();
         providerDao.deleteAll();
+        
+        cashierClosureDao.deleteAll();
 
         createDefaultAdmin();
     }

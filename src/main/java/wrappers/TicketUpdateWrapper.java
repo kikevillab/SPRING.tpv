@@ -15,6 +15,7 @@ public class TicketUpdateWrapper {
     public TicketUpdateWrapper() {
         super();
         shoppingUpdateList = new ArrayList<>();
+        vouchers = new ArrayList<>();
     }
 
     public List<ShoppingUpdateWrapper> getShoppingUpdateList() {

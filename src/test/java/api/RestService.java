@@ -20,7 +20,7 @@ public class RestService {
 
     public String registerAndLoginManager() {
         UserWrapper manager = new UserWrapper(666000666, "daemon", "pass");
-        new RestBuilder<Object>(URL).path(Uris.USERS).body(manager).basicAuth(this.loginAdmin(), "").post().build();
+        new RestBuilder<Object>(URL).path(Uris.USERS).body(manager).param("role", "MANAGER").basicAuth(this.loginAdmin(), "").post().build();
         TokenWrapper token = new RestBuilder<TokenWrapper>(URL).path(Uris.TOKENS)
                 .basicAuth(Long.toString(manager.getMobile()), manager.getPassword()).clazz(TokenWrapper.class).post().build();
         return token.getToken();
