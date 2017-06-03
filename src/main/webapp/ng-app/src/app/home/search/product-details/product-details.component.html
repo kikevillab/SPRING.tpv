@@ -1,21 +1,18 @@
 <div *ngIf="!loading; else spinner">
-	<div *ngIf="productDetails; else error" id="dialog-content" fxLayout="column" fxLayoutGap="1em">
+	<div *ngIf="product; else error" id="dialog-content" fxLayout="column" fxLayoutGap="1em">
 		<md-card id="product-details-container" fxHide.xs fxHide.sm>
 			<md-card-content fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayout.xs="column" fxLayoutAlign="space-between">
 				<div>
-					<img src="{{productDetails.product.image}}" width="175"/>
+					<img src="{{getImage(product.image)}}" width="175"/>
 				</div>
 				<md-card id="product-details-card">
 					<md-card-content>
-						<h1>{{productDetails.product.description | capitalize}}</h1>
+						<h1>{{product.description | capitalize}}</h1>
 						<p>
-							<b>Type</b>: {{productDetails.type}}
+							<b>Code</b>: {{product.code}}
 						</p>
 						<p>
-							<b>Reference</b>: {{productDetails.product.reference}}
-						</p>
-						<p>
-							<b>Price</b>: {{productDetails.product.retailPrice | currency:'EUR':true}}
+							<b>Price</b>: {{product.retailPrice | currency:'EUR':true}}
 						</p>
 					</md-card-content>
 				</md-card>
@@ -23,43 +20,19 @@
 		</md-card>
 		<md-card fxHide fxShow.xs fxShow.sm>
 			<md-card-content>
-				<h2>{{productDetails.product.description | capitalize}}</h2>
+				<h2>{{product.description | capitalize}}</h2>
 				<p>
-					<b>Type</b>: {{productDetails.type}}
+					<b>Code</b>: {{product.code}}
 				</p>
 				<p>
-					<b>Reference</b>: {{productDetails.product.reference}}
-				</p>
-				<p>
-					<b>Price</b>: {{productDetails.product.retailPrice | currency:'EUR':true}}
+					<b>Price</b>: {{product.retailPrice | currency:'EUR':true}}
 				</p>
 			</md-card-content>
 		</md-card>
 		<md-card>
-			<div *ngIf="productDetails.article" fxLayout="row" fxLayout.xs="column" fxLayoutGap="1em" fxLayoutAlign="space-around">
-				<div>
-					<b>Stock</b>: {{productDetails.article.stock}}
-				</div>
-				<div>
-					<b>Wholesale price</b>: {{productDetails.article.wholesalePrice | currency:'EUR':true}}
-				</div>
-			</div>
-			<div *ngIf="productDetails.embroidery" fxLayout="row" fxLayout.xs="column" fxLayoutGap="1em" fxLayoutAlign="space-around">
-				<div>
-					<b>Stitches</b>: {{productDetails.embroidery.stitches}}
-				</div>
-				<div>
-					<b>Colors</b>: {{productDetails.embroidery.colors}}
-				</div>
-				<div>
-					<b>Square millimeters</b>: {{productDetails.embroidery.squareMillimeters}}
-				</div>
-			</div>
-			<div *ngIf="productDetails.textilePrinting">
-				<div>
-					<b>Type</b>: {{productDetails.textilePrinting.type}}
-				</div>
-			</div>
+			<md-card-content>
+				<a>{{product.longDescription}}</a>
+			</md-card-content>
 		</md-card>
 		<button fxHide.xl fxHide.lg fxHide.md md-raised-button color="accent" (click)="addToCart()">Add to cart</button>
 		<div id="button-container">
