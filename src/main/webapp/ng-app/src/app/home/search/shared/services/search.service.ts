@@ -23,12 +23,12 @@ export class SearchService {
   constructor (private httpService: HTTPService) {
     for (let i = 1; i < 10; i++){
       let number = (i <= 6) ? i : (i%6 +1);
-      let image: string = `http://localhost:8080/SPRING.tpv.1.2.0-SNAPSHOT/assets/img/products/img-product-${number}.png`;
+      let image: string = `/assets/img/products/img-product-${number}.png`;
       this.categories.push(new Category(i, "category"+i, null, image));
     }
     for (let i = 1; i < 50; i++){
       let number = (i <= 6) ? i : (i%6 +1);
-      let image: string = `http://localhost:8080/SPRING.tpv.1.2.0-SNAPSHOT/assets/img/products/img-product-${number}.png`;
+      let image: string = `/assets/img/products/img-product-${number}.png`;
       this.categories.push(new Category(i, "product"+i, "840000000111"+i % 8, image));
     }
   }

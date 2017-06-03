@@ -63,8 +63,4 @@ export class ProductDetailsComponent {
     this.dialogRef.close();
   }
 
-  getImage(image: string): string {
-    return `http://localhost:8080/SPRING.tpv.1.2.0-SNAPSHOT${image}`;
-  }
-
 }
