@@ -15,7 +15,7 @@ export class PurchaseView {
   }
 
   getUserAssociationButton() {
-    return element(by.id('submit-mobile-numbe-input-button'));
+    return element(by.id('user-association-submit-button'));
   }
 
 }

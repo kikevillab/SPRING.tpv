@@ -11,6 +11,7 @@ import { LOCAL_STORAGE_TOKEN_ATTRIBUTE } from '../app.config';
 
 @Injectable()
 export class HomeGuard implements CanActivate {
+
   constructor(private router: Router, private localStorageService: LocalStorageService) {}
 
   canActivate() {
@@ -26,4 +27,5 @@ export class HomeGuard implements CanActivate {
     this.router.navigate(['/welcome']);
     return false;
   }
+  
 }

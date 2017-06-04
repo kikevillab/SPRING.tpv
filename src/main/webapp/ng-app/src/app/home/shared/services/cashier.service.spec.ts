@@ -10,6 +10,7 @@ import { CashierService } from './cashier.service';
 import { CashierClosure } from '../models/cashier-closure.model';
 
 import { HTTPService } from '../../../shared/services/http.service';
+import { LocalStorageService } from '../../../shared/services/local-storage.service';
 
 export const MockCashierClosureOpen = {
   id: 1,
@@ -39,6 +40,7 @@ describe('Service: CashierService', () => {
         MockBackend,
         BaseRequestOptions,
         HTTPService,
+        LocalStorageService,
         {
           provide: Http,
           useFactory: (backend, options) => new Http(backend, options),

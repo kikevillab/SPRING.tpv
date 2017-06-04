@@ -2,7 +2,7 @@
 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <md-input-container [ngClass]="'form-element-container'">
         <input mdInput type="text" name="mobile" placeholder="Mobile"
-               formControlName="mobile" required #mobile>
+               formControlName="mobile" id="login-mobile-input" required #mobile>
         <md-hint align="end">{{mobile.value.length}} / 9</md-hint>
     </md-input-container>
     <div *ngIf="formErrors.mobile" [ngClass]="['form-element-container', 'error']">
@@ -10,7 +10,7 @@
     </div>
     <md-input-container [ngClass]="'form-element-container'">
         <input mdInput type="password" name="password" placeholder="Password"
-               #password formControlName="password" required>
+               #password formControlName="password" id="login-password-input" required>
     </md-input-container>
     <div *ngIf="formErrors.password" [ngClass]="['form-element-container', 'error']">
         {{ formErrors.password }}
@@ -18,6 +18,6 @@
     <div *ngIf="formErrors.login" [ngClass]="['form-element-container', 'error']">
         {{ formErrors.login }}
     </div>
-    <button md-raised-button type="submit"
+    <button md-raised-button type="submit" id="login-submit-button"
             [disabled]="!loginForm.valid">OK</button>
 </form>

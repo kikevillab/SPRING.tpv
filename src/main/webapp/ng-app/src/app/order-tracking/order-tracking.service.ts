@@ -4,7 +4,7 @@
 */
 import { Injectable } from '@angular/core';
 
-import { API_GENERIC_URI, URI_TICKETS } from '../app.config';
+import { URI_TICKETS } from '../app.config';
 
 import { ProductState } from './product-state.model';
 
@@ -20,7 +20,7 @@ export class OrderTrackingService {
 
   getTicket(reference:string): Promise<any> {
     return new Promise((resolve,reject) => {
-      this.httpService.get(`${API_GENERIC_URI}${URI_TICKETS}/tracking/${reference}`).subscribe((products:ProductState[]) => {
+      this.httpService.get(`${URI_TICKETS}/tracking/${reference}`).subscribe((products:ProductState[]) => {
         resolve(products);
       }, (error: TPVHTTPError) => reject(error.description));
     });
