@@ -1,5 +1,8 @@
 package entities.core;
 
+import java.util.Arrays;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -30,6 +33,15 @@ public class ProductCategory extends CategoryComponent {
     @Override
     protected String print() {
         return product.toString();
+    }
+    
+    @Override
+    public List<CategoryComponent> components() {
+        return Arrays.asList(this);
+    }
+    @Override
+    public void addComponent(CategoryComponent component) {
+        throw new UnsupportedOperationException();      
     }
 
     

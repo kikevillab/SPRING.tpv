@@ -3,7 +3,6 @@ package entities.core;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
@@ -40,10 +39,20 @@ public class CategoryComposite extends CategoryComponent {
     }
 
     @Override
+    public List<CategoryComponent> components() {
+        return this.categoryComponents;
+    }
+    
+    @Override
     protected String print() {
         StringBuilder str = new StringBuilder();
         categoryComponents.forEach(component -> str.append("[ Component = " + component));
         return str.toString();
+    }
+
+    @Override
+    public void addComponent(CategoryComponent component) {
+        this.categoryComponents.add(component);
     }
 
 }

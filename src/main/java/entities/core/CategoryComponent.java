@@ -1,5 +1,7 @@
 package entities.core;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -64,6 +66,10 @@ public abstract class CategoryComponent {
     }
 
     protected abstract String print();
+    
+    public abstract void addComponent(CategoryComponent component);
+    
+    public abstract List<CategoryComponent> components();
     
     @Override
     public String toString() {
