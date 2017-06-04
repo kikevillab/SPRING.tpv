@@ -8,11 +8,10 @@ branches:
     - master
     - develop
     
-notifications:
-  slack: tpv-miw:RR3NECTV3PaLvPZOUUd8qF7O
+notifications:  
   email:
     recipients:
-      - j.bernal@upm.es
+      - e.arranz@alumnos.upm.es 
       
 services:
   - mysql
