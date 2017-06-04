@@ -3,9 +3,9 @@
   * Github: https://github.com/sergiobanegas 
 */
 import { Injectable } from '@angular/core';
-import { Headers } from '@angular/http';
+import { Headers, URLSearchParams } from '@angular/http';
 
-import { API_GENERIC_URI, LOCAL_STORAGE_TOKEN_ATTRIBUTE, URI_USERS, ROLE_CUSTOMER } from '../../../../../app.config';
+import { LOCAL_STORAGE_TOKEN_ATTRIBUTE, URI_USERS, ROLE_CUSTOMER } from '../../../../../app.config';
 
 import { User } from '../../../../shared/models/user.model';
 import { HTTPService } from '../../../../../shared/services/http.service';
@@ -17,10 +17,11 @@ export class UserService {
 
   constructor (private httpService: HTTPService, private localStorageService: LocalStorageService) {}
 
-  newUser(user: User): Promise<any> {
-    
+  newUser(user: User): Promise<any> { 
     return new Promise((resolve: Function, reject: Function) => {
-      this.httpService.post(`${API_GENERIC_URI}${URI_USERS}?role=${ROLE_CUSTOMER}`, user).subscribe(
+      let params: URLSearchParams = new URLSearchParams();
+      params.append('role', ROLE_CUSTOMER);
+      this.httpService.post(`${URI_USERS}`, user, null, params).subscribe(
         () => resolve(user),
         (error: TPVHTTPError) => {reject(error.description);}
       );

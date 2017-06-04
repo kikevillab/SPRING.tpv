@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Subject } from 'rxjs/Subject';
 
-import { API_GENERIC_URI, URI_TICKETS } from '../../app.config';
+import { URI_TICKETS } from '../../app.config';
 
 import { TicketOfTheDay } from './ticket-of-the-day.model';
 
@@ -26,7 +26,7 @@ export class TicketsOfTheDayService {
     let todayDate: Date = new Date();
     let dateFormatted: string = todayDate.toISOString().slice(0,10).replace(/-/g,"");
     return new Promise((resolve,reject) => {
-      this.httpService.get(`${API_GENERIC_URI + URI_TICKETS + TicketsOfTheDayService.URI_DAY_TICKETS}/${dateFormatted}`).subscribe((tickets:TicketOfTheDay[]) => {
+      this.httpService.get(`${URI_TICKETS + TicketsOfTheDayService.URI_DAY_TICKETS}/${dateFormatted}`).subscribe((tickets:TicketOfTheDay[]) => {
         this.ticketsOfTheDay = tickets;
         this.ticketsOfTheDaySubject.next(this.ticketsOfTheDay);
         resolve(tickets);

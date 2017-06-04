@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 import { Subject } from 'rxjs/Subject';
 import * as moment from 'moment/moment';
 
-import { API_GENERIC_URI, URI_TICKETS, URI_VOUCHERS, URI_INVOICES } from '../../../../../app.config';
+import { URI_TICKETS, URI_VOUCHERS, URI_INVOICES } from '../../../../../app.config';
 
 import { InvoiceCreation } from '../models/invoice-creation.model';
 import { UserMobile } from '../models/user-mobile.model';
@@ -31,7 +31,7 @@ export class PrintService {
       let voucherWrapper: VoucherCreation = new VoucherCreation(amount, expirationDate);
       let headers = new Headers();
       headers.append('Accept', 'application/pdf');
-      this.httpService.post(`${API_GENERIC_URI + URI_VOUCHERS}`, voucherWrapper, headers).subscribe((response: Blob) => {
+      this.httpService.post(`${URI_VOUCHERS}`, voucherWrapper, headers).subscribe((response: Blob) => {
         resolve(response);
       },(error: TPVHTTPError) => {
         reject(error.description);
@@ -44,7 +44,7 @@ export class PrintService {
       // let userMobile: number = this.shoppingService.getUserMobile();
       // userMobile
       //   ? this.postInvoice(resolve, reject, tickeReference)
-      //   : this.httpService.patch(`${API_GENERIC_URI + URI_TICKETS}/{ticketId}`, new UserMobile(userMobile)).subscribe((response: any) => {
+      //   : this.httpService.patch(`${URI_TICKETS}/{ticketId}`, new UserMobile(userMobile)).subscribe((response: any) => {
       //       this.postInvoice(resolve, reject, ticketId);
       //     },(error: TPVHTTPError) => {
       //       reject(error.description);
@@ -56,7 +56,7 @@ export class PrintService {
     let invoiceCreationWrapper: InvoiceCreation = new InvoiceCreation(ticketReference);
       let headers = new Headers();
       headers.append('Accept', 'application/pdf');
-      this.httpService.post(`${API_GENERIC_URI + URI_INVOICES}`, invoiceCreationWrapper, headers).subscribe((response: Blob) => {
+      this.httpService.post(`${URI_INVOICES}`, invoiceCreationWrapper, headers).subscribe((response: Blob) => {
         resolve(response);
       },(error: TPVHTTPError) => {
         reject(error.description);
