@@ -17,6 +17,7 @@ public class TicketCreationWrapper {
     public TicketCreationWrapper() {
         super();
         shoppingList = new ArrayList<>();
+        vouchers = new ArrayList<>();
     }
 
     public Long getUserMobile() {

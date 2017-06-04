@@ -8,10 +8,13 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import api.exceptions.EmptyShoppingListException;
@@ -43,6 +46,7 @@ import wrappers.ShoppingTrackingWrapper;
 import wrappers.ShoppingUpdateWrapper;
 import wrappers.TicketCreationResponseWrapper;
 import wrappers.TicketCreationWrapper;
+import wrappers.TicketReferenceCreatedWrapper;
 import wrappers.TicketReferenceWrapper;
 import wrappers.TicketUpdateWrapper;
 import wrappers.TicketWrapper;
@@ -233,6 +237,12 @@ public class TicketResource {
         checkTicketReferenceExists(reference);
 
         return ticketController.getTicketTracking(reference);
+    }
+    
+    @RequestMapping(method = RequestMethod.GET)
+    // @PreAuthorize("hasRole('ADMIN')or hasRole('MANAGER') or hasRole('OPERATOR')")
+    public Page<TicketReferenceCreatedWrapper> getTicketsByUserMobile(@RequestParam long mobile, Pageable pageable) {
+        return ticketController.getTicketsByUserMobile(mobile, pageable);
     }
     
     private void checkTicketReferenceExists(String reference) throws NotFoundTicketReferenceException {

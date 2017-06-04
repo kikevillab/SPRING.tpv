@@ -5,6 +5,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,7 +57,7 @@ public class ProductResource {
     }
 
     @RequestMapping(value = Uris.BARCODES, method = RequestMethod.POST)
-    public byte[] generateBarcodesPdf(@RequestBody List<ProductBarcodeWrapper> productBarcodeWrappers)
+    public ResponseEntity<byte[]> generateBarcodesPdf(@RequestBody List<ProductBarcodeWrapper> productBarcodeWrappers)
             throws NotFoundProductCodeException, IOException {
         productBarcodeWrappers = productBarcodeWrappers.stream()
                 .filter(barcodeWrapper -> barcodeWrapper.getBarcode() != null && !barcodeWrapper.getBarcode().isEmpty())
@@ -61,7 +65,13 @@ public class ProductResource {
         for (ProductBarcodeWrapper productBarcodeWrapper : productBarcodeWrappers) {
             throwExceptionIfProductDoesNotExists(productBarcodeWrapper.getBarcode());
         }
-        return productController.generateBarcodesPdf(productBarcodeWrappers);
+        byte[] pdfByteArray = productController.generateBarcodesPdf(productBarcodeWrappers);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.parseMediaType("application/pdf"));
+        headers.set(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=" + "barcodes.pdf");
+        headers.setCacheControl("must-revalidate, post-check=0, pre-" + "hcheck=0");
+        ResponseEntity<byte[]> barcodesPdf = new ResponseEntity<byte[]>(pdfByteArray, headers, HttpStatus.OK);
+        return barcodesPdf;
     }
 
     private void throwExceptionIfProductDoesNotExists(String code) throws NotFoundProductCodeException {

@@ -29,7 +29,7 @@ public class TicketWrapper {
 	private String qrReference;
 
     public TicketWrapper() {
-        
+        this.shoppingList = new ArrayList<>();
     }
 
     public TicketWrapper(Ticket ticket) {

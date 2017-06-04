@@ -18,7 +18,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 public class RestBuilder<T> {
 
-    private RestTemplate restTemplate = new EnhancedRestTemplate();
+    private RestTemplate restTemplate = new RestTemplate();
 
     private String uri;
 

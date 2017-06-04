@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 
+import api.exceptions.NotFoundUserMobileException;
 import daos.users.AuthorizationDao;
 import daos.users.UserDao;
 import entities.users.Authorization;
@@ -144,6 +145,19 @@ public class UserController {
         user.setMobile(UserWrapper.getMobile());
         user.setActive(UserWrapper.isActive());
         userDao.save(user);
+    }
+
+    public void deleteUser(long mobile) throws NotFoundUserMobileException {
+        User user = this.userDao.findByMobile(mobile);
+
+        if (user == null)
+            throw new NotFoundUserMobileException();
+
+        for (Authorization auth : this.authorizationDao.findAll())
+            if (auth.getId() == user.getId())
+                this.authorizationDao.delete(auth);
+
+        this.userDao.delete(user);
     }
 
 }
