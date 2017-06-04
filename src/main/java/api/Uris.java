@@ -84,6 +84,6 @@ public class Uris {
 
     public static final String BARCODES = "/barcodes";
     
-    public static final String BATCH = "/bacth";
+    public static final String DELETE_TOKEN_EXPIRED = "/deleteTokenExpired";
 
 }

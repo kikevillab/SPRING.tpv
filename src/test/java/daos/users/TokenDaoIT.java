@@ -44,15 +44,11 @@ public class TokenDaoIT {
     @Test
     public void testDeleteByCreationDateLessThan() {
         List<Token> t = tokenDao.findAll();
-//        assertEquals(0,tokenDao.deleteByCreationDateLessThan(new Date(new Date().getTime() - Integer.parseInt(environment.getProperty("tokenTime.user")))));
-//        assertEquals(1, tokenDao.count());
-//        assertEquals(1,tokenDao.deleteByCreationDateLessThan(new Date(new Date().getTime() - Integer.parseInt(environment.getProperty("tokenTime.user")) + Integer.parseInt(environment.getProperty("tokenTime.user")) + 1000 )));
-//        assertEquals(0, tokenDao.count());
-        tokenDao.deleteByCreationDateLessThan(new Date(new Date().getTime() - Integer.parseInt(environment.getProperty("tokenTime.user"))));
-        tokenDao.count();
-        tokenDao.deleteByCreationDateLessThan(new Date(new Date().getTime() - Integer.parseInt(environment.getProperty("tokenTime.user")) + Integer.parseInt(environment.getProperty("tokenTime.user")) + 1000 ));
-        tokenDao.count();
-        //tokenDao.save(t);
+        assertEquals(0,tokenDao.deleteByCreationDateLessThan(new Date(new Date().getTime() - Integer.parseInt(environment.getProperty("tokenTime.user")))));
+        assertEquals(1, tokenDao.count());
+        assertEquals(1,tokenDao.deleteByCreationDateLessThan(new Date(new Date().getTime() - Integer.parseInt(environment.getProperty("tokenTime.user")) + Integer.parseInt(environment.getProperty("tokenTime.user")) + 1000 )));
+        assertEquals(0, tokenDao.count());
+        tokenDao.save(t);
     }
 
 }
