@@ -12,6 +12,7 @@ import { MaterialModule } from '@angular/material';
 import { SearchService } from './search.service';
 
 import { HTTPService } from '../../../../shared/services/http.service';
+import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 
 export const MockCategory = {
   id: 1234,
@@ -37,6 +38,7 @@ describe('Service: SearchService', () => {
         MockBackend,
         BaseRequestOptions,
         HTTPService,
+        LocalStorageService,
         {
           provide: Http,
           useFactory: (backend, options) => new Http(backend, options),
