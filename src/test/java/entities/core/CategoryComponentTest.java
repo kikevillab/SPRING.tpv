@@ -19,6 +19,10 @@ public class CategoryComponentTest {
         categoryComposite.addComponent(new CategoryComposite(null, "CAMISAS"));
         categoryComposite.addComponent(
                 new ProductCategory(new Product("84000015410", "sadJGHDshdjh", new BigDecimal(0.0), "Nike's Air Sneakers") {
+                    @Override
+                    public String getLongDescription() {
+                        return "";
+                    }
                 }));
     }
 
@@ -45,10 +49,20 @@ public class CategoryComponentTest {
         categoryRoot.addComponent(new CategoryComposite(null, "CAMISAS"));
         categoryRoot.addComponent(
                 new ProductCategory(new Product("84000015410", "sadJGHDshdjh", new BigDecimal(0.0), "Nike's Air Sneakers") {
+
+                    @Override
+                    public String getLongDescription() {
+                        return "";
+                    }
                 }));
         assertTrue(categoryRoot.components().size() == 2);
         CategoryComposite pantalones = new CategoryComposite(null, "PANTALONES");
-        pantalones.addCategoryComponent(new ProductCategory(new Product("84000012345", "AdsJKGHHJdsdfd", new BigDecimal(25.00), "Pepe Jeans Slim 48"){}));
+        pantalones.addCategoryComponent(new ProductCategory(new Product("84000012345", "AdsJKGHHJdsdfd", new BigDecimal(25.00), "Pepe Jeans Slim 48"){
+
+            @Override
+            public String getLongDescription() {
+                return "";
+            }}));
         categoryRoot.addComponent(pantalones);
         assertTrue(categoryRoot.components().size() == 3);
     }
