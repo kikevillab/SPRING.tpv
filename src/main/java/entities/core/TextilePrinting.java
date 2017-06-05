@@ -23,6 +23,10 @@ public class TextilePrinting extends Product {
     public void setType(String type) {
         this.type = type;
     }
+    
+    public String getLongDescription() {
+        return "Textile printing. Type: " + type + ".";
+    }
 
     @Override
     public String toString() {

@@ -84,6 +84,8 @@ public abstract class Product {
     public void setReference(String reference) {
         this.reference = reference;
     }
+    
+    public abstract String getLongDescription();
 
     @Override
     public int hashCode() {
