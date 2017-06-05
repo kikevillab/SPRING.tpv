@@ -6,9 +6,9 @@ import { TestBed, async, inject } from '@angular/core/testing';
 import { HttpModule, Response, ResponseOptions, BaseRequestOptions, Http } from '@angular/http';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 
-import { CashierService } from './cashier.service';
 import { CashierClosure } from '../models/cashier-closure.model';
-
+import { CashierService } from './cashier.service';
+import { AuthService } from './auth.service';
 import { HTTPService } from '../../../shared/services/http.service';
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
 
@@ -36,6 +36,7 @@ describe('Service: CashierService', () => {
     TestBed.configureTestingModule({
       imports: [ HttpModule ],
       providers: [ 
+        AuthService,
         CashierService,
         MockBackend,
         BaseRequestOptions,

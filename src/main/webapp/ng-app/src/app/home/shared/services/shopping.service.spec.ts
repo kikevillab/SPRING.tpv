@@ -12,6 +12,7 @@ import { User } from '../models/user.model';
 import { Voucher } from '../models/voucher.model';
 
 import { ShoppingService } from './shopping.service';
+import { AuthService } from './auth.service';
 import { CashierService } from './cashier.service';
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
 import { HTTPService } from '../../../shared/services/http.service';
@@ -46,17 +47,18 @@ describe('Service: ShoppingService', () => {
     TestBed.configureTestingModule({
       imports: [HttpModule],
       providers: [ 
-      ShoppingService,
-      LocalStorageService,
-      MockBackend,
-      BaseRequestOptions,
-      HTTPService,
-      {
-        provide: Http,
-        useFactory: (backend, options) => new Http(backend, options),
-        deps: [MockBackend, BaseRequestOptions]
-      },
-      CashierService
+        ShoppingService,
+        LocalStorageService,
+        MockBackend,
+        BaseRequestOptions,
+        HTTPService,
+        {
+          provide: Http,
+          useFactory: (backend, options) => new Http(backend, options),
+          deps: [MockBackend, BaseRequestOptions]
+        },
+        AuthService,
+        CashierService
       ]
     });
     shoppingService = TestBed.get(ShoppingService);
