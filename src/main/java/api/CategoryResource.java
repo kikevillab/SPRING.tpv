@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import api.exceptions.CategoryComponentNotFound;
+import api.exceptions.CategoryComponentNotFoundException;
 import config.ResourceNames;
 import controllers.CategoryController;
 import entities.core.CategoryComponent;
@@ -22,20 +22,20 @@ public class CategoryResource {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public CategoryComponent findAllCategories() throws CategoryComponentNotFound {
+    public CategoryComponent findAllCategories() throws CategoryComponentNotFoundException {
         throwExceptionIfCategoryComponentDoesNotExist(ResourceNames.CATEGORIES_ROOT);
         return categoryController.findAllCategories();
     }
 
     @RequestMapping(value = Uris.CATEGORY_NAME, method = RequestMethod.GET)
-    public CategoryComponent findCategoryByName(@PathVariable String name) throws CategoryComponentNotFound {
+    public CategoryComponent findCategoryByName(@PathVariable String name) throws CategoryComponentNotFoundException {
         throwExceptionIfCategoryComponentDoesNotExist(name);
         return categoryController.findCategoryComponentByName(name);
     }
 
-    private void throwExceptionIfCategoryComponentDoesNotExist(String name) throws CategoryComponentNotFound {
+    private void throwExceptionIfCategoryComponentDoesNotExist(String name) throws CategoryComponentNotFoundException {
         if (!categoryController.existsCategory(name)) {
-            throw new CategoryComponentNotFound("CategoryComponent: " + name);
+            throw new CategoryComponentNotFoundException("CategoryComponent: " + name);
         }
     }
 }

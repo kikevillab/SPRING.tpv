@@ -1,17 +1,17 @@
 package api.exceptions;
 
-public class CategoryComponentNotFound extends ApiException {
+public class CategoryComponentNotFoundException extends ApiException {
 
     private static final long serialVersionUID = -4101618007964666528L;
 
     private static final String DESCRIPTION = "Category not found. ";
 
-    private static final int CODE = 28;
+    private static final int CODE = 31;
 
-    public CategoryComponentNotFound() {
+    public CategoryComponentNotFoundException() {
         this("");
     }
-    public CategoryComponentNotFound(String detail) {
+    public CategoryComponentNotFoundException(String detail) {
         super(DESCRIPTION + ". " + detail, CODE);
     }
     
