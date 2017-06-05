@@ -46,6 +46,10 @@ public class Embroidery extends Product {
     public void setSquareMillimeters(int squareMillimeters) {
         this.squareMillimeters = squareMillimeters;
     }
+    
+    public String getLongDescription() {
+        return "Embroidery that has " + colors + " colors, " + stitches + " stitches and " + squareMillimeters + " square millimeters.";
+    }
 
     @Override
     public String toString() {
