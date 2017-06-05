@@ -13,6 +13,7 @@ import {FilterComponent} from './filter/filter.component';
 import {ResultsComponent} from './results/results.component';
 import {NewUserDialog} from './new-user/new-user.component';
 import {UserDetailsDialog} from './details/details.component';
+import {EditUserDialog} from './edit-user/edit-user.component';
 import {SharedModule} from '../../../shared/shared.module';
 import {NgxDatatableModule} from '@swimlane/ngx-datatable';
 import {AngularMaterialModule} from '../../../shared/angular-material.module';
@@ -21,6 +22,7 @@ import {ToastService} from '../../../shared/services/toast.service';
 import {UsersService} from './users.service';
 import {TicketsService} from './details/tickets.service';
 import {RegExpFormValidatorService} from '../../../shared/services/reg-exp-form-validator.service';
+import {UserForm} from './user-form.service';
 import {InMemoryWebApiModule} from 'angular-in-memory-web-api';
 import {InMemoryDataService} from '../../../shared/services/in-memory-data.service';
 import {BooleanToStringPipe} from './details/bool-to-str.pipe';
@@ -43,14 +45,16 @@ import {BooleanToStringPipe} from './details/bool-to-str.pipe';
         ResultsComponent,
         NewUserDialog,
         UserDetailsDialog,
-        BooleanToStringPipe
+        BooleanToStringPipe,
+        EditUserDialog
     ],
     providers: [
         HTTPService,
         ToastService,
         UsersService,
         RegExpFormValidatorService,
-        TicketsService
+        TicketsService,
+        UserForm
     ],
     exports: [
         UsersComponent,
@@ -58,11 +62,13 @@ import {BooleanToStringPipe} from './details/bool-to-str.pipe';
         ResultsComponent,
         NewUserDialog,
         UserDetailsDialog,
-        BooleanToStringPipe
+        BooleanToStringPipe,
+        EditUserDialog
     ],
     entryComponents: [
         NewUserDialog,
-        UserDetailsDialog
+        UserDetailsDialog,
+        EditUserDialog
     ]
 })
 export class UsersModule {
