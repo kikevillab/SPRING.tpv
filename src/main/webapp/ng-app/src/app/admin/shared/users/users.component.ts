@@ -9,7 +9,7 @@ import {ToastService} from '../../../shared/services/toast.service';
 import {User} from '../../../shared/models/user.model';
 import {MdDialog, MdDialogConfig} from '@angular/material';
 import {NewUserDialog} from './new-user/new-user.component';
-import {isNull} from "util";
+import {isNull, isUndefined} from "util";
 
 @Component({
     selector: 'users',
@@ -65,5 +65,11 @@ export class UsersComponent implements OnInit {
                 results => this.ngOnInit(),
                 error => this.handleError(error)
             );
+        else if (!isUndefined(user) && !user.equals(this.selected)) {
+            this.httpService.put(user).subscribe(
+                results => this.ngOnInit(),
+                error => this.handleError(error)
+            );
+        }
     }
 }
