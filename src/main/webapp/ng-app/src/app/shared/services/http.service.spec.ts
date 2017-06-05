@@ -23,7 +23,7 @@ describe('Service: HTTPService', () => {
 		});
 	});
 
-	it(`'requestGet()' should return an Observable<Array<any>>`,
+	it(`'requestGet()' should return an Observable<any>`,
 		inject([HTTPService, MockBackend], (httpService, mockBackend) => {
 			const mockResponse = {
 				data: [

@@ -9,11 +9,13 @@ import { Router } from '@angular/router';
 import { MaterialModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import 'hammerjs';
+
 import { SharedModule } from '../shared/shared.module';
 
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { HomeComponent } from './home.component';
 
+import { AuthService } from './shared/services/auth.service';
 import { ToastService } from '../shared/services/toast.service';
 import { LocalStorageService } from '../shared/services/local-storage.service';
 import { HTTPService } from '../shared/services/http.service';
@@ -30,6 +32,7 @@ describe('Component: HomeComponent', () => {
       declarations: [ HomeComponent, ShoppingCartComponent ],
       providers: [
         { provide: Router },
+        AuthService,
         ToastService,
         LocalStorageService,
         HTTPService,
