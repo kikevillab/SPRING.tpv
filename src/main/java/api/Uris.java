@@ -86,4 +86,6 @@ public class Uris {
     
     public static final String CATEGORIES = "/categories";
 
+    public static final String CATEGORY_NAME = "/{name}";
+
 }

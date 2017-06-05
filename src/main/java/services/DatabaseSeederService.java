@@ -156,21 +156,6 @@ public class DatabaseSeederService {
         return categoryComponents;
     }
 
-    private List<CategoryComponent> buildCategoryComponentList2() {
-        List<CategoryComponent> categoryComponents = new ArrayList<>();
-        CategoryComposite categoryCompositeRoot = new CategoryComposite(null, "category_root");
-
-        ProductCategory textilePrinting7400000003333 = new ProductCategory(textilePrintingDao.findAll().get(0));
-        ProductCategory article7400000001111 = new ProductCategory(articleDao.findAll().get(0));
-        categoryComponentDao.save(textilePrinting7400000003333);
-        categoryComponentDao.save(article7400000001111);
-        categoryCompositeRoot.addCategoryComponent(textilePrinting7400000003333);
-        categoryCompositeRoot.addCategoryComponent(article7400000001111);
-
-        categoryComponents.add(categoryCompositeRoot);
-        return categoryComponents;
-    }
-
     public boolean existsYamlFile(String fileName) {
         Resource resource = appContext.getResource(YAML_FILES_ROOT + fileName);
         return resource.exists();
