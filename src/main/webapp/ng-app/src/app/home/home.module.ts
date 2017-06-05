@@ -20,6 +20,7 @@ import { HomeComponent, OrderTrackingDialog } from './home.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { HomeService } from './home.service';
 import { CashierService } from './shared/services/cashier.service';
+import { AuthService } from './shared/services/auth.service';
 import { HTTPService } from '../shared/services/http.service';
 import { LocalStorageService } from '../shared/services/local-storage.service';
 import { ToastService } from '../shared/services/toast.service';
@@ -60,7 +61,7 @@ import { SharedModule } from '../shared/shared.module';
     ShoppingCartComponent,
     OrderTrackingDialog
   ],
-  providers: [ HomeGuard, HomeService, HTTPService, LocalStorageService, ToastService, CashierService ],
+  providers: [ HomeGuard, HomeService, HTTPService, LocalStorageService, ToastService, CashierService, AuthService ],
   entryComponents: [ OrderTrackingDialog ]
 })
 export class HomeModule { }

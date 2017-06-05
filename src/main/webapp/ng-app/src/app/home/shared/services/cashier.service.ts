@@ -12,6 +12,7 @@ import { CashierClosure } from '../models/cashier-closure.model';
 import { Amount } from '../models/amount.model';
 import { CashierClosingData } from '../models/cashier-closing-data.model';
 
+import { AuthService } from './auth.service';
 import { HTTPService } from '../../../shared/services/http.service';
 import { TPVHTTPError } from '../../../shared/models/tpv-http-error.model';
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
@@ -27,18 +28,18 @@ export class CashierService {
   private static URI_WITHDRAW: string = '/withdraw';
   private static URI_CLOSE_CASHIER: string = '/close';
 
-  constructor (private httpService: HTTPService) {}
+  constructor (private httpService: HTTPService, private authService: AuthService) {}
 
   initialize(): void {
       this.httpService.get(`${URI_CASHIERCLOSURES + CashierService.URI_LAST_CASHIER}`).subscribe((cashier: CashierClosure) => {
         this.currentCashier = cashier;
         this.currentCashierSubject.next(this.currentCashier);
-      },(error: TPVHTTPError) => {
+      },(error: TPVHTTPError | any) => {
         if (error.error === 'NotExistsCashierClosuresException'){
           this.currentCashier = new CashierClosure();
           this.currentCashierSubject.next(this.currentCashier);
-        } else {
-          console.log(error.description);        
+        } else if (error === 401) {
+          this.authService.reportUnauthorized();
         }
     });
   }
