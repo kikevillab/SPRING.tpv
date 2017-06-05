@@ -51,7 +51,7 @@ export class HTTPService {
 		    }
 		}
 		let options: RequestOptions = new RequestOptions({headers: requestHeaders, params: params});
-		if (requestHeaders.has('accept') && requestHeaders.get('accept') === 'application/pdf'){
+		if (requestHeaders.has('Accept') && requestHeaders.get('Accept') === 'application/pdf'){
 			options.responseType = ResponseContentType.Blob;
 		}
 		return options;
