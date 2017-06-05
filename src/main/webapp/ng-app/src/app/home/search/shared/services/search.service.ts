@@ -4,7 +4,7 @@
 */
 import { Injectable } from '@angular/core';
 
-import { API_GENERIC_URI, URI_PRODUCTS, URI_CATEGORIES } from '../../../../app.config';
+import { URI_PRODUCTS, URI_CATEGORIES } from '../../../../app.config';
 
 import { Category } from '../models/category.model'; // delete?
 import { CategoriesPage } from '../models/categories-page.model'; // delete?
@@ -18,7 +18,7 @@ export class SearchService {
   private parentCategory: number;
   private categories: Category[] = [];
   private static pageSize: number = 20;
-  private static CATEGORIES_FULL_URI: string = `${API_GENERIC_URI + URI_CATEGORIES}?size=${SearchService.pageSize}`;
+  private static CATEGORIES_FULL_URI: string = `${URI_CATEGORIES}?size=${SearchService.pageSize}`;
 
   constructor (private httpService: HTTPService) {
     for (let i = 1; i < 10; i++){
@@ -58,7 +58,7 @@ export class SearchService {
 
   getProductDetails(code: string): Promise<any> {
     return new Promise((resolve: Function, reject: Function) => {
-      this.httpService.get(`${API_GENERIC_URI + URI_PRODUCTS}/${code}`).subscribe((product: Product) => {
+      this.httpService.get(`${URI_PRODUCTS}/${code}`).subscribe((product: Product) => {
         resolve(product);
       },(error: TPVHTTPError) => {
         reject(error.description);

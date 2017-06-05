@@ -1,4 +1,4 @@
-<md-toolbar class="main-header"><span>New</span></md-toolbar>
+<md-toolbar class="main-header"><span>Edit</span></md-toolbar>
 <form md-dialog-content class="small-margin-top" [formGroup]="userForm" (ngSubmit)="onSubmit()">
     <md-input-container class="form-element-container">
         <input mdInput type="text" name="mobile" placeholder="Mobile" maxlength="9" minlength="9"
@@ -33,7 +33,7 @@
         <md-checkbox name="active" formControlName="active" color="accent" #active>Active</md-checkbox>
     </div>
     <button class="medium-margin-top" md-raised-button type="submit" color="accent"
-            [disabled]="!userForm.valid">Create
-        <md-icon class="md-24 margin-left">add_circle_outline</md-icon>
+            [disabled]="!userForm.valid">Edit
+        <md-icon class="md-24 margin-left">edit</md-icon>
     </button>
 </form>

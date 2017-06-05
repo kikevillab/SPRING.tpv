@@ -1,35 +1,25 @@
 language: java
-
 jdk:
-  - oraclejdk8
-  
+- oraclejdk8
 branches:
   only:
-    - master
-    - develop
-    
+  - master
+  - develop
 notifications:
   slack: tpv-miw:RR3NECTV3PaLvPZOUUd8qF7O
   email:
     recipients:
-      - j.bernal@upm.es
-      
+    - j.bernal@upm.es
 services:
-  - mysql
-  
+- mysql
 before_install:
-  - mysql -e 'CREATE DATABASE IF NOT EXISTS tpv;'
-      
+- mysql -e 'CREATE DATABASE IF NOT EXISTS tpv;'
 script: mvn verify --settings settings.xml
-
-# deploy:
-#   provider: heroku
-#   api_key:
-#     secure: Ysq0nMpumN3wmeC0SWvjJPlnGeeSFqebM9euLB2txClOWK4xvK5owtNtVyBIyN2GeFkfejI40XXl8g1S64XjFtjJ3S19P+vKyqj2ZflXLb49pUmAvDPLes2O0FQN58zkkM9SEuN1Hn1YnzNbywbUhJMfGwBuRCQc2ruTVH+4NrOb/q/vBKgbh1RvWS8/5SmrKXjPqyhAHguRGBBkUQo3mmVv0sLdFwWzspV/BZYs6MYLQeKTJaFp4BOVUpEttBVBbzrqoUrnAWuSDlr/QFPTdncVxgdD0PQJlecJYRybnq4Pc4qtQdtZ4I+kEfHfPi09nHqkZvvwXJ3EccGvdKNkRCPRRIutFnr7WWqomRI0Dt/8xSWkmNNsIszdw5dsBZ/yoH4NZGESCIb77RghfvRnhDeUIGSYoevqY7yJ3LNxYa7477fjENkfuiNnl34dADSaC6jrU+ln8pYiarifOHuEW5xRbXO7J4oHMjUXBYCF3D+TWie2Sj17KpFAziExrrnT75o+MjrtrXxrTUjsU2hOOTr5BiWCD4fgpvgqSE3UA+8Avfg5iHOAyB9qgnc9rv5KKz5WOi2Q7x82s2u9JSjbvOeYEzZunakTG8lmDI/UiFi1kdLTqATPMGPZbCzULWWzJZCdFx97v2JUj4U7vc8/jj6NOTBDYEodhEL0mJtbn5c=
-#   on: develop 
-#   app: tpv-miw
 deploy:
   provider: heroku
   api_key:
-    secure: jjvDjvl23nG0FouLmCi+wzXSbMHbz7Lq8modAjw5vfzMQPjjMC4siBZv1Z8OJe+y0EuA3T+S/wS0yoW2JyPStvAb1UcSOucusMa8sZhfT+3G4CmoondgOA4CTZvbe6uTofFI8J57qSTe0JPxBM4NeXoIHL5qU9HZE7G0GF4mF3kHM06/JOCL0OlBoie0FN47n4ifsdapnM9AB0wOyVmzY7bPRxcDCD6xXGXB8f83opdRP/560RjfXqkOXl3z/GnRgRt4fwzA3elGEsMg8JWHV1ucC7j9aM9yiuVEknXdQjSuLoNEG7W0IU3B7prF7S4IAZCGmSp5HuxTs7NFP3F/ZHCNIc9PQYDTsEW5AsZWEyimstrb9beWAGUVHxn6sz8NZ54rft6tQ0UouT3/vErh/iYPNknsBxtvo3jdjdxirs7FjNL/ocQ8/gI/Ii57W/bOpxH8dtSVHx7Xhqz4sxOzcH6hFS5qBzLeT3xpPypfWnC7AzxdnzmDyqEE3G3Szm2MAxCk917ueJIKud1cVpLj4UqywH0iB4kfP1Xg8/RhPuytjeubi3ZabO4qasfuZqWw+9N1WPmZjhY+Ama3ISlBUF8NlIbC3iZXEf6GL1vdvbuLmb9muW54kP6D+dlfw8+9K4uGG2MFwnWeMHSBi7GzN64kaKbkrfLp8L+Ji4yKie8=
-  app: tpv-miw  
+    secure: 01fHZFO6eifs2/5SJwOcw6lAWAQYLvFhUp/k8gR+ZJ3t5va3/fdDDe4Lr1YLBXXu/W1FjKtGnq9/LVpEmHoZODQBTDvr8IcVhGO0gX32V/HxBV32cdZo4qr4EFM3Czpo88IG/Pf18ZRI3dt8lwKgHndHn5vMj7WefLb/zJTNSdqEPT85t24XciasQoEm21H49ZxNi828tXvq0Og2lndq8e7jF60C0vFl8YonpT+CVWSXWv4njOU1VtpwmKBSQQtDCoL4jE3BJfLLruf3wh9oTcnIFcy+MZHKNDJUqZpcE+4nOFqdDYSmVgHBuHpNru/hwsISs8YSvylJ2oknBloXJObJ54vnAKTOH0D5P118Y+WfjmWW4Fny0+tvxHaIAI+wCS0UGSTtpDqMyOAx9yNSaM46blBvoP3JCGXDVk/lUPa0ndaBo1j9IYIhLijoxloeGa9Q8PnvmTYyd431DfPruWxBopMpqwoYUF7eM+HZZhh7HB/ehQZfFwbDwnt8ym11srbpXXroEKpVba6Iwb5fen+Y89T9pG0xO7fSxjhYbUgyWq9PmxZdE2oVc1HEvaBwXav/8gK6+uAXh3Xn1sAoLReoJMgpN/LMZqBYAOzyEbhqHZbjnZISNTJNeSdAa0+5B0dpgLwe6SObz31kapAucUvDaewnhdp/t5XC+RMOtO8=
+  app: tpv-miw
+  on:
+    repo: miw-upm/SPRING.tpv
+    branch: develop

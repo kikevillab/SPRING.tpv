@@ -12,7 +12,7 @@ import {HTTPService} from '../../shared/services/http.service';
 
 @Injectable()
 export class LoginService {
-    private endpoint: string = API_GENERIC_URI + '/tokens';
+    private endpoint: string =  '/tokens';
 
     constructor(private httpService: HTTPService) {
     }
