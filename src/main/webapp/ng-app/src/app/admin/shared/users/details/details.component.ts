@@ -10,6 +10,9 @@ import {TPVHTTPError} from '../../../../shared/models/tpv-http-error.model';
 import {ToastService} from '../../../../shared/services/toast.service';
 import {TicketsService} from './tickets.service';
 import {MOBILE_ATTRIBUTE_NAME} from '../../../../shared/models/user.model';
+import {MdDialog, MdDialogConfig} from '@angular/material';
+import {EditUserDialog} from '../edit-user/edit-user.component';
+import {isUndefined} from "util";
 
 @Component({
     templateUrl: './details.component.html',
@@ -19,10 +22,13 @@ export class UserDetailsDialog implements OnInit {
     user: User;
     tickets: Ticket[];
     headers: Object;
+    editUserDialogConfig: MdDialogConfig;
 
     constructor(private dialogRef: MdDialogRef<UserDetailsDialog>, private httpService: TicketsService,
-                private toastService: ToastService) {
+                private toastService: ToastService, private editUserDialog: MdDialog) {
+        this.editUserDialogConfig = new MdDialogConfig();
         this.user = this.dialogRef._containerInstance.dialogConfig.data;
+        this.editUserDialogConfig.data = this.user;
         this.headers = [{name: 'Reference'}, {name: 'Created'}];
     }
 
@@ -39,5 +45,14 @@ export class UserDetailsDialog implements OnInit {
 
     deleteUser() {
         this.dialogRef.close(null);
+    }
+
+    editUser() {
+        let dialogRef = this.editUserDialog.open(EditUserDialog, this.editUserDialogConfig);
+        dialogRef.afterClosed().subscribe(user => {
+            if (!isUndefined(user))
+                this.dialogRef.close(new User(user.mobile, user.password, user.dni, user.email, user.username,
+                    user.address, user.active, user.id));
+        });
     }
 }
