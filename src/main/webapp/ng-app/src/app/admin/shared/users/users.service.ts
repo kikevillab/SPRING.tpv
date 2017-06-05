@@ -87,4 +87,11 @@ export class UsersService {
         return Observable.throw(NOT_AUTHENTICATED_MESSAGE);
     }
 
+    put(user: User): Observable<any> {
+        if (!isNull(this.headers))
+            return this.httpService.put(this.endpoint + '/' + user.id, user, this.headers);
+
+        return Observable.throw(NOT_AUTHENTICATED_MESSAGE);
+    }
+
 }
