@@ -42,7 +42,7 @@ export class HTTPService {
 
 	private setOptions(headers: Headers, params: URLSearchParams): RequestOptions {
 		let requestHeaders: Headers = headers || new Headers();
-		requestHeaders.append("X-Requested-With", "XMLHttpRequest");
+		requestHeaders.append('X-Requested-With', 'XMLHttpRequest');
 		if (!requestHeaders.has('Authorization')) {
 			let sessionString: string = this.localStorageService.getItem(LOCAL_STORAGE_TOKEN_ATTRIBUTE);
 		    let parsedSession = JSON.parse(sessionString);
