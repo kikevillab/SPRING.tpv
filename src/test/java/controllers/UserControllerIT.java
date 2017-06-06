@@ -244,6 +244,8 @@ public class UserControllerIT {
         }
     }
 
+    
+    
     @Test
     public void testDeleteUser() {
         try {
@@ -255,5 +257,7 @@ public class UserControllerIT {
             fail();
         }
     }
+    
+    
 
 }
