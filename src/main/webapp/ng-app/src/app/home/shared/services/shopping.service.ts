@@ -106,19 +106,24 @@ export class ShoppingService {
 
   addVoucher(reference: string): Promise<any> {
     return new Promise((resolve: Function, reject: Function) => {
-      this.httpService.get(`${URI_VOUCHERS}/${reference}`).subscribe((voucher: Voucher) => {
-        let today: Date = new Date();
-        if (voucher.expiration < today.getTime()){
-          reject('The voucher entered is expired');
-        } else if (voucher.dateOfUse){
-          reject('The voucher entered is already used');
-        } else {
-          this.vouchers.push(voucher);
-          this.vouchersSubject.next(this.vouchers);
-          voucher.value > this.totalPrice && this.setCashReceived(0);      
-          resolve(voucher);
-        }
-      }, (error: TPVHTTPError) => reject(error.description));
+      let found: Voucher[] = this.vouchers.filter((voucher: Voucher) => {
+        return voucher.reference == reference;
+      });
+      found.length !== 0
+        ? reject('The voucher is already added')
+        : this.httpService.get(`${URI_VOUCHERS}/${reference}`).subscribe((voucher: Voucher) => {
+          let today: Date = new Date();
+          if (voucher.expiration < today.getTime()){
+            reject('The voucher entered is expired');
+          } else if (voucher.dateOfUse){
+            reject('The voucher entered is already used');
+          } else {
+            this.vouchers.push(voucher);
+            this.vouchersSubject.next(this.vouchers);
+            voucher.value > this.totalPrice && this.setCashReceived(0);      
+            resolve(voucher);
+          }
+        }, (error: TPVHTTPError) => reject(error.description));
     });
   }
 
