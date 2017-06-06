@@ -24,6 +24,7 @@ public class TextilePrinting extends Product {
         this.type = type;
     }
     
+    @Override
     public String getLongDescription() {
         return "Textile printing. Type: " + type + ".";
     }
