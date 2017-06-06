@@ -34,11 +34,11 @@ export class CashierService {
       this.httpService.get(`${URI_CASHIERCLOSURES + CashierService.URI_LAST_CASHIER}`).subscribe((cashier: CashierClosure) => {
         this.currentCashier = cashier;
         this.currentCashierSubject.next(this.currentCashier);
-      },(error: TPVHTTPError | any) => {
+      },(error: any) => {
         if (error.error === 'NotExistsCashierClosuresException'){
           this.currentCashier = new CashierClosure();
           this.currentCashierSubject.next(this.currentCashier);
-        } else if (error === 401) {
+        } else if (error.status === 401) {
           this.authService.reportUnauthorized();
         }
     });
