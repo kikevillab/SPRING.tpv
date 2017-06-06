@@ -9,19 +9,20 @@ import javax.persistence.OneToOne;
 
 @Entity
 public class ProductCategory extends CategoryComponent {
-    
+
     @OneToOne
     @JoinColumn
     private Product product;
-    
-    public ProductCategory(){
+
+    public ProductCategory() {
         super();
     }
-    public ProductCategory(Product product){
+
+    public ProductCategory(Product product) {
         super(product.getCode(), product.getDescription());
-        this.product = product;     
+        this.product = product;
     }
-    
+
     public Product getProduct() {
         return product;
     }
@@ -34,15 +35,20 @@ public class ProductCategory extends CategoryComponent {
     protected String print() {
         return product.toString();
     }
-    
+
     @Override
     public List<CategoryComponent> components() {
         return Arrays.asList(this);
     }
+
     @Override
     public void addComponent(CategoryComponent component) {
-        throw new UnsupportedOperationException();      
+        throw new UnsupportedOperationException();
     }
 
-    
+    @Override
+    public Product product() {
+        return getProduct();
+    }
+
 }

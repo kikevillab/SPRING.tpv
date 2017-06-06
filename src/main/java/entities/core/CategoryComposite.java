@@ -12,11 +12,11 @@ public class CategoryComposite extends CategoryComponent {
     @OneToMany(fetch = FetchType.EAGER)
     private List<CategoryComponent> categoryComponents;
 
-    public CategoryComposite(){
+    public CategoryComposite() {
         super();
         categoryComponents = new ArrayList<>();
     }
-    
+
     public CategoryComposite(String code, String name) {
         super(code, name);
         categoryComponents = new ArrayList<>();
@@ -42,7 +42,7 @@ public class CategoryComposite extends CategoryComponent {
     public List<CategoryComponent> components() {
         return this.categoryComponents;
     }
-    
+
     @Override
     protected String print() {
         StringBuilder str = new StringBuilder();
@@ -53,6 +53,11 @@ public class CategoryComposite extends CategoryComponent {
     @Override
     public void addComponent(CategoryComponent component) {
         this.categoryComponents.add(component);
+    }
+
+    @Override
+    public Product product() {
+        throw new UnsupportedOperationException();
     }
 
 }

@@ -1,5 +1,6 @@
 package controllers;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
@@ -12,7 +13,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import config.PersistenceConfig;
 import config.TestsControllerConfig;
 import config.TestsPersistenceConfig;
-import daos.core.CategoryComponentDao;
+import wrappers.CategoryComponentWrapper;
+import wrappers.CategoryCompositeWrapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {PersistenceConfig.class, TestsPersistenceConfig.class, TestsControllerConfig.class})
@@ -20,22 +22,29 @@ public class CategoryControllerIT {
 
     @Autowired
     private CategoryController categoryController;
-    
-    @Autowired
-    private CategoryComponentDao categoryComponentDao;
-    
+
     @Test
-    public void testFindAllCategories(){
+    public void testFindAllCategories() {
         assertNotNull(categoryController.findAllCategories());
     }
-    
+
     @Test
-    public void testFindCategoryByName(){
-        assertNotNull(categoryController.findCategoryComponentByName("TextilePrintings"));      
+    public void testFindCategoryByName() {
+        assertNotNull(categoryController.findCategoryComponentByName("TextilePrintings"));
     }
-    
+
     @Test
-    public void testFindCategoryByNameWithNonExistentName(){
+    public void testFindCategoryByNameWithNonExistentName() {
         assertNull(categoryController.findCategoryComponentByName("non_existent"));
+    }
+
+    @Test
+    public void testFindCategoryWrapperByName() {
+        CategoryComponentWrapper componentWrapper = categoryController.findCategoryComponentWrapperByName("TextilePrintings");
+        assertNotNull(componentWrapper);
+        assertNull(componentWrapper.getCode());
+        assertNull(componentWrapper.getImage());
+        assertNotNull(componentWrapper.getName());
+        assertFalse(((CategoryCompositeWrapper) componentWrapper).getComponents().isEmpty());
     }
 }

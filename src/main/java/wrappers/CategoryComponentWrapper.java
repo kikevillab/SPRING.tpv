@@ -10,20 +10,15 @@ public class CategoryComponentWrapper {
     private String image;
 
     public CategoryComponentWrapper() {
-    }
-
-    public CategoryComponentWrapper(String code, String name, String image) {
         super();
-        this.code = code;
-        this.name = name;
-        this.image = image;
     }
 
-    public CategoryComponentWrapper(CategoryComponent component){
+    public CategoryComponentWrapper(CategoryComponent component) {
         this.code = component.getCode();
         this.name = component.getName();
         this.image = component.getIcon();
     }
+
     public String getCode() {
         return code;
     }
