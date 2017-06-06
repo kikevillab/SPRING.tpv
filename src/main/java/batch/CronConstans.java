@@ -9,7 +9,7 @@ public class CronConstans {
                * / X significa "cada X"
                ? ("Sin valor específico")
    */
-  public static final String EJECUCION_CADA_MINUTO = "0 1 * * * ?";
+  public static final String EJECUCION_CADA_MINUTO = "0 * * * * *";
     
 
 

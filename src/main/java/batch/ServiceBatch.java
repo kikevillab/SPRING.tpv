@@ -12,7 +12,9 @@ import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteExcep
 import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ServiceBatch {
 
     @Autowired
@@ -23,10 +25,11 @@ public class ServiceBatch {
 
     @Scheduled(cron = CronConstans.EJECUCION_CADA_MINUTO)
     public void launch() throws JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException,
-       JobParametersInvalidException {
+            JobParametersInvalidException {
+
         JobParameters jobParameters = new JobParametersBuilder().addLong("time", System.currentTimeMillis()).toJobParameters();
         JobExecution execution = jobLauncher.run(job, jobParameters);
-        LogManager.getLogger().info("++++ Exit status: " + execution.getStatus() + "++++ ");
+        LogManager.getLogger().info("Exit status: " + execution.getStatus() + " ");
     }
 
 }

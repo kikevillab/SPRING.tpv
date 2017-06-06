@@ -1,4 +1,4 @@
-package api;
+package services;
 
 import static org.junit.Assert.assertEquals;
 
@@ -10,14 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import batch.BatchConfig;
+import config.BatchConfig;
 import config.PersistenceConfig;
 import config.TestsBatchConfig;
 import daos.users.TokenDao;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { PersistenceConfig.class, BatchConfig.class, TestsBatchConfig.class })
-public class JobResourceTesting {
+public class ServiceBatchTesting {
     
     @Autowired
     private JobLauncherTestUtils jobLauncherTestUtils;

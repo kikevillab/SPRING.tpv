@@ -4,9 +4,12 @@ import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import daos.users.TokenDao;
 
+@Service
 public class RemoveTokenExpiredService {
 
     private Environment environment;
@@ -23,8 +26,8 @@ public class RemoveTokenExpiredService {
         this.environment = environment;
     }
 
-    public void removeTokenExpired() {
-        tokenDao.deleteByCreationDateLessThan(new Date(new Date().getTime() - Integer.parseInt(environment.getProperty("tokenTime.user"))));
+    public int removeTokenExpired() {
+        return tokenDao.deleteByCreationDateLessThan(new Date(new Date().getTime() - Integer.parseInt(environment.getProperty("tokenTime.user"))));
 
     }
 }

@@ -18,9 +18,11 @@ public class TokenBatchTasklet implements Tasklet {
         this.removeTokenExpiredService = removeTokenExpiredService;
     }
 
+
+    
     @Override
     public RepeatStatus execute(StepContribution arg0, ChunkContext arg1) throws Exception {
-        LogManager.getLogger().info("++++ Ejecutando task de limpieza de tokens ++++");
+        LogManager.getLogger().info("Ejecutando task de limpieza de tokens");
         removeTokenExpiredService.removeTokenExpired();
         return RepeatStatus.FINISHED;
     }
