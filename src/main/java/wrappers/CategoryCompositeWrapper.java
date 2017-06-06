@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import entities.core.CategoryComponent;
-import entities.core.ProductCategory;
 
 public class CategoryCompositeWrapper extends CategoryComponentWrapper {
     private List<CategoryComponentWrapper> components;
@@ -14,26 +13,22 @@ public class CategoryCompositeWrapper extends CategoryComponentWrapper {
         components = new ArrayList<>();
     }
 
-    public CategoryCompositeWrapper(List<CategoryComponent> components) {
-        this();
-        for(CategoryComponent component : components){
-            this.setCode(component.getCode());
-            this.setImage(component.getIcon());
-            this.setName(component.getName());
-            if(component.isCategory()){
-                this.components.add(new CategoryCompositeWrapper(component.components()));
-            } else {
-                this.components.add(new ProductCategoryWrapper((ProductCategory) component));
-            }
-        }
+    public CategoryCompositeWrapper(CategoryComponent categoryComponent) {
+        super(categoryComponent);
+        components = new ArrayList<>();
+        categoryComponent.components().forEach(component -> this.components.add(new CategoryComponentWrapper(component)));
     }
-    
-    public CategoryCompositeWrapper(CategoryComponent component){
-        this(component.components());
+
+    public List<CategoryComponentWrapper> getComponents() {
+        return components;
+    }
+
+    public void setComponents(List<CategoryComponentWrapper> components) {
+        this.components = components;
     }
 
     @Override
     public String toString() {
-        return "CategoryCompositeWrapper [components=" + components + "]";
+        return super.toString() + "CategoryCompositeWrapper [components=" + components + "]";
     }
 }

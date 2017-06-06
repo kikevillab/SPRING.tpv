@@ -1,28 +1,25 @@
 package wrappers;
 
-import entities.core.ProductCategory;
+import entities.core.CategoryComponent;
+import entities.core.Product;
 
 public class ProductCategoryWrapper extends CategoryComponentWrapper{
-    ProductWrapper product;
+    private Product product;
 
     public ProductCategoryWrapper(){
         super();
     }
     
-    public ProductCategoryWrapper(ProductWrapper product) {
-        super();
-        this.product = product;
-    }
-    
-    public ProductCategoryWrapper(ProductCategory productCategory){
-        this.product = new ProductWrapper(productCategory.getProduct());
+    public ProductCategoryWrapper(CategoryComponent categoryComponent) {
+        super(categoryComponent);
+        this.product = categoryComponent.product();
     }
 
-    public ProductWrapper getProduct() {
+    public Product getProduct() {
         return product;
     }
 
-    public void setProduct(ProductWrapper product) {
+    public void setProduct(Product product) {
         this.product = product;
     }
 
