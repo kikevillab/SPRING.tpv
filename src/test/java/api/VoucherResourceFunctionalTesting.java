@@ -59,6 +59,8 @@ public class VoucherResourceFunctionalTesting {
         String token = new RestService().loginAdmin();
         new RestBuilder<Object>(RestService.URL).path(Uris.VOUCHERS).pathId(0).path(Uris.VOUCHER_CONSUMPTION).basicAuth(token, "")
                 .clazz(Object.class).put().build();
+        new RestBuilder<Object>(RestService.URL).path(Uris.VOUCHERS).pathId(0).path(Uris.VOUCHER_CONSUMPTION).basicAuth(token, "")
+                .clazz(Object.class).put().build();
     }
 
     @Test

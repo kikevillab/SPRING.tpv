@@ -2,6 +2,9 @@
   * @author Sergio Banegas Cortijo
   * Github: https://github.com/sergiobanegas 
 */
+import { browser } from 'protractor';
+
+import { WelcomePage } from './welcome.po';
 import { HomePage } from './home.po';
 import { SearchView } from './search/search.po';
 import { CartView } from './cart/cart.po';
@@ -13,6 +16,7 @@ import { TicketsOfTheDayView } from './tickets-of-the-day/tickets-of-the-day.po'
 
 describe('Page: Home', () => {
 
+	let welcome: WelcomePage;
 	let page: HomePage;
 	let searchView: SearchView;
 	let cartView: CartView;
@@ -23,6 +27,7 @@ describe('Page: Home', () => {
 	let ticketsOfTheDayView: TicketsOfTheDayView;
 
 	beforeAll(() => {
+		welcome = new WelcomePage();
 		page = new HomePage();
 		searchView = new SearchView();
 		cartView = new CartView();
@@ -31,7 +36,9 @@ describe('Page: Home', () => {
 		movementView = new MovementView();
 		closeCashierView = new CloseCashierView();
 		ticketsOfTheDayView = new TicketsOfTheDayView();
-		page.navigateTo();
+		welcome.navigateTo();
+		welcome.login();
+		browser.sleep(3000);
 		page.openCashier();
 	});
 

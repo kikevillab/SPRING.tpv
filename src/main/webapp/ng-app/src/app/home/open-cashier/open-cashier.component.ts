@@ -25,7 +25,7 @@ export class OpenCashierComponent implements OnInit, OnDestroy {
 		let currentCashier:CashierClosure = this.cashierService.getCurrentCashier();
 		this.cashierClosureDate = currentCashier != undefined ? currentCashier.closureDate : undefined;
 		this.cashierSubscription = this.cashierService.getCurrentCashierObservable().subscribe((currentCashier: CashierClosure) => {
-			!currentCashier.closureDate && this.router.navigate(['/home']);
+			currentCashier.openingDate && !currentCashier.closureDate && this.router.navigate(['/home']);
 	      	this.cashierClosureDate = currentCashier.closureDate;
     	});
 	}

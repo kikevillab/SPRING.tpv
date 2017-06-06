@@ -9,6 +9,7 @@ import { MockBackend, MockConnection } from '@angular/http/testing';
 import { ProductState }  from './product-state.model';
 import { OrderTrackingService } from './order-tracking.service';
 import { HTTPService } from '../shared/services/http.service';
+import { LocalStorageService } from '../shared/services/local-storage.service';
 
 let productStateMock = [];
 productStateMock.push(new ProductState("article0", "article0", "OPENED"));
@@ -25,6 +26,7 @@ describe('Service: OrderTrackingService', () => {
       MockBackend,
       BaseRequestOptions,
       HTTPService,
+      LocalStorageService,
       {
         provide: Http,
         useFactory: (backend, options) => new Http(backend, options),

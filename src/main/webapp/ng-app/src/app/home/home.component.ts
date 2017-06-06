@@ -11,6 +11,7 @@ import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { HomeService } from './home.service';
 import { CashierClosure } from './shared/models/cashier-closure.model';
 import { CashierService } from './shared/services/cashier.service';
+import { AuthService } from './shared/services/auth.service';
 import { ToastService } from '../shared/services/toast.service';
 
 @Component({
@@ -35,10 +36,14 @@ export class HomeComponent implements OnInit, OnDestroy {
 	cartSideNavOpened: boolean = false;
 	openedCashier: boolean = true;
 	cashierSubscription: Subscription;
+	authorizationSubscription: Subscription;
 
-	constructor(private router: Router, private toastService: ToastService, private dialog: MdDialog, private cashierService: CashierService, private homeService: HomeService) {}
+	constructor(private router: Router, private toastService: ToastService, private dialog: MdDialog, private cashierService: CashierService, private homeService: HomeService, private authService: AuthService) {}
 
 	ngOnInit(){
+		this.authorizationSubscription = this.authService.getAuthorizationObservable().subscribe((authorized: boolean) => {
+			!authorized && this.logout();
+		});
 		this.cashierSubscription = this.cashierService.getCurrentCashierObservable().subscribe((currentCashier: CashierClosure) => {
 	      this.openedCashier = currentCashier.closureDate == null;
 	      (!this.openedCashier || currentCashier.openingDate == null) && this.router.navigate(['/home/open-cashier']);
@@ -54,10 +59,14 @@ export class HomeComponent implements OnInit, OnDestroy {
 		this.dialog.open(OrderTrackingDialog);
 	}
 
-	logout(): void {
+	onClickLogout(): void {
+		this.toastService.info('Goodbye', 'You have logged out');
+		this.logout();
+	}
+
+	private logout(): void {
 		this.homeService.logout();
 		this.router.navigate(['/welcome']);
-		this.toastService.info('Goodbye', 'You have logged out');
 	}
 
 	ngOnDestroy(){
@@ -98,4 +107,3 @@ export class OrderTrackingDialog {
   }
 
 }
-

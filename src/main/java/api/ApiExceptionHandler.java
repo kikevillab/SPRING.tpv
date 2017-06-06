@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import api.exceptions.AlreadyExistUserFieldException;
 import api.exceptions.ApiException;
 import api.exceptions.ArticleNotFoundException;
+import api.exceptions.CategoryComponentNotFoundException;
 import api.exceptions.EmbroideryNotFoundException;
 import api.exceptions.EmptyShoppingListException;
 import api.exceptions.ErrorMessage;
@@ -50,7 +51,8 @@ public class ApiExceptionHandler {
             FileNotFoundException.class, TicketNotFoundException.class, InvoiceNotFoundException.class, NotFoundUserMobileException.class,
             NotFoundTicketReferenceException.class, NotFoundProductCodeInTicketException.class, VoucherNotFoundException.class,
             EmbroideryNotFoundException.class, ArticleNotFoundException.class, TextilePrintingNotFoundException.class,
-            NotFoundTicketReferenceException.class, NotFoundProductCodeInTicketException.class, NotExistsCashierClosuresException.class})
+            NotFoundTicketReferenceException.class, NotFoundProductCodeInTicketException.class, NotExistsCashierClosuresException.class,
+            CategoryComponentNotFoundException.class})
 
     @ResponseBody
     public ErrorMessage notFoundRequest(ApiException exception) {

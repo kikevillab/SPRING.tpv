@@ -21,6 +21,8 @@ public class ProductWrapper {
     private boolean discontinued;
     
     private String image;
+    
+    private String longDescription;
 
     public ProductWrapper() {
     }
@@ -32,6 +34,7 @@ public class ProductWrapper {
         this.description = product.getDescription();
         this.discontinued = product.isDiscontinued();
         this.image = product.getImage();
+        this.longDescription = product.getLongDescription();
     }
 
     public String getCode() {
@@ -81,11 +84,20 @@ public class ProductWrapper {
     public void setReference(String reference) {
         this.reference = reference;
     }
+    
+    public String getLongDescription() {
+        return longDescription;
+    }
+    
+    public void setLongDescription(String longDescription) {
+        this.longDescription = longDescription;
+    }
 
     @Override
     public String toString() {
         return "ProductWrapper [code=" + code + ", reference=" + reference + ", description=" + description + ", retailPrice=" + retailPrice
-                + ", discontinued=" + discontinued + ", image=" + image + "]";
+                + ", discontinued=" + discontinued + ", image=" + image + ", longDescription=" + longDescription + "]";
     }
+
 
 }

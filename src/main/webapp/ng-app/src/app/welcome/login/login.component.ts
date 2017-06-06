@@ -4,6 +4,7 @@
 
 import {Component, OnInit} from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
 import {LoginService} from './login.service';
 import {LocalStorageService} from '../../shared/services/local-storage.service';
 import {User} from '../../shared/models/user.model';
@@ -35,7 +36,8 @@ export class LoginComponent implements OnInit {
 
     constructor(private formBuilder: FormBuilder,
                 private loginService: LoginService,
-                private localStorageService: LocalStorageService) {
+                private localStorageService: LocalStorageService,
+                private router: Router) {
         this.user = new User();
     }
 
@@ -43,7 +45,10 @@ export class LoginComponent implements OnInit {
         this.user = this.loginForm.value;
         this.loginService.login(this.user.mobile, this.user.password)
             .subscribe(
-                session => this.localStorageService.setItem(LOCAL_STORAGE_TOKEN_ATTRIBUTE, session),
+                session => {
+                    this.localStorageService.setItem(LOCAL_STORAGE_TOKEN_ATTRIBUTE, session);
+                    this.router.navigate(['/home']);
+                }, 
                 error => this.formErrors.login = error
             );
     }
