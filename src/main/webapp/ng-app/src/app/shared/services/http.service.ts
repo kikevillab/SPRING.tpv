@@ -76,8 +76,13 @@ export class HTTPService {
 		}
 	}
 
-	private handleError (error: Response | any): any {
-		return Observable.throw(error.status || error.json());
+	private handleError (error: Response): any {
+		try {
+       		JSON.parse(error["_body"]);
+       		return Observable.throw(error.json());
+	    } catch (e) {
+	        return Observable.throw(error);
+	    }
 	}
 	
 }
