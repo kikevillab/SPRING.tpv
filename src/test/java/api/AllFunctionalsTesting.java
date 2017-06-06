@@ -10,6 +10,6 @@ import org.junit.runners.Suite.SuiteClasses;
         InvoiceResourceFunctionalTesting.class, EmbroideryResourceFunctionalTesting.class, TextilePrintingResourceFunctionalTesting.class,
         ArticleResourceFunctionalTesting.class, VoucherResourceFunctionalTesting.class, CategoryResourceFunctionalTesting.class})
 
-public class AllFunctionalTesting {
+public class AllFunctionalsTesting {
 
 }
