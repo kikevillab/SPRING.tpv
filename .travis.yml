@@ -23,3 +23,5 @@ deploy:
   on:
     repo: miw-upm/SPRING.tpv
     branch: develop
+after_deploy: mvn test -Pfunctional-api-test
+
