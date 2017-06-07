@@ -50,6 +50,8 @@ export class PrintComponent implements OnInit, OnDestroy {
 
   printInvoice(): void {
     if (this.userMobile){
+      console.log("PACO");
+      console.log(this.shoppingService.getTicketReference());
       this.printService.createInvoice(this.shoppingService.getTicketReference()).then((pdf: Blob) => {
         this.printInvoiceSelected = false;
         this.pdfService.openBlob(pdf);
