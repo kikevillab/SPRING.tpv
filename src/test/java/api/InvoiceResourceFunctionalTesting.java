@@ -43,15 +43,6 @@ public class InvoiceResourceFunctionalTesting {
         new RestBuilder<InvoiceWrapper>(RestService.URL).path(Uris.INVOICES).body(ticketReferenceWrapper).basicAuth(token, "").post()
                 .build();
     }
-    
-    @Test
-    public void testCreateInvoiceWithTicketWithNotAllShoppingsClosed(){
-        thrown.expect(new HttpMatcher(HttpStatus.BAD_REQUEST));
-        TicketReferenceWrapper ticketReferenceWrapper = new TicketReferenceWrapper("ticket5");   
-        String token = new RestService().loginAdmin();
-        new RestBuilder<Object>(RestService.URL).path(Uris.INVOICES).body(ticketReferenceWrapper).basicAuth(token, "").post()
-                .build();
-    }
 
     @Test
     public void testCreateInvoice() {
