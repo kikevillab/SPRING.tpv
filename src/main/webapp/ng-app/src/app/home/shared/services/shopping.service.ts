@@ -35,7 +35,7 @@ export class ShoppingService {
   private cashReceived: number = 0;
   private vouchers: Voucher[] = [];
   private submitted: boolean = false;
-  private ticketReference: number;
+  private ticketReference: string;
 
   constructor (private storageService: LocalStorageService, private httpService: HTTPService, private cashierService: CashierService) {
     this.updateCart();
@@ -211,7 +211,7 @@ export class ShoppingService {
     return this.cashReceivedSubject.asObservable();
   }
 
-  getTicketReference(): number {
+  getTicketReference(): string {
     return this.ticketReference;
   }
 

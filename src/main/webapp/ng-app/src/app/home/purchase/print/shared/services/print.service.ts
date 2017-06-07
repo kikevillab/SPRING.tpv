@@ -5,7 +5,6 @@
 import { Injectable } from '@angular/core';
 import { Headers } from '@angular/http';
 import { Observable } from 'rxjs';
-import { Subject } from 'rxjs/Subject';
 import * as moment from 'moment/moment';
 
 import { URI_TICKETS, URI_VOUCHERS, URI_INVOICES } from '../../../../../app.config';
@@ -39,20 +38,21 @@ export class PrintService {
     });
   }
 
-  createInvoice(ticketReference: number): Promise<any> {
+  createInvoice(ticketReference: string): Promise<any> {
     return new Promise((resolve: Function, reject: Function) => {
-      // let userMobile: number = this.shoppingService.getUserMobile();
-      // userMobile
-      //   ? this.postInvoice(resolve, reject, tickeReference)
-      //   : this.httpService.patch(`${URI_TICKETS}/{ticketId}`, new UserMobile(userMobile)).subscribe((response: any) => {
-      //       this.postInvoice(resolve, reject, ticketId);
-      //     },(error: TPVHTTPError) => {
-      //       reject(error.description);
-      //     });
+      let userMobile: number = this.shoppingService.getUserMobile();
+      userMobile
+        ? this.postInvoice(resolve, reject, ticketReference)
+        : reject('Not implemented');
+         // : this.httpService.patch(`${URI_TICKETS}/{ticketId}`, new UserMobile(userMobile)).subscribe((response: any) => {
+         //     this.postInvoice(resolve, reject, ticketId);
+         //   },(error: TPVHTTPError) => {
+         //     reject(error.description);
+         //   });
     });
   }
 
-  private postInvoice(resolve: Function, reject: Function, ticketReference: number){
+  private postInvoice(resolve: Function, reject: Function, ticketReference: string){
     let invoiceCreationWrapper: InvoiceCreation = new InvoiceCreation(ticketReference);
       let headers = new Headers();
       headers.append('Accept', 'application/pdf');

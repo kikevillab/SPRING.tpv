@@ -38,6 +38,16 @@ md-spinner {
   display: none; 
 }
 
+#floating-buttons-container {
+  position: absolute;
+  z-index: 2;
+}
+
+#floating-buttons-container > button {
+  margin-bottom: 0.5em;
+  display: block;
+}
+
 @media only screen and (min-width: 600px) {
   .category-container {
     max-width: 25%; 
@@ -47,6 +57,10 @@ md-spinner {
     margin-right: 5em;
     margin-left: 5em;
     position: relative;
+  }
+
+  #floating-buttons-container {
+    padding-top: 5em;
   }
 }
 @media only screen and (min-width: 960px) {
@@ -72,8 +86,3 @@ md-spinner {
     position: relative;
   }
 }
-
-#scroll-to-top-button {
-  position: absolute;
-  z-index: 2;
-} 
