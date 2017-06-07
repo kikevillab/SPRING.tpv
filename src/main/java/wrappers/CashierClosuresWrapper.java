@@ -1,7 +1,7 @@
 package wrappers;
 
 
-import entities.core.CashierClosures;
+import entities.core.CashierClosure;
 
 import java.util.Calendar;
 
@@ -18,12 +18,12 @@ public class CashierClosuresWrapper {
 
     private String comment;
 
-    public CashierClosuresWrapper(CashierClosures cashierClosures) {
-        this.id = cashierClosures.getId();
-        this.amount = cashierClosures.getAmount();
-        this.openingDate = cashierClosures.getOpeningDate();
-        this.closureDate = cashierClosures.getClosureDate();
-        this.comment = cashierClosures.getComment();
+    public CashierClosuresWrapper(CashierClosure cashierClosure) {
+        this.id = cashierClosure.getId();
+        this.amount = cashierClosure.getAmount();
+        this.openingDate = cashierClosure.getOpeningDate();
+        this.closureDate = cashierClosure.getClosureDate();
+        this.comment = cashierClosure.getComment();
     }
 
     public long getId() {

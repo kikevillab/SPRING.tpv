@@ -12,15 +12,20 @@ import {UsersComponent} from './users.component';
 import {FilterComponent} from './filter/filter.component';
 import {ResultsComponent} from './results/results.component';
 import {NewUserDialog} from './new-user/new-user.component';
-import {CapitalizePipe} from './capitalize.pipe';
+import {UserDetailsDialog} from './details/details.component';
+import {EditUserDialog} from './edit-user/edit-user.component';
+import {SharedModule} from '../../../shared/shared.module';
 import {NgxDatatableModule} from '@swimlane/ngx-datatable';
 import {AngularMaterialModule} from '../../../shared/angular-material.module';
 import {HTTPService} from '../../../shared/services/http.service';
 import {ToastService} from '../../../shared/services/toast.service';
 import {UsersService} from './users.service';
+import {TicketsService} from './details/tickets.service';
 import {RegExpFormValidatorService} from '../../../shared/services/reg-exp-form-validator.service';
+import {UserForm} from './user-form.service';
 import {InMemoryWebApiModule} from 'angular-in-memory-web-api';
 import {InMemoryDataService} from '../../../shared/services/in-memory-data.service';
+import {BooleanToStringPipe} from './details/bool-to-str.pipe';
 
 @NgModule({
     imports: [
@@ -31,6 +36,7 @@ import {InMemoryDataService} from '../../../shared/services/in-memory-data.servi
         NgxDatatableModule,
         AngularMaterialModule,
         FormsModule,
+        SharedModule,
         InMemoryWebApiModule.forRoot(InMemoryDataService, {passThruUnknownUrl: true})
     ],
     declarations: [
@@ -38,23 +44,31 @@ import {InMemoryDataService} from '../../../shared/services/in-memory-data.servi
         FilterComponent,
         ResultsComponent,
         NewUserDialog,
-        CapitalizePipe
+        UserDetailsDialog,
+        BooleanToStringPipe,
+        EditUserDialog
     ],
     providers: [
         HTTPService,
         ToastService,
         UsersService,
-        RegExpFormValidatorService
+        RegExpFormValidatorService,
+        TicketsService,
+        UserForm
     ],
     exports: [
         UsersComponent,
         FilterComponent,
         ResultsComponent,
         NewUserDialog,
-        CapitalizePipe
+        UserDetailsDialog,
+        BooleanToStringPipe,
+        EditUserDialog
     ],
     entryComponents: [
-        NewUserDialog
+        NewUserDialog,
+        UserDetailsDialog,
+        EditUserDialog
     ]
 })
 export class UsersModule {

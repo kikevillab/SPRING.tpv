@@ -1,2 +1,43 @@
-<h1 id="pageTitle">Products</h1>
-<md-card>Product list</md-card>
+<div id="scroll-container" [style.height.px]="calculateContainerHeight()" (scroll)="scrollHandler($event)" #scrollContainer >
+	<h1 id="page-title">Products</h1>
+	<div class="margin-sides">
+		<button md-mini-fab color="warn" mdTooltip="Reset search" mdTooltipPosition="below" (click)="resetSearch()" id="reset-search-button" *ngIf="filtered">
+			<md-icon>cached</md-icon>
+		</button>
+		<md-card>
+			<md-card-title>Search products and categories</md-card-title>
+				<md-card-content fxLayout="row" fxLayout.xs="column" fxLayout.sm="column">
+					<form (ngSubmit)="search($event)" #searchForm="ngForm" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-around" id="search-container">
+						<md-input-container>
+							<input mdInput type="text" maxLength="255" class="form-control" id="name-input" required placeholder="Name"
+							[(ngModel)]="nameInput" name="nameInput" #name="ngModel">
+						</md-input-container>	
+						<div fxLayout="column">		
+						<button md-raised-button color="primary" type="submit" [disabled]="!searchForm.form.valid" id="submit-search-button">Search</button ></div>
+					</form>
+					<div *ngIf="lastNameInput" id="search-results-container">
+						<a>Displaying search results of <span class="text-primary">'{{lastNameInput}}'</span></a>
+					</div>
+				</md-card-content>
+		</md-card>
+	</div>
+	<div fxLayout="row" fxLayout.xs="column" fxLayoutWrap="wrap" fxLayoutAlign="center space-around" class="margin-sides" *ngIf="categories; else spinner">
+		<div fxFlex.xs="calc(50%)" fxFlex.sm="calc(33.33%)" fxFlex.gt-md="calc(25%)" *ngFor="let category of categoriesRendered" class="category-container">
+			<md-card [style.background-color]="getCategoryBackgroundColor(category.code)" (click)="openCategory(category)" class="category-card">
+				<div class="image-container">
+				<img md-card-image src="{{category.image}}"/>
+				</div>
+				<md-card-title>{{category.name | capitalize}}</md-card-title>
+			</md-card>
+			<button md-mini-fab color="accent" *ngIf="category.code" mdTooltip="Add to cart" mdTooltipPosition="below" (click)="addToCart(category.code)" class="add-to-cart-button">
+				<md-icon>add_shopping_cart</md-icon>
+			</button>
+		</div>			
+	</div>
+	<ng-template #spinner>
+		<md-spinner></md-spinner>
+	</ng-template>
+	<button md-mini-fab color="primary" [style.top.px]="getScrollToTopButtonTopPx()" *ngIf="pxScrolled > 50" mdTooltip="Go to top" mdTooltipPosition="below" (click)="scrollToTop()" id="scroll-to-top-button">
+		<md-icon>keyboard_arrow_up</md-icon>
+	</button>
+</div>

@@ -2,7 +2,7 @@
   * @author Sergio Banegas Cortijo
   * Github: https://github.com/sergiobanegas 
 */
-import {Component, Attribute, NgZone} from '@angular/core'
+import { Component, Attribute, NgZone } from '@angular/core'
 
 @Component({
   selector: 'date',

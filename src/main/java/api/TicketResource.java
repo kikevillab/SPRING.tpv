@@ -1,5 +1,6 @@
 package api;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -7,10 +8,13 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import api.exceptions.EmptyShoppingListException;
@@ -23,10 +27,15 @@ import api.exceptions.NotFoundProductCodeException;
 import api.exceptions.NotFoundProductCodeInTicketException;
 import api.exceptions.NotFoundTicketReferenceException;
 import api.exceptions.NotFoundUserMobileException;
+import api.exceptions.VoucherAlreadyConsumedException;
+import api.exceptions.VoucherHasExpiredException;
+import api.exceptions.VoucherNotFoundException;
 import controllers.ArticleController;
+import controllers.CashierClosuresController;
 import controllers.ProductController;
 import controllers.TicketController;
 import controllers.UserController;
+import controllers.VoucherController;
 import entities.core.Article;
 import entities.core.Product;
 import entities.core.Shopping;
@@ -35,8 +44,11 @@ import wrappers.DayTicketWrapper;
 import wrappers.ShoppingCreationWrapper;
 import wrappers.ShoppingTrackingWrapper;
 import wrappers.ShoppingUpdateWrapper;
+import wrappers.TicketCreationResponseWrapper;
 import wrappers.TicketCreationWrapper;
+import wrappers.TicketReferenceCreatedWrapper;
 import wrappers.TicketReferenceWrapper;
+import wrappers.TicketUpdateWrapper;
 import wrappers.TicketWrapper;
 
 @RestController
@@ -54,6 +66,10 @@ public class TicketResource {
     private ProductController productController;
 
     private ArticleController articleController;
+
+    private VoucherController voucherController;
+
+    private CashierClosuresController cashierClosuresController;
 
     @Autowired
     public void setTicketController(TicketController ticketController) {
@@ -75,11 +91,23 @@ public class TicketResource {
         this.articleController = articleController;
     }
 
+    @Autowired
+    public void setVoucherController(VoucherController voucherController) {
+        this.voucherController = voucherController;
+    }
+
+    @Autowired
+    public void setCashierClosuresController(CashierClosuresController cashierClosuresController) {
+        this.cashierClosuresController = cashierClosuresController;
+    }
+
     // @PreAuthorize("hasRole('ADMIN')or hasRole('MANAGER') or hasRole('OPERATOR')")
     @RequestMapping(method = RequestMethod.POST)
-    public TicketReferenceWrapper createTicket(@RequestBody TicketCreationWrapper ticketCreationWrapper)
+    public TicketCreationResponseWrapper createTicket(@RequestBody TicketCreationWrapper ticketCreationWrapper)
             throws EmptyShoppingListException, NotFoundProductCodeException, NotFoundUserMobileException, NotEnoughStockException,
-            InvalidProductAmountInNewTicketException, InvalidProductDiscountException {
+            InvalidProductAmountInNewTicketException, InvalidProductDiscountException, IOException, VoucherNotFoundException,
+            VoucherHasExpiredException, VoucherAlreadyConsumedException {
+
         Long userMobile = ticketCreationWrapper.getUserMobile();
         if (userMobile != null && !userController.userExists(userMobile)) {
             throw new NotFoundUserMobileException();
@@ -89,6 +117,9 @@ public class TicketResource {
         if (shoppingCreationWrapperList.isEmpty()) {
             throw new EmptyShoppingListException();
         }
+
+        List<String> voucherReferences = ticketCreationWrapper.getVouchers();
+        checkVouchers(voucherReferences);
 
         for (ShoppingCreationWrapper shoppingCreationWrapper : shoppingCreationWrapperList) {
             String productCode = shoppingCreationWrapper.getProductCode();
@@ -116,18 +147,26 @@ public class TicketResource {
             }
         }
 
-        Ticket ticket = ticketController.createTicket(ticketCreationWrapper);
-        return new TicketReferenceWrapper(ticket.getReference());
+        // Consume vouchers and add given cash to cashierClosure
+        for (String voucherReference : voucherReferences) {
+            voucherController.consumeVoucher(voucherReference);
+        }
+        cashierClosuresController.depositCashierRequest(ticketCreationWrapper.getCash());
+
+        return ticketController.createTicket(ticketCreationWrapper);
     }
 
     @RequestMapping(value = Uris.REFERENCE, method = RequestMethod.PATCH)
     public TicketReferenceWrapper updateTicket(@PathVariable String reference,
-            @RequestBody List<ShoppingUpdateWrapper> shoppingUpdateWrapperList) throws NotFoundTicketReferenceException,
-            NotFoundProductCodeInTicketException, InvalidProductAmountInUpdateTicketException, NotEnoughStockException {
-        if (!ticketController.ticketReferenceExists(reference)) {
-            throw new NotFoundTicketReferenceException("Ticket reference: " + reference);
-        }
+            @RequestBody TicketUpdateWrapper ticketUpdateWrapper) throws NotFoundTicketReferenceException,
+            NotFoundProductCodeInTicketException, InvalidProductAmountInUpdateTicketException, NotEnoughStockException, VoucherNotFoundException, VoucherHasExpiredException, VoucherAlreadyConsumedException {
+        
+        checkTicketReferenceExists(reference);
+        
+        List<String> voucherReferences = ticketUpdateWrapper.getVouchers();
+        checkVouchers(voucherReferences);
 
+        List<ShoppingUpdateWrapper> shoppingUpdateWrapperList = ticketUpdateWrapper.getShoppingUpdateList();
         Iterator<Shopping> shoppingList = ticketController.getTicket(reference).getShoppingList().iterator();
         for (ShoppingUpdateWrapper shoppingUpdateWrapper : shoppingUpdateWrapperList) {
             String productCode = shoppingUpdateWrapper.getProductCode();
@@ -159,6 +198,12 @@ public class TicketResource {
                 articleController.consumeArticle(productCode, stockDifference);
             }
         }
+        
+     // Consume vouchers and add given cash to cashierClosure
+        for (String voucherReference : voucherReferences) {
+            voucherController.consumeVoucher(voucherReference);
+        }
+        cashierClosuresController.depositCashierRequest(ticketUpdateWrapper.getCash());
 
         Ticket ticket = ticketController.updateTicket(reference, shoppingUpdateWrapperList);
         return new TicketReferenceWrapper(ticket.getReference());
@@ -166,9 +211,8 @@ public class TicketResource {
 
     @RequestMapping(value = Uris.REFERENCE, method = RequestMethod.GET)
     public TicketWrapper getTicket(@PathVariable String reference) throws NotFoundTicketReferenceException {
-        if (!ticketController.ticketReferenceExists(reference)) {
-            throw new NotFoundTicketReferenceException("Ticket reference: " + reference);
-        }
+        checkTicketReferenceExists(reference);
+        
         return new TicketWrapper(ticketController.getTicket(reference));
     }
 
@@ -190,10 +234,34 @@ public class TicketResource {
 
     @RequestMapping(value = Uris.TRACKING + Uris.REFERENCE, method = RequestMethod.GET)
     public List<ShoppingTrackingWrapper> getTicketTracking(@PathVariable String reference) throws NotFoundTicketReferenceException {
+        checkTicketReferenceExists(reference);
+
+        return ticketController.getTicketTracking(reference);
+    }
+    
+    @RequestMapping(method = RequestMethod.GET)
+    // @PreAuthorize("hasRole('ADMIN')or hasRole('MANAGER') or hasRole('OPERATOR')")
+    public Page<TicketReferenceCreatedWrapper> getTicketsByUserMobile(@RequestParam long mobile, Pageable pageable) {
+        return ticketController.getTicketsByUserMobile(mobile, pageable);
+    }
+    
+    private void checkTicketReferenceExists(String reference) throws NotFoundTicketReferenceException {
         if (!ticketController.ticketReferenceExists(reference)) {
             throw new NotFoundTicketReferenceException("Ticket reference: " + reference);
         }
-
-        return ticketController.getTicketTracking(reference);
+    }
+    
+    private void checkVouchers(List<String> voucherReferenceList) throws VoucherNotFoundException, VoucherHasExpiredException, VoucherAlreadyConsumedException {
+        for (String reference : voucherReferenceList) {
+            if (!voucherController.voucherExists(reference)) {
+                throw new VoucherNotFoundException("Voucher reference: " + reference);
+            }
+            if (voucherController.voucherHasExpired(reference)) {
+                throw new VoucherHasExpiredException("Voucher reference: " + reference);
+            }
+            if (voucherController.isVoucherConsumed(reference)) {
+                throw new VoucherAlreadyConsumedException("Voucher reference: " + reference);
+            }
+        }
     }
 }

@@ -60,7 +60,7 @@ public class Ticket {
 
     public Ticket(long id) {
         this();
-        setId(id);
+        setId(id);            
     }
 
     public long getId() {
@@ -101,6 +101,10 @@ public class Ticket {
         return created;
     }
 
+    public void setReference(String reference){
+        this.reference = reference;
+    }
+    
     public String getReference() {
         return reference;
     }

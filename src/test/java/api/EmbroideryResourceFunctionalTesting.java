@@ -48,7 +48,7 @@ public class EmbroideryResourceFunctionalTesting {
     @Test
     public void testUpdateEmbroideryWithNonExistentEmbroidery(){
         thrown.expect(new HttpMatcher(HttpStatus.NOT_FOUND));
-        String code = "00000000000";
+        String code = "0000000000000";
         String token = new RestService().loginAdmin();
         EmbroideryUpdateWrapper embroideryUpdateWrapper = new EmbroideryUpdateWrapper();
         embroideryUpdateWrapper.setCode("CODE");
@@ -66,7 +66,7 @@ public class EmbroideryResourceFunctionalTesting {
     
     @Test
     public void testUpdateEmbroidery(){
-        String code = "84000002222";
+        String code = "8400000002222";
         String token = new RestService().loginAdmin();
         EmbroideryUpdateWrapper embroideryUpdateWrapper = new EmbroideryUpdateWrapper();
         embroideryUpdateWrapper.setCode("CODE");
@@ -84,7 +84,7 @@ public class EmbroideryResourceFunctionalTesting {
     
     @Test
     public void testFindOneEmbroidery(){
-        String code = "84000002222";
+        String code = "8400000002222";
         String token = new RestService().loginAdmin();
         EmbroideryWrapper embroideryWrapper = new RestBuilder<EmbroideryWrapper>(RestService.URL).path(Uris.EMBROIDERIES).pathId(code).basicAuth(token, "")
         .clazz(EmbroideryWrapper.class).get().build();
@@ -102,7 +102,7 @@ public class EmbroideryResourceFunctionalTesting {
     
     @Test
     public void testDeleteEmbroidery(){
-        String code = "84000002226";
+        String code = "8400000002226";
         String token = new RestService().loginAdmin();
         new RestBuilder<Object>(RestService.URL).path(Uris.EMBROIDERIES).pathId(code).basicAuth(token, "")
         .clazz(Object.class).delete().build();

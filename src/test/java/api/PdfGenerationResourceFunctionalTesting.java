@@ -1,5 +1,7 @@
 package api;
 
+import java.util.Arrays;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -36,6 +38,9 @@ public class PdfGenerationResourceFunctionalTesting {
         .body(new VoucherIdWrapper(1))
         .post()
         .build();
+        new RestBuilder<Object>(RestService.URL).path(Uris.PDF_GENERATION + Uris.BARCODES)
+        .post()
+        .build();
     }
 
     @Test
@@ -68,6 +73,18 @@ public class PdfGenerationResourceFunctionalTesting {
         .build();
     }
     */
+    
+    @Test
+    public void testGenerateBarcodesPdfWithManagerLoggedIn() {
+        String[] productCodeList = {"8400000002222", "8400000002225", "8400000003334", "8400000003335"};
+        String token = new RestService().registerAndLoginManager();
+        new RestBuilder<Object>(RestService.URL).path(Uris.PDF_GENERATION + Uris.BARCODES)
+        .body(Arrays.asList(productCodeList))
+        .basicAuth(token, "")
+        .post()
+        .build();
+    }
+    
     @After
     public void tearDown(){
         new RestService().deleteAll();

@@ -9,13 +9,13 @@ import { Component, HostListener, OnInit } from '@angular/core';
   templateUrl: './calculator.component.html',
   styles: [`
     b {
-      font-size:200%;
+      font-size: 200%;
     }
-    #currentOperator {
-      float:right;
+    #current-operator {
+      float: right;
     }
     div > div > div {
-      padding:0.5em;
+      padding: 0.5em;
     }
   `]
 })

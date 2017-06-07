@@ -17,29 +17,20 @@ import { ToastService } from '../../shared/services/toast.service';
   selector: 'shopping-cart-view',
   templateUrl: './shopping-cart.component.html',
   styles: [`
-    #mobileMenuButton {
-      position:absolute;
-      top:0px;
-      left:0px;
+    #mobile-menu-button {
+      position: absolute;
+      top: 0px;
+      left: 0px;
     }
-    @media only screen and (min-width: 480px) {
-      #paddingContainer {
-        padding:10em;
-        padding-top:0em;
+    @media only screen and (min-width: 600px) {
+      #padding-container {
+        padding: 10em;
+        padding-top: 0em;
       }
     }
-    #clearCartButton, #openCalculatorButton {
-      margin-left:0.4em;
-      float:right;
-    }
-    md-input-container {
-      width: 100%;
-    }
-    md-card {
-      margin-bottom:1em;
-    }
-    .center {
-      text-align:center;
+    #clear-cart-button, #open-calculator-button {
+      margin-left: 0.4em;
+      float: right;
     }
   `]
 })
@@ -49,7 +40,7 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
   codeInput: string = '';
   totalPrice: number = this.shoppingService.getTotalPrice();
   cartProducts: CartProduct[] = this.shoppingService.getCartProducts();
-  subscription: Subscription;
+  cartProductsSubscription: Subscription;
   columns: Object[] = [
   { name: 'description' },
   { name: 'retailPrice' },
@@ -62,7 +53,7 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
   constructor (private shoppingService: ShoppingService, private toastService: ToastService, private router: Router, public dialog: MdDialog){}
 
   ngOnInit(){
-    this.subscription = this.shoppingService.getCartProductsObservable().subscribe((cartProducts: CartProduct[]) => {
+    this.cartProductsSubscription = this.shoppingService.getCartProductsObservable().subscribe((cartProducts: CartProduct[]) => {
       this.cartProducts = cartProducts;
       this.totalPrice = this.shoppingService.getTotalPrice();
     });
@@ -103,7 +94,7 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
   }
 
   checkout(): void {
-    this.router.navigate(['/home/payment']);
+    this.router.navigate(['/home/purchase/payment']);
     this.closeSidenavEvent.emit(true);
   }
 
@@ -125,7 +116,7 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(){
-    this.subscription && this.subscription.unsubscribe();
+    this.cartProductsSubscription && this.cartProductsSubscription.unsubscribe();
   }
 
 }

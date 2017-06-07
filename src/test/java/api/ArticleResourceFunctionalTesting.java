@@ -47,7 +47,7 @@ public class ArticleResourceFunctionalTesting {
     @Test
     public void testUpdateArticleWithNonExistentArticle() {
         thrown.expect(new HttpMatcher(HttpStatus.NOT_FOUND));
-        String code = "48545465";
+        String code = "4854546562789";
         String token = new RestService().loginAdmin();
         String desc = "test_desc";
         boolean discontinued = true;
@@ -69,7 +69,7 @@ public class ArticleResourceFunctionalTesting {
 
     @Test
     public void testUpdateArticle() {
-        String code = "84000001116";
+        String code = "8400000001116";
         String token = new RestService().loginAdmin();
         boolean discontinued = true;
         String image = "test_url";
@@ -90,7 +90,7 @@ public class ArticleResourceFunctionalTesting {
 
     @Test
     public void testFindOneArticle() {
-        String code = "84000001114";
+        String code = "8400000001114";
         String token = new RestService().loginAdmin();
         ArticleWrapper articleWrapper = new RestBuilder<ArticleWrapper>(RestService.URL)
                 .path(Uris.ARTICLES).pathId(code).basicAuth(token, "").clazz(ArticleWrapper.class).get().build();
@@ -108,7 +108,7 @@ public class ArticleResourceFunctionalTesting {
 
     @Test
     public void testDeleteArticle() {
-        String code = "84000001115";
+        String code = "8400000001115";
         String token = new RestService().loginAdmin();
         new RestBuilder<Object>(RestService.URL).path(Uris.ARTICLES).pathId(code).basicAuth(token, "").clazz(Object.class).delete()
                 .build();

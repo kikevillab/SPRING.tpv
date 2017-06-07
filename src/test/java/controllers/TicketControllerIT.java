@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -14,6 +15,8 @@ import java.util.Random;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -26,13 +29,14 @@ import entities.core.Article;
 import entities.core.Shopping;
 import entities.core.ShoppingState;
 import entities.core.Ticket;
-import wrappers.DayTicketWrapper;
 import entities.core.TicketPK;
+import wrappers.DayTicketWrapper;
 import wrappers.ShoppingCreationWrapper;
 import wrappers.ShoppingTrackingWrapper;
 import wrappers.ShoppingUpdateWrapper;
+import wrappers.TicketCreationResponseWrapper;
 import wrappers.TicketCreationWrapper;
-import wrappers.TicketIdWrapper;
+import wrappers.TicketReferenceCreatedWrapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {PersistenceConfig.class, TestsPersistenceConfig.class, TestsControllerConfig.class})
@@ -48,12 +52,12 @@ public class TicketControllerIT {
     private ArticleDao articleDao;
 
     @Test
-    public void testCreateTicketWithoutUser() {
+    public void testCreateTicketWithoutUser() throws IOException {
         TicketCreationWrapper ticketCreationWrapper = new TicketCreationWrapper();
 
         List<ShoppingCreationWrapper> shoppingCreationWrapperList = new ArrayList<>();
         ShoppingCreationWrapper shoppingCreationWrapper = new ShoppingCreationWrapper();
-        shoppingCreationWrapper.setProductCode("84000001111");
+        shoppingCreationWrapper.setProductCode("8400000001111");
         shoppingCreationWrapper.setAmount(2);
         shoppingCreationWrapper.setDiscount(0);
         shoppingCreationWrapper.setDelivered(true);
@@ -62,7 +66,8 @@ public class TicketControllerIT {
 
         long lastTicketId = ticketDao.findFirstByOrderByCreatedDescIdDesc().getId();
 
-        Ticket ticket = ticketController.createTicket(ticketCreationWrapper);
+        TicketCreationResponseWrapper responseWrapper = ticketController.createTicket(ticketCreationWrapper);
+        Ticket ticket = ticketDao.findFirstByReference(responseWrapper.getTicketReference());
         List<Shopping> shoppingList = ticket.getShoppingList();
         Shopping shopping = shoppingList.get(0);
         Article article = articleDao.findOne(shoppingCreationWrapper.getProductCode());
@@ -81,14 +86,14 @@ public class TicketControllerIT {
     }
 
     @Test
-    public void testCreateTicketWithUser() {
+    public void testCreateTicketWithUser() throws IOException {
         TicketCreationWrapper ticketCreationWrapper = new TicketCreationWrapper();
         Long userMobile = 666000000L;
         ticketCreationWrapper.setUserMobile(userMobile);
 
         List<ShoppingCreationWrapper> shoppingCreationWrapperList = new ArrayList<>();
         ShoppingCreationWrapper shoppingCreationWrapper = new ShoppingCreationWrapper();
-        shoppingCreationWrapper.setProductCode("84000002222");
+        shoppingCreationWrapper.setProductCode("8400000002222");
         shoppingCreationWrapper.setAmount(1);
         shoppingCreationWrapper.setDiscount(5);
         shoppingCreationWrapper.setDelivered(false);
@@ -97,7 +102,8 @@ public class TicketControllerIT {
 
         long lastTicketId = ticketDao.findFirstByOrderByCreatedDescIdDesc().getId();
 
-        Ticket ticket = ticketController.createTicket(ticketCreationWrapper);
+        TicketCreationResponseWrapper responseWrapper = ticketController.createTicket(ticketCreationWrapper);
+        Ticket ticket = ticketDao.findFirstByReference(responseWrapper.getTicketReference());
         List<Shopping> shoppingList = ticket.getShoppingList();
         Shopping shopping = shoppingList.get(0);
 
@@ -113,8 +119,8 @@ public class TicketControllerIT {
     }
 
     @Test
-    public void testUpdateTicket() {
-        String productCode = "84000003333";
+    public void testUpdateTicket() throws IOException {
+        String productCode = "8400000003333";
         TicketCreationWrapper ticketCreationWrapper = new TicketCreationWrapper();
         List<ShoppingCreationWrapper> shoppingCreationWrapperList = new ArrayList<>();
         ShoppingCreationWrapper shoppingCreationWrapper = new ShoppingCreationWrapper();
@@ -124,7 +130,8 @@ public class TicketControllerIT {
         shoppingCreationWrapper.setDelivered(false);
         shoppingCreationWrapperList.add(shoppingCreationWrapper);
         ticketCreationWrapper.setShoppingList(shoppingCreationWrapperList);
-        Ticket createdTicket = ticketController.createTicket(ticketCreationWrapper);
+        TicketCreationResponseWrapper responseWrapper = ticketController.createTicket(ticketCreationWrapper);
+        Ticket createdTicket = ticketDao.findFirstByReference(responseWrapper.getTicketReference());
         Shopping createdShopping = createdTicket.getShoppingList().get(0);
 
         List<ShoppingUpdateWrapper> shoppingUpdateWrapperList = new ArrayList<>();
@@ -192,12 +199,7 @@ public class TicketControllerIT {
             assertEquals(shopping.getShoppingState(), shoppingTrackingWrapper.getShoppingState());
         }
     }
-    
-    @Test
-    public void testFindOneTicket(){
-        assertNotNull(ticketController.findOneTicket(new TicketIdWrapper(1L)));
-    }
-    
+       
     @Test
     public void testTicketIsClosedWithATicketWithAllShoppingsClosed(){
         Ticket ticketWithAllShoppingsClosed = new Ticket();
@@ -247,5 +249,15 @@ public class TicketControllerIT {
         assertEquals(totalNumTickets, dayTicketsList.size());
         assertEquals(totalTicketsPrice, total, 0.01);
     }
-
+    
+    @Test
+    public void testGetTicketsByUserMobile() {
+        long mobile = 666000002L;
+        int pageNumber = 1;
+        int pageSize = 1;
+        Page<TicketReferenceCreatedWrapper> ticketPage = ticketController.getTicketsByUserMobile(mobile, new PageRequest(pageNumber, pageSize));
+        assertNotNull(ticketPage);
+        assertEquals(pageSize, ticketPage.getNumberOfElements());
+    }
+    
 }

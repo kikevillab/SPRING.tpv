@@ -27,8 +27,8 @@ providerList:
     note: No
     
 articleList:
-  - &article74000001111
-    code: 74000001111
+  - &article7400000001111
+    code: 7400000001111
     reference: article0_seed_test
     retailPrice: 20
     description: article0_seed_test
@@ -36,8 +36,8 @@ articleList:
     provider: *provider777100000
     
 embroideryList:
-  - &embroidery74000002222
-    code: 74000002222
+  - &embroidery7400000002222
+    code: 7400000002222
     reference: embroidery0_seed_test
     retailPrice: 20
     description: embroidery0_seed_test
@@ -46,26 +46,26 @@ embroideryList:
     squareMillimeters: 0
     
 textilePrintingList:
-  - &textilePrinting74000003333
-    code: 74000003333
+  - &textilePrinting7400000003333
+    code: 7400000003333
     reference: textilePrinting0_seed_test
     retailPrice: 20
     description: textilePrinting0_seed_test
     type: ploter
-
+            
 ticketList:
   - &ticket71
     id: 71
     shoppingList:
       - amount: 1
         discount: 0
-        product: *article74000001111
+        product: *article7400000001111
         description: article0_seed_test
         retailPrice: 20
         shoppingState: CLOSED
       - amount: 2
         discount: 15
-        product: *embroidery74000002222
+        product: *embroidery7400000002222
         description: embroidery0_seed_test
         retailPrice: 21
         shoppingState: STARTED
@@ -74,13 +74,13 @@ ticketList:
     shoppingList:
       - amount: 5
         discount: 20
-        product: *textilePrinting74000003333
+        product: *textilePrinting7400000003333
         description: textilePrinting0_seed_test
         retailPrice: 20
         shoppingState: COMMITTED
       - amount: 1
         discount: 15
-        product: *embroidery74000002222
+        product: *embroidery7400000002222
         description: embroidery0_seed_test
         retailPrice: 21
         shoppingState: CLOSED

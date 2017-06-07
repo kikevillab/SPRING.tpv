@@ -1,5 +1,6 @@
 package controllers;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
@@ -7,6 +8,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 
 import daos.core.InvoiceDao;
@@ -17,14 +21,16 @@ import entities.core.Product;
 import entities.core.Shopping;
 import entities.core.ShoppingState;
 import entities.core.Ticket;
-import entities.core.TicketPK;
 import entities.users.User;
+import services.PdfGenerationService;
 import wrappers.DayTicketWrapper;
 import wrappers.ShoppingCreationWrapper;
 import wrappers.ShoppingTrackingWrapper;
 import wrappers.ShoppingUpdateWrapper;
+import wrappers.TicketCreationResponseWrapper;
 import wrappers.TicketCreationWrapper;
-import wrappers.TicketIdWrapper;
+import wrappers.TicketReferenceCreatedWrapper;
+import wrappers.TicketReferenceWrapper;
 
 @Controller
 public class TicketController {
@@ -37,6 +43,8 @@ public class TicketController {
 
     private InvoiceDao invoiceDao;
 
+    private PdfGenerationService pdfGenService;
+    
     @Autowired
     public void setTicketDao(TicketDao ticketDao) {
         this.ticketDao = ticketDao;
@@ -56,8 +64,13 @@ public class TicketController {
     public void setInvoiceDao(InvoiceDao invoiceDao) {
         this.invoiceDao = invoiceDao;
     }
+    
+    @Autowired
+    public void setPdfGenerationService(PdfGenerationService pdfGenService){
+        this.pdfGenService = pdfGenService;
+    }
 
-    public Ticket createTicket(TicketCreationWrapper ticketCreationWrapper) {
+    public TicketCreationResponseWrapper createTicket(TicketCreationWrapper ticketCreationWrapper) throws IOException {
         Ticket ticket = new Ticket(getNextId());
         Long userMobile = ticketCreationWrapper.getUserMobile();
         if (userMobile != null) {
@@ -78,8 +91,8 @@ public class TicketController {
         ticket.setShoppingList(shoppingList);
         ticketDao.save(ticket);
         ticket = ticketDao.findFirstByReference(ticket.getReference());
-
-        return ticket;
+        byte[] ticketPdfByteArray = pdfGenService.generateTicketPdf(ticket);
+        return new TicketCreationResponseWrapper(ticketPdfByteArray, ticket.getReference());
     }
 
     private long getNextId() {
@@ -148,8 +161,17 @@ public class TicketController {
         return dayTicketsList;
     }
     
-    public Ticket findOneTicket(TicketIdWrapper ticketIdWrapper) {
-        return ticketDao.findOne(new TicketPK(ticketIdWrapper.getId()));
+    public Page<TicketReferenceCreatedWrapper> getTicketsByUserMobile(long mobile, Pageable pageable) {
+        Page<Ticket> ticketPage = ticketDao.findByUserMobile(mobile, pageable);
+        List<TicketReferenceCreatedWrapper> ticketWrapperList = new ArrayList<>(); 
+        for (Ticket ticket : ticketPage.getContent()) {
+            ticketWrapperList.add(new TicketReferenceCreatedWrapper(ticket));
+        }
+        return new PageImpl<TicketReferenceCreatedWrapper>(ticketWrapperList, pageable, ticketPage.getTotalElements());
+    }
+       
+    public Ticket findOneTicket(TicketReferenceWrapper ticketReferenceWrapper) {
+        return ticketDao.findFirstByReference(ticketReferenceWrapper.getTicketReference());
     }
 
     public boolean ticketIsAlreadyAssignedToInvoice(Ticket ticket) {

@@ -1,11 +1,13 @@
 package services;
 
 import static config.ResourceNames.ADMIN_FILE;
-import static config.ResourceNames.YAML_FILES_ROOT;
 import static config.ResourceNames.DEFAULT_SEED_FILE;
+import static config.ResourceNames.YAML_FILES_ROOT;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
@@ -18,6 +20,8 @@ import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 
 import daos.core.ArticleDao;
+import daos.core.CashierClosureDao;
+import daos.core.CategoryComponentDao;
 import daos.core.EmbroideryDao;
 import daos.core.InvoiceDao;
 import daos.core.ProviderDao;
@@ -27,6 +31,9 @@ import daos.core.VoucherDao;
 import daos.users.AuthorizationDao;
 import daos.users.TokenDao;
 import daos.users.UserDao;
+import entities.core.CategoryComponent;
+import entities.core.CategoryComposite;
+import entities.core.ProductCategory;
 import entities.users.Authorization;
 import entities.users.Role;
 import entities.users.User;
@@ -67,7 +74,13 @@ public class DatabaseSeederService {
 
     @Autowired
     private InvoiceDao invoiceDao;
-    
+
+    @Autowired
+    private CategoryComponentDao categoryComponentDao;
+
+    @Autowired
+    private CashierClosureDao cashierClosureDao;
+
     @PostConstruct
     public void createDefaultAdmin() {
         Yaml adminYaml = new Yaml();
@@ -107,13 +120,40 @@ public class DatabaseSeederService {
                 articleDao.save(tpvGraph.getArticleList());
                 embroideryDao.save(tpvGraph.getEmbroideryList());
                 textilePrintingDao.save(tpvGraph.getTextilePrintingList());
+                categoryComponentDao.save(buildCategoryComponentList());
                 ticketDao.save(tpvGraph.getTicketList());
                 invoiceDao.save(tpvGraph.getInvoiceList());
+                cashierClosureDao.save(tpvGraph.getCashierClosureList());
             } catch (IOException e) {
                 System.err.println("ERROR: File " + fileName + " doesn't exist or can't be opened");
                 e.printStackTrace();
             }
         }
+    }
+
+    private List<CategoryComponent> buildCategoryComponentList() {
+        List<CategoryComponent> categoryComponents = new ArrayList<>();
+        CategoryComposite categoryCompositeRoot = new CategoryComposite(null, "category_root");
+        CategoryComposite embroideriesCategoryComposite = new CategoryComposite(null, "Embroideries");
+        CategoryComposite articlesCategoryComposite = new CategoryComposite(null, "Articles");
+        CategoryComposite textilePrintingsCategoryComposite = new CategoryComposite(null, "TextilePrintings");
+        ProductCategory textilePrinting7400000003333 = new ProductCategory(textilePrintingDao.findAll().get(0));
+        ProductCategory article7400000001111 = new ProductCategory(articleDao.findAll().get(0));
+        ProductCategory embroidery7400000002222 = new ProductCategory(embroideryDao.findAll().get(0));
+        textilePrinting7400000003333 = categoryComponentDao.save(textilePrinting7400000003333);
+        article7400000001111 = categoryComponentDao.save(article7400000001111);
+        embroidery7400000002222 = categoryComponentDao.save(embroidery7400000002222);
+        embroideriesCategoryComposite.addCategoryComponent(embroidery7400000002222);
+        articlesCategoryComposite.addCategoryComponent(article7400000001111);
+        textilePrintingsCategoryComposite.addCategoryComponent(textilePrinting7400000003333);
+        embroideriesCategoryComposite = categoryComponentDao.save(embroideriesCategoryComposite);
+        articlesCategoryComposite = categoryComponentDao.save(articlesCategoryComposite);
+        textilePrintingsCategoryComposite = categoryComponentDao.save(textilePrintingsCategoryComposite);
+        categoryCompositeRoot.addCategoryComponent(embroideriesCategoryComposite);
+        categoryCompositeRoot.addCategoryComponent(articlesCategoryComposite);
+        categoryCompositeRoot.addCategoryComponent(textilePrintingsCategoryComposite);
+        categoryComponents.add(categoryCompositeRoot);
+        return categoryComponents;
     }
 
     public boolean existsYamlFile(String fileName) {
@@ -130,16 +170,23 @@ public class DatabaseSeederService {
         userDao.deleteAll();
 
         voucherDao.deleteAll();
-
+        for (CategoryComponent component : categoryComponentDao.findAll()) {
+            if (component.isCategory()) {
+                categoryComponentDao.delete(component);
+            }
+        }
+        categoryComponentDao.deleteAll();
         articleDao.deleteAll();
         embroideryDao.deleteAll();
         textilePrintingDao.deleteAll();
         providerDao.deleteAll();
 
+        cashierClosureDao.deleteAll();
+
         createDefaultAdmin();
     }
-    
-    public void seed(){
+
+    public void seed() {
         seedDatabase(DEFAULT_SEED_FILE);
     }
 }

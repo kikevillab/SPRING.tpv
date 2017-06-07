@@ -95,8 +95,8 @@ providerList:
     note: No
 
 articleList:
-  - &article84000001111
-    code: 84000001111
+  - &article8400000001111
+    code: 8400000001111
     reference: article0
     retailPrice: 20
     description: article0
@@ -104,8 +104,8 @@ articleList:
     stock: 5
     provider: *provider666100000
     image: /assets/img/products/img-product-5.png
-  - &article84000001112
-    code: 84000001112
+  - &article8400000001112
+    code: 8400000001112
     reference: article1
     retailPrice: 21
     description: article1
@@ -113,8 +113,8 @@ articleList:
     stock: 8
     provider: *provider666100000
     image: /assets/img/products/img-product-6.png
-  - &article84000001113
-    code: 84000001113
+  - &article8400000001113
+    code: 8400000001113
     reference: article2
     retailPrice: 22
     description: article2
@@ -122,8 +122,8 @@ articleList:
     stock: 0
     provider: *provider666100000
     image: /assets/img/products/img-product-1.png
-  - &article84000001114
-    code: 84000001114
+  - &article8400000001114
+    code: 8400000001114
     reference: article3
     retailPrice: 23
     description: article3
@@ -131,7 +131,7 @@ articleList:
     stock: 15
     provider: *provider666100000
     image: /assets/img/products/img-product-2.png
-  - code: 84000001115
+  - code: 8400000001115
     reference: article4
     retailPrice: 24
     description: article4
@@ -139,7 +139,7 @@ articleList:
     stock: 26
     provider: *provider666100001
     image: /assets/img/products/img-product-3.png
-  - code: 84000001116
+  - code: 8400000001116
     reference: article5
     retailPrice: 25
     description: article5
@@ -147,7 +147,7 @@ articleList:
     stock: 3
     provider: *provider666100001
     image: /assets/img/products/img-product-4.png
-  - code: 84000001117
+  - code: 8400000001117
     reference: article6
     retailPrice: 26
     description: article6
@@ -155,7 +155,7 @@ articleList:
     stock: 125
     provider: *provider666100001
     image: /assets/img/products/img-product-5.png
-  - code: 84000001118
+  - code: 8400000001118
     reference: article7
     retailPrice: 27
     description: article7
@@ -165,8 +165,8 @@ articleList:
     image: /assets/img/products/img-product-6.png
 
 embroideryList:
-  - &embroidery84000002222
-    code: 84000002222
+  - &embroidery8400000002222
+    code: 8400000002222
     reference: embroidery0
     retailPrice: 20
     description: embroidery0
@@ -174,8 +174,8 @@ embroideryList:
     colors: 0
     squareMillimeters: 0
     image: /assets/img/products/img-product-1.png
-  - &embroidery84000002223
-    code: 84000002223
+  - &embroidery8400000002223
+    code: 8400000002223
     reference: embroidery1
     retailPrice: 21
     description: embroidery1
@@ -183,8 +183,8 @@ embroideryList:
     colors: 1
     squareMillimeters: 10
     image: /assets/img/products/img-product-2.png
-  - &embroidery84000002224
-    code: 84000002224
+  - &embroidery8400000002224
+    code: 8400000002224
     reference: embroidery2
     retailPrice: 22
     description: embroidery2
@@ -192,8 +192,8 @@ embroideryList:
     colors: 2
     squareMillimeters: 20
     image: /assets/img/products/img-product-3.png
-  - &embroidery84000002225
-    code: 84000002225
+  - &embroidery8400000002225
+    code: 8400000002225
     reference: embroidery3
     retailPrice: 23
     description: embroidery3
@@ -201,8 +201,8 @@ embroideryList:
     colors: 3
     squareMillimeters: 30
     image: /assets/img/products/img-product-4.png
-  - &embroidery84000002226
-    code: 84000002226
+  - &embroidery8400000002226
+    code: 8400000002226
     reference: embroidery4
     retailPrice: 23
     description: embroidery4
@@ -212,35 +212,35 @@ embroideryList:
     image: /assets/img/products/img-product-5.png
 
 textilePrintingList:
-  - &textilePrinting84000003333
-    code: 84000003333
+  - &textilePrinting8400000003333
+    code: 8400000003333
     reference: textilePrinting0
     retailPrice: 20
     description: textilePrinting0
     image: /assets/img/products/img-product-4.png
     type: ploter
-  - &textilePrinting84000003334
-    code: 84000003334
+  - &textilePrinting8400000003334
+    code: 8400000003334
     reference: textilePrinting1
     retailPrice: 21
     description: textilePrinting1
     image: /assets/img/products/img-product-1.png
     type: ploter
-  - &textilePrinting84000003335
-    code: 84000003335
+  - &textilePrinting8400000003335
+    code: 8400000003335
     reference: textilePrinting2
     retailPrice: 22
     description: textilePrinting2
     image: /assets/img/products/img-product-2.png
     type: ploter
-  - &textilePrinting84000003336
-    code: 84000003336
+  - &textilePrinting8400000003336
+    code: 8400000003336
     reference: textilePrinting3
     retailPrice: 23
     description: textilePrinting3
     image: /assets/img/products/img-product-3.png
     type: ploter
-  - code: 84000003337
+  - code: 8400000003337
     reference: textilePrinting4
     retailPrice: 23
     description: textilePrinting4
@@ -249,164 +249,170 @@ textilePrintingList:
 
 ticketList:
   - id: 1
+    reference : ticket1
     shoppingList:
       - amount: 1
         discount: 0
-        product: *article84000001111
+        product: *article8400000001111
         description: article0
         retailPrice: 20
         shoppingState: CLOSED
       - amount: 2
         discount: 0
-        product: *article84000001112
+        product: *article8400000001112
         description: article1
         retailPrice: 21
         shoppingState: CLOSED
       - amount: 3
         discount: 0
-        product: *article84000001113
+        product: *article8400000001113
         description: article2
         retailPrice: 22
         shoppingState: OPENED
       - amount: 4
         discount: 0
-        product: *article84000001114
+        product: *article8400000001114
         description: article3
         retailPrice: 23
         shoppingState: OPENED
   - id: 2
+    reference : ticket2
     shoppingList:
       - amount: 1
         discount: 0
-        product: *embroidery84000002222
+        product: *embroidery8400000002222
         description: embroidery0
         retailPrice: 20
         shoppingState: STARTED
       - amount: 2
         discount: 0
-        product: *embroidery84000002223
+        product: *embroidery8400000002223
         description: embroidery1
         retailPrice: 21
         shoppingState: STARTED
       - amount: 3
         discount: 0
-        product: *embroidery84000002224
+        product: *embroidery8400000002224
         description: embroidery2
         retailPrice: 22
         shoppingState: STARTED
       - amount: 4
         discount: 0
-        product: *embroidery84000002225
+        product: *embroidery8400000002225
         description: embroidery3
         retailPrice: 23
         shoppingState: COMMITTED
     user: *user666000003
   - &ticket3
     id: 3
+    reference : ticket3
     shoppingList:
       - amount: 1
         discount: 10
-        product: *textilePrinting84000003333
+        product: *textilePrinting8400000003333
         description: textilePrinting0
         retailPrice: 20
         shoppingState: CLOSED
       - amount: 2
         discount: 10
-        product: *textilePrinting84000003334
+        product: *textilePrinting8400000003334
         description: textilePrinting1
         retailPrice: 21
         shoppingState: STARTED
       - amount: 3
         discount: 10
-        product: *textilePrinting84000003335
+        product: *textilePrinting8400000003335
         description: textilePrinting2
         retailPrice: 22
         shoppingState: OPENED
       - amount: 6
         discount: 10
-        product: *textilePrinting84000003336
+        product: *textilePrinting8400000003336
         description: textilePrinting3
         retailPrice: 23
         shoppingState: COMMITTED
     user: *user666000003
   - &ticket4
     id: 4
+    reference : ticket4
     shoppingList:
       - amount: 1
         discount: 10
-        product: *textilePrinting84000003333
+        product: *textilePrinting8400000003333
         description: textilePrinting0
         retailPrice: 20
         shoppingState: CLOSED
       - amount: 2
         discount: 10
-        product: *textilePrinting84000003334
+        product: *textilePrinting8400000003334
         description: textilePrinting1
         retailPrice: 21
         shoppingState: COMMITTED
       - amount: 3
         discount: 10
-        product: *textilePrinting84000003335
+        product: *textilePrinting8400000003335
         description: textilePrinting2
         retailPrice: 22
         shoppingState: OPENED
       - amount: 3
         discount: 10
-        product: *textilePrinting84000003336
+        product: *textilePrinting8400000003336
         description: textilePrinting3
         retailPrice: 23
         shoppingState: OPENED
     user: *user666000002
   - id: 5
+    reference : ticket5
     shoppingList:
       - amount: 1
         discount: 10
-        product: *textilePrinting84000003333
+        product: *textilePrinting8400000003333
         description: textilePrinting0
         retailPrice: 20
         shoppingState: CLOSED
       - amount: 2
         discount: 10
-        product: *textilePrinting84000003334
+        product: *textilePrinting8400000003334
         description: textilePrinting1
         retailPrice: 21
         shoppingState: OPENED
       - amount: 3
         discount: 10
-        product: *textilePrinting84000003335
+        product: *textilePrinting8400000003335
         description: textilePrinting2
         retailPrice: 22
         shoppingState: COMMITTED
       - amount: 5
         discount: 10
-        product: *textilePrinting84000003336
+        product: *textilePrinting8400000003336
         description: textilePrinting3
         retailPrice: 23
         shoppingState: STARTED
     user: *user666000002
   - id: 6
+    reference : ticket6
     shoppingList:
       - amount: 1
         discount: 10
-        product: *textilePrinting84000003333
+        product: *textilePrinting8400000003333
         description: textilePrinting0
         retailPrice: 20
         shoppingState: CLOSED
       - amount: 2
         discount: 10
-        product: *textilePrinting84000003334
+        product: *textilePrinting8400000003334
         description: textilePrinting1
         retailPrice: 21
         shoppingState: CLOSED
       - amount: 3
         discount: 10
-        product: *textilePrinting84000003335
+        product: *textilePrinting8400000003335
         description: textilePrinting2
         retailPrice: 22
         shoppingState: CLOSED
       - amount: 5
         discount: 10
-        product: *textilePrinting84000003336
+        product: *textilePrinting8400000003336
         description: textilePrinting3
         retailPrice: 23
         shoppingState: CLOSED

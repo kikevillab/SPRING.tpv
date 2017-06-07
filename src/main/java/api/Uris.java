@@ -82,4 +82,10 @@ public class Uris {
     
     public static final String VOUCHER_ACTIVESTOTALVALUE = "/activesvaluetotal";
 
+    public static final String BARCODES = "/barcodes";
+    
+    public static final String CATEGORIES = "/categories";
+
+    public static final String CATEGORY_NAME = "/{name}";
+
 }

@@ -33,6 +33,7 @@ public class Voucher {
     public Voucher() {
         created = Calendar.getInstance();
         dateOfUse = null;
+        updateReference();
     }
 
     public Voucher(BigDecimal value, Calendar expiration) {
@@ -52,18 +53,17 @@ public class Voucher {
     public String getReference() {
         return reference;
     }
-
+    
     public BigDecimal getValue() {
         return value;
     }
 
     public void setValue(BigDecimal value) {
-        this.value = value;
-        updateReference();
+        this.value = value;    
     }
 
     private void updateReference() {
-        reference = new Encrypting().encryptInBase64UrlSafe("" + value + Long.toString(new Date().getTime()));
+        reference = new Encrypting().encryptInBase64UrlSafe("" + Long.toString(new Date().getTime()) + super.hashCode());
     }
 
     public Calendar getCreated() {
