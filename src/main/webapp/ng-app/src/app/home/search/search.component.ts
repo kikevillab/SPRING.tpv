@@ -8,6 +8,7 @@ import { MdDialog, MdDialogRef } from '@angular/material';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 
 import { Category } from './shared/models/category.model';
+import { CategoriesPage } from './shared/models/categories-page.model';
 import { SearchService } from './shared/services/search.service';
 import { ShoppingService } from '../shared/services/shopping.service';
 import { CapitalizePipe } from '../../shared/pipes/capitalize.pipe';
@@ -21,48 +22,50 @@ import { ToastService } from '../../shared/services/toast.service';
 export class SearchComponent implements OnInit {
 
   categories: Category[];
-  categoriesRendered: Category[] = [];
   nameInput: string;
   lastNameInput: string;
   filtered: boolean = false;
-  displayNumber: number = 20;
   index: number = 0;
   pxScrolled: number = 0;
   @ViewChild('scrollContainer') scrollContainer: ElementRef;
+  lastPage: CategoriesPage;
+  isRootCategory: boolean = true;
 
   constructor (private searchService: SearchService, private shoppingService: ShoppingService, private toastService: ToastService, private dialog: MdDialog){}
 
   ngOnInit(){
-  	this.searchService.getCategoryContent().then((categories: Category[]) => {
-  		this.categories = categories;
-      if (this.categories.length > this.displayNumber) {
-        this.categoriesRendered = this.categories.slice(0, this.displayNumber);
-        this.index = this.displayNumber;
-      } else {
-        this.categoriesRendered = this.categories;
-      }      
+  	this.searchService.getCategoryContent().then((categories: CategoriesPage) => {
+  		this.categories = categories.content;
   	});
   }
 
-  addItems(startIndex: number, endIndex: number): void {
-    if (this.categories.length < endIndex){
-      endIndex = this.categories.length;
+  openCategory(category: Category): void {
+    if (category.code) {
+      let dialogRef: MdDialogRef<ProductDetailsComponent> = this.dialog.open(ProductDetailsComponent);
+      dialogRef.componentInstance.initialize(category.code);
+    } else {
+      this.searchService.getCategoryContent(category.id).then((categories: CategoriesPage) => {
+        this.categories = categories.content;
+        this.isRootCategory = this.searchService.isRootCategory();
+      });
     }
-    for (let i: number = startIndex; i < endIndex; i++) {
-      this.categoriesRendered.push(this.categories[i]);
-    }
   }
 
-  scrollToTop(): void {
-    this.scrollContainer.nativeElement.scrollTop = 0;
+  goToPreviousCategory(): void {
+  	this.searchService.goToPreviousCategory().then((categories: Category[]) => {
+  		this.categories = categories;
+  		this.isRootCategory = this.searchService.isRootCategory();
+  	});
   }
 
-  getScrollToTopButtonTopPx(): number {
-    return this.pxScrolled + 5;
-  }
-
-  calculateContainerHeight(): number {
-    return window.innerHeight - this.scrollContainer.nativeElement.offsetTop - 16;
+  search(pageNumber: number = 0): void {
+    this.nameInput && this.searchService.search(this.nameInput, pageNumber).then((categoriesPage: CategoriesPage) => {
+      this.categories = categoriesPage.content;
+      this.lastPage = categoriesPage; 
+      this.filtered = true;
+      this.lastNameInput = this.nameInput;
+      this.nameInput = undefined;
+    });
   }
 
   @HostListener('window:scroll', [])
@@ -70,25 +73,15 @@ export class SearchComponent implements OnInit {
     let tracker: any = event.target;
     let limit: number = tracker.scrollHeight - tracker.clientHeight;
     this.pxScrolled = event.target.scrollTop;
-    if (tracker.scrollTop === limit && this.categoriesRendered.length < this.categories.length) {
-        let start: number = this.index;
-        this.index += this.displayNumber;
-        this.addItems(start, this.index);
+    if (tracker.scrollTop === limit && !this.lastPage.last) {
+    	this.search(this.lastPage.number + 1);
     }
-  }
-
-  search(): void {
-    this.nameInput && this.searchService.search(this.nameInput).then((categories: Category[]) => {
-      this.categories = categories;      
-      this.filtered = true;
-      this.lastNameInput = this.nameInput;
-      this.nameInput = undefined;
-    });
   }
 
   resetSearch(): void {
     this.filtered = false;
     this.lastNameInput = undefined;
+    this.ngOnInit();
   }
 
   addToCart(code: string): void {
@@ -99,15 +92,16 @@ export class SearchComponent implements OnInit {
     });
   }
 
-  openCategory(category: Category): void {
-    if (category.code) {
-      let dialogRef: MdDialogRef<ProductDetailsComponent> = this.dialog.open(ProductDetailsComponent);
-      dialogRef.componentInstance.initialize(category.code);
-    } else {
-      this.searchService.getCategoryContent(category.id).then((categories: Category[]) => {
-        this.categories = categories;
-      });
-    }
+  scrollToTop(): void {
+    this.scrollContainer.nativeElement.scrollTop = 0;
+  }
+
+  getFloatingButtonsTopPx(): number {
+    return this.pxScrolled + 5;
+  }
+
+  calculateContainerHeight(): number {
+    return window.innerHeight - this.scrollContainer.nativeElement.offsetTop - 16;
   }
 
   getCategoryBackgroundColor(code: string): string {
