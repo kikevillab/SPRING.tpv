@@ -23,7 +23,7 @@ public class ServiceBatch {
     @Autowired
     JobLauncher jobLauncher;
 
-    @Scheduled(cron = CronConstans.EJECUCION_CADA_MINUTO)
+    @Scheduled(cron = CronConstans.EJECUCION_A_MEDIA_NOCHE)
     public void launch() throws JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException,
             JobParametersInvalidException {
 
