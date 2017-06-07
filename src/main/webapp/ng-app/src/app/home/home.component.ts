@@ -8,15 +8,21 @@ import { Subscription } from 'rxjs/Subscription';
 import { MdSidenav, MdDialog, MdDialogRef, MdDialogConfig } from '@angular/material';
 
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
+import { HomeService } from './home.service';
 import { CashierClosure } from './shared/models/cashier-closure.model';
 import { CashierService } from './shared/services/cashier.service';
-
+import { AuthService } from './shared/services/auth.service';
 import { ToastService } from '../shared/services/toast.service';
 
 @Component({
 	selector: 'home-view',
 	templateUrl: './home.component.html',
 	styles: [`
+		@media only screen and (max-width: 600px) {
+			md-sidenav {
+				width: 100%;
+			}
+		}
 		@media only screen and (min-width: 768px) {
 			md-sidenav {
 				width: 45em;
@@ -32,17 +38,20 @@ import { ToastService } from '../shared/services/toast.service';
 export class HomeComponent implements OnInit, OnDestroy {
 
 	@ViewChild('cart') cartSidenav: MdSidenav;
-
 	cartSideNavOpened: boolean = false;
 	openedCashier: boolean = true;
 	cashierSubscription: Subscription;
+	authorizationSubscription: Subscription;
 
-	constructor(private router: Router, private toastService: ToastService, private dialog: MdDialog, private cashierService: CashierService) {}
+	constructor(private router: Router, private toastService: ToastService, private dialog: MdDialog, private cashierService: CashierService, private homeService: HomeService, private authService: AuthService) {}
 
 	ngOnInit(){
+		this.authorizationSubscription = this.authService.getAuthorizationObservable().subscribe((authorized: boolean) => {
+			!authorized && this.logout();
+		});
 		this.cashierSubscription = this.cashierService.getCurrentCashierObservable().subscribe((currentCashier: CashierClosure) => {
 	      this.openedCashier = currentCashier.closureDate == null;
-	      (!this.openedCashier || currentCashier.openingDate == null) && this.router.navigate(['/home/opencashier']);
+	      (!this.openedCashier || currentCashier.openingDate == null) && this.router.navigate(['/home/open-cashier']);
     	});
     	this.cashierService.initialize();
 	}
@@ -55,9 +64,14 @@ export class HomeComponent implements OnInit, OnDestroy {
 		this.dialog.open(OrderTrackingDialog);
 	}
 
-	logout(): void {
-		this.router.navigate(['/welcome']);
+	onClickLogout(): void {
 		this.toastService.info('Goodbye', 'You have logged out');
+		this.logout();
+	}
+
+	private logout(): void {
+		this.homeService.logout();
+		this.router.navigate(['/welcome']);
 	}
 
 	ngOnDestroy(){
@@ -94,8 +108,7 @@ export class OrderTrackingDialog {
   submitTicketReference(event: Event): void {
   	event.preventDefault();
   	this.dialogRef.close();
-  	this.router.navigate(['/ordertracking', this.ticketReferenceInput]);
+  	this.router.navigate(['/order-tracking', this.ticketReferenceInput]);
   }
 
 }
-

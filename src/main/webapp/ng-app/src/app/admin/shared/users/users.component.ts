@@ -9,6 +9,7 @@ import {ToastService} from '../../../shared/services/toast.service';
 import {User} from '../../../shared/models/user.model';
 import {MdDialog, MdDialogConfig} from '@angular/material';
 import {NewUserDialog} from './new-user/new-user.component';
+import {isNull, isUndefined} from "util";
 
 @Component({
     selector: 'users',
@@ -21,11 +22,13 @@ export class UsersComponent implements OnInit {
     endpoint: string;
     usersType: string;
     dialogConfig: MdDialogConfig;
+    selected: User;
 
     constructor(private httpService: UsersService, private toastService: ToastService,
                 private newUserDialog: MdDialog) {
         this.dialogConfig = new MdDialogConfig();
         this.dialogConfig.data = this.httpService;
+        this.selected = new User();
     }
 
     ngOnInit(): void {
@@ -50,5 +53,23 @@ export class UsersComponent implements OnInit {
             this.ngOnInit();
             console.log(user);
         });
+    }
+
+    onSelectedUser(user: User) {
+        this.selected = user;
+    }
+
+    onModifiedUser(user: User) {
+        if (isNull(user))
+            this.httpService.delete(this.selected.mobile).subscribe(
+                results => this.ngOnInit(),
+                error => this.handleError(error)
+            );
+        else if (!isUndefined(user) && !user.equals(this.selected)) {
+            this.httpService.put(user).subscribe(
+                results => this.ngOnInit(),
+                error => this.handleError(error)
+            );
+        }
     }
 }

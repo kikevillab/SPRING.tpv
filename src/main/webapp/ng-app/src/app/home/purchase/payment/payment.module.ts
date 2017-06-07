@@ -15,7 +15,7 @@ import 'hammerjs';
 
 import { PaymentComponent } from './payment.component';
 import { CashPaymentComponent } from './cash-payment/cash-payment.component';
-import { AddVoucherComponent } from './add-voucher/add-voucher.component';
+import { VoucherPaymentComponent } from './voucher-payment/voucher-payment.component';
 import { ChangeComponent } from './change/change.component';
 
 import { SharedModule } from '../shared/shared.module';
@@ -38,8 +38,8 @@ import { ShoppingService } from '../../shared/services/shopping.service';
     ToastyModule,
     SharedModule
   ],
-  declarations: [ PaymentComponent, CashPaymentComponent, AddVoucherComponent, ChangeComponent ],
+  declarations: [ PaymentComponent, CashPaymentComponent, VoucherPaymentComponent, ChangeComponent ],
   providers: [ HTTPService, LocalStorageService, ToastService, ShoppingService ],
-  entryComponents: [ CashPaymentComponent, AddVoucherComponent ]
+  entryComponents: [ CashPaymentComponent, VoucherPaymentComponent ]
 })
 export class PaymentModule { }

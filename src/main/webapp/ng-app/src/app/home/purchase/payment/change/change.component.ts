@@ -15,14 +15,13 @@ import { ToastService } from '../../../../shared/services/toast.service';
   selector: 'change-view',
   templateUrl: './change.component.html',
   styles: [`
-    #resetPaymentButton {
+    #reset-payment-button {
       position: absolute;
       right: 0px;
       top: 0px;
     }
   `]
 })
-
 export class ChangeComponent implements OnInit, OnDestroy {
 
   totalPrice: number = this.shoppingService.getTotalPrice();

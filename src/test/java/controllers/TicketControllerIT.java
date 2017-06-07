@@ -15,6 +15,8 @@ import java.util.Random;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -34,7 +36,8 @@ import wrappers.ShoppingTrackingWrapper;
 import wrappers.ShoppingUpdateWrapper;
 import wrappers.TicketCreationResponseWrapper;
 import wrappers.TicketCreationWrapper;
-import wrappers.TicketIdWrapper;
+import wrappers.TicketReferenceCreatedWrapper;
+import wrappers.TicketWrapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {PersistenceConfig.class, TestsPersistenceConfig.class, TestsControllerConfig.class})
@@ -65,7 +68,7 @@ public class TicketControllerIT {
         long lastTicketId = ticketDao.findFirstByOrderByCreatedDescIdDesc().getId();
 
         TicketCreationResponseWrapper responseWrapper = ticketController.createTicket(ticketCreationWrapper);
-        Ticket ticket = ticketDao.findOne(new TicketPK(responseWrapper.getTicketId()));
+        Ticket ticket = ticketDao.findFirstByReference(responseWrapper.getTicketReference());
         List<Shopping> shoppingList = ticket.getShoppingList();
         Shopping shopping = shoppingList.get(0);
         Article article = articleDao.findOne(shoppingCreationWrapper.getProductCode());
@@ -101,7 +104,7 @@ public class TicketControllerIT {
         long lastTicketId = ticketDao.findFirstByOrderByCreatedDescIdDesc().getId();
 
         TicketCreationResponseWrapper responseWrapper = ticketController.createTicket(ticketCreationWrapper);
-        Ticket ticket = ticketDao.findOne(new TicketPK(responseWrapper.getTicketId()));
+        Ticket ticket = ticketDao.findFirstByReference(responseWrapper.getTicketReference());
         List<Shopping> shoppingList = ticket.getShoppingList();
         Shopping shopping = shoppingList.get(0);
 
@@ -129,7 +132,7 @@ public class TicketControllerIT {
         shoppingCreationWrapperList.add(shoppingCreationWrapper);
         ticketCreationWrapper.setShoppingList(shoppingCreationWrapperList);
         TicketCreationResponseWrapper responseWrapper = ticketController.createTicket(ticketCreationWrapper);
-        Ticket createdTicket = ticketDao.findOne(new TicketPK(responseWrapper.getTicketId()));
+        Ticket createdTicket = ticketDao.findFirstByReference(responseWrapper.getTicketReference());
         Shopping createdShopping = createdTicket.getShoppingList().get(0);
 
         List<ShoppingUpdateWrapper> shoppingUpdateWrapperList = new ArrayList<>();
@@ -197,12 +200,7 @@ public class TicketControllerIT {
             assertEquals(shopping.getShoppingState(), shoppingTrackingWrapper.getShoppingState());
         }
     }
-    
-    @Test
-    public void testFindOneTicket(){
-        assertNotNull(ticketController.findOneTicket(new TicketIdWrapper(1L)));
-    }
-    
+       
     @Test
     public void testTicketIsClosedWithATicketWithAllShoppingsClosed(){
         Ticket ticketWithAllShoppingsClosed = new Ticket();
@@ -252,5 +250,25 @@ public class TicketControllerIT {
         assertEquals(totalNumTickets, dayTicketsList.size());
         assertEquals(totalTicketsPrice, total, 0.01);
     }
-
+    
+    @Test
+    public void testGetTicketsByUserMobile() {
+        long mobile = 666000002L;
+        int pageNumber = 1;
+        int pageSize = 1;
+        Page<TicketReferenceCreatedWrapper> ticketPage = ticketController.getTicketsByUserMobile(mobile, new PageRequest(pageNumber, pageSize));
+        assertNotNull(ticketPage);
+        assertEquals(pageSize, ticketPage.getNumberOfElements());
+    }
+    
+    @Test
+    public void testAssociateUserToTicket(){
+        Ticket ticketNotAssignedToAnUser = ticketDao.findOne(new TicketPK(1L));    
+        assertNull(ticketNotAssignedToAnUser.getUser());
+        Long userMobile = 666000002L;
+        TicketWrapper ticketWithUser = ticketController.associateUserToTicket(ticketNotAssignedToAnUser.getReference(), userMobile);
+        assertNotNull(ticketWithUser.getUserMobile());
+        assertEquals(userMobile, ticketWithUser.getUserMobile());
+    }
+    
 }

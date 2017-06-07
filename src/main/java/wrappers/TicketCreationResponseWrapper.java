@@ -5,13 +5,13 @@ import java.util.Arrays;
 public class TicketCreationResponseWrapper {
     private byte[] pdfByteArray;
     
-    private long ticketId;
+    private String ticketReference;
 
     public TicketCreationResponseWrapper(){}
     
-    public TicketCreationResponseWrapper(byte[] pdfByteArray, long ticketId){
+    public TicketCreationResponseWrapper(byte[] pdfByteArray, String ticketReference){
         this.pdfByteArray = pdfByteArray;
-        this.ticketId = ticketId;
+        this.ticketReference = ticketReference;
     }
     
     public byte[] getPdfByteArray() {
@@ -22,17 +22,17 @@ public class TicketCreationResponseWrapper {
         this.pdfByteArray = pdfByteArray;
     }
 
-    public long getTicketId() {
-        return ticketId;
+    public String getTicketReference() {
+        return ticketReference;
     }
 
-    public void setTicketId(long ticketId) {
-        this.ticketId = ticketId;
+    public void setTicketReference(String ticketReference) {
+        this.ticketReference = ticketReference;
     }
 
     @Override
     public String toString() {
-        return "TicketCreationResponseWrapper [pdfByteArray=" + Arrays.toString(pdfByteArray) + ", ticketId=" + ticketId + "]";
+        return "TicketCreationResponseWrapper [pdfByteArray=" + Arrays.toString(pdfByteArray) + ", ticketReference=" + ticketReference + "]";
     }
 
 }

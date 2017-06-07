@@ -4,84 +4,98 @@
 */
 import { Injectable } from '@angular/core';
 
-import { API_GENERIC_URI } from '../../../../app.config';
+import { URI_PRODUCTS, URI_CATEGORIES } from '../../../../app.config';
+import { URLSearchParams } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 
-import { Category } from '../models/category.model';
-import { ProductDetails } from '../models/product-details.model';
-import { Article } from '../models/article.model'; // delete
-
+import { CategoriesPage } from '../models/categories-page.model'; // delete?
 import { Product } from '../../../../shared/models/product.model';
 import { HTTPService } from '../../../../shared/services/http.service';
 import { TPVHTTPError } from '../../../../shared/models/tpv-http-error.model';
 
 @Injectable()
 export class SearchService {
+  private static pageSize: number = 20;
+  private static CATEGORIES_FULL_URI: string = `${URI_CATEGORIES}/search?size=${SearchService.pageSize}`;
+  private categoriesRoute: number[] = [];
+  private categoriesPageSubject: Subject<CategoriesPage> = new Subject<CategoriesPage>();
 
-  private parentCategory: number;
+  constructor (private httpService: HTTPService) {}
 
-  private categories: Category[] = [];
-
-  constructor (private httpService: HTTPService) {
-    for (let i = 1; i < 10; i++){
-      let number = (i <= 6) ? i : (i%6 +1);
-      let image: string = `http://localhost:8080/SPRING.tpv.1.2.0-SNAPSHOT/assets/img/products/img-product-${number}.png`;
-      this.categories.push(new Category(i, "category"+i, null, image));
-    }
-    for (let i = 1; i < 8; i++){
-      let number = (i <= 6) ? i : (i%6 +1);
-      let image: string = `http://localhost:8080/SPRING.tpv.1.2.0-SNAPSHOT/assets/img/products/img-product-${number}.png`;
-      this.categories.push(new Category(i, "article"+i, "8400000111"+i, image));
-    }
-    for (let i = 1; i < 8; i++){
-      let number = (i <= 6) ? i : (i%6 +1);
-      let image: string = `http://localhost:8080/SPRING.tpv.1.2.0-SNAPSHOT/assets/img/products/img-product-${number}.png`;
-      this.categories.push(new Category(i, "product"+i, "8400000222"+i, image));
-    }
-    for (let i = 1; i < 8; i++){
-      let number = (i <= 6) ? i : (i%6 +1);
-      let image: string = `http://localhost:8080/SPRING.tpv.1.2.0-SNAPSHOT/assets/img/products/img-product-${number}.png`;
-      this.categories.push(new Category(i, "product"+i, "8400000333"+i, image));
-    }
-  }
-
-  getCategoryContent(id?: number): Promise<any> {
-    this.parentCategory = id ? id : undefined;
+  getCategoryContent(id?: number, pageNumber: number = 0): Promise<any> {
     return new Promise((resolve: Function, reject: Function) => {
-      resolve(this.categories);
-      // this.httpService.get(`${API_GENERIC_URI}/categories?parent=${this.rootCategory}`).subscribe((categories: Category[]) => {
-      //   resolve(categories);
-      // },(error: TPVHTTPError) => {
-      //   reject(error.description);
-      // });
+      if (pageNumber == 0) {
+        this.categoriesRoute = [];
+      } else if (!id && this.categoriesRoute.length > 0){
+        id = this.categoriesRoute[this.categoriesRoute.length - 1];
+      }
+      id && this.categoriesRoute.indexOf(id) === -1 && this.categoriesRoute.push(id);
+      let idString: string = id ? id.toString() : "";
+      let params: URLSearchParams = new URLSearchParams();
+      params.append('page', pageNumber.toString());
+      params.append('id', idString);
+      this.httpService.get(`${SearchService.CATEGORIES_FULL_URI}`, null, params).subscribe((categoriesPage: CategoriesPage) => {
+        this.categoriesPageSubject.next(categoriesPage);
+        resolve(categoriesPage);
+      },(error: TPVHTTPError) => {
+        reject(error.description);
+      });
     });
   }
 
-  search(name: string): Promise<any> {
+  goToPreviousCategory(): Promise<any> {
+      return new Promise((resolve: Function, reject: Function) => {
+        if (this.categoriesRoute.length > 0) {
+          this.categoriesRoute.pop();
+          this.categoriesRoute.length > 0
+            ? this.getCategoryContent(this.categoriesRoute[0]).then((categoriesPage: CategoriesPage) => {
+                this.categoriesPageSubject.next(categoriesPage);
+                resolve(categoriesPage);
+              }).catch((error: string)=> {
+                reject(error);
+              })
+            : this.getCategoryContent().then((categoriesPage: CategoriesPage) => {
+                this.categoriesPageSubject.next(categoriesPage);
+                resolve(categoriesPage);
+              }).catch((error: string)=> {
+                reject(error);
+              })
+        }
+      });
+  }
+
+  search(name: string, pageNumber: number = 0): Promise<any> {
+    this.categoriesRoute = [];
     return new Promise((resolve: Function, reject: Function) => {
-    resolve(this.categories);
-    // this.httpService.get(`${API_GENERIC_URI}/categories?parent=${this.rootCategory}?name=${name}`).subscribe((categories: Category[]) => {
-      //   resolve(categories);
-      // },(error: TPVHTTPError) => {
-      //   reject(error.description);
-      // });
+      let params: URLSearchParams = new URLSearchParams();
+      params.append('page', pageNumber.toString());
+      params.append('name', name);
+      this.httpService.get(`${SearchService.CATEGORIES_FULL_URI}`, null, params).subscribe((categoriesPage: CategoriesPage) => {
+        this.categoriesPageSubject.next(categoriesPage);
+        resolve(categoriesPage);
+      },(error: TPVHTTPError) => {
+        reject(error.description);
+      });
     });
   }
 
   getProductDetails(code: string): Promise<any> {
     return new Promise((resolve: Function, reject: Function) => {
-      let productDetails: ProductDetails = new ProductDetails();
-      let article: Article = new Article(code, 'reference', 'article1', 1234, false, "http://localhost:8080/SPRING.tpv.1.2.0-SNAPSHOT/assets/img/products/img-product-1.png", 12, 312);
-      productDetails.article = article;
-      productDetails.type = "Article";
-      productDetails.product = new Product(article.code, article.reference, article.description, article.retailPrice, article.discontinued, article.image);
-      resolve(productDetails);
-      // this.httpService.get(`${API_GENERIC_URI}/products/details/${code}`).subscribe((productDetails: ProductDetails) => {
-      //   resolve(productDetails);
-      // },(error: TPVHTTPError) => {
-      //   reject(error.description);
-      // });
+      this.httpService.get(`${URI_PRODUCTS}/${code}`).subscribe((product: Product) => {
+        resolve(product);
+      },(error: TPVHTTPError) => {
+        reject(error.description);
+      });
     });
   }
 
+  isRootCategory(): boolean {
+    return this.categoriesRoute.length == 0;
+  }
+
+  getCategoriesPageObservable(): Observable<CategoriesPage> {
+    return this.categoriesPageSubject.asObservable();
+  }
  
 }

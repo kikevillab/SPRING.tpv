@@ -7,6 +7,7 @@ import { HttpModule, Http, Response, ResponseOptions, XHRBackend } from '@angula
 import { MockBackend } from '@angular/http/testing';
 
 import { HTTPService } from './http.service';
+import { LocalStorageService } from './local-storage.service';
 
 describe('Service: HTTPService', () => {
 
@@ -15,13 +16,14 @@ describe('Service: HTTPService', () => {
 			imports: [HttpModule],
 			providers: [
 			HTTPService,
+			LocalStorageService,
 			{ provide: XHRBackend, useClass: MockBackend },
 			MockBackend
 			]
 		});
 	});
 
-	it(`'requestGet()' should return an Observable<Array<any>>`,
+	it(`'requestGet()' should return an Observable<any>`,
 		inject([HTTPService, MockBackend], (httpService, mockBackend) => {
 			const mockResponse = {
 				data: [

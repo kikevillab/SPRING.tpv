@@ -11,7 +11,7 @@ import { Component, HostListener, OnInit } from '@angular/core';
     b {
       font-size: 200%;
     }
-    #currentOperator {
+    #current-operator {
       float: right;
     }
     div > div > div {

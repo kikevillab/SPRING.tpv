@@ -3,7 +3,7 @@
 		<a routerLink="/home">TPV Online</a>
 		<span class="toolbar-spacer"></span>
 		<date format="medium"></date>
-		<button md-mini-fab color="accent" (click)="cart.open(); cartSideNavOpened=true;" id="cartButton" [disabled]="!openedCashier">
+		<button md-mini-fab color="accent" (click)="cart.open(); cartSideNavOpened=true;" id="cart-button" [disabled]="!openedCashier">
 			<md-icon class="md-24">shopping_cart</md-icon>
 		</button>
 		<button md-icon-button [mdMenuTriggerFor]="toolbarMenu">
@@ -18,11 +18,11 @@
 				<md-icon>local_shipping</md-icon>
 				<span>Order tracking</span>
 			</button>
-			<button md-menu-item routerLink="/home/ticketsoftheday" *ngIf="openedCashier">
+			<button md-menu-item routerLink="/home/tickets-of-the-day" *ngIf="openedCashier">
 				<md-icon>today</md-icon>
 				<span>Tickets of the day</span>
 			</button>
-			<button md-menu-item routerLink="/home/closecashier" *ngIf="openedCashier">
+			<button md-menu-item routerLink="/home/close-cashier" *ngIf="openedCashier">
 				<md-icon>next_week</md-icon>
 				<span>Close cashier</span>
 			</button>
@@ -30,7 +30,7 @@
 				<md-icon>build</md-icon>
 				<span>Admin panel</span>
 			</button>
-			<button md-menu-item (click)="logout()">
+			<button md-menu-item (click)="onClickLogout()">
 				<md-icon>exit_to_app</md-icon>
 				<span>Logout</span>
 			</button>

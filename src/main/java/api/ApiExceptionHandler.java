@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import api.exceptions.AlreadyExistUserFieldException;
 import api.exceptions.ApiException;
 import api.exceptions.ArticleNotFoundException;
+import api.exceptions.CategoryComponentNotFoundException;
 import api.exceptions.EmbroideryNotFoundException;
 import api.exceptions.EmptyShoppingListException;
 import api.exceptions.ErrorMessage;
@@ -19,7 +20,6 @@ import api.exceptions.InvalidProductAmountInNewTicketException;
 import api.exceptions.InvalidProductAmountInUpdateTicketException;
 import api.exceptions.InvalidProductDiscountException;
 import api.exceptions.InvalidUserFieldException;
-import api.exceptions.InvoiceDoesNotAllowNotClosedTicketsException;
 import api.exceptions.InvoiceNotFoundException;
 import api.exceptions.LastCashierClosureIsClosedException;
 import api.exceptions.LastCashierClosureIsOpenYetException;
@@ -50,7 +50,8 @@ public class ApiExceptionHandler {
             FileNotFoundException.class, TicketNotFoundException.class, InvoiceNotFoundException.class, NotFoundUserMobileException.class,
             NotFoundTicketReferenceException.class, NotFoundProductCodeInTicketException.class, VoucherNotFoundException.class,
             EmbroideryNotFoundException.class, ArticleNotFoundException.class, TextilePrintingNotFoundException.class,
-            NotFoundTicketReferenceException.class, NotFoundProductCodeInTicketException.class, NotExistsCashierClosuresException.class})
+            NotFoundTicketReferenceException.class, NotFoundProductCodeInTicketException.class, NotExistsCashierClosuresException.class,
+            CategoryComponentNotFoundException.class})
 
     @ResponseBody
     public ErrorMessage notFoundRequest(ApiException exception) {
@@ -68,8 +69,8 @@ public class ApiExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({MalformedHeaderException.class, InvalidUserFieldException.class, EmptyShoppingListException.class,
             InvalidProductAmountInNewTicketException.class, InvalidProductAmountInUpdateTicketException.class,
-            InvalidProductDiscountException.class, InvoiceDoesNotAllowNotClosedTicketsException.class,
-            TicketIsAlreadyAssignedToInvoiceException.class, TicketHasInvalidUserException.class, MalformedDateException.class})
+            InvalidProductDiscountException.class, TicketIsAlreadyAssignedToInvoiceException.class, TicketHasInvalidUserException.class,
+            MalformedDateException.class})
     @ResponseBody
     public ErrorMessage badRequest(ApiException exception) {
         ErrorMessage apiErrorMessage = new ErrorMessage(exception);

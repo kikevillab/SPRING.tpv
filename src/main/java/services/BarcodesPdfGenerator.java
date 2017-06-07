@@ -25,8 +25,8 @@ public class BarcodesPdfGenerator extends PdfGenerator<List<Product>> {
 
     private final static float[] BARCODE_COLUMN_WIDTH = new float[] {50.0f, 50.0f, 50.0f, 50.0f};
 
-    public BarcodesPdfGenerator(List<Product> embroideryAndTextile) {
-        super(embroideryAndTextile);
+    public BarcodesPdfGenerator(List<Product> productList) {
+        super(productList);
     }
 
     @Override
@@ -42,12 +42,10 @@ public class BarcodesPdfGenerator extends PdfGenerator<List<Product>> {
     @Override
     protected void buildPdf() {
         Table table = new Table(BARCODE_COLUMN_WIDTH);
-        for (int i = 0; i < entity.size(); i++) {
-            Product product = entity.get(i);
+        for (Product product : entity) {
             table.addCell(createBarcode(product, document.getPdfDocument()));
         }
         document.add(table);
-        document.close();
     }
 
     private Cell createBarcode(Product product, PdfDocument pdfDocument) {

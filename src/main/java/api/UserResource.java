@@ -1,22 +1,23 @@
 package api;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import api.exceptions.AlreadyExistUserFieldException;
+import api.exceptions.CannotDeleteUserException;
 import api.exceptions.InvalidUserFieldException;
 import api.exceptions.NotFoundUserIdException;
 import api.exceptions.NotFoundUserMobileException;
 import controllers.UserController;
 import entities.users.Role;
 import wrappers.UserDetailsWrapper;
-import wrappers.UserUpdateWrapper;
 import wrappers.UserWrapper;
 
 @RestController
@@ -30,41 +31,109 @@ public class UserResource {
         this.userController = userController;
     }
 
+    @RequestMapping(value = Uris.USERS + Uris.PHONE, method = RequestMethod.GET)
+    public UserDetailsWrapper findUserByMobilePhone(@PathVariable long mobilePhone) throws NotFoundUserMobileException {
+        if (!userController.userExists(mobilePhone)) {
+            throw new NotFoundUserMobileException();
+        }
+        return userController.findUserByMobilePhone(mobilePhone);
+    }
+
+    @RequestMapping(value = Uris.USERS, method = RequestMethod.PUT)
+    public void updateUser(@RequestBody UserWrapper userWrapper) throws NotFoundUserIdException {
+        if (!userController.userExists(userWrapper.getId())) {
+            throw new NotFoundUserIdException("User id: " + userWrapper.getId());
+        }
+        userController.updateUser(userWrapper);
+    }
+
+    @RequestMapping(value = Uris.USERS, method = RequestMethod.GET)
+    // @PreAuthorize("hasRole('ADMIN')")
+    public Page<UserWrapper> userList(Pageable pageable, String role) throws InvalidUserFieldException {
+        this.validateFieldObject(pageable, "Pageable: objeto para paginar");
+        if (this.StringToRole(role) == null)
+            return null;
+        return userController.getAllAndRole(pageable, Role.valueOf(Role.class, role));
+    }
+
+    @RequestMapping(value = Uris.USERS + Uris.MOBILE, method = RequestMethod.GET)
+    // @PreAuthorize("hasRole('ADMIN')")
+    public UserWrapper userMobile(long mobile, String role) throws InvalidUserFieldException {
+        this.validateFieldObject(mobile, "mobile");
+        if (this.StringToRole(role) == null)
+            return null;
+        return userController.getByMobileAndRole(mobile, Role.valueOf(Role.class, role));
+    }
+
+    @RequestMapping(value = Uris.USERS + Uris.IDENTIFICATION, method = RequestMethod.GET)
+    // @PreAuthorize("hasRole('ADMIN')")
+    public UserWrapper userIdentificacion(String identification, String role) throws InvalidUserFieldException {
+        this.validateField(identification, "identification:dni");
+        if (this.StringToRole(role) == null)
+            return null;
+        return userController.getByDniAndRole(identification, Role.valueOf(Role.class, role));
+    }
+
+    @RequestMapping(value = Uris.USERS + Uris.EMAIL, method = RequestMethod.GET)
+    // @PreAuthorize("hasRole('ADMIN')")
+    public UserWrapper userEmail(@RequestParam(value = "email") String email, String role) throws InvalidUserFieldException {
+        this.validateField(email, "email");
+        if (this.StringToRole(role) == null)
+            return null;
+        return userController.getByEmailAndRole(email, Role.valueOf(Role.class, role));
+    }
+
     @RequestMapping(value = Uris.USERS, method = RequestMethod.POST)
-    public void userRegistration(@RequestBody UserWrapper userWrapper) throws InvalidUserFieldException, AlreadyExistUserFieldException {
+    public void customerRegistration(@RequestBody UserWrapper userWrapper, String role)
+            throws InvalidUserFieldException, AlreadyExistUserFieldException {
+        this.validateFieldRegiter(userWrapper, "UserWrapper:usuario");
         validateField(userWrapper.getUsername(), "username");
-        if (!this.userController.registration(userWrapper, Role.MANAGER)) {
+        if (this.StringToRole(role) == null)
+            return;
+        if (!this.userController.registration(userWrapper, Role.valueOf(Role.class, role))) {
             throw new AlreadyExistUserFieldException();
         }
     }
 
-  
+    @RequestMapping(value = Uris.USERS + Uris.USER_MOBILE, method = RequestMethod.DELETE)
+    // @PreAuthorize("hasRole('ADMIN')")
+    public void deleteUser(@PathVariable long mobile) throws CannotDeleteUserException {
+        try {
+            this.userController.deleteUser(mobile);
+        } catch (Exception e) {
+            throw new CannotDeleteUserException();
+        }
+    }
+
+    private void validateFieldObject(Object objeto, String msg) throws InvalidUserFieldException {
+        if (objeto == null)
+            throw new InvalidUserFieldException(msg);
+    }
+
+    private void validateFieldRegiter(UserWrapper user, String msg) throws InvalidUserFieldException {
+        if (user == null) {
+            throw new InvalidUserFieldException(msg);
+        } else {
+            if ((user.getPassword() == null) || (user.getUsername() == null))
+                throw new InvalidUserFieldException(msg);
+        }
+    }
 
     private void validateField(String field, String msg) throws InvalidUserFieldException {
         if (field == null || field.isEmpty()) {
             throw new InvalidUserFieldException(msg);
         }
     }
-    
-    @RequestMapping(value = Uris.USERS + Uris.PHONE, method = RequestMethod.GET)
-    public UserDetailsWrapper findUserByMobilePhone(@PathVariable long mobilePhone) throws NotFoundUserMobileException{
-        if(!userController.userExists(mobilePhone)){
-            throw new NotFoundUserMobileException();
+
+    private Role StringToRole(String roleParam) {
+        Role rolRetorno = null;
+        try {
+            rolRetorno = Role.valueOf(Role.class, roleParam);
+            return rolRetorno;
+        } catch (Exception e) {
+            return rolRetorno;
         }
-        return userController.findUserByMobilePhone(mobilePhone);
+
     }
-    
-    @RequestMapping(value = Uris.USERS, method = RequestMethod.GET)
-    public List<UserDetailsWrapper> findAllUsers(){
-        return userController.findAllUsers();
-    }
-    
-    @RequestMapping(value = Uris.USERS, method = RequestMethod.PUT)
-    public void updateUser(@RequestBody UserUpdateWrapper userUpdateWrapper) throws NotFoundUserIdException{
-        if(!userController.userExists(userUpdateWrapper.getId())){
-            throw new NotFoundUserIdException("User id: " + userUpdateWrapper.getId());
-        }
-        userController.updateUser(userUpdateWrapper);
-    }
-    
+
 }

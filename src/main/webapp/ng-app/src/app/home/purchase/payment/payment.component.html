@@ -15,7 +15,7 @@
 					<md-card >
 						<h3>Method of payment</h3>
 						<md-card-content fxLayout="column" fxLayoutGap="1em" >
-							<button md-raised-button color="primary" (click)="openCashPaymentDialog()" [disabled]="isShoppingCartEmpty() || paidOut == true" id="cashPaymentButton">Cash payment</button>
+							<button md-raised-button color="primary" (click)="openCashPaymentDialog()" [disabled]="isShoppingCartEmpty() || paidOut == true" id="cash-payment-button">Cash payment</button>
 							<button md-raised-button color="primary" (click)="openAddVoucherDialog()" [disabled]="isShoppingCartEmpty() || vouchers.length > 4 || paidOut == true">Voucher</button>
 							<button md-raised-button color="primary" disabled>Credit card</button>
 						</md-card-content>
@@ -31,7 +31,7 @@
 			</md-card-content>
 		</md-card>
 	</div>
-	<div id="moneyReceivedContainer">
+	<div id="money-received-container">
 		<change-view></change-view>
 	</div>
 </div>

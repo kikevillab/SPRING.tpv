@@ -5,6 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.List;
 
@@ -17,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import api.exceptions.NotFoundUserMobileException;
 import config.PersistenceConfig;
 import config.TestsControllerConfig;
 import config.TestsPersistenceConfig;
@@ -24,7 +26,6 @@ import daos.users.UserDao;
 import entities.users.Role;
 import entities.users.User;
 import wrappers.UserDetailsWrapper;
-import wrappers.UserUpdateWrapper;
 import wrappers.UserWrapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -67,7 +68,7 @@ public class UserControllerIT {
     @Test
     public void testUpdateUser() {
         User user = userDao.findOne(1);
-        UserUpdateWrapper userWrapper = new UserUpdateWrapper();
+        UserWrapper userWrapper = new UserWrapper();
         userWrapper.setId(user.getId());
         userWrapper.setAddress("address");
         userWrapper.setDni(user.getDni());
@@ -75,6 +76,7 @@ public class UserControllerIT {
         userWrapper.setMobile(user.getMobile());
         userWrapper.setUsername(user.getUsername());
         userWrapper.setPassword(user.getPassword());
+        userWrapper.setActive(user.isActive());
         userController.updateUser(userWrapper);
         user = userDao.findOne(1);
         assertEquals("address", user.getAddress());
@@ -229,6 +231,29 @@ public class UserControllerIT {
         UserWrapper user = new UserWrapper(USER_MOBILE, USER_NAME,USER_PASSWORD,USER_DNI,USER_ADRESS,USER_EMAIL,USER_ACTIVATE);
         assertFalse(userController.registration(null, Role.CUSTOMER));
         assertFalse(userController.registration(user,null));
+    }
+    
+    @Test
+    public void testDeleteUserException() {
+        try {
+            long invalidNumber=-1;
+            this.userController.deleteUser(invalidNumber);
+            fail();
+        } catch (NotFoundUserMobileException exception) {
+            assertTrue(true);
+        }
+    }
+
+    @Test
+    public void testDeleteUser() {
+        try {
+            long mobile=666000099;
+            userController.registration(new UserWrapper(mobile, "usuarioDelete", "passDelete"), Role.CUSTOMER);
+            this.userController.deleteUser(mobile);
+            assertFalse(this.userController.userMobileExists(mobile));
+        } catch (NotFoundUserMobileException exception) {
+            fail();
+        }
     }
 
 }

@@ -41,7 +41,7 @@ export class PrintComponent implements OnInit, OnDestroy {
     this.shoppingCartSubscription = this.shoppingService.getCartProductsObservable().subscribe((cartProducts: CartProduct[]) => {
       this.router.navigate(['/home']);
     });
-    !this.shoppingService.getTicketId() && this.router.navigate(['/home/purchase/payment']);
+    !this.shoppingService.getTicketReference() && this.router.navigate(['/home/purchase/payment']);
   }
 
   createVoucher(): void {
@@ -50,13 +50,17 @@ export class PrintComponent implements OnInit, OnDestroy {
 
   printInvoice(): void {
     if (this.userMobile){
-      this.printService.createInvoice(this.shoppingService.getTicketId()).then((invoice: any) => {
+      console.log("PACO");
+      console.log(this.shoppingService.getTicketReference());
+      this.printService.createInvoice(this.shoppingService.getTicketReference()).then((pdf: Blob) => {
         this.printInvoiceSelected = false;
-        //this.pdfService.open(pdf);
+        this.pdfService.openBlob(pdf);
       }).catch((error: string) => {
       	this.toastService.error('Error generating invoice', error);
       });
-    } else this.printInvoiceSelected = true;
+    } else {
+      this.printInvoiceSelected = true;
+    }
   }
 
   finish(): void {

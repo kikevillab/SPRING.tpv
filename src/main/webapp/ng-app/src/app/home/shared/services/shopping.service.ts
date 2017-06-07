@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Subject } from 'rxjs/Subject';
 
-import { API_GENERIC_URI } from '../../../app.config';
+import { URI_PRODUCTS, URI_TICKETS, URI_USERS, URI_VOUCHERS } from '../../../app.config';
 
 import { CartProduct } from '../models/cart-product.model';
 import { Product } from '../../../shared/models/product.model';
@@ -14,6 +14,7 @@ import { User } from '../models/user.model';
 import { TicketCheckout } from '../models/ticket-checkout.model';
 import { Voucher } from '../models/voucher.model';
 import { NewTicketResponse } from '../models/new-ticket-response.model';
+import { CashierService } from './cashier.service';
 
 import { HTTPService } from '../../../shared/services/http.service';
 import { TPVHTTPError } from '../../../shared/models/tpv-http-error.model';
@@ -34,15 +35,15 @@ export class ShoppingService {
   private cashReceived: number = 0;
   private vouchers: Voucher[] = [];
   private submitted: boolean = false;
-  private ticketId: number;
+  private ticketReference: string;
 
-  constructor (private storageService: LocalStorageService, private httpService: HTTPService) {
+  constructor (private storageService: LocalStorageService, private httpService: HTTPService, private cashierService: CashierService) {
     this.updateCart();
   }
 
   addProduct(productCode: string): Promise<any> {
     return new Promise((resolve: Function, reject: Function) => {
-      this.httpService.get(`${API_GENERIC_URI}/products/${productCode}`).subscribe((productDetails: Product) => {
+      this.httpService.get(`${URI_PRODUCTS}/${productCode}`).subscribe((productDetails: Product) => {
         let index: number = this.cartProducts.findIndex((cp: CartProduct) => cp.productCode == productCode);
         index > -1 
           ? this.cartProducts[index].amount++
@@ -74,12 +75,15 @@ export class ShoppingService {
 
   submitOrder(): Promise<any> {
     return new Promise((resolve: Function, reject: Function) => {
-      let newTicket: TicketCheckout = new TicketCheckout(this.cartProducts, this.vouchers, this.userMobile);
-      this.httpService.post(`${API_GENERIC_URI}/tickets`, newTicket).subscribe((ticketCreated: NewTicketResponse) => {
+      let vouchersReferences: string[] = this.vouchers.map((voucher: Voucher) => voucher.reference);
+      let cash: number = (this.totalPrice - this.getVouchersTotalPaid() > 0) ? (this.totalPrice - this.getVouchersTotalPaid()) : 0;
+      let newTicket: TicketCheckout = new TicketCheckout(this.cartProducts, cash, vouchersReferences, this.userMobile);
+      this.httpService.post(`${URI_TICKETS}`, newTicket).subscribe((ticketCreated: NewTicketResponse) => {
         this.submitted = true;
         this.submittedSubject.next(this.submitted);
-        this.ticketId = ticketCreated.ticketId;
+        this.ticketReference = ticketCreated.ticketReference;
         this.clear();
+        this.cashierService.initialize();
         resolve(ticketCreated);
       }, (error: TPVHTTPError) => reject(error.description));
     });
@@ -87,7 +91,7 @@ export class ShoppingService {
 
   associateUser(userMobile: number): Promise<User> {
     return new Promise((resolve: Function,reject: Function) => {
-      this.httpService.get(`${API_GENERIC_URI}/users/${userMobile}`).subscribe((associatedUser: User) => {
+      this.httpService.get(`${URI_USERS}/${userMobile}`).subscribe((associatedUser: User) => {
         this.userMobile = associatedUser.mobile;
         this.userMobileSubject.next(this.userMobile);
         resolve(associatedUser);
@@ -102,19 +106,24 @@ export class ShoppingService {
 
   addVoucher(reference: string): Promise<any> {
     return new Promise((resolve: Function, reject: Function) => {
-      this.httpService.get(`${API_GENERIC_URI}/vouchers/${reference}`).subscribe((voucher: Voucher) => {
-        let today: Date = new Date();
-        if (voucher.expiration < today.getTime()){
-          reject('The voucher entered is expired');
-        } else if (voucher.dateOfUse){
-          reject('The voucher entered is already used');
-        } else {
-          this.vouchers.push(voucher);
-          this.vouchersSubject.next(this.vouchers);
-          voucher.value > this.totalPrice && this.setCashReceived(0);      
-          resolve(voucher);
-        }
-      }, (error: TPVHTTPError) => reject(error.description));
+      let found: Voucher[] = this.vouchers.filter((voucher: Voucher) => {
+        return voucher.reference == reference;
+      });
+      found.length !== 0
+        ? reject('The voucher is already added')
+        : this.httpService.get(`${URI_VOUCHERS}/${reference}`).subscribe((voucher: Voucher) => {
+          let today: Date = new Date();
+          if (voucher.expiration < today.getTime()){
+            reject('The voucher entered is expired');
+          } else if (voucher.dateOfUse){
+            reject('The voucher entered is already used');
+          } else {
+            this.vouchers.push(voucher);
+            this.vouchersSubject.next(this.vouchers);
+            voucher.value > this.totalPrice && this.setCashReceived(0);      
+            resolve(voucher);
+          }
+        }, (error: TPVHTTPError) => reject(error.description));
     });
   }
 
@@ -202,8 +211,8 @@ export class ShoppingService {
     return this.cashReceivedSubject.asObservable();
   }
 
-  getTicketId(): number {
-    return this.ticketId;
+  getTicketReference(): string {
+    return this.ticketReference;
   }
 
   isShoppingCartEmpty(): boolean {
@@ -212,6 +221,12 @@ export class ShoppingService {
 
   getTotalPaid(): number {
     let total: number = this.cashReceived;
+    total += this.getVouchersTotalPaid();
+    return total;
+  }
+
+  private getVouchersTotalPaid(): number {
+    let total: number = 0.0;
     this.vouchers.forEach((voucher: Voucher) => {
       total += voucher.value;
     });

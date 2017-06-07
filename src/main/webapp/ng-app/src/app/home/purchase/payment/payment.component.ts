@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { MdDialog, MdDialogRef } from '@angular/material';
 
 import { CashPaymentComponent } from './cash-payment/cash-payment.component';
-import { AddVoucherComponent } from './add-voucher/add-voucher.component';
+import { VoucherPaymentComponent } from './voucher-payment/voucher-payment.component';
 
 import { CartProduct } from '../../shared/models/cart-product.model';
 import { Voucher } from '../../shared/models/voucher.model';
@@ -22,7 +22,7 @@ import { ToastService } from '../../../shared/services/toast.service';
   templateUrl: './payment.component.html',
   styles: [`
 	  @media only screen and (min-width: 960px) {
-	    #moneyReceivedContainer {
+	    #money-received-container {
 	      width: 20em;
 	    }
 	  }
@@ -84,7 +84,7 @@ export class PaymentComponent implements OnInit, OnDestroy{
   }
 
   openAddVoucherDialog(): void {
-    this.dialog.open(AddVoucherComponent);
+    this.dialog.open(VoucherPaymentComponent);
   }
 
   cancel(): void {
