@@ -35,13 +35,15 @@ export class ShoppingService {
   private cashReceived: number = 0;
   private vouchers: Voucher[] = [];
   private submitted: boolean = false;
-  private ticketReference: number;
+  private ticketReference: string;
+  private userAssociated: boolean = false;
 
   constructor (private storageService: LocalStorageService, private httpService: HTTPService, private cashierService: CashierService) {
     this.updateCart();
   }
 
   addProduct(productCode: string): Promise<any> {
+    this.submitted && this.finishPayment();
     return new Promise((resolve: Function, reject: Function) => {
       this.httpService.get(`${URI_PRODUCTS}/${productCode}`).subscribe((productDetails: Product) => {
         let index: number = this.cartProducts.findIndex((cp: CartProduct) => cp.productCode == productCode);
@@ -84,6 +86,7 @@ export class ShoppingService {
         this.ticketReference = ticketCreated.ticketReference;
         this.clear();
         this.cashierService.initialize();
+        this.userAssociated = this.userMobile !== undefined;
         resolve(ticketCreated);
       }, (error: TPVHTTPError) => reject(error.description));
     });
@@ -100,7 +103,7 @@ export class ShoppingService {
   }
 
   disassociateUser(): void {
-    this.userMobile = null;
+    this.userMobile = undefined;
     this.userMobileSubject.next(this.userMobile);
   }
 
@@ -151,8 +154,9 @@ export class ShoppingService {
   }
 
   finishPayment(): void {
-    this.userMobile = null;
+    this.userMobile = undefined;
     this.submitted = false;
+    this.userAssociated = false;
     this.submittedSubject.next(this.submitted);
     this.userMobileSubject.next(this.userMobile);
   }
@@ -211,12 +215,16 @@ export class ShoppingService {
     return this.cashReceivedSubject.asObservable();
   }
 
-  getTicketReference(): number {
+  getTicketReference(): string {
     return this.ticketReference;
   }
 
   isShoppingCartEmpty(): boolean {
     return this.cartProducts.length == 0;
+  }
+
+  isUserAlreadyAssociated(): boolean {
+    return this.userAssociated;
   }
 
   getTotalPaid(): number {
