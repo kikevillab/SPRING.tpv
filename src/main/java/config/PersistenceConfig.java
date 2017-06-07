@@ -2,6 +2,7 @@ package config;
 
 import java.util.Properties;
 
+import javax.annotation.PostConstruct;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
@@ -12,8 +13,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -27,6 +31,9 @@ public class PersistenceConfig {
 
     @Autowired
     private Environment environment;
+    
+    @Autowired
+    private ResourceLoader resourceLoader;
 
     @Bean
     public DataSource dataSource() {
@@ -62,6 +69,17 @@ public class PersistenceConfig {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(entityManagerFactory());
         return transactionManager;
+    }
+    
+    @PostConstruct
+    protected void initialize() {
+        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+        //Crea las tablas de metadatos de Spring Batch
+        //VER: https://www.mkyong.com/spring-batch/spring-batch-metadata-tables-are-not-created-automatically/
+        populator.addScript(resourceLoader.getResource("classpath:/org/springframework/batch/core/schema-drop-mysql.sql"));
+        populator.addScript(resourceLoader.getResource("classpath:/org/springframework/batch/core/schema-mysql.sql"));
+        populator.setContinueOnError(true);
+        DatabasePopulatorUtils.execute(populator, dataSource());
     }
 
 }

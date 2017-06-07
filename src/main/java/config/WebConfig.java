@@ -10,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Configuration
 @EnableWebMvc
 @EnableSpringDataWebSupport
-@ComponentScan(basePackages = {ResourceNames.REST_API, ResourceNames.CONTROLLERS, ResourceNames.DAOS_USERS, ResourceNames.DAOS_CORE,
+@ComponentScan(basePackages = {ResourceNames.REST_API, ResourceNames.CONTROLLERS, ResourceNames.DAOS_USERS, ResourceNames.DAOS_CORE,ResourceNames.BATCH,
         ResourceNames.SERVICES})
 public class WebConfig extends WebMvcConfigurerAdapter {
 
