@@ -2,8 +2,9 @@
   * @author Sergio Banegas Cortijo
   * Github: https://github.com/sergiobanegas
 */
-import { Component, OnInit, HostListener, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, ViewChild, ElementRef } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
+import { Subscription } from 'rxjs/Subscription';
 
 import { ProductDetailsComponent } from './product-details/product-details.component';
 
@@ -19,9 +20,10 @@ import { ToastService } from '../../shared/services/toast.service';
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.css']
 })
-export class SearchComponent implements OnInit {
+export class SearchComponent implements OnInit, OnDestroy {
 
-  categories: Category[];
+  categories: Category[] = [];
+  categoriesPageSubcription: Subscription;
   nameInput: string;
   lastNameInput: string;
   filtered: boolean = false;
@@ -30,13 +32,22 @@ export class SearchComponent implements OnInit {
   @ViewChild('scrollContainer') scrollContainer: ElementRef;
   lastPage: CategoriesPage;
   isRootCategory: boolean = true;
+  scrolled: boolean = false;
+  loading: boolean = true;
 
   constructor (private searchService: SearchService, private shoppingService: ShoppingService, private toastService: ToastService, private dialog: MdDialog){}
 
   ngOnInit(){
-  	this.searchService.getCategoryContent().then((categories: CategoriesPage) => {
-  		this.categories = categories.content;
-  	});
+    this.categoriesPageSubcription = this.searchService.getCategoriesPageObservable().subscribe((categoriesPage: CategoriesPage) => {
+      this.loading = false;
+      this.categories = this.scrolled
+        ? this.categories.concat(categoriesPage.content)
+        : categoriesPage.content;
+      this.scrolled = false;
+      this.lastPage = categoriesPage;
+      this.isRootCategory = this.searchService.isRootCategory();
+    });
+  	this.searchService.getCategoryContent();
   }
 
   openCategory(category: Category): void {
@@ -44,24 +55,19 @@ export class SearchComponent implements OnInit {
       let dialogRef: MdDialogRef<ProductDetailsComponent> = this.dialog.open(ProductDetailsComponent);
       dialogRef.componentInstance.initialize(category.code);
     } else {
-      this.searchService.getCategoryContent(category.id).then((categories: CategoriesPage) => {
-        this.categories = categories.content;
-        this.isRootCategory = this.searchService.isRootCategory();
-      });
+      this.loading = true;
+      this.searchService.getCategoryContent(category.id);
     }
   }
 
   goToPreviousCategory(): void {
-  	this.searchService.goToPreviousCategory().then((categories: Category[]) => {
-  		this.categories = categories;
-  		this.isRootCategory = this.searchService.isRootCategory();
-  	});
+    this.loading = true;
+  	this.searchService.goToPreviousCategory();
   }
 
   search(pageNumber: number = 0): void {
+    this.loading = true;
     this.nameInput && this.searchService.search(this.nameInput, pageNumber).then((categoriesPage: CategoriesPage) => {
-      this.categories = categoriesPage.content;
-      this.lastPage = categoriesPage; 
       this.filtered = true;
       this.lastNameInput = this.nameInput;
       this.nameInput = undefined;
@@ -74,14 +80,20 @@ export class SearchComponent implements OnInit {
     let limit: number = tracker.scrollHeight - tracker.clientHeight;
     this.pxScrolled = event.target.scrollTop;
     if (tracker.scrollTop === limit && !this.lastPage.last) {
-    	this.search(this.lastPage.number + 1);
+      this.scrolled = true;
+    	this.lastNameInput
+      ? this.searchService.search(this.lastNameInput, this.lastPage.number + 1)
+      : this.searchService.getCategoryContent(null , this.lastPage.number + 1);
     }
   }
 
   resetSearch(): void {
     this.filtered = false;
     this.lastNameInput = undefined;
-    this.ngOnInit();
+    this.lastPage = undefined;
+    this.loading = true;
+    this.scrolled = false;
+    this.searchService.getCategoryContent();
   }
 
   addToCart(code: string): void {
@@ -106,6 +118,10 @@ export class SearchComponent implements OnInit {
 
   getCategoryBackgroundColor(code: string): string {
     return code ? '#E1F5FE' : '#FFF9C4';
+  }
+
+  ngOnDestroy() {
+    this.categoriesPageSubcription && this.categoriesPageSubcription.unsubscribe();
   }
 
 }

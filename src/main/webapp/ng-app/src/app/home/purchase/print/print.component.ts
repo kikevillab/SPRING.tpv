@@ -58,7 +58,9 @@ export class PrintComponent implements OnInit, OnDestroy {
       }).catch((error: string) => {
       	this.toastService.error('Error generating invoice', error);
       });
-    } else this.printInvoiceSelected = true;
+    } else {
+      this.printInvoiceSelected = true;
+    }
   }
 
   finish(): void {

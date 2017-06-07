@@ -45,6 +45,7 @@ md-spinner {
 
 #floating-buttons-container > button {
   margin-bottom: 0.5em;
+  display: block;
 }
 
 @media only screen and (min-width: 600px) {

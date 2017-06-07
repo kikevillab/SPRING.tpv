@@ -5,7 +5,6 @@
 import { Injectable } from '@angular/core';
 import { Headers } from '@angular/http';
 import { Observable } from 'rxjs';
-import { Subject } from 'rxjs/Subject';
 import * as moment from 'moment/moment';
 
 import { URI_TICKETS, URI_VOUCHERS, URI_INVOICES } from '../../../../../app.config';
