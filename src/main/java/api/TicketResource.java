@@ -274,10 +274,10 @@ public class TicketResource {
     }
 
     @RequestMapping(value = Uris.REFERENCE + Uris.TICKET_USER, method = RequestMethod.PATCH)
-    public TicketWrapper associateUserToTicket(@PathVariable("reference") String ticketReference,
+    public TicketWrapper associateUserToTicket(@PathVariable String reference,
             @RequestBody TicketUserPatchBodyWrapper ticketUserPatchWrapper) throws NotFoundTicketReferenceException, NotFoundUserMobileException {
-        checkTicketReferenceExists(ticketReference);
+        checkTicketReferenceExists(reference);
         throwExceptionIfUserDoesNotExist(ticketUserPatchWrapper.getUserMobile());
-        return ticketController.associateUserToTicket(ticketReference, ticketUserPatchWrapper.getUserMobile());
+        return ticketController.associateUserToTicket(reference, ticketUserPatchWrapper.getUserMobile());
     }
 }
