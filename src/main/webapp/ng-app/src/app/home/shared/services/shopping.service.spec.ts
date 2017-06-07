@@ -140,7 +140,7 @@ describe('Service: ShoppingService', () => {
 
   it(`Should disassociate an user when 'disassociateUser()' method is called`, () => {
     shoppingService.disassociateUser();
-    expect(shoppingService.getUserMobile()).toBeNull();
+    expect(shoppingService.getUserMobile()).toBe(undefined);
   });
 
 });
