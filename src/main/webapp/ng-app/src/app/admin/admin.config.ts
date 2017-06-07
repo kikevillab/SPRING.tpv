@@ -9,3 +9,4 @@ export const TICKETS_URI: string = 'api/tickets';
 export const CUSTOMERS: string = 'customers';
 export const OPERATORS: string = 'operators';
 export const MANAGERS: string = 'managers';
+export const TICKETS: string = 'tickets';

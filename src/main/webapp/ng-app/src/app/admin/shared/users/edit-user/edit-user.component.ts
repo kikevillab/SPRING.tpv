@@ -5,7 +5,7 @@
 import {Component, OnInit} from '@angular/core';
 import {User} from '../../../../shared/models/user.model';
 import {MdDialogRef} from '@angular/material';
-import {UserForm} from '../user-form.service';
+import {UserForm} from '../../services/user-form.service';
 import {FormGroup} from "@angular/forms";
 
 @Component({
