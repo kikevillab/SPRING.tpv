@@ -30,6 +30,7 @@ import wrappers.ShoppingWrapper;
 import wrappers.TicketCreationWrapper;
 import wrappers.TicketReferenceWrapper;
 import wrappers.TicketUpdateWrapper;
+import wrappers.TicketUserPatchBodyWrapper;
 import wrappers.TicketWrapper;
 
 public class TicketResourceFunctionalTesting {
@@ -498,6 +499,28 @@ public class TicketResourceFunctionalTesting {
 
         assertNotNull(ticketPage);
         assertEquals(Integer.valueOf(pageSize).intValue(), ticketPage.getNumberOfElements());
+    }
+    
+    @Test
+    public void testAssociateUserToTicketWithNonExistentTicket(){
+        thrown.expect(new HttpMatcher(HttpStatus.NOT_FOUND));
+        String nonExistentTicketReference = "nonExistentTicketReference";
+        TicketUserPatchBodyWrapper bodyWrapper = new TicketUserPatchBodyWrapper();
+        bodyWrapper.setUserMobile(666000002L);
+        new RestBuilder<TicketWrapper>(RestService.URL)
+        .path(Uris.TICKETS).pathId(nonExistentTicketReference).path(Uris.TICKET_USER)
+        .clazz(TicketWrapper.class).body(bodyWrapper).patch().build();
+    }
+    
+    @Test
+    public void testAssociateUserToTicketWithNonExistentUser(){
+        thrown.expect(new HttpMatcher(HttpStatus.NOT_FOUND));
+        String nonExistentTicketReference = "nonExistentTicketReference";
+        TicketUserPatchBodyWrapper bodyWrapper = new TicketUserPatchBodyWrapper();
+        bodyWrapper.setUserMobile(666000002L);
+        new RestBuilder<TicketWrapper>(RestService.URL)
+        .path(Uris.TICKETS).pathId(nonExistentTicketReference).path(Uris.TICKET_USER)
+        .clazz(TicketWrapper.class).body(bodyWrapper).patch().build();
     }
 
     @After
