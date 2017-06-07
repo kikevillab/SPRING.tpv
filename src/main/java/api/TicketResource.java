@@ -268,7 +268,7 @@ public class TicketResource {
     }
     
     private void throwExceptionIfUserDoesNotExist(Long userMobile) throws NotFoundUserMobileException {
-        if(userController.userExists(userMobile)){
+        if(!userController.userExists(userMobile)){
             throw new NotFoundUserMobileException("User mobile: " + userMobile);
         }
     }
