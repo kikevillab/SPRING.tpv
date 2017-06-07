@@ -34,6 +34,12 @@ export class HTTPService {
 		return this.http.put(endpoint, body, options).map(this.extractData).catch(this.handleError);
 	}
 
+	patch(endpoint: string, body?: Object, headers?: Headers, params?: URLSearchParams): Observable<any> {
+		let options: RequestOptions = this.setOptions(headers, params);
+		endpoint = this.getFullEndpoint(endpoint);
+		return this.http.patch(endpoint, body, options).map(this.extractData).catch(this.handleError);
+	}
+
 	delete(endpoint: string, headers?: Headers, params?: URLSearchParams): Observable<any> {
 		let options: RequestOptions = this.setOptions(headers, params);
 		endpoint = this.getFullEndpoint(endpoint);

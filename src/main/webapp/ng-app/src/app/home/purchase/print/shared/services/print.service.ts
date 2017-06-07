@@ -40,27 +40,39 @@ export class PrintService {
 
   createInvoice(ticketReference: string): Promise<any> {
     return new Promise((resolve: Function, reject: Function) => {
-      let userMobile: number = this.shoppingService.getUserMobile();
-      userMobile
-        ? this.postInvoice(resolve, reject, ticketReference)
-        : reject('Not implemented');
-         // : this.httpService.patch(`${URI_TICKETS}/{ticketId}`, new UserMobile(userMobile)).subscribe((response: any) => {
-         //     this.postInvoice(resolve, reject, ticketId);
-         //   },(error: TPVHTTPError) => {
-         //     reject(error.description);
-         //   });
+      if (this.shoppingService.isUserAlreadyAssociated()){
+        this.postInvoice(resolve, reject, ticketReference).then((response: Blob) => {
+          resolve(response);
+        }).catch((error: string) => {
+          reject(error);
+        })
+      } else {
+        let userMobile: number = this.shoppingService.getUserMobile();
+        this.httpService.patch(`${URI_TICKETS}/${ticketReference}/user`, new UserMobile(userMobile)).subscribe((response: any) => {
+           this.postInvoice(resolve, reject, ticketReference).then((response: Blob) => {
+            this.shoppingService.finishPayment();
+           	resolve(response);
+           }).catch((error: string) => {
+           	reject(error);
+           });
+         },(error: TPVHTTPError) => {
+           reject(error.description);
+         });
+      }
     });
   }
 
-  private postInvoice(resolve: Function, reject: Function, ticketReference: string){
-    let invoiceCreationWrapper: InvoiceCreation = new InvoiceCreation(ticketReference);
-      let headers = new Headers();
-      headers.append('Accept', 'application/pdf');
-      this.httpService.post(`${URI_INVOICES}`, invoiceCreationWrapper, headers).subscribe((response: Blob) => {
-        resolve(response);
-      },(error: TPVHTTPError) => {
-        reject(error.description);
-      });
+  private postInvoice(resolve: Function, reject: Function, ticketReference: string): Promise<any> {
+  	return new Promise((resolve: Function, reject: Function) => {
+    	let invoiceCreationWrapper: InvoiceCreation = new InvoiceCreation(ticketReference);
+	  	let headers = new Headers();
+	  	headers.append('Accept', 'application/pdf');
+	  	return this.httpService.post(`${URI_INVOICES}`, invoiceCreationWrapper, headers).subscribe((response: Blob) => {
+	    	resolve(response);
+	  	},(error: TPVHTTPError) => {
+	    	reject(error.description);
+	  	});
+  	});
   }
 
 }
