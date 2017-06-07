@@ -23,9 +23,16 @@
 				</md-card-content>
 		</md-card>
 		<md-card *ngIf="categories && categories.length == 0" fxLayoutAlign="center space-around">
-			<b>
-				There's no categories or products with the name <span class="text-primary">{{lastNameInput}}</span>
-			</b>
+			<div *ngIf="lastNameInput; else noDataToShow">
+				<b>
+					There's no categories or products with the name <span class="text-primary">{{lastNameInput}}</span>
+				</b>
+			</div>
+			<ng-template #noDataToShow>
+				<b>
+					There's no categories or products to show
+				</b>
+			</ng-template>
 		</md-card>
 	</div>
 	<div fxLayout="row" fxLayout.xs="column" fxLayoutWrap="wrap" fxLayoutAlign="center space-around" class="margin-sides" *ngIf="!loading; else spinner">

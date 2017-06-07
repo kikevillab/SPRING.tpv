@@ -2,7 +2,7 @@
 	<md-card id="printOptionsContainer" *ngIf="!printInvoiceSelected">
 		<md-card-title>Print options</md-card-title>
 		<md-card-content fxLayout="column" fxLayoutAlign="center" fxLayoutGap="1em">
-			<button md-raised-button color="primary" (click)="printInvoice()">Print invoice</button>
+			<button md-raised-button color="primary" (click)="printInvoice()" *ngIf="!printed">Print invoice</button>
 			<button md-raised-button color="primary" (click)="createVoucher()">Print voucher</button>
 			<button md-raised-button color="warn" routerLink="/home">Finish</button>
 		</md-card-content>
