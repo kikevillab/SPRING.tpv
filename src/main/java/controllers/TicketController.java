@@ -187,4 +187,7 @@ public class TicketController {
         }
         return closed;
     }
+    public List<Ticket> findAll() {
+       return ticketDao.findAll();      
+    }
 }

@@ -106,11 +106,11 @@ public class UserResource {
         }
     }
 
-    @RequestMapping(value = Uris.USERS + Uris.REFERENCE, method = RequestMethod.GET)
-    public UserWrapper getByTicketReference(@PathVariable(value = "reference") String ticketReference)
+    @RequestMapping(value = Uris.USERS +Uris.TICKET_REFERENCE+Uris.REFERENCE, method = RequestMethod.GET)
+    public UserWrapper getByTicketReference(@PathVariable (value = "reference") String reference)
             throws NotFoundTicketReferenceException, InvalidUserFieldException {
-        validateField(ticketReference, "ticketReference");
-        return this.userController.getByTicketReference(ticketReference);
+        validateField(reference, "ticketReference");
+        return this.userController.getByTicketReference(reference);
     }
     
     
