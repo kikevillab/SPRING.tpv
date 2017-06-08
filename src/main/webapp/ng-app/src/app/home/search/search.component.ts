@@ -7,12 +7,10 @@ import { MdDialog, MdDialogRef } from '@angular/material';
 import { Subscription } from 'rxjs/Subscription';
 
 import { ProductDetailsComponent } from './product-details/product-details.component';
-
 import { Category } from './shared/models/category.model';
 import { CategoriesPage } from './shared/models/categories-page.model';
 import { SearchService } from './shared/services/search.service';
 import { ShoppingService } from '../shared/services/shopping.service';
-import { CapitalizePipe } from '../../shared/pipes/capitalize.pipe';
 import { ToastService } from '../../shared/services/toast.service';
 
 @Component({
@@ -26,8 +24,6 @@ export class SearchComponent implements OnInit, OnDestroy {
   categoriesPageSubcription: Subscription;
   nameInput: string;
   lastNameInput: string;
-  filtered: boolean = false;
-  index: number = 0;
   pxScrolled: number = 0;
   @ViewChild('scrollContainer') scrollContainer: ElementRef;
   lastPage: CategoriesPage;
@@ -39,11 +35,10 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   ngOnInit(){
     this.categoriesPageSubcription = this.searchService.getCategoriesPageObservable().subscribe((categoriesPage: CategoriesPage) => {
-      this.loading = false;
       this.categories = this.scrolled
         ? this.categories.concat(categoriesPage.content)
         : categoriesPage.content;
-      this.scrolled = false;
+      this.scrolled = this.loading = false;
       this.lastPage = categoriesPage;
       this.isRootCategory = this.searchService.isRootCategory();
     });
@@ -65,10 +60,9 @@ export class SearchComponent implements OnInit, OnDestroy {
   	this.searchService.goToPreviousCategory();
   }
 
-  search(pageNumber: number = 0): void {
+  search(): void {
     this.loading = true;
-    this.nameInput && this.searchService.search(this.nameInput, pageNumber).then((categoriesPage: CategoriesPage) => {
-      this.filtered = true;
+    this.nameInput && this.searchService.search(this.nameInput).then((categoriesPage: CategoriesPage) => {
       this.lastNameInput = this.nameInput;
       this.nameInput = undefined;
     });
@@ -76,21 +70,19 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   @HostListener('window:scroll', [])
   scrollHandler(event: any): void {
-    let tracker: any = event.target;
+    let tracker: Element = event.target;
     let limit: number = tracker.scrollHeight - tracker.clientHeight;
     this.pxScrolled = event.target.scrollTop;
     if (tracker.scrollTop === limit && !this.lastPage.last) {
-      this.scrolled = true;
-    	this.lastNameInput
-      ? this.searchService.search(this.lastNameInput, this.lastPage.number + 1)
-      : this.searchService.getCategoryContent(null , this.lastPage.number + 1);
+    	this.scrolled = true;
+		this.lastNameInput
+      		? this.searchService.search(this.lastNameInput, this.lastPage.number + 1)
+      		: this.searchService.getCategoryContent(null , this.lastPage.number + 1);
     }
   }
 
   resetSearch(): void {
-    this.filtered = false;
-    this.lastNameInput = undefined;
-    this.lastPage = undefined;
+    this.lastNameInput = this.lastPage = undefined;
     this.loading = true;
     this.scrolled = false;
     this.searchService.getCategoryContent();
