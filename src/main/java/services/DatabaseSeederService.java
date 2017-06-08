@@ -137,9 +137,15 @@ public class DatabaseSeederService {
         CategoryComposite embroideriesCategoryComposite = new CategoryComposite(null, "Embroideries");
         CategoryComposite articlesCategoryComposite = new CategoryComposite(null, "Articles");
         CategoryComposite textilePrintingsCategoryComposite = new CategoryComposite(null, "TextilePrintings");
+        CategoryComposite textilePrintingsCategoryComposite1 = new CategoryComposite(null, "TextilePrintings1");
+        CategoryComposite textilePrintingsCategoryComposite2 = new CategoryComposite(null, "TextilePrintings2");
+        CategoryComposite textilePrintingsCategoryComposite3 = new CategoryComposite(null, "TextilePrintings3");
         ProductCategory textilePrinting7400000003333 = new ProductCategory(textilePrintingDao.findAll().get(0));
         ProductCategory article7400000001111 = new ProductCategory(articleDao.findAll().get(0));
         ProductCategory embroidery7400000002222 = new ProductCategory(embroideryDao.findAll().get(0));
+        textilePrintingsCategoryComposite1 = categoryComponentDao.save(textilePrintingsCategoryComposite1);
+        textilePrintingsCategoryComposite2 = categoryComponentDao.save(textilePrintingsCategoryComposite2);
+        textilePrintingsCategoryComposite3 = categoryComponentDao.save(textilePrintingsCategoryComposite3);
         textilePrinting7400000003333 = categoryComponentDao.save(textilePrinting7400000003333);
         article7400000001111 = categoryComponentDao.save(article7400000001111);
         embroidery7400000002222 = categoryComponentDao.save(embroidery7400000002222);
@@ -152,6 +158,9 @@ public class DatabaseSeederService {
         categoryCompositeRoot.addCategoryComponent(embroideriesCategoryComposite);
         categoryCompositeRoot.addCategoryComponent(articlesCategoryComposite);
         categoryCompositeRoot.addCategoryComponent(textilePrintingsCategoryComposite);
+        categoryCompositeRoot.addCategoryComponent(textilePrintingsCategoryComposite1);
+        categoryCompositeRoot.addCategoryComponent(textilePrintingsCategoryComposite2);
+        categoryCompositeRoot.addCategoryComponent(textilePrintingsCategoryComposite3);
         categoryComponents.add(categoryCompositeRoot);
         return categoryComponents;
     }

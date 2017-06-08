@@ -40,8 +40,8 @@ public class CategoryController {
         return getCategoryComponentWrapper(categoryComponent);
     }
 
-    public Page<CategoryComponentWrapper> findCategoriesPaginatedByName(Pageable pageable, String name) {
-        Page<CategoryComponent> categoryComponentPage = categoryComponentDao.findByName(pageable, name);
+    public Page<CategoryComponentWrapper> findCategoriesPaginatedByNameContaining(Pageable pageable, String name) {
+        Page<CategoryComponent> categoryComponentPage = categoryComponentDao.findByNameContaining(pageable, name);
         List<CategoryComponentWrapper> componentWrappers = new ArrayList<>();
         for (CategoryComponent component : categoryComponentPage.getContent()) {
             componentWrappers.add(new CategoryComponentWrapper(component));
@@ -49,7 +49,7 @@ public class CategoryController {
         return new PageImpl<CategoryComponentWrapper>(componentWrappers, pageable, categoryComponentPage.getTotalElements());
     }
     
-    public Page<CategoryComponentWrapper> findCategoriesChildrenPaginatedByName(Pageable pageable, String name) {
+    public Page<CategoryComponentWrapper> findCategoriesChildrenPaginatedByParentName(Pageable pageable, String name) {
         Page<CategoryComponent> categoryComponentPage = categoryComponentDao.findChildrenByParentName(pageable, name);
         List<CategoryComponentWrapper> componentWrappers = new ArrayList<>();
         for (CategoryComponent component : categoryComponentPage.getContent()) {

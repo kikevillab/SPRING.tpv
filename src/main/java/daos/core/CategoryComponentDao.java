@@ -12,6 +12,8 @@ public interface CategoryComponentDao extends JpaRepository<CategoryComponent, L
     CategoryComponent findByName(String name);
 
     Page<CategoryComponent> findByName(Pageable pageable, String name);
+    
+    Page<CategoryComponent> findByNameContaining(Pageable pageable, String name);
 
     @Query(
             value = "SELECT cc.categoryComponents FROM CategoryComponent cc WHERE cc.name LIKE %:name%", 
