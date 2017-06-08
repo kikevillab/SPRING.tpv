@@ -24,9 +24,7 @@ export class SearchService {
 
   getCategoryContent(id?: number, pageNumber: number = 0): Promise<any> {
     return new Promise((resolve: Function, reject: Function) => {
-      if (pageNumber == 0) {
-        this.categoriesRoute = [];
-      } else if (!id && this.categoriesRoute.length > 0){
+      if (!id && this.categoriesRoute.length > 0){
         id = this.categoriesRoute[this.categoriesRoute.length - 1];
       }
       id && this.categoriesRoute.indexOf(id) === -1 && this.categoriesRoute.push(id);
@@ -47,12 +45,16 @@ export class SearchService {
   }
 
   goToPreviousCategory(): Promise<any> {
-        if (this.categoriesRoute.length > 0) {
-          this.categoriesRoute.pop();
-          return this.categoriesRoute.length > 0
-            ? this.getCategoryContent(this.categoriesRoute[0])
-            : this.getCategoryContent();
-        }
+    if (this.categoriesRoute.length > 0) {
+      this.categoriesRoute.pop();
+      return this.categoriesRoute.length > 0
+        ? this.getCategoryContent(this.categoriesRoute[0])
+        : this.getCategoryContent();
+    } else {
+      return new Promise((resolve: Function, reject: Function)=>{
+        reject('No previous category');
+      });
+    }
   }
 
   private getCategories(params: URLSearchParams): Promise<any> {
