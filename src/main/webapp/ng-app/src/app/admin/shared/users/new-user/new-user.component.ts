@@ -9,7 +9,7 @@ import {TPVHTTPError} from '../../../../shared/models/tpv-http-error.model';
 import {MdDialogRef} from '@angular/material';
 import {ToastService} from '../../../../shared/services/toast.service';
 import {UsersService} from '../users.service';
-import {UserForm} from '../user-form.service';
+import {UserForm} from '../../services/user-form.service';
 
 @Component({
     templateUrl: './new-user.component.html',

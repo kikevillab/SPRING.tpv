@@ -5,10 +5,10 @@
 import {Component, OnInit} from '@angular/core';
 import {User} from '../../../../shared/models/user.model';
 import {MdDialogRef} from '@angular/material';
-import {Ticket} from './ticket.model';
+import {Ticket} from '../../models/ticket.model';
 import {TPVHTTPError} from '../../../../shared/models/tpv-http-error.model';
 import {ToastService} from '../../../../shared/services/toast.service';
-import {TicketsService} from './tickets.service';
+import {TicketsService} from '../../services/tickets.service';
 import {MOBILE_ATTRIBUTE_NAME} from '../../../../shared/models/user.model';
 import {MdDialog, MdDialogConfig} from '@angular/material';
 import {EditUserDialog} from '../edit-user/edit-user.component';
