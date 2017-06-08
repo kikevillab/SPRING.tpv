@@ -3,7 +3,7 @@
   * Github: https://github.com/sergiobanegas 
 */
 import { Injectable } from '@angular/core';
-import { Headers, URLSearchParams } from '@angular/http';
+import { URLSearchParams } from '@angular/http';
 
 import { LOCAL_STORAGE_TOKEN_ATTRIBUTE, URI_USERS, ROLE_CUSTOMER } from '../../../../../app.config';
 

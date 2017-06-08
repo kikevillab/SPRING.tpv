@@ -2,14 +2,13 @@
   * @author Sergio Banegas Cortijo
   * Github: https://github.com/sergiobanegas
 */
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MdDialogRef } from '@angular/material';
 
 import { Product } from '../../../shared/models/product.model';
 import { SearchService } from '../shared/services/search.service';
 import { ShoppingService } from '../../shared/services/shopping.service';
 
-import { CapitalizePipe } from '../../../shared/pipes/capitalize.pipe';
 import { ToastService } from '../../../shared/services/toast.service';
 
 @Component({

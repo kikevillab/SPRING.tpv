@@ -31,6 +31,7 @@ export class PrintComponent implements OnInit, OnDestroy {
   userAssociatedSubscription: Subscription;
   shoppingCartSubscription: Subscription;
   printInvoiceSelected: boolean = false;
+  printed: boolean = false;
 
   constructor(public shoppingService: ShoppingService, public printService: PrintService, private pdfService: PDFService, public router: Router, public dialog: MdDialog, private toastService: ToastService) {}
 
@@ -53,10 +54,13 @@ export class PrintComponent implements OnInit, OnDestroy {
       this.printService.createInvoice(this.shoppingService.getTicketReference()).then((pdf: Blob) => {
         this.printInvoiceSelected = false;
         this.pdfService.openBlob(pdf);
+        this.printed = true;
       }).catch((error: string) => {
       	this.toastService.error('Error generating invoice', error);
       });
-    } else this.printInvoiceSelected = true;
+    } else {
+      this.printInvoiceSelected = true;
+    }
   }
 
   finish(): void {

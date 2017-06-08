@@ -24,13 +24,22 @@ public class CategoryResource {
     public void setCategoryController(CategoryController categoryController) {
         this.categoryController = categoryController;
     }
-    
+
     @RequestMapping(value = Uris.SEARCH, method = RequestMethod.GET)
-    public Page<CategoryComponentWrapper> findCategoriesPaginatedByDepthLevel(Pageable pageable, @RequestParam String name) throws CategoryComponentNotFoundException {
-        if(name == null || name.isEmpty()){
-            name = ResourceNames.CATEGORIES_ROOT;
+    public Page<CategoryComponentWrapper> findCategoriesPaginatedByDepthLevel(Pageable pageable, @RequestParam(required = false) Long id,
+            @RequestParam(required = false) String name) throws CategoryComponentNotFoundException {
+        Page<CategoryComponentWrapper> categoryComponentWrapperPage;
+        if (id != null) {
+            categoryComponentWrapperPage = categoryController.findCategoryChildrenPaginatedByParentId(pageable, id.longValue());
+        } else {
+            if (name == null || name.isEmpty()) {
+                name = ResourceNames.CATEGORIES_ROOT;
+                categoryComponentWrapperPage = categoryController.findCategoriesChildrenPaginatedByParentName(pageable, name);
+            } else {
+                categoryComponentWrapperPage = categoryController.findCategoriesPaginatedByNameContaining(pageable, name);
+            }           
         }
-        return categoryController.findCategoriesPaginatedByName(pageable, name);
+        return categoryComponentWrapperPage;
     }
 
     @RequestMapping(method = RequestMethod.GET)

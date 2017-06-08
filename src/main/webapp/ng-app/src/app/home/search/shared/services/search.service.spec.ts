@@ -14,11 +14,10 @@ import { SearchService } from './search.service';
 import { HTTPService } from '../../../../shared/services/http.service';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 
-export const MockCategory = {
-  id: 1234,
-  name: "category1",
-  code: null,
-  image: 'image'
+export const MockCategoriesPage = {
+  content: [],
+  last: false,
+  number: 0
 }
 
 describe('Service: SearchService', () => {
@@ -49,12 +48,21 @@ describe('Service: SearchService', () => {
     searchService = TestBed.get(SearchService);
   }));
 
-  it(`Should asign the parent category when 'getCategoryContent()' is called`, inject([MockBackend], (mockBackend: MockBackend) => {  
+  it(`Should add the new category to the categoriesRoute list when 'getCategoryContent() is called`, inject([MockBackend], (mockBackend: MockBackend) => {  
       mockBackend.connections.subscribe((conn: MockConnection) => {
-        conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(MockCategory) })));
+        conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(MockCategoriesPage) })));
       });
       searchService.getCategoryContent(1234).then(()=>{
-        expect(searchService.getParentCategory()).toBe(1234);
+        expect(searchService.isRootCategory()).toBeFalsy();
+      });
+   }));
+
+  it(`Should pop the last category of categoriesRoute when 'goToPreviousCategory() is called`, inject([MockBackend], (mockBackend: MockBackend) => {  
+      mockBackend.connections.subscribe((conn: MockConnection) => {
+        conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(MockCategoriesPage) })));
+      });
+      searchService.goToPreviousCategory().then(()=>{
+        expect(searchService.isRootCategory()).toBeTruthy();
       });
    }));
 
