@@ -78,9 +78,9 @@
 			<properties>
 				<logs.level>error</logs.level>
 				<logs.path>../logs</logs.path>
-				<database.url>jdbc:mysql://zwgaqwfn759tj79r.chr7pe7iynqr.eu-west-1.rds.amazonaws.com:3306/k33rma1lhchknh1n</database.url>
-                <database.user>d91h1fb2z5hfzsnh</database.user>
-                <database.password>a6aq4htdl1tf6t3l</database.password>				
+				<database.url>jdbc:mysql://miwtpv.cqmevxnyr53u.us-east-2.rds.amazonaws.com:3306/tpv</database.url>
+                <database.user>miwtpv</database.user>
+                <database.password>miwtpv2017</database.password>				
 				<hibernate.hbm2ddl.auto>update</hibernate.hbm2ddl.auto>
 				<tomcat.url>http://tpv-miw.herokuapp.com/api</tomcat.url>
 			</properties>
@@ -113,7 +113,7 @@
                  <tomcat.url>http://tpv-miw.herokuapp.com/api</tomcat.url>
             </properties>
             <build>
-                <plugins>
+                <plugins>               
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
