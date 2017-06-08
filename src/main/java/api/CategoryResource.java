@@ -34,9 +34,9 @@ public class CategoryResource {
         } else {
             if (name == null || name.isEmpty()) {
                 name = ResourceNames.CATEGORIES_ROOT;
-                categoryComponentWrapperPage = categoryController.findCategoriesChildrenPaginatedByName(pageable, name);
+                categoryComponentWrapperPage = categoryController.findCategoriesChildrenPaginatedByParentName(pageable, name);
             } else {
-                categoryComponentWrapperPage = categoryController.findCategoriesPaginatedByName(pageable, name);
+                categoryComponentWrapperPage = categoryController.findCategoriesPaginatedByNameContaining(pageable, name);
             }           
         }
         return categoryComponentWrapperPage;
