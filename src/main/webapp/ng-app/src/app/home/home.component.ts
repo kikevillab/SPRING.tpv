@@ -18,6 +18,10 @@ import { ToastService } from '../shared/services/toast.service';
     selector: 'home-view',
     templateUrl: './home.component.html',
     styles: [`
+        md-sidenav {
+            padding: 1em;
+        }
+        
 		@media only screen and (max-width: 600px) {
 			md-sidenav {
 				width: 100%;
@@ -41,7 +45,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     @ViewChild('cart') cartSidenav: MdSidenav;
     cartSideNavOpened: boolean = false;
-    openedCashier: boolean = true;
+    openedCashier: boolean = false;
     cashierSubscription: Subscription;
     authorizationSubscription: Subscription;
 
@@ -52,8 +56,8 @@ export class HomeComponent implements OnInit, OnDestroy {
             !authorized && this.logout();
         });
         this.cashierSubscription = this.cashierService.getCurrentCashierObservable().subscribe((currentCashier: CashierClosure) => {
-            this.openedCashier = currentCashier.closureDate == null;
-            (!this.openedCashier || currentCashier.openingDate == null) && this.router.navigate(['/home/open-cashier']);
+            this.openedCashier = currentCashier == null || currentCashier.closureDate == null;
+            (!this.openedCashier || currentCashier.openingDate === null) && this.router.navigate(['/home/open-cashier']);
         });
         this.cashierService.initialize();
     }
@@ -85,22 +89,15 @@ export class HomeComponent implements OnInit, OnDestroy {
 @Component({
     selector: 'order-tracking-dialog-view',
     template: `
-    	<form (ngSubmit)="submitTicketReference($event)" #ticketReferenceForm="ngForm">
-    		<div class="form-group">
-    			<md-input-container >
-    				<input mdInput placeholder="Ticket reference" maxLength="255" class="form-control" id="inputTicketReference" required
-    				[(ngModel)]="ticketReferenceInput" name="inputTicketReference" #name="ngModel">
-    			</md-input-container>
-    			<button md-raised-button color="primary" type="submit" [disabled]="!ticketReferenceForm.form.valid" id="submitTicketReferenceButton">OK</button>
-    		</div>
-    	</form>
-    `,
-    styles: [`
-        button {
-          display: block;
-          margin: 0 auto;
-        }
-    `]
+    	<form (ngSubmit)="submitTicketReference($event)" #ticketReferenceForm="ngForm" fxLayout="column">
+			<p>Get a ticket state by entering his reference:</p>
+            <md-input-container>
+				<input mdInput placeholder="Ticket reference" maxLength="255" class="form-control" id="inputTicketReference" required
+				[(ngModel)]="ticketReferenceInput" name="inputTicketReference" #name="ngModel">
+			</md-input-container>
+			<button md-raised-button color="primary" type="submit" [disabled]="!ticketReferenceForm.form.valid">OK</button>
+        </form>
+    `
 })
 export class OrderTrackingDialog {
 

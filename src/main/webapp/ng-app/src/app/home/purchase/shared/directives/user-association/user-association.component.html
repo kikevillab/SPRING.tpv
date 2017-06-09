@@ -35,7 +35,7 @@
 				    	<input mdInput placeholder="Identification" type="text" class="form-control" required [(ngModel)]="newUserInput.dni" name="inputUserDNI">
 				  	</md-input-container>
 				  	<md-input-container>
-				    	<input mdInput placeholder="Email" type="email" class="form-control" required [(ngModel)]="newUserInput.email" name="inputUserEmail">
+				    	<input mdInput placeholder="Email" type="email" class="form-control" required [(ngModel)]="newUserInput.email" name="inputUserEmail" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
 				  	</md-input-container>
 			 	</div>
 			  	<md-input-container>
