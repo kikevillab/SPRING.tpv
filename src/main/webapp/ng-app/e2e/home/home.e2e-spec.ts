@@ -61,6 +61,7 @@ describe('Page: Home', () => {
         page.clickCartButton();
         let totalPriceBefore = cartView.getTotalValueText();
         cartView.submitProductCode('8400000001114');
+        browser.sleep(3000);
         let totalPriceAfter = cartView.getTotalValueText();
         expect(totalPriceBefore).not.toBe(totalPriceAfter);
     });
@@ -95,12 +96,14 @@ describe('Page: Home', () => {
         movementView.navigateTo();
         expect(movementView.getSubmitButton().isEnabled()).toBe(false);
         movementView.fillForm();
+        browser.sleep(3000);
         expect(movementView.getSubmitButton().isEnabled()).toBe(true);
     });
 
     it(`should show the close cashier button after filling the form`, () => {
         closeCashierView.navigateTo();
         closeCashierView.fillForm();
+        browser.sleep(3000);
         expect(closeCashierView.getCloseCashierButton().isEnabled()).toBe(true);
     });
 
