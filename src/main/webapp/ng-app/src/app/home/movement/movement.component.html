@@ -4,7 +4,12 @@
 		<md-card-title>Cash flow</md-card-title>
 		<md-card-content fxLayout="column">
 			<div>
-				<h3 *ngIf="cashier">Money in cashier: <span class="text-primary">{{cashier.amount | currency:'EUR':true}}</span></h3>
+				<h3 *ngIf="cashier">
+					Money in cashier: 
+					<span class="text-primary">
+						<currency [value]="cashier.amount"></currency>
+					</span>
+				</h3>
 			</div>
 			<div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutGap="1em" fxLayoutAlign="space-between" id="cash-flow-container">
 				<md-card fxLayout="column">

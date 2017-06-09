@@ -84,7 +84,7 @@
     <md-divider></md-divider>
   </md-list>
 </md-card>
-<p>Total: <b id="total-price">{{totalPrice | currency:'EUR':true}}</b></p>
+<p>Total: <b id="total-price"><currency [value]="totalPrice"></currency></b></p>
 <div fxLayout="column" id="padding-container" fxLayoutGap="1em">
   <md-card >
     <form fxLayout="column" (ngSubmit)="onSubmit($event)" #cartForm="ngForm">

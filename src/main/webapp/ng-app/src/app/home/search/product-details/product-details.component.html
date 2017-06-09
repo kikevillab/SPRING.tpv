@@ -12,7 +12,8 @@
 							<b>Code</b>: {{product.code}}
 						</p>
 						<p>
-							<b>Price</b>: {{product.retailPrice | currency:'EUR':true}}
+							<b>Price</b>:
+							<currency [value]="product.retailPrice"></currency>
 						</p>
 					</md-card-content>
 				</md-card>
@@ -25,7 +26,7 @@
 					<b>Code</b>: {{product.code}}
 				</p>
 				<p>
-					<b>Price</b>: {{product.retailPrice | currency:'EUR':true}}
+					<b>Price</b>: <currency [value]="product.retailPrice"></currency>
 				</p>
 			</md-card-content>
 		</md-card>
