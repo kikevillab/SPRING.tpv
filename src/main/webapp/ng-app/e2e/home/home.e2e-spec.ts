@@ -10,7 +10,6 @@ import { SearchView } from './search/search.po';
 import { CartView } from './cart/cart.po';
 import { CalculatorView } from './cart/calculator.po';
 import { PurchaseView } from './purchase/purchase.po';
-import { MovementView } from './movement/movement.po';
 import { CloseCashierView } from './close-cashier/close-cashier.po';
 import { TicketsOfTheDayView } from './tickets-of-the-day/tickets-of-the-day.po';
 
@@ -22,7 +21,6 @@ describe('Page: Home', () => {
     let cartView: CartView;
     let calculatorView: CalculatorView;
     let purchaseView: PurchaseView;
-    let movementView: MovementView;
     let closeCashierView: CloseCashierView;
     let ticketsOfTheDayView: TicketsOfTheDayView;
 
@@ -33,7 +31,6 @@ describe('Page: Home', () => {
         cartView = new CartView();
         calculatorView = new CalculatorView();
         purchaseView = new PurchaseView();
-        movementView = new MovementView();
         closeCashierView = new CloseCashierView();
         ticketsOfTheDayView = new TicketsOfTheDayView();
         welcome.navigateTo();
@@ -90,14 +87,6 @@ describe('Page: Home', () => {
         cartView.submitProductCode('8400000001114');
         cartView.clickClearCartButton();
         expect(cartView.getCartInputs()).toBe(0);
-    });
-
-    it(`should show the movement submit button after filling the form`, () => {
-        movementView.navigateTo();
-        expect(movementView.getSubmitButton().isEnabled()).toBe(false);
-        movementView.fillForm();
-        browser.sleep(3000);
-        expect(movementView.getSubmitButton().isEnabled()).toBe(true);
     });
 
     it(`should show the close cashier button after filling the form`, () => {
