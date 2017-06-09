@@ -233,6 +233,10 @@ export class ShoppingService {
         return total;
     }
 
+    getCashToPay(): number {
+        return this.totalPrice - this.getVouchersTotalPaid();
+    }
+
     private getVouchersTotalPaid(): number {
         let total: number = 0.0;
         this.vouchers.forEach((voucher: Voucher) => {

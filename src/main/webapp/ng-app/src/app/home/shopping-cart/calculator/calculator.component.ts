@@ -12,10 +12,6 @@ import { Component, HostListener, OnInit } from '@angular/core';
             font-size: 200%;
         }
 
-        #current-operator {
-            float: right;
-        }
-
         div > div > div {
             padding: 0.5em;
         }
