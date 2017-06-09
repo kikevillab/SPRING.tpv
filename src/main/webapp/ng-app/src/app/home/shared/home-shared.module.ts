@@ -10,12 +10,12 @@ import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
     imports: [
-      FormsModule,
-    	SharedModule
+        FormsModule,
+        SharedModule
     ],
     exports: [
-      FormsModule,
-    	SharedModule
+        FormsModule,
+        SharedModule
     ]
 })
-export class HomeSharedModule {}
+export class HomeSharedModule { }

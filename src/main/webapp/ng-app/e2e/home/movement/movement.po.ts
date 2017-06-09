@@ -6,17 +6,17 @@ import { browser, element, by } from 'protractor';
 
 export class MovementView {
 
-  navigateTo() {
-    return browser.get('/home/movement');
-  }
+    navigateTo() {
+        return browser.get('/home/movement');
+    }
 
-  fillForm() {
-    element(by.id('amount-input')).sendKeys(1);
-    element(by.id('cashier-closure-radio-button')).click();
-  }
+    fillForm() {
+        element(by.id('amount-input')).sendKeys(1);
+        element(by.id('cashier-closure-radio-button')).click();
+    }
 
-  getSubmitButton() {
-    return element(by.id('submit-button'));
-  }
+    getSubmitButton() {
+        return element(by.id('submit-button'));
+    }
 
 }

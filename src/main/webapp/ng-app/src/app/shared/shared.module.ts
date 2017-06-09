@@ -18,27 +18,26 @@ import { CapitalizePipe } from './pipes/capitalize.pipe';
 
 @NgModule({
     imports: [
-    	CommonModule,
-    	HttpModule,
-    	JsonpModule,
-    	BrowserAnimationsModule,
-    	MaterialModule,
-    	FlexLayoutModule,
-    	ToastyModule
+        CommonModule,
+        HttpModule,
+        JsonpModule,
+        BrowserAnimationsModule,
+        MaterialModule,
+        FlexLayoutModule,
+        ToastyModule
     ],
-    declarations: [ DateComponent, CurrencyComponent, CapitalizePipe ],
+    declarations: [DateComponent, CurrencyComponent, CapitalizePipe],
     exports: [
-    	CommonModule,
-    	HttpModule,
-    	JsonpModule,
-    	BrowserAnimationsModule,
-    	MaterialModule,
-    	FlexLayoutModule,
-    	ToastyModule,
-    	DateComponent,
+        CommonModule,
+        HttpModule,
+        JsonpModule,
+        BrowserAnimationsModule,
+        MaterialModule,
+        FlexLayoutModule,
+        ToastyModule,
+        DateComponent,
         CurrencyComponent,
-    	CapitalizePipe
+        CapitalizePipe
     ]
 })
-export class SharedModule {
-}
+export class SharedModule { }

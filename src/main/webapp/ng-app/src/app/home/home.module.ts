@@ -28,33 +28,33 @@ import { ShoppingService } from './shared/services/shopping.service';
 import { CashierService } from './shared/services/cashier.service';
 
 @NgModule({
-  imports: [
-    HomeRoutingModule,
-    ShoppingCartModule,
-    SearchModule,
-    OpenCashierModule,
-    CloseCashierModule,
-    MovementModule,
-    PurchaseModule,
-    TicketsOfTheDayModule,
-    HomeSharedModule
-  ],
-  declarations: [
-    HomeComponent,
-    ShoppingCartComponent,
-    OrderTrackingDialog
-  ],
-  providers: [
-    HomeGuard,
-    HomeService,
-    HTTPService,
-    LocalStorageService,
-    ToastService,
-    ShoppingService,
-    CashierService,
-    AuthService
-  ],
-  entryComponents: [ OrderTrackingDialog ],
-  exports: [ HomeSharedModule ]
+    imports: [
+        HomeRoutingModule,
+        ShoppingCartModule,
+        SearchModule,
+        OpenCashierModule,
+        CloseCashierModule,
+        MovementModule,
+        PurchaseModule,
+        TicketsOfTheDayModule,
+        HomeSharedModule
+    ],
+    declarations: [
+        HomeComponent,
+        ShoppingCartComponent,
+        OrderTrackingDialog
+    ],
+    providers: [
+        HomeGuard,
+        HomeService,
+        HTTPService,
+        LocalStorageService,
+        ToastService,
+        ShoppingService,
+        CashierService,
+        AuthService
+    ],
+    entryComponents: [OrderTrackingDialog],
+    exports: [HomeSharedModule]
 })
-export class HomeModule {}
+export class HomeModule { }

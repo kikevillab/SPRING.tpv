@@ -13,13 +13,13 @@ import { PurchaseComponent } from './purchase.component';
 import { PDFService } from './shared/services/pdf.service';
 
 @NgModule({
-  imports: [
-	  RouterModule,
-	  PaymentModule,
-	  PrintModule,
-	  PurchaseSharedModule
-  ],
-  declarations: [ PurchaseComponent ],
-  providers: [ PDFService ]
+    imports: [
+        RouterModule,
+        PaymentModule,
+        PrintModule,
+        PurchaseSharedModule
+    ],
+    declarations: [PurchaseComponent],
+    providers: [PDFService]
 })
-export class PurchaseModule {}
+export class PurchaseModule { }

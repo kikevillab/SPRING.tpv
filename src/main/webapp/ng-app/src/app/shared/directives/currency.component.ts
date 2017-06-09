@@ -5,11 +5,11 @@
 import { Component, Input } from '@angular/core'
 
 @Component({
-  selector: 'currency',
-  template: `{{value | currency:'EUR':true}}`
+    selector: 'currency',
+    template: `{{value | currency:'EUR':true}}`
 })
 export class CurrencyComponent {
 
-  @Input() value: number;
+    @Input() value: number;
 
 } 

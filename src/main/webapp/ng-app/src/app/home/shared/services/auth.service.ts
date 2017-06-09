@@ -9,14 +9,14 @@ import { Subject } from 'rxjs/Subject';
 @Injectable()
 export class AuthService {
 
-  private authorizationSubject: Subject<boolean> = new Subject<boolean>();
+    private authorizationSubject: Subject<boolean> = new Subject<boolean>();
 
-  reportUnauthorized(): void {
-    this.authorizationSubject.next(false);
-  }
+    reportUnauthorized(): void {
+        this.authorizationSubject.next(false);
+    }
 
-  getAuthorizationObservable(): Observable<boolean> {
-    return this.authorizationSubject.asObservable();
-  }
+    getAuthorizationObservable(): Observable<boolean> {
+        return this.authorizationSubject.asObservable();
+    }
 
 }

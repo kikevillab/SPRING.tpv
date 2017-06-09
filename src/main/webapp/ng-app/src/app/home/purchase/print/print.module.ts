@@ -12,12 +12,12 @@ import { CreateVoucherComponent } from './create-voucher/create-voucher.componen
 import { PrintService } from './shared/services/print.service';
 
 @NgModule({
-  imports: [
-    RouterModule,
-    PurchaseSharedModule
-  ],
-  declarations: [ PrintComponent, CreateVoucherComponent ],
-  providers: [ PrintService ],
-  entryComponents: [ CreateVoucherComponent ]
+    imports: [
+        RouterModule,
+        PurchaseSharedModule
+    ],
+    declarations: [PrintComponent, CreateVoucherComponent],
+    providers: [PrintService],
+    entryComponents: [CreateVoucherComponent]
 })
-export class PrintModule {}
+export class PrintModule { }

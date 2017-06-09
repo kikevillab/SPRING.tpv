@@ -10,9 +10,9 @@ import { UserAssociationComponent } from './directives/user-association/user-ass
 import { UserService } from './directives/user-association/user.service';
 
 @NgModule({
-    imports: [ HomeSharedModule ],
-    declarations: [ UserAssociationComponent ],
-    providers: [ UserService ],
-    exports: [ HomeSharedModule, UserAssociationComponent ]
+    imports: [HomeSharedModule],
+    declarations: [UserAssociationComponent],
+    providers: [UserService],
+    exports: [HomeSharedModule, UserAssociationComponent]
 })
-export class PurchaseSharedModule {}
+export class PurchaseSharedModule { }

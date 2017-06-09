@@ -12,12 +12,12 @@ import { OrderTrackingRoutingModule } from './order-tracking-routing.module';
 import { OrderTrackingService } from './order-tracking.service';
 
 @NgModule({
-    declarations: [ OrderTrackingComponent ],
+    declarations: [OrderTrackingComponent],
     imports: [
         NgxDatatableModule,
         OrderTrackingRoutingModule,
         SharedModule
     ],
-    providers: [ OrderTrackingService ]
+    providers: [OrderTrackingService]
 })
-export class OrderTrackingModule {}
+export class OrderTrackingModule { }

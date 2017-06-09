@@ -15,19 +15,21 @@ import { AuthService } from './shared/services/auth.service';
 import { ToastService } from '../shared/services/toast.service';
 
 @Component({
-	selector: 'home-view',
-	templateUrl: './home.component.html',
-	styles: [`
+    selector: 'home-view',
+    templateUrl: './home.component.html',
+    styles: [`
 		@media only screen and (max-width: 600px) {
 			md-sidenav {
 				width: 100%;
 			}
 		}
+
 		@media only screen and (min-width: 768px) {
 			md-sidenav {
 				width: 45em;
 			}
 		}
+        
 		@media only screen and (min-width: 1024px) {
 			md-sidenav {
 				width: 50em;
@@ -37,78 +39,79 @@ import { ToastService } from '../shared/services/toast.service';
 })
 export class HomeComponent implements OnInit, OnDestroy {
 
-	@ViewChild('cart') cartSidenav: MdSidenav;
-	cartSideNavOpened: boolean = false;
-	openedCashier: boolean = true;
-	cashierSubscription: Subscription;
-	authorizationSubscription: Subscription;
+    @ViewChild('cart') cartSidenav: MdSidenav;
+    cartSideNavOpened: boolean = false;
+    openedCashier: boolean = true;
+    cashierSubscription: Subscription;
+    authorizationSubscription: Subscription;
 
-	constructor(private router: Router, private toastService: ToastService, private dialog: MdDialog, private cashierService: CashierService, private homeService: HomeService, private authService: AuthService) {}
+    constructor(private router: Router, private toastService: ToastService, private dialog: MdDialog, private cashierService: CashierService, private homeService: HomeService, private authService: AuthService) { }
 
-	ngOnInit(){
-		this.authorizationSubscription = this.authService.getAuthorizationObservable().subscribe((authorized: boolean) => {
-			!authorized && this.logout();
-		});
-		this.cashierSubscription = this.cashierService.getCurrentCashierObservable().subscribe((currentCashier: CashierClosure) => {
-	      this.openedCashier = currentCashier.closureDate == null;
-	      (!this.openedCashier || currentCashier.openingDate == null) && this.router.navigate(['/home/open-cashier']);
-    	});
-    	this.cashierService.initialize();
-	}
+    ngOnInit() {
+        this.authorizationSubscription = this.authService.getAuthorizationObservable().subscribe((authorized: boolean) => {
+            !authorized && this.logout();
+        });
+        this.cashierSubscription = this.cashierService.getCurrentCashierObservable().subscribe((currentCashier: CashierClosure) => {
+            this.openedCashier = currentCashier.closureDate == null;
+            (!this.openedCashier || currentCashier.openingDate == null) && this.router.navigate(['/home/open-cashier']);
+        });
+        this.cashierService.initialize();
+    }
 
-	closeCartSidenav(): void {
-		this.cartSideNavOpened = false;
-	}
+    closeCartSidenav(): void {
+        this.cartSideNavOpened = false;
+    }
 
-	openOrderTrackingDialog(): void {
-		this.dialog.open(OrderTrackingDialog);
-	}
+    openOrderTrackingDialog(): void {
+        this.dialog.open(OrderTrackingDialog);
+    }
 
-	onClickLogout(): void {
-		this.toastService.info('Goodbye', 'You have logged out');
-		this.logout();
-	}
+    onClickLogout(): void {
+        this.toastService.info('Goodbye', 'You have logged out');
+        this.logout();
+    }
 
-	private logout(): void {
-		this.homeService.logout();
-		this.router.navigate(['/welcome']);
-	}
+    private logout(): void {
+        this.homeService.logout();
+        this.router.navigate(['/welcome']);
+    }
 
-	ngOnDestroy(){
-		this.cashierSubscription && this.cashierSubscription.unsubscribe();
-	}
+    ngOnDestroy() {
+        this.cashierSubscription && this.cashierSubscription.unsubscribe();
+    }
 
 }
 
 @Component({
-  selector: 'order-tracking-dialog',
-  template: `
-	<form (ngSubmit)="submitTicketReference($event)" #ticketReferenceForm="ngForm">
-		<div class="form-group">
-			<md-input-container >
-				<input mdInput placeholder="Ticket reference" maxLength="255" class="form-control" id="inputTicketReference" required
-				[(ngModel)]="ticketReferenceInput" name="inputTicketReference" #name="ngModel">
-			</md-input-container>
-			<button md-raised-button color="primary" type="submit" [disabled]="!ticketReferenceForm.form.valid" id="submitTicketReferenceButton">OK</button>
-		</div>
-	</form>
-  `, styles: [`
-    button {
-      display: block;
-      margin: 0 auto;
-    }
-  `]
+    selector: 'order-tracking-dialog-view',
+    template: `
+    	<form (ngSubmit)="submitTicketReference($event)" #ticketReferenceForm="ngForm">
+    		<div class="form-group">
+    			<md-input-container >
+    				<input mdInput placeholder="Ticket reference" maxLength="255" class="form-control" id="inputTicketReference" required
+    				[(ngModel)]="ticketReferenceInput" name="inputTicketReference" #name="ngModel">
+    			</md-input-container>
+    			<button md-raised-button color="primary" type="submit" [disabled]="!ticketReferenceForm.form.valid" id="submitTicketReferenceButton">OK</button>
+    		</div>
+    	</form>
+    `,
+    styles: [`
+        button {
+          display: block;
+          margin: 0 auto;
+        }
+    `]
 })
 export class OrderTrackingDialog {
 
-  ticketReferenceInput: string = '';
+    ticketReferenceInput: string = '';
 
-  constructor(public dialogRef: MdDialogRef<OrderTrackingDialog>, private router: Router) {}
+    constructor(public dialogRef: MdDialogRef<OrderTrackingDialog>, private router: Router) { }
 
-  submitTicketReference(event: Event): void {
-  	event.preventDefault();
-  	this.dialogRef.close();
-  	this.router.navigate(['/order-tracking', this.ticketReferenceInput]);
-  }
+    submitTicketReference(event: Event): void {
+        event.preventDefault();
+        this.dialogRef.close();
+        this.router.navigate(['/order-tracking', this.ticketReferenceInput]);
+    }
 
 }

@@ -9,7 +9,7 @@ import { HomeSharedModule } from '../shared/home-shared.module';
 import { CloseCashierComponent } from './close-cashier.component';
 
 @NgModule({
-  imports: [ HomeSharedModule ],
-  declarations: [ CloseCashierComponent ]
+    imports: [HomeSharedModule],
+    declarations: [CloseCashierComponent]
 })
-export class CloseCashierModule {}
+export class CloseCashierModule { }

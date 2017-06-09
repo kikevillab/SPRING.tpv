@@ -12,8 +12,8 @@ import { VoucherPaymentComponent } from './voucher-payment/voucher-payment.compo
 import { ChangeComponent } from './change/change.component';
 
 @NgModule({
-  imports: [ PurchaseSharedModule ],
-  declarations: [ PaymentComponent, CashPaymentComponent, VoucherPaymentComponent, ChangeComponent ],
-  entryComponents: [ CashPaymentComponent, VoucherPaymentComponent ]
+    imports: [PurchaseSharedModule],
+    declarations: [PaymentComponent, CashPaymentComponent, VoucherPaymentComponent, ChangeComponent],
+    entryComponents: [CashPaymentComponent, VoucherPaymentComponent]
 })
-export class PaymentModule {}
+export class PaymentModule { }

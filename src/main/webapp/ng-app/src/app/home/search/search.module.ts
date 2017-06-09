@@ -11,12 +11,12 @@ import { ProductDetailsComponent } from './product-details/product-details.compo
 import { SearchService } from './shared/services/search.service';
 
 @NgModule({
-  imports: [ HomeSharedModule ],
-  declarations: [
-  	SearchComponent,
-	ProductDetailsComponent
-  ],
-  providers: [ SearchService ],
-  entryComponents: [ ProductDetailsComponent ]
+    imports: [HomeSharedModule],
+    declarations: [
+        SearchComponent,
+        ProductDetailsComponent
+    ],
+    providers: [SearchService],
+    entryComponents: [ProductDetailsComponent]
 })
-export class SearchModule {}
+export class SearchModule { }

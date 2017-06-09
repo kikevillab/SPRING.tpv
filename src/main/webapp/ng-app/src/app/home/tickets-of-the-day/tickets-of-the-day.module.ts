@@ -17,7 +17,7 @@ import { TicketsOfTheDayService } from './tickets-of-the-day.service';
         RouterModule,
         HomeSharedModule
     ],
-    declarations: [ TicketsOfTheDayComponent ],
-    providers: [ TicketsOfTheDayService ]
+    declarations: [TicketsOfTheDayComponent],
+    providers: [TicketsOfTheDayService]
 })
-export class TicketsOfTheDayModule {}
+export class TicketsOfTheDayModule { }

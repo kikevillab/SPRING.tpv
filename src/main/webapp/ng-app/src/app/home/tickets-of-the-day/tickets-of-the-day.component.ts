@@ -13,13 +13,14 @@ import { TicketsOfTheDayService } from './tickets-of-the-day.service';
     templateUrl: './tickets-of-the-day.component.html',
     styles: [`
         md-spinner {
-          margin: 0 auto;
+            margin: 0 auto;
         }
+
         @media only screen and (min-width: 960px) {
-          md-card {
-            margin: 10em;
-            margin-top: 0;
-          }
+            md-card {
+                margin: 10em;
+                margin-top: 0;
+            }
         }
     `]
 })
@@ -30,29 +31,28 @@ export class TicketsOfTheDayComponent implements OnInit, OnDestroy {
     ticketsSubscription: Subscription;
     error: boolean = false;
     columns: Object[] = [
-      { name: 'reference' },
-      { name: 'total' }
+        { name: 'reference' },
+        { name: 'total' }
     ];
 
-    constructor(private ticketsOfTheDayService: TicketsOfTheDayService){}
+    constructor(private ticketsOfTheDayService: TicketsOfTheDayService) { }
 
-    ngOnInit(){
-      this.ticketsSubscription = this.ticketsOfTheDayService.getTicketsObservable().subscribe((tickets: TicketOfTheDay[]) => {
-           this.ticketsOfTheDay = tickets;
-           this.loading = false;
-      });
-      this.ticketsOfTheDayService.getTickets().then((tickets: TicketOfTheDay[]) => {
-        this.ticketsOfTheDay = tickets;
-        this.error = false;
-        this.loading = false;
-      }).catch((error: string) => {
-        this.error = true;
-        this.loading = false;
-      }); 
+    ngOnInit() {
+        this.ticketsSubscription = this.ticketsOfTheDayService.getTicketsObservable().subscribe((tickets: TicketOfTheDay[]) => {
+            this.ticketsOfTheDay = tickets;
+            this.loading = false;
+        });
+        this.ticketsOfTheDayService.getTickets().then((tickets: TicketOfTheDay[]) => {
+            this.ticketsOfTheDay = tickets;
+            this.error = this.loading = false;
+        }).catch((error: string) => {
+            this.error = true;
+            this.loading = false;
+        });
     }
 
-    ngOnDestroy(){
-      this.ticketsSubscription && this.ticketsSubscription.unsubscribe();
+    ngOnDestroy() {
+        this.ticketsSubscription && this.ticketsSubscription.unsubscribe();
     }
 
 }

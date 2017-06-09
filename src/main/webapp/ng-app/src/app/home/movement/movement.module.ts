@@ -9,7 +9,7 @@ import { HomeSharedModule } from '../shared/home-shared.module';
 import { MovementComponent } from './movement.component';
 
 @NgModule({
-  imports: [ HomeSharedModule ],
-  declarations: [ MovementComponent ]
+    imports: [HomeSharedModule],
+    declarations: [MovementComponent]
 })
-export class MovementModule {}
+export class MovementModule { }
