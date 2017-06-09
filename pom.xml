@@ -78,10 +78,10 @@
 			<properties>
 				<logs.level>error</logs.level>
 				<logs.path>../logs</logs.path>
-				<database.url>jdbc:mysql://miwtpv.cqmevxnyr53u.us-east-2.rds.amazonaws.com:3306/tpv</database.url>
-                <database.user>miwtpv</database.user>
-                <database.password>miwtpv2017</database.password>				
-				<hibernate.hbm2ddl.auto>update</hibernate.hbm2ddl.auto>
+				<database.url>jdbc:mysql://test.clmwkhi0u7og.eu-west-1.rds.amazonaws.com:3306/tpv</database.url>
+                <database.user>admin</database.user>
+                <database.password>admin1234</database.password>                
+                <hibernate.hbm2ddl.auto>create</hibernate.hbm2ddl.auto>
 				<tomcat.url>http://tpv-miw.herokuapp.com/api</tomcat.url>
 			</properties>
 		</profile>
