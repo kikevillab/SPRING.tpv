@@ -3,5 +3,5 @@
   * Github: https://github.com/sergiobanegas 
 */
 export class UserMobile {
-	constructor(public userMobile: number) {}
+    constructor(public userMobile: number) { }
 }

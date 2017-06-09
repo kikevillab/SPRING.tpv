@@ -12,20 +12,20 @@ import { LOCAL_STORAGE_TOKEN_ATTRIBUTE } from '../app.config';
 @Injectable()
 export class HomeGuard implements CanActivate {
 
-  constructor(private router: Router, private localStorageService: LocalStorageService) {}
+    constructor(private router: Router, private localStorageService: LocalStorageService) { }
 
-  canActivate() {
-    if (this.localStorageService.isStored(LOCAL_STORAGE_TOKEN_ATTRIBUTE)) {
-      let sessionString: string = this.localStorageService.getItem(
-          LOCAL_STORAGE_TOKEN_ATTRIBUTE);
-      let parsedSession: any = JSON.parse(sessionString);
-      let session: Session = new Session(parsedSession.token, parsedSession.rol);
-      if (session.hasPrivileges()) {
-        return true;
-      }
+    canActivate() {
+        if (this.localStorageService.isStored(LOCAL_STORAGE_TOKEN_ATTRIBUTE)) {
+            let sessionString: string = this.localStorageService.getItem(
+                LOCAL_STORAGE_TOKEN_ATTRIBUTE);
+            let parsedSession: any = JSON.parse(sessionString);
+            let session: Session = new Session(parsedSession.token, parsedSession.rol);
+            if (session.hasPrivileges()) {
+                return true;
+            }
+        }
+        this.router.navigate(['/welcome']);
+        return false;
     }
-    this.router.navigate(['/welcome']);
-    return false;
-  }
-  
+
 }

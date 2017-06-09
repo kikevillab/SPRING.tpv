@@ -3,5 +3,5 @@
   * Github: https://github.com/sergiobanegas 
 */
 export class InvoiceCreation {
-	constructor(public ticketReference: string) {}
+    constructor(public ticketReference: string) { }
 }

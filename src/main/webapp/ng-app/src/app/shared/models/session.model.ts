@@ -11,6 +11,6 @@ export class Session {
     }
 
     hasPrivileges(): boolean {
-    	return this.role === ROLE_ADMIN || this.role === ROLE_MANAGER || this.role === ROLE_OPERATOR;
-    }   
+        return this.role === ROLE_ADMIN || this.role === ROLE_MANAGER || this.role === ROLE_OPERATOR;
+    }
 }

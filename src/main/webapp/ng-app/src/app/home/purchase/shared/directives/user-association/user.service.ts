@@ -15,17 +15,17 @@ import { LocalStorageService } from '../../../../../shared/services/local-storag
 @Injectable()
 export class UserService {
 
-  constructor (private httpService: HTTPService, private localStorageService: LocalStorageService) {}
+    constructor(private httpService: HTTPService, private localStorageService: LocalStorageService) { }
 
-  newUser(user: User): Promise<any> { 
-    return new Promise((resolve: Function, reject: Function) => {
-      let params: URLSearchParams = new URLSearchParams();
-      params.append('role', ROLE_CUSTOMER);
-      this.httpService.post(`${URI_USERS}`, user, null, params).subscribe(
-        () => resolve(user),
-        (error: TPVHTTPError) => {reject(error.description);}
-      );
-    });
-  }
+    newUser(user: User): Promise<any> {
+        return new Promise((resolve: Function, reject: Function) => {
+            let params: URLSearchParams = new URLSearchParams();
+            params.append('role', ROLE_CUSTOMER);
+            this.httpService.post(`${URI_USERS}`, user, null, params).subscribe(
+                () => resolve(user),
+                (error: TPVHTTPError) => { reject(error.description); }
+            );
+        });
+    }
 
 }

@@ -3,5 +3,5 @@
   * Github: https://github.com/sergiobanegas 
 */
 export class VoucherCreation {
-	constructor(public value: number, public expiration: Date) {}
+    constructor(public value: number, public expiration: Date) { }
 }

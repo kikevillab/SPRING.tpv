@@ -18,28 +18,30 @@ import { TicketsOfTheDayComponent } from './tickets-of-the-day/tickets-of-the-da
 import { HomeGuard } from './home.guard';
 
 const routes: Routes = [
-	{ 
-	    path: 'home', 
-	    component: HomeComponent,
-	    canActivate: [ HomeGuard ],
-	    children: [
-	   		{ path: '', redirectTo: 'search', pathMatch: 'full' },
-	   		{ path: 'search', component: SearchComponent },
-	    	{ path: 'open-cashier', component: OpenCashierComponent },
-	    	{ path: 'close-cashier', component: CloseCashierComponent },
-	    	{ path: 'movement', component: MovementComponent },
-	    	{ path: 'purchase', component: PurchaseComponent, children: [
-		   		{ path: '', redirectTo: 'payment', pathMatch: 'full' },
-		    	{ path: 'payment', component: PaymentComponent },
-		    	{ path: 'print', component: PrintComponent }
-	    	] },
-	    	{ path: 'tickets-of-the-day', component: TicketsOfTheDayComponent }
-	    ]
-	},
+    {
+        path: 'home',
+        component: HomeComponent,
+        canActivate: [HomeGuard],
+        children: [
+            { path: '', redirectTo: 'search', pathMatch: 'full' },
+            { path: 'search', component: SearchComponent },
+            { path: 'open-cashier', component: OpenCashierComponent },
+            { path: 'close-cashier', component: CloseCashierComponent },
+            { path: 'movement', component: MovementComponent },
+            {
+                path: 'purchase', component: PurchaseComponent, children: [
+                    { path: '', redirectTo: 'payment', pathMatch: 'full' },
+                    { path: 'payment', component: PaymentComponent },
+                    { path: 'print', component: PrintComponent }
+                ]
+            },
+            { path: 'tickets-of-the-day', component: TicketsOfTheDayComponent }
+        ]
+    },
 ];
 
 @NgModule({
-  imports: [ RouterModule.forChild(routes) ],
-  exports: [ RouterModule ]
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule]
 })
 export class HomeRoutingModule { }

@@ -4,17 +4,22 @@
 		<md-card-title>Cash flow</md-card-title>
 		<md-card-content fxLayout="column">
 			<div>
-				<h3 *ngIf="cashier">Money in cashier: <span class="text-primary">{{cashier.amount | currency:'EUR':true}}</span></h3>
+				<h3 *ngIf="cashier">
+					Money in cashier: 
+					<span class="text-primary">
+						<currency [value]="cashier.amount"></currency>
+					</span>
+				</h3>
 			</div>
 			<div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutGap="1em" fxLayoutAlign="space-between" id="cash-flow-container">
 				<md-card fxLayout="column">
-					<md-select placeholder="Operation" [(ngModel)]="operation" (change)="onChangeOperation()">
-					  <md-option value="Withdraw">
-					  	Withdraw
-					  </md-option>
-					  <md-option value="Deposit" selected>
-					  	Deposit
-					  </md-option>
+					<md-select id="operation-select" placeholder="Operation" [(ngModel)]="operation" (change)="onChangeOperation()">
+						<md-option value="withdraw">
+					  		Withdraw
+						</md-option>
+						<md-option value="deposit" selected>
+					  		Deposit
+					  	</md-option>
 					</md-select>
 				</md-card>
 				<md-card fxLayout="column">
@@ -30,9 +35,9 @@
 		<md-card-content fxLayout="row" fxLayout.xs="column" fxLayoutGap="1em" fxLayoutAlign="space-between">
 			<md-card>
 				<md-radio-group fxLayout="column">
-					  <md-radio-button name="reason" [checked]="selectedCommentOption == 'Cashier closing'" (click)="selectCommentOption('Cashier closing')" value="Cashier closing" id="cashier-closure-radio-button">Cashier closing</md-radio-button>
-					  <md-radio-button name="reason" *ngIf="operation=='Withdraw'" [checked]="selectedCommentOption =='Payment to suppliers'" (click)="selectCommentOption('Payment to suppliers')" value="Payment to suppliers">Payment to suppliers</md-radio-button>
-					  <md-radio-button name="reason" [checked]="selectedCommentOption == 'Other reason'" (click)="selectCommentOption('Other reason')" value="Other reason">Other reason</md-radio-button>
+						<md-radio-button name="reason" [checked]="selectedCommentOption == 'Cashier closing'" (click)="selectCommentOption('Cashier closing')" value="Cashier closing" id="cashier-closure-radio-button">Cashier closing</md-radio-button>
+						<md-radio-button name="reason" *ngIf="operation=='Withdraw'" [checked]="selectedCommentOption =='Payment to suppliers'" (click)="selectCommentOption('Payment to suppliers')" value="Payment to suppliers">Payment to suppliers</md-radio-button>
+						<md-radio-button name="reason" [checked]="selectedCommentOption == 'Other reason'" (click)="selectCommentOption('Other reason')" value="Other reason">Other reason</md-radio-button>
 				</md-radio-group>
 			</md-card>
 			<md-card fxLayout="column" *ngIf="selectedCommentOption == 'Other reason'" id="comment-box">

@@ -20,31 +20,31 @@
 	<ng-template #newClient>
 		<form (ngSubmit)="newUser($event)" #userCreationForm="ngForm">
 			<div class="form-group" fxLayout="column" fxLayoutGap="1em">
-			  <p>Fill the form in order to create the a client:</p>
-			  <div fxLayout="column" fxLayout.gt-md="row" fxLayoutGap="1em">
-				 <md-input-container>
-				    <input mdInput placeholder="Mobile" type="number" class="form-control" required [(ngModel)]="newUserInput.mobile" name="inputUserMobile" #mobileInput>
-				 </md-input-container>
-				 <md-input-container>
-				    <input mdInput placeholder="User name" type="text" class="form-control" required [(ngModel)]="newUserInput.username" name="inputUserUsername" #usernameInput maxLength="10">
-				    <md-hint align="end">{{usernameInput.value.length}} / 10</md-hint>
-				 </md-input-container>
-			  </div>
-			  <div fxLayout="column" fxLayout.gt-md="row" fxLayoutGap="1em">
-				  <md-input-container>
-				    <input mdInput placeholder="Identification" type="text" class="form-control" required [(ngModel)]="newUserInput.dni" name="inputUserDNI">
-				  </md-input-container>
-				  <md-input-container>
-				    <input mdInput placeholder="Email" type="email" class="form-control" required [(ngModel)]="newUserInput.email" name="inputUserEmail">
-				  </md-input-container>
-			  </div>
-			  <md-input-container>
-			    <input mdInput placeholder="Address" type="text" class="form-control" required [(ngModel)]="newUserInput.address" name="inputUserAddress">
-			  </md-input-container>
-			  <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="1em" id="button-container">
-				  <button md-raised-button color="warn" type="button" (click)="cancelNewClient()">Cancel</button>
-				  <button md-raised-button color="primary" type="submit" [disabled]="!userCreationForm.form.valid">Create</button>
-			  </div>
+				<p>Fill the form in order to create the a client:</p>
+				<div fxLayout="column" fxLayout.gt-md="row" fxLayoutGap="1em">
+					<md-input-container>
+				    	<input mdInput placeholder="Mobile" type="number" class="form-control" required [(ngModel)]="newUserInput.mobile" name="inputUserMobile" #mobileInput>
+				 	</md-input-container>
+				 	<md-input-container>
+				    	<input mdInput placeholder="User name" type="text" class="form-control" required [(ngModel)]="newUserInput.username" name="inputUserUsername" #usernameInput maxLength="10">
+				    	<md-hint align="end">{{usernameInput.value.length}} / 10</md-hint>
+				 	</md-input-container>
+			  	</div>
+			  	<div fxLayout="column" fxLayout.gt-md="row" fxLayoutGap="1em">
+				  	<md-input-container>
+				    	<input mdInput placeholder="Identification" type="text" class="form-control" required [(ngModel)]="newUserInput.dni" name="inputUserDNI">
+				  	</md-input-container>
+				  	<md-input-container>
+				    	<input mdInput placeholder="Email" type="email" class="form-control" required [(ngModel)]="newUserInput.email" name="inputUserEmail">
+				  	</md-input-container>
+			 	</div>
+			  	<md-input-container>
+			    	<input mdInput placeholder="Address" type="text" class="form-control" required [(ngModel)]="newUserInput.address" name="inputUserAddress">
+			  	</md-input-container>
+			  	<div fxLayout="row" fxLayout.xs="column" fxLayoutGap="1em" id="button-container">
+				 	<button md-raised-button color="warn" type="button" (click)="cancelNewClient()">Cancel</button>
+					<button md-raised-button color="primary" type="submit" [disabled]="!userCreationForm.form.valid">Create</button>
+				</div>
 			</div>
 		</form>
 	</ng-template>
@@ -56,19 +56,24 @@
 	<md-card-title>Client data</md-card-title>
 	<md-card-content>
 		<p>
-			<b>Username</b>: {{userAssociated.username}}
+			<b>Username</b>
+			: {{userAssociated.username}}
 		</p>
 		<p>
-			<b>Mobile</b>: {{userAssociated.mobile}}
+			<b>Mobile</b>
+			: {{userAssociated.mobile}}
 		</p>
 		<p>
-			<b>Identification</b>: {{userAssociated.dni}}
+			<b>Identification</b>
+			: {{userAssociated.dni}}
 		</p>
 		<p>
-			<b>Email</b>: {{userAssociated.email}}
+			<b>Email</b>
+			: {{userAssociated.email}}
 		</p>
 		<p>
-			<b>Address</b>: {{userAssociated.address}}
+			<b>Address</b>
+			: {{userAssociated.address}}
 		</p>
 	</md-card-content>
 </div>
