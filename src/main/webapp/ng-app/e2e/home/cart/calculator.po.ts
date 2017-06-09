@@ -6,29 +6,28 @@ import { element, by } from 'protractor';
 
 export class CalculatorView {
 
-  clickNumber(number:number) {
-    return element(by.id(`number-${number}-button`)).click(); 
-  }
+    clickNumber(number: number) {
+        return element(by.id(`number-${number}-button`)).click();
+    }
 
-  clickSumButton() {
-    return element(by.id('sum-button')).click();
-  }
+    clickSumButton() {
+        return element(by.id('sum-button')).click();
+    }
 
-  clickDecimalsButton() {
-    return element(by.id('decimals-button')).click(); 
-  }
+    clickDecimalsButton() {
+        return element(by.id('decimals-button')).click();
+    }
 
-  clickCalculateButton() {
-    return element(by.id('calculate-button')).click(); 
-  }
+    clickCalculateButton() {
+        return element(by.id('calculate-button')).click();
+    }
 
-  clickResetButton() {
-    return element(by.id('reset-button')).click(); 
-  }
+    clickResetButton() {
+        return element(by.id('reset-button')).click();
+    }
 
-  getResultText() {
-    return element(by.id('calculator-result')).getText(); 
-  }
+    getResultText() {
+        return element(by.id('calculator-result')).getText();
+    }
 
 }
-

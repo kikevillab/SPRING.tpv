@@ -16,18 +16,21 @@ import { OrderTrackingService } from './order-tracking.service';
         md-spinner {
             margin: 0 auto;
         }
+
         .green {
-            color:green;
-        }
-        #backButton {
-            cursor:pointer;
-        }
-        .red {
-            color:red;
+            color: green;
         }
 
+        #backButton {
+            cursor: pointer;
+        }
+
+        .red {
+            color: red;
+        }
+        
         .red > button {
-            cursor:auto;
+            cursor: auto;
         }
     `]
 })
@@ -36,27 +39,25 @@ export class OrderTrackingComponent implements OnInit {
     ticketReference: string;
     loading: boolean = true;
     products: ProductState[];
-    error: boolean = false;
     columns = [
-      { name: 'productCode' },
-      { name: 'description' },
-      { name: 'shoppingState' }
+        { name: 'productCode' },
+        { name: 'description' },
+        { name: 'shoppingState' }
     ];
 
-    constructor(private route: ActivatedRoute, private orderTrackingService: OrderTrackingService, private location: Location){}
+    constructor(private route: ActivatedRoute, private orderTrackingService: OrderTrackingService, private location: Location) { }
 
-    ngOnInit(){
-       this.ticketReference = this.route.snapshot.params['reference'];
-       this.orderTrackingService.getTicket(this.ticketReference).then((products: ProductState[]) => {
-           this.products = products;
-           this.loading = false;
-       }).catch((error: string) => {
-           this.error = true;
-           this.loading = false;
-       }); 
+    ngOnInit() {
+        this.ticketReference = this.route.snapshot.params['reference'];
+        this.orderTrackingService.getTicket(this.ticketReference).then((products: ProductState[]) => {
+            this.products = products;
+            this.loading = false;
+        }).catch((error: string) => {
+            this.loading = false;
+        });
     }
 
-    goToPreviousPage(): void{
+    goToPreviousPage(): void {
         this.location.back();
     }
 
