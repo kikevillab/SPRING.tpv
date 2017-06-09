@@ -9,10 +9,12 @@
 					<md-card-content>
 						<h1>{{product.description | capitalize}}</h1>
 						<p>
-							<b>Code</b>: {{product.code}}
+							<b>Code</b>
+							: {{product.code}}
 						</p>
 						<p>
-							<b>Price</b>:
+							<b>Price</b>
+							: 
 							<currency [value]="product.retailPrice"></currency>
 						</p>
 					</md-card-content>
@@ -23,10 +25,13 @@
 			<md-card-content>
 				<h2>{{product.description | capitalize}}</h2>
 				<p>
-					<b>Code</b>: {{product.code}}
+					<b>Code</b>
+					: {{product.code}}
 				</p>
 				<p>
-					<b>Price</b>: <currency [value]="product.retailPrice"></currency>
+					<b>Price</b>
+					: 
+					<currency [value]="product.retailPrice"></currency>
 				</p>
 			</md-card-content>
 		</md-card>
