@@ -42,6 +42,8 @@
 		<spring.data.version>1.8.0.RELEASE</spring.data.version>
 		<!-- Deploy tomcat version -->
 		<tomcat.version>8.0.33.0</tomcat.version>
+		<!-- Ant run task (sleep before functional api test) -->
+        <antrun.version>1.8</antrun.version>
 	</properties>
 
 	<profiles>
@@ -111,9 +113,30 @@
             <id>functional-api-test</id>
             <properties>
                  <tomcat.url>http://tpv-miw.herokuapp.com/api</tomcat.url>
+                 <sleep.seconds>30</sleep.seconds>
             </properties>
             <build>
-                <plugins>               
+                <plugins>   
+                    <plugin>
+                      <groupId>org.apache.maven.plugins</groupId>
+                      <artifactId>maven-antrun-plugin</artifactId>
+                      <version>${antrun.version}</version>
+                      <executions>
+                          <execution>
+                              <id>sleep-for-a-while</id>
+                              <phase>process-test-classes</phase>
+                              <configuration>
+                                  <target>
+                                     <echo message="sleep for ${sleep.seconds} seconds..." />
+                                      <sleep seconds="${sleep.seconds}" />
+                                  </target>
+                              </configuration>
+                              <goals>
+                                  <goal>run</goal>
+                              </goals>
+                          </execution>
+                      </executions>
+                    </plugin>            
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
