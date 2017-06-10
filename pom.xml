@@ -44,6 +44,7 @@
 		<tomcat.version>8.0.33.0</tomcat.version>
 		<!-- Ant run task (sleep before functional api test) -->
         <antrun.version>1.8</antrun.version>
+        <integration.test.skip>false</integration.test.skip>
 	</properties>
 
 	<profiles>
@@ -114,6 +115,7 @@
             <properties>
                  <tomcat.url>http://tpv-miw.herokuapp.com/api</tomcat.url>
                  <sleep.seconds>30</sleep.seconds>
+                 <integration.test.skip>true</integration.test.skip>
             </properties>
             <build>
                 <plugins>   
@@ -140,7 +142,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
-                        <version>2.19.1</version>
+                        <version>${maven.failsafe.version}</version>
                         <configuration>
                             <includes>
                                 <include>**/*FunctionalTesting*</include>
@@ -348,7 +350,7 @@
 							<goal>integration-test</goal>
 						</goals>
 						<configuration>
-							<skip>false</skip>
+							<skip>${integration.test.skip}</skip>
 						</configuration>
 					</execution>
 					<execution>
@@ -357,7 +359,7 @@
 							<goal>verify</goal>
 						</goals>
 						<configuration>
-							<skip>false</skip>
+							<skip>${integration.test.skip}</skip>
 						</configuration>
 					</execution>
 				</executions>
