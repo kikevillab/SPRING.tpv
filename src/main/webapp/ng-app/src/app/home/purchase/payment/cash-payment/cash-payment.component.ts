@@ -30,7 +30,7 @@ import { ShoppingService } from '../../../shared/services/shopping.service';
 
 export class CashPaymentComponent {
 
-    totalPrice: number = this.shoppingService.getTotalPrice();
+    totalPrice: number = this.shoppingService.getCashToPay();
     moneyQuantitiesCharged: Object = {
         "500": 0,
         "200": 0,
@@ -73,6 +73,9 @@ export class CashPaymentComponent {
 
     finishPayment(): void {
         this.dialogRef.close();
+        if (!this.moneyCharged) {
+            this.moneyCharged = 0;
+        }
         this.shoppingService.setCashReceived(this.moneyCharged);
     }
 
