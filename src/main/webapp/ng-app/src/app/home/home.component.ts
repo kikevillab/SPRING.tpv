@@ -56,7 +56,7 @@ export class HomeComponent implements OnInit, OnDestroy {
             !authorized && this.logout();
         });
         this.cashierSubscription = this.cashierService.getCurrentCashierObservable().subscribe((currentCashier: CashierClosure) => {
-            this.openedCashier = currentCashier == null || currentCashier.closureDate == null;
+            this.openedCashier = currentCashier !== null && currentCashier.openingDate !== null && (!currentCashier.closureDate || currentCashier.closureDate === null);
             (!this.openedCashier || currentCashier.openingDate === null) && this.router.navigate(['/home/open-cashier']);
         });
         this.cashierService.initialize();
