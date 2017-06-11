@@ -61,6 +61,8 @@ public abstract class PdfGenerator<T> {
     protected abstract float topMargin();
 
     protected abstract float bottomMargin();
+    
+    protected abstract void buildPdf();
 
     private Document getDocument(String fullPath, PageSize pageSize) throws IOException {
         PdfWriter pdfWriter = new PdfWriter(fullPath);
@@ -82,6 +84,6 @@ public abstract class PdfGenerator<T> {
         return Files.readAllBytes(new File(fullPath).toPath());
     }
 
-    protected abstract void buildPdf();
+
 
 }

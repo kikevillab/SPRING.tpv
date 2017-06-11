@@ -52,8 +52,16 @@ public class ResourceNames {
 
     public final static String CATEGORIES_ROOT = "category_root";
     
-    public final static String FAKE_RECEIPT_REGULAR_FONT = "./src/main/resources/fonts/fake-receipt.regular.ttf";
+    public final static String FONTS = "./src/main/resources/fonts/";
     
-    public final static String UPM_LOGO = "./src/main/resources/img/logo_upm.jpg";
+    public final static String FAKE_RECEIPT_REGULAR_FONT = "fake-receipt.regular.ttf";
+    
+    public final static String OPEN_SANS_REGULAR_FONT = "OpenSans-Regular.ttf";
+    
+    public final static String OPEN_SANS_BOLD_FONT = "OpenSans-Bold.ttf";
+    
+    public final static String IMAGES = "./src/main/resources/img/";
+    
+    public final static String UPM_LOGO = "logo_upm.jpg";
 
 }
