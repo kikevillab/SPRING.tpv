@@ -7,10 +7,13 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
+import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
+import com.itextpdf.layout.property.HorizontalAlignment;
+import com.itextpdf.layout.property.TextAlignment;
 
 public abstract class PdfGenerator<T> {
 
@@ -39,9 +42,25 @@ public abstract class PdfGenerator<T> {
         return path;
     }
 
-    protected abstract String ownPath();
+    protected abstract String path();
 
-    protected abstract PageSize ownPageSize();
+    protected abstract PageSize pageSize();
+
+    protected abstract PdfFont font() throws IOException;
+
+    protected abstract float fontSize();
+
+    protected abstract HorizontalAlignment horizontalAlignment();
+
+    protected abstract TextAlignment textAlignment();
+
+    protected abstract float leftMargin();
+
+    protected abstract float rightMargin();
+
+    protected abstract float topMargin();
+
+    protected abstract float bottomMargin();
 
     private Document getDocument(String fullPath, PageSize pageSize) throws IOException {
         PdfWriter pdfWriter = new PdfWriter(fullPath);
@@ -50,9 +69,14 @@ public abstract class PdfGenerator<T> {
     }
 
     public byte[] generatePdf() throws IOException {
-        String fullPath = createFullPath(ownPath());
+        String fullPath = createFullPath(path());
         makeDirectories(fullPath);
-        document = getDocument(fullPath, ownPageSize());
+        document = getDocument(fullPath, pageSize());
+        document.setMargins(topMargin(), rightMargin(), bottomMargin(), leftMargin());
+        document.setFont(font());
+        document.setFontSize(fontSize());
+        document.setHorizontalAlignment(horizontalAlignment());
+        document.setTextAlignment(textAlignment());
         buildPdf();
         document.close();
         return Files.readAllBytes(new File(fullPath).toPath());

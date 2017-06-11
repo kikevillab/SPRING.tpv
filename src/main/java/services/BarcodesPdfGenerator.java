@@ -3,15 +3,18 @@ package services;
 import static config.ResourceNames.BARCODES_PDFS_ROOT;
 import static config.ResourceNames.BARCODE_PDF;
 
+import java.io.IOException;
 import java.util.List;
 
 import com.itextpdf.barcodes.BarcodeEAN;
+import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.property.HorizontalAlignment;
 import com.itextpdf.layout.property.TextAlignment;
 
 import entities.core.Product;
@@ -28,14 +31,54 @@ public class BarcodesPdfGenerator extends PdfGenerator<List<Product>> {
     public BarcodesPdfGenerator(List<Product> productList) {
         super(productList);
     }
+    
+    @Override
+    protected PdfFont font() throws IOException {
+        return document.getPdfDocument().getDefaultFont();
+    }
 
     @Override
-    protected String ownPath() {
+    protected float fontSize() {
+        return 5;
+    }
+
+    @Override
+    protected HorizontalAlignment horizontalAlignment() {
+        return HorizontalAlignment.LEFT;
+    }
+
+    @Override
+    protected TextAlignment textAlignment() {
+        return TextAlignment.LEFT;
+    }
+
+    @Override
+    protected float leftMargin() {
+        return 0;
+    }
+
+    @Override
+    protected float rightMargin() {
+        return 0;
+    }
+
+    @Override
+    protected float topMargin() {
+        return 0;
+    }
+
+    @Override
+    protected float bottomMargin() {
+        return 0;
+    }
+
+    @Override
+    protected String path() {
         return BARCODES_PDFS_ROOT + BARCODE_PDF;
     }
 
     @Override
-    protected PageSize ownPageSize() {
+    protected PageSize pageSize() {
         return PageSize.A4;
     }
 
@@ -69,5 +112,7 @@ public class BarcodesPdfGenerator extends PdfGenerator<List<Product>> {
         cell.setMargin(BARCODE_MARGIN);
         return cell;
     }
+
+
 
 }

@@ -12,6 +12,7 @@ import com.itextpdf.barcodes.BarcodeQRCode;
 import com.itextpdf.io.font.PdfEncodings;
 import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.color.Color;
+import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.pdf.PdfDocument;
@@ -26,49 +27,78 @@ import com.itextpdf.layout.property.HorizontalAlignment;
 import com.itextpdf.layout.property.TextAlignment;
 import com.itextpdf.layout.property.VerticalAlignment;
 
+import config.ResourceNames;
 import entities.core.Shopping;
 import entities.core.Ticket;
 
 public class TicketPdfGenerator extends PdfGenerator<Ticket> {
-    // private final static float[] SHOPPING_LIST_COLUMNS_WIDTHS = new float[] {10.0f, 30.0f, 30.0f, 10.0f, 40.0f, 30.0f};
 
     private final static float[] SHOPPING_LIST_COLUMNS_WIDTHS = new float[] {1, 1, 1, 1, 1, 1};
 
-    private final static float EIGHTY_MM = 227;
+    private final static float TICKET_WIDHT = 227;
+
+    private final static float TICKET_HEIGHT = 842;
 
     private final static float QR_CODE_MODULE_SIZE = 2.5f;
-
-    private final static String TICKET_FONT = "./src/main/resources/fonts/fake-receipt.regular.ttf";
-    
-    private final static String UPM_LOGO = "./src/main/resources/img/logo_upm.jpg";
 
     public TicketPdfGenerator(Ticket entity) {
         super(entity);
     }
 
     @Override
-    protected String ownPath() {
+    protected String path() {
         return TICKETS_PDFS_ROOT + TICKET_PDF_FILENAME_ROOT + entity.getId();
     }
 
     @Override
-    protected PageSize ownPageSize() {
-        return new PageSize(EIGHTY_MM, 842);
+    protected PageSize pageSize() {
+        return new PageSize(TICKET_WIDHT, TICKET_HEIGHT);
+    }
+
+    @Override
+    protected PdfFont font() throws IOException {
+        return PdfFontFactory.createFont(ResourceNames.FAKE_RECEIPT_REGULAR_FONT, PdfEncodings.CP1250, true);
+    }
+
+    @Override
+    protected float fontSize() {
+        return 8.0f;
+    }
+
+    @Override
+    protected HorizontalAlignment horizontalAlignment() {
+        return HorizontalAlignment.CENTER;
+    }
+
+    @Override
+    protected TextAlignment textAlignment() {
+        return TextAlignment.CENTER;
+    }
+
+    @Override
+    protected float leftMargin() {
+        return 0;
+    }
+
+    @Override
+    protected float rightMargin() {
+        return 0;
+    }
+
+    @Override
+    protected float topMargin() {
+        return 0;
+    }
+
+    @Override
+    protected float bottomMargin() {
+        return 0;
     }
 
     @Override
     protected void buildPdf() {
-        document.setHorizontalAlignment(HorizontalAlignment.CENTER);
-        document.setTextAlignment(TextAlignment.CENTER);
-        document.setFontSize(8.0f);
-        document.setMargins(0.0f, 0.0f, 0.0f, 0.0f);
         try {
-            document.setFont(PdfFontFactory.createFont(TICKET_FONT, PdfEncodings.CP1250, true));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            Image img = new Image(ImageDataFactory.create(UPM_LOGO));
+            Image img = new Image(ImageDataFactory.create(ResourceNames.UPM_LOGO));
             img.setWidth(50);
             img.setHorizontalAlignment(HorizontalAlignment.CENTER);
             document.add(img);
@@ -82,7 +112,7 @@ public class TicketPdfGenerator extends PdfGenerator<Ticket> {
         separator.setGap(2);
         separator.setLineWidth(0.5f);
         document.add(new LineSeparator(separator));
-        
+
         document.add(new Paragraph("REFERENCE: " + entity.getReference()));
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         document.add(new Paragraph("CREATED ON: " + formatter.format(entity.getCreated().getTime())));
@@ -102,7 +132,7 @@ public class TicketPdfGenerator extends PdfGenerator<Ticket> {
         double total = 0.0;
         for (int i = 0; i < entity.getShoppingList().size(); i++) {
             Shopping shopping = entity.getShoppingList().get(i);
-            shoppingListTable.addCell(String.valueOf(i+1));
+            shoppingListTable.addCell(String.valueOf(i + 1));
             shoppingListTable.addCell(String.valueOf(shopping.getAmount()));
             shoppingListTable.addCell(String.valueOf(shopping.getDiscount() + "%"));
             shoppingListTable.addCell(String.valueOf(shopping.getProduct().getDescription()));
@@ -130,4 +160,5 @@ public class TicketPdfGenerator extends PdfGenerator<Ticket> {
         qrCodeImage.setTextAlignment(TextAlignment.CENTER);
         return qrCodeImage;
     }
+
 }

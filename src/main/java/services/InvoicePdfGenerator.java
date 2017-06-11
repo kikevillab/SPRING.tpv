@@ -3,11 +3,15 @@ package services;
 import static config.ResourceNames.INVOICES_PDFS_ROOT;
 import static config.ResourceNames.INVOICE_PDF_FILENAME_ROOT;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 
+import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.property.HorizontalAlignment;
+import com.itextpdf.layout.property.TextAlignment;
 
 import entities.core.Invoice;
 import entities.core.Shopping;
@@ -21,13 +25,53 @@ public class InvoicePdfGenerator extends PdfGenerator<Invoice> {
     }
 
     @Override
-    protected String ownPath() {
+    protected String path() {
         return INVOICES_PDFS_ROOT + INVOICE_PDF_FILENAME_ROOT + entity.getId();
     }
 
     @Override
-    protected PageSize ownPageSize() {
+    protected PageSize pageSize() {
         return PageSize.A4;
+    }
+
+    @Override
+    protected PdfFont font() throws IOException {
+        return document.getPdfDocument().getDefaultFont();
+    }
+
+    @Override
+    protected float fontSize() {
+        return 5;
+    }
+
+    @Override
+    protected HorizontalAlignment horizontalAlignment() {
+        return HorizontalAlignment.CENTER;
+    }
+
+    @Override
+    protected TextAlignment textAlignment() {
+        return TextAlignment.LEFT;
+    }
+
+    @Override
+    protected float leftMargin() {
+        return 0;
+    }
+
+    @Override
+    protected float rightMargin() {
+        return 0;
+    }
+
+    @Override
+    protected float topMargin() {
+        return 0;
+    }
+
+    @Override
+    protected float bottomMargin() {
+        return 0;
     }
 
     @Override
@@ -56,4 +100,5 @@ public class InvoicePdfGenerator extends PdfGenerator<Invoice> {
         }
         document.add(shoppingListTable);
     }
+
 }

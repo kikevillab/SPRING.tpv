@@ -51,5 +51,9 @@ public class ResourceNames {
     public final static String BATCH = "batch";
 
     public final static String CATEGORIES_ROOT = "category_root";
+    
+    public final static String FAKE_RECEIPT_REGULAR_FONT = "./src/main/resources/fonts/fake-receipt.regular.ttf";
+    
+    public final static String UPM_LOGO = "./src/main/resources/img/logo_upm.jpg";
 
 }
