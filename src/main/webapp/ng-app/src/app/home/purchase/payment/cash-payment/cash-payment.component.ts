@@ -79,4 +79,10 @@ export class CashPaymentComponent {
         this.shoppingService.setCashReceived(this.moneyCharged);
     }
 
+    formatCountedMoneyInput(): void {
+        if (this.moneyCharged < 0) {
+            this.moneyCharged = 0;
+        }
+    }
+
 }

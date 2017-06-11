@@ -10,7 +10,7 @@
 					<p>Associate a client by entering his number: </p>
 					<md-input-container >
 						<input mdInput type="number" step="1" min="13" max="111" max="9999999999999" class="form-control" id="mobile-number-input" required placeholder="Mobile number"
-						[(ngModel)]="mobileNumberInput" name="mobileNumberInput" #name="ngModel">
+						[(ngModel)]="mobileNumberInput" name="mobileNumberInput" #name="ngModel" (blur)="formatMobileNumberInput()">
 					</md-input-container>				
 				</div>
 				<button md-raised-button color="primary" type="submit" [disabled]="!mobileNumberForm.form.valid" id="user-association-submit-button">OK</button >
@@ -23,7 +23,7 @@
 				<p>Fill the form in order to create the a client:</p>
 				<div fxLayout="column" fxLayout.gt-md="row" fxLayoutGap="1em">
 					<md-input-container>
-				    	<input mdInput placeholder="Mobile" type="number" class="form-control" required [(ngModel)]="newUserInput.mobile" name="inputUserMobile" #mobileInput>
+				    	<input mdInput placeholder="Mobile" type="number" class="form-control" required [(ngModel)]="newUserInput.mobile" name="inputUserMobile" #mobileInput (blur)="formatNewUserMobileNumberInput()">
 				 	</md-input-container>
 				 	<md-input-container>
 				    	<input mdInput placeholder="User name" type="text" class="form-control" required [(ngModel)]="newUserInput.username" name="inputUserUsername" #usernameInput maxLength="10">
@@ -32,7 +32,7 @@
 			  	</div>
 			  	<div fxLayout="column" fxLayout.gt-md="row" fxLayoutGap="1em">
 				  	<md-input-container>
-				    	<input mdInput placeholder="Identification" type="text" class="form-control" required [(ngModel)]="newUserInput.dni" name="inputUserDNI">
+				    	<input mdInput placeholder="National Identification Number" type="text" class="form-control" required [(ngModel)]="newUserInput.dni" name="inputUserDNI">
 				  	</md-input-container>
 				  	<md-input-container>
 				    	<input mdInput placeholder="Email" type="email" class="form-control" required [(ngModel)]="newUserInput.email" name="inputUserEmail" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">

@@ -34,4 +34,10 @@ export class CreateVoucherComponent {
         this.dialogRef.close();
     }
 
+    formatVoucherValueInput(): void {
+        if (this.voucherValueInput < 1) {
+            this.voucherValueInput = undefined;
+        }
+    }
+
 }

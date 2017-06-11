@@ -83,4 +83,16 @@ export class UserAssociationComponent {
         this.newClientOpened = false;
     }
 
+    formatMobileNumberInput(): void {
+        if (this.mobileNumberInput < 0) {
+            this.mobileNumberInput = undefined;
+        }
+    }
+
+    formatNewUserMobileNumberInput(): void {
+        if (this.newUserInput.mobile < 0) {
+            this.newUserInput.mobile = undefined;
+        }
+    }
+
 }
