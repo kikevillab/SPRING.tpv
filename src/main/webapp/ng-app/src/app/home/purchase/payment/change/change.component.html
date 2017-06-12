@@ -4,21 +4,34 @@
 	</button>
 	<md-card-title>Money received</md-card-title>
 	<md-card-content>
-		<p>Cash: <b class="text-primary">{{ cashReceived | currency:'EUR':true }}</b></p>
+		<p>Cash: 
+			<b class="text-primary">
+				<currency [value]="cashReceived"></currency>
+			</b>
+		</p>
 		<h3>Vouchers</h3>
 		<md-list *ngFor="let voucher of vouchers">
 			<md-list-item>
-				<b md-line class="text-primary">{{ voucher.value | currency:'EUR':true }}</b>
+				<b md-line class="text-primary">
+					<currency [value]="voucher.value"></currency>
+				</b>
 				<button md-icon-button (click)="removeVoucher(voucher)" mdTooltip="Delete from purchase" mdTooltipPosition="left">
 			        <md-icon class="md-24" color="warn">clear</md-icon>
 			    </button>
 			</md-list-item>
 			<md-divider></md-divider>
 		</md-list>
-		<p>Total: <b class="text-primary">{{ totalPaid | currency:'EUR':true }}</b></p>
+		<p>
+			Total: 
+			<b class="text-primary">
+				<currency [value]="totalPaid"></currency>
+			</b>
+		</p>
 		<span *ngIf="change > 0">
 			<h3>Change</h3>
-			<h4 class="text-primary">{{ change | currency:'EUR':true }}</h4>
+			<h4 class="text-primary">
+				<currency [value]="change"></currency>
+			</h4>
 		</span>
 	</md-card-content>
 </md-card>

@@ -6,15 +6,14 @@ import { browser, element, by } from 'protractor';
 
 export class WelcomePage {
 
-	navigateTo() {
-		return browser.get('/welcome');
-	}
+    navigateTo() {
+        return browser.get('/welcome');
+    }
 
-	login() {
-		element(by.id('login-mobile-input')).sendKeys('123456789');
-		element(by.id('login-password-input')).sendKeys('admin');
-		return element(by.id('login-submit-button')).click(); 
-	}
+    login() {
+        element(by.id('login-mobile-input')).sendKeys('123456789');
+        element(by.id('login-password-input')).sendKeys('admin');
+        return element(by.id('login-submit-button')).click();
+    }
 
 }
-

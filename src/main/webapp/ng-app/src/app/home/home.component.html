@@ -39,7 +39,7 @@
 	<div class="content">
 		<router-outlet></router-outlet>
 	</div>
-	<md-sidenav #cart align="end" [opened]="cartSideNavOpened" class="sidenav">
+	<md-sidenav #cart align="end" [opened]="cartSideNavOpened">
 		<shopping-cart-view (closeSidenavEvent)= "closeCartSidenav()"></shopping-cart-view>
 	</md-sidenav>
 </md-sidenav-container>

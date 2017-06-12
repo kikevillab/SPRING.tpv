@@ -13,70 +13,72 @@ import { ToastService } from '../../shared/services/toast.service';
 
 
 @Component({
-  selector: 'close-cashier-view',
-  templateUrl: './close-cashier.component.html',
-  styles: [`
-    @media only screen and (min-width: 600px) {
-      md-card {
-        width: 30em;
-      }
-    }
-  `]
+    selector: 'close-cashier-view',
+    templateUrl: './close-cashier.component.html',
+    styles: [`
+        @media only screen and (min-width: 600px) {
+            md-card {
+                width: 30em;
+            }
+        }
+    `]
 })
 
 export class CloseCashierComponent implements OnInit, OnDestroy {
 
-  countedMoney: number;
-  selectedOption: string = 'I agree';
-  comment: string = '';
-  cashier: CashierClosure;
-  cashierSubscription: Subscription;
+    countedMoney: number;
+    selectedOption: string = 'I agree';
+    comment: string = '';
+    cashier: CashierClosure;
+    cashierSubscription: Subscription;
 
-  constructor(private cashierService: CashierService, private router: Router, private toastService: ToastService){}
+    constructor(private cashierService: CashierService, private router: Router, private toastService: ToastService) { }
 
-  ngOnInit(){
-    this.cashier = this.cashierService.getCurrentCashier();
-    this.cashierSubscription = this.cashierService.getCurrentCashierObservable().subscribe((cashier: CashierClosure) => {
-      this.cashier = cashier;
-    });
-  }
-
-  selectOption(entry): void {
-    this.selectedOption = entry;
-  }
-
-  formatCountedMoney(): void {
-    this.countedMoney = this.countedMoney !== undefined ? Math.round(this.countedMoney * 100) / 100 : undefined;  
-  }
-
-  close(): void {
-    let comment: string = this.selectedOption;
-    if (this.comment != ''){
-      comment += `. ${this.comment}`;
+    ngOnInit() {
+        this.cashier = this.cashierService.getCurrentCashier();
+        this.cashierSubscription = this.cashierService.getCurrentCashierObservable().subscribe((cashier: CashierClosure) => {
+            this.cashier = cashier;
+        });
     }
-    this.cashierService.closeCashier(this.countedMoney, comment).then((cashier: CashierClosure) => {
-      this.toastService.info('Cashier closed', 'The cashier has been closed');
-    }).catch((error: string) => {
-      this.toastService.error('Error closing the cashier', error);
-    });
-  }
 
-  getCashierMoney(): number {
-    return this.cashier ? this.cashier.amount : 0;
-  }
+    selectOption(entry: string): void {
+        this.selectedOption = entry;
+    }
 
-  getDesbalance(): number {
-     if (this.cashier){
-       return (this.countedMoney == undefined || isNaN(Number(this.countedMoney.toString()))) ? this.cashier.amount : this.countedMoney - this.cashier.amount;
-     } else return 0;
-  }
+    formatCountedMoney(): void {
+        this.countedMoney = this.countedMoney !== undefined ? Math.round(this.countedMoney * 100) / 100 : undefined;
+    }
 
-  isInvalidForm(): boolean {
-    return this.countedMoney < 0 || this.countedMoney == undefined;
-  }
+    close(): void {
+        let comment: string = this.selectedOption;
+        if (this.comment != '') {
+            comment += `. ${this.comment}`;
+        }
+        this.cashierService.closeCashier(this.countedMoney, comment).then((cashier: CashierClosure) => {
+            this.toastService.info('Cashier closed', 'The cashier has been closed');
+        }).catch((error: string) => {
+            this.toastService.error('Error closing the cashier', error);
+        });
+    }
 
-  ngOnDestroy(){
-    this.cashierSubscription && this.cashierSubscription.unsubscribe();
-  }
+    getCashierMoney(): number {
+        return this.cashier ? this.cashier.amount : 0;
+    }
+
+    getDesbalance(): number {
+        if (this.cashier) {
+            return (this.countedMoney == undefined || isNaN(Number(this.countedMoney.toString()))) ? this.cashier.amount : this.countedMoney - this.cashier.amount;
+        } else {
+            return 0;
+        }
+    }
+
+    isInvalidForm(): boolean {
+        return this.countedMoney < 0 || this.countedMoney == undefined;
+    }
+
+    ngOnDestroy() {
+        this.cashierSubscription && this.cashierSubscription.unsubscribe();
+    }
 
 }

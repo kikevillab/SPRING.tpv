@@ -14,106 +14,107 @@ import { ShoppingService } from '../shared/services/shopping.service';
 import { ToastService } from '../../shared/services/toast.service';
 
 @Component({
-  selector: 'search-view',
-  templateUrl: './search.component.html',
-  styleUrls: ['./search.component.css']
+    selector: 'search-view',
+    templateUrl: './search.component.html',
+    styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit, OnDestroy {
 
-  categories: Category[] = [];
-  categoriesPageSubcription: Subscription;
-  nameInput: string;
-  lastNameInput: string;
-  pxScrolled: number = 0;
-  @ViewChild('scrollContainer') scrollContainer: ElementRef;
-  lastPage: CategoriesPage;
-  isRootCategory: boolean = true;
-  scrolled: boolean = false;
-  loading: boolean = true;
+    categories: Category[] = [];
+    categoriesPageSubcription: Subscription;
+    nameInput: string;
+    lastNameInput: string;
+    pxScrolled: number = 0;
+    @ViewChild('scrollContainer') scrollContainer: ElementRef;
+    lastPage: CategoriesPage;
+    isRootCategory: boolean = true;
+    scrolled: boolean = false;
+    loading: boolean = true;
 
-  constructor (private searchService: SearchService, private shoppingService: ShoppingService, private toastService: ToastService, private dialog: MdDialog){}
+    constructor(private searchService: SearchService, private shoppingService: ShoppingService, private toastService: ToastService, private dialog: MdDialog) { }
 
-  ngOnInit(){
-    this.categoriesPageSubcription = this.searchService.getCategoriesPageObservable().subscribe((categoriesPage: CategoriesPage) => {
-      this.categories = this.scrolled
-        ? this.categories.concat(categoriesPage.content)
-        : categoriesPage.content;
-      this.scrolled = this.loading = false;
-      this.lastPage = categoriesPage;
-      this.isRootCategory = this.searchService.isRootCategory();
-    });
-  	this.searchService.getCategoryContent();
-  }
-
-  openCategory(category: Category): void {
-    if (category.code) {
-      let dialogRef: MdDialogRef<ProductDetailsComponent> = this.dialog.open(ProductDetailsComponent);
-      dialogRef.componentInstance.initialize(category.code);
-    } else {
-      this.loading = true;
-      this.searchService.getCategoryContent(category.id);
+    ngOnInit() {
+        this.categoriesPageSubcription = this.searchService.getCategoriesPageObservable().subscribe((categoriesPage: CategoriesPage) => {
+            this.categories = this.scrolled
+                ? this.categories.concat(categoriesPage.content)
+                : categoriesPage.content;
+            this.scrolled = this.loading = false;
+            this.lastPage = categoriesPage;
+            this.isRootCategory = this.searchService.isRootCategory();
+        });
+        this.searchService.getCategoryContent();
     }
-  }
 
-  goToPreviousCategory(): void {
-    this.loading = true;
-  	this.searchService.goToPreviousCategory();
-  }
-
-  search(): void {
-    this.loading = true;
-    this.nameInput && this.searchService.search(this.nameInput).then((categoriesPage: CategoriesPage) => {
-      this.lastNameInput = this.nameInput;
-      this.nameInput = undefined;
-    });
-  }
-
-  @HostListener('window:scroll', [])
-  scrollHandler(event: any): void {
-    let tracker: Element = event.target;
-    let limit: number = tracker.scrollHeight - tracker.clientHeight;
-    this.pxScrolled = event.target.scrollTop;
-    if (tracker.scrollTop === limit && !this.lastPage.last) {
-    	this.scrolled = true;
-		this.lastNameInput
-      		? this.searchService.search(this.lastNameInput, this.lastPage.number + 1)
-      		: this.searchService.getCategoryContent(null , this.lastPage.number + 1);
+    openCategory(category: Category): void {
+        if (category.code) {
+            let dialogRef: MdDialogRef<ProductDetailsComponent> = this.dialog.open(ProductDetailsComponent);
+            dialogRef.componentInstance.initialize(category.code);
+        } else {
+            this.loading = true;
+            this.searchService.getCategoryContent(category.id);
+        }
     }
-  }
 
-  resetSearch(): void {
-    this.lastNameInput = this.lastPage = undefined;
-    this.loading = true;
-    this.scrolled = false;
-    this.searchService.getCategoryContent();
-  }
+    goToPreviousCategory(): void {
+        this.loading = true;
+        this.searchService.goToPreviousCategory();
+    }
 
-  addToCart(code: string): void {
-    this.shoppingService.addProduct(code).then(() => {   
-      this.toastService.info('Product added', 'The product has been added to the shopping cart');
-    }).catch((error: string) => {
-      this.toastService.error('Error adding product', error);
-    });
-  }
+    search(event: any): void {
+        event.preventDefault();
+        this.loading = true;
+        this.nameInput && this.searchService.search(this.nameInput).then((categoriesPage: CategoriesPage) => {
+            this.lastNameInput = this.nameInput;
+            this.nameInput = undefined;
+        });
+    }
 
-  scrollToTop(): void {
-    this.scrollContainer.nativeElement.scrollTop = 0;
-  }
+    @HostListener('window:scroll', [])
+    scrollHandler(event: any): void {
+        let tracker: Element = event.target;
+        let limit: number = tracker.scrollHeight - tracker.clientHeight;
+        this.pxScrolled = event.target.scrollTop;
+        if (tracker.scrollTop === limit && !this.lastPage.last) {
+            this.scrolled = true;
+            this.lastNameInput
+                ? this.searchService.search(this.lastNameInput, this.lastPage.number + 1)
+                : this.searchService.getCategoryContent(null, this.lastPage.number + 1);
+        }
+    }
 
-  getFloatingButtonsTopPx(): number {
-    return this.pxScrolled + 5;
-  }
+    resetSearch(): void {
+        this.lastNameInput = this.lastPage = undefined;
+        this.loading = true;
+        this.scrolled = false;
+        this.searchService.getCategoryContent();
+    }
 
-  calculateContainerHeight(): number {
-    return window.innerHeight - this.scrollContainer.nativeElement.offsetTop - 16;
-  }
+    addToCart(code: string): void {
+        this.shoppingService.addProduct(code).then(() => {
+            this.toastService.info('Product added', 'The product has been added to the shopping cart');
+        }).catch((error: string) => {
+            this.toastService.error('Error adding product', error);
+        });
+    }
 
-  getCategoryBackgroundColor(code: string): string {
-    return code ? '#E1F5FE' : '#FFF9C4';
-  }
+    scrollToTop(): void {
+        this.scrollContainer.nativeElement.scrollTop = 0;
+    }
 
-  ngOnDestroy() {
-    this.categoriesPageSubcription && this.categoriesPageSubcription.unsubscribe();
-  }
+    getFloatingButtonsTopPx(): number {
+        return this.pxScrolled + 5;
+    }
+
+    calculateScrollContainerHeight(): number {
+        return window.innerHeight - this.scrollContainer.nativeElement.offsetTop - 16;
+    }
+
+    getCategoryBackgroundColor(code: string): string {
+        return code ? '#E1F5FE' : '#FFF9C4';
+    }
+
+    ngOnDestroy() {
+        this.categoriesPageSubcription && this.categoriesPageSubcription.unsubscribe();
+    }
 
 }
