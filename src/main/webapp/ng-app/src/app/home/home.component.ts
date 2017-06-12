@@ -47,12 +47,12 @@ export class HomeComponent implements OnInit, OnDestroy {
     cartSideNavOpened: boolean = false;
     openedCashier: boolean = false;
     cashierSubscription: Subscription;
-    authorizationSubscription: Subscription;
+    authSubscription: Subscription;
 
     constructor(private router: Router, private toastService: ToastService, private dialog: MdDialog, private cashierService: CashierService, private homeService: HomeService, private authService: AuthService) { }
 
     ngOnInit() {
-        this.authorizationSubscription = this.authService.getAuthorizationObservable().subscribe((authorized: boolean) => {
+        this.authSubscription = this.authService.getAuthorizationObservable().subscribe((authorized: boolean) => {
             !authorized && this.logout();
         });
         this.cashierSubscription = this.cashierService.getCurrentCashierObservable().subscribe((currentCashier: CashierClosure) => {
@@ -81,6 +81,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
+    	this.authSubscription && this.authSubscription.unsubscribe();
         this.cashierSubscription && this.cashierSubscription.unsubscribe();
     }
 
