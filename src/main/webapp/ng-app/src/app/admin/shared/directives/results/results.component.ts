@@ -5,7 +5,6 @@
 import {Component, EventEmitter} from '@angular/core';
 import {User} from '../../../../shared/models/user.model';
 import {MdDialog, MdDialogConfig} from '@angular/material';
-import {TableRecord} from './table-record.model';
 import {UserDetailsDialog} from '../details/details.component';
 
 @Component({
@@ -28,7 +27,7 @@ export class ResultsComponent {
         this.onModifiedUser = new EventEmitter();
     }
 
-    onActivate(selection: TableRecord) {
+    onActivate(selection: any) {
         this.dialogConfig.data = selection.row;
         this.onSelectedUser.emit(selection.row);
 
