@@ -16,7 +16,7 @@ import { ToastService } from '../../shared/services/toast.service';
 })
 export class OpenCashierComponent implements OnInit, OnDestroy {
 
-    private cashierClosureDate: Date;
+    cashierClosureDate: Date;
     private cashierSubscription: Subscription;
 
     constructor(private router: Router, private cashierService: CashierService, private toastService: ToastService) { }

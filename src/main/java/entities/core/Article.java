@@ -52,7 +52,7 @@ public class Article extends Product {
     
     @Override
     public String getLongDescription() {
-        return "Article with " + stock + " units in stock and sold at a wholesale price of " + wholesalePrice + "€.";
+        return "Article with " + stock + " units in stock and sold at a wholesale price of €" + wholesalePrice + ".";
     }
 
     @Override

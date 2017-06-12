@@ -60,7 +60,8 @@ export class SearchComponent implements OnInit, OnDestroy {
         this.searchService.goToPreviousCategory();
     }
 
-    search(): void {
+    search(event: any): void {
+        event.preventDefault();
         this.loading = true;
         this.nameInput && this.searchService.search(this.nameInput).then((categoriesPage: CategoriesPage) => {
             this.lastNameInput = this.nameInput;
@@ -104,7 +105,7 @@ export class SearchComponent implements OnInit, OnDestroy {
         return this.pxScrolled + 5;
     }
 
-    calculateContainerHeight(): number {
+    calculateScrollContainerHeight(): number {
         return window.innerHeight - this.scrollContainer.nativeElement.offsetTop - 16;
     }
 

@@ -1,4 +1,4 @@
-<div id="scroll-container" [style.height.px]="calculateContainerHeight()" (scroll)="scrollHandler($event)" #scrollContainer>
+<div id="scroll-container" [style.height.px]="calculateScrollContainerHeight()" (scroll)="scrollHandler($event)" #scrollContainer>
 	<h1 id="page-title">Products</h1>
 	<div class="margin-sides" fxLayoutGap="1em" fxLayout="column">
 		<button md-mini-fab color="warn" mdTooltip="Reset search" mdTooltipPosition="below" (click)="resetSearch()" id="reset-search-button" *ngIf="lastNameInput">
@@ -9,8 +9,7 @@
 				<md-card-content fxLayout="row" fxLayout.xs="column" fxLayout.sm="column">
 					<form (ngSubmit)="search($event)" #searchForm="ngForm" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-around" id="search-container">
 						<md-input-container>
-							<input mdInput type="text" maxLength="255" class="form-control" id="name-input" required placeholder="Name"
-							[(ngModel)]="nameInput" name="nameInput" #name="ngModel">
+							<input mdInput type="text" maxLength="255" class="form-control" id="name-input" required placeholder="Name" [(ngModel)]="nameInput" name="nameInput" #name="ngModel">
 						</md-input-container>	
 						<div fxLayout="column">		
 						<button md-raised-button color="primary" type="submit" [disabled]="!searchForm.form.valid" id="submit-search-button">Search</button ></div>

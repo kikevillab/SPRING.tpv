@@ -10,7 +10,7 @@
 		    	Total: <currency [value]="totalPrice"></currency>
 		    </div>
 		  	<md-input-container fxFlex="40">
-		  		<input mdInput placeholder="Counted money (€)" type="number" id="moneyCharged" [(ngModel)]="moneyCharged" step="0.01" min="0.00">
+		  		<input mdInput placeholder="Counted money (€)" type="number" id="moneyCharged" [(ngModel)]="moneyCharged" step="0.01" min="0.00" (blur)="formatCountedMoneyInput()">
 		  	</md-input-container>
 		  	<button fxFlex="20" md-raised-button color="primary" (click)="finishPayment()">OK</button>
 		</div>

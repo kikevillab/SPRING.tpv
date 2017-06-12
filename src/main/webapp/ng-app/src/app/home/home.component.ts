@@ -47,16 +47,16 @@ export class HomeComponent implements OnInit, OnDestroy {
     cartSideNavOpened: boolean = false;
     openedCashier: boolean = false;
     cashierSubscription: Subscription;
-    authorizationSubscription: Subscription;
+    authSubscription: Subscription;
 
     constructor(private router: Router, private toastService: ToastService, private dialog: MdDialog, private cashierService: CashierService, private homeService: HomeService, private authService: AuthService) { }
 
     ngOnInit() {
-        this.authorizationSubscription = this.authService.getAuthorizationObservable().subscribe((authorized: boolean) => {
+        this.authSubscription = this.authService.getAuthorizationObservable().subscribe((authorized: boolean) => {
             !authorized && this.logout();
         });
         this.cashierSubscription = this.cashierService.getCurrentCashierObservable().subscribe((currentCashier: CashierClosure) => {
-            this.openedCashier = currentCashier == null || currentCashier.closureDate == null;
+            this.openedCashier = currentCashier !== null && currentCashier.openingDate !== null && (!currentCashier.closureDate || currentCashier.closureDate === null);
             (!this.openedCashier || currentCashier.openingDate === null) && this.router.navigate(['/home/open-cashier']);
         });
         this.cashierService.initialize();
@@ -81,6 +81,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
+        this.authSubscription && this.authSubscription.unsubscribe();
         this.cashierSubscription && this.cashierSubscription.unsubscribe();
     }
 
@@ -101,7 +102,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 })
 export class OrderTrackingDialog {
 
-    ticketReferenceInput: string = '';
+    ticketReferenceInput: string;
 
     constructor(public dialogRef: MdDialogRef<OrderTrackingDialog>, private router: Router) { }
 
