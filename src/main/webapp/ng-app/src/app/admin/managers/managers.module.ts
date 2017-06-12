@@ -4,7 +4,7 @@
 
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {UsersModule} from '../shared/users/users.module';
+import {UsersModule} from '../shared/users.module';
 import {ManagersComponent} from './managers.component';
 
 @NgModule({
