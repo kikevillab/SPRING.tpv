@@ -32,11 +32,11 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-            .title("TITLE")
-            .description("DESCRIPTION")
-            .version("VERSION")
+            .title("SWAGGER DEL PROYECTO TPV. TECNOLOGÍA SPRING")
+            .description("Swagger del proyecto tpv, donde se puede realizar llamadas a las distintas apis de la aplicación"
+                    + " y poder tanto probar las apis como ver los resultados de las llamadas.")
+            .version("1.2.0")
             .termsOfServiceUrl("http://terms-of-services.url")
-            .license("LICENSE")
             .licenseUrl("http://url-to-license.com")
             .build();
     }
