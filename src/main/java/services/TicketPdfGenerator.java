@@ -4,7 +4,6 @@ import static config.ResourceNames.TICKETS_PDFS_ROOT;
 import static config.ResourceNames.TICKET_PDF_FILENAME_ROOT;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 
@@ -33,7 +32,7 @@ import entities.core.Ticket;
 
 public class TicketPdfGenerator extends PdfGenerator<Ticket> {
 
-    private final static float[] SHOPPING_LIST_COLUMNS_WIDTHS = new float[] {1, 1, 1, 1, 1, 1};
+    private final static float[] SHOPPING_LIST_COLUMNS_WIDTHS = new float[] {20, 20, 100, 40, 40};
 
     private final static float TICKET_PAGE_WIDHT = 227;
 
@@ -116,33 +115,26 @@ public class TicketPdfGenerator extends PdfGenerator<Ticket> {
         document.add(new Paragraph("REFERENCE: " + entity.getReference()));
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         document.add(new Paragraph("CREATED ON: " + formatter.format(entity.getCreated().getTime())));
-        Table shoppingListTable = new Table(SHOPPING_LIST_COLUMNS_WIDTHS);
+        Table shoppingListTable = new Table(SHOPPING_LIST_COLUMNS_WIDTHS, true);
         shoppingListTable.setBorder(new SolidBorder(Color.WHITE, 5));
         shoppingListTable.setVerticalAlignment(VerticalAlignment.MIDDLE);
         shoppingListTable.setHorizontalAlignment(HorizontalAlignment.CENTER);
         shoppingListTable.addHeaderCell("");
-        shoppingListTable.addHeaderCell("Amount".toUpperCase());
-        shoppingListTable.addHeaderCell("%".toUpperCase());
-        shoppingListTable.addHeaderCell("Product".toUpperCase());
-        shoppingListTable.addHeaderCell("Description".toUpperCase());
-        shoppingListTable.addHeaderCell("Price".toUpperCase());
-        entity.getShoppingList().addAll(entity.getShoppingList());
-        entity.getShoppingList().addAll(entity.getShoppingList());
-        entity.getShoppingList().addAll(entity.getShoppingList());
-        double total = 0.0;
+        shoppingListTable.addHeaderCell("QT");
+        shoppingListTable.addHeaderCell("ITEM");
+        shoppingListTable.addHeaderCell("%");
+        shoppingListTable.addHeaderCell("€");
         for (int i = 0; i < entity.getShoppingList().size(); i++) {
             Shopping shopping = entity.getShoppingList().get(i);
             shoppingListTable.addCell(String.valueOf(i + 1));
             shoppingListTable.addCell(String.valueOf(shopping.getAmount()));
-            shoppingListTable.addCell(String.valueOf(shopping.getDiscount() + "%"));
-            shoppingListTable.addCell(String.valueOf(shopping.getProduct().getDescription()));
             shoppingListTable.addCell(String.valueOf(shopping.getDescription()));
-            shoppingListTable.addCell(String.valueOf(shopping.getRetailPrice() + "€"));
-            total += shopping.getRetailPrice().doubleValue();
+            shoppingListTable.addCell(String.valueOf(shopping.getDiscount() + "100%"));
+            shoppingListTable.addCell(String.valueOf(shopping.getShoppingSubtotal() + "€"));
         }
         Cell sixColumsCell = new Cell(1, 6);
         sixColumsCell.setTextAlignment(TextAlignment.RIGHT);
-        sixColumsCell.add("TOTAL: " + String.valueOf(new BigDecimal(total)) + "€");
+        sixColumsCell.add("TOTAL: " + String.valueOf(entity.getTicketTotal()) + "€");
         shoppingListTable.addCell(sixColumsCell);
         document.add(shoppingListTable);
         document.add(new LineSeparator(separator));
