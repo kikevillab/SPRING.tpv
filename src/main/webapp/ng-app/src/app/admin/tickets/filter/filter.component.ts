@@ -4,8 +4,7 @@
 
 import {Component, OnInit, EventEmitter} from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
-import {MOBILE_ATTRIBUTE_NAME} from '../../../shared/models/user.model';
-import {Ticket, REFERENCE_ATTRIBUTE_NAME} from '../../shared/models/ticket.model';
+import {Ticket, REFERENCE_ATTRIBUTE_NAME, USER_ID_ATTRIBUTE_NAME} from '../../shared/models/ticket.model';
 import {Filter, START_DATE_ATTRIBUTE_NAME, END_DATE_ATTRIBUTE_NAME} from './filter.model';
 import {TicketsService} from '../../shared/services/tickets.service';
 import {ToastService} from '../../../shared/services/toast.service';
@@ -25,10 +24,10 @@ export class FilterComponent implements OnInit {
     httpService: TicketsService;
     filterForm: FormGroup;
     validationMessages = {
-        'mobile': {
-            'minlength': 'Mobile must be 9 digits long.',
-            'maxlength': 'Mobile must be 9 digits long.',
-            'invalid': 'Mobile is invalid.'
+        'user': {
+            'minlength': 'user must be 9 digits long.',
+            'maxlength': 'user must be 9 digits long.',
+            'invalid': 'user is invalid.'
         },
         'reference': {
             'maxlength': 'Reference cannot be more than 255 characters long.'
@@ -41,7 +40,7 @@ export class FilterComponent implements OnInit {
         }
     };
     formErrors = {
-        'mobile': '',
+        'user': '',
         'reference': '',
         'start_date': '',
         'end_date': ''
@@ -60,13 +59,13 @@ export class FilterComponent implements OnInit {
 
     onSubmit(): void {
         let formValues = this.filterForm.value;
-        this.filter = new Filter(formValues.mobile, formValues.reference, formValues.start_date, formValues.end_date);
+        this.filter = new Filter(formValues.user, formValues.reference, formValues.start_date, formValues.end_date);
         let fieldName: string = null;
         let fieldValue = null;
 
-        if (!isNull(this.filter.mobile) && (this.filter.mobile.valueOf() > 0)) {
-            fieldName = MOBILE_ATTRIBUTE_NAME;
-            fieldValue = this.filter.mobile;
+        if (!isNull(this.filter.user) && (this.filter.user.valueOf() > 0)) {
+            fieldName = USER_ID_ATTRIBUTE_NAME;
+            fieldValue = this.filter.user;
         }
         else if (!isNull(this.filter.reference) && (this.filter.reference.length > 0)) {
             fieldName = REFERENCE_ATTRIBUTE_NAME;
@@ -107,8 +106,8 @@ export class FilterComponent implements OnInit {
     }
 
     disableSubmit(): boolean {
-        return (!(((this.filterForm.controls['mobile'].dirty)
-            && (this.formErrors.mobile.length === 0))
+        return (!(((this.filterForm.controls['user'].dirty)
+            && (this.formErrors.user.length === 0))
             || ((this.filterForm.controls['reference'].dirty)
             && (this.formErrors.reference.length === 0))
             || ((this.filterForm.controls['start_date'].dirty)
@@ -124,7 +123,7 @@ export class FilterComponent implements OnInit {
 
     buildForm(): void {
         this.filterForm = this.formBuilder.group({
-            'mobile': [this.filter.mobile, [Validators.minLength(9), Validators.maxLength(9),
+            'user': [this.filter.user, [Validators.minLength(9), Validators.maxLength(9),
                 this.formValidatorByRegExp.regExpFormValidator(/[0-9]{9}/)]],
             'reference': [this.filter.reference, [Validators.maxLength(255)]],
             'start_date': [this.filter.start_date, [
