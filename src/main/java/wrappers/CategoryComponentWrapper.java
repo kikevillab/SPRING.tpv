@@ -3,6 +3,8 @@ package wrappers;
 import entities.core.CategoryComponent;
 
 public class CategoryComponentWrapper {
+    private Long id;
+
     private String code;
 
     private String name;
@@ -10,20 +12,24 @@ public class CategoryComponentWrapper {
     private String image;
 
     public CategoryComponentWrapper() {
-    }
-
-    public CategoryComponentWrapper(String code, String name, String image) {
         super();
-        this.code = code;
-        this.name = name;
-        this.image = image;
     }
 
-    public CategoryComponentWrapper(CategoryComponent component){
+    public CategoryComponentWrapper(CategoryComponent component) {
+        this.id = component.getId();
         this.code = component.getCode();
         this.name = component.getName();
         this.image = component.getIcon();
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getCode() {
         return code;
     }
@@ -50,7 +56,7 @@ public class CategoryComponentWrapper {
 
     @Override
     public String toString() {
-        return "CategoryComponentWrapper [code=" + code + ", name=" + name + ", image=" + image + "]";
+        return "CategoryComponentWrapper [ id=" + id + ", code=" + code + ", name=" + name + ", image=" + image + "]";
     }
 
 }

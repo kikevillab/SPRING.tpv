@@ -71,6 +71,8 @@ public abstract class CategoryComponent {
     
     public abstract List<CategoryComponent> components();
     
+    public abstract Product product();
+    
     @Override
     public String toString() {
         return "CategoryComponent [id=" + id + ", code=" + code + ", name=" + name + ", icon=" + icon + print() + "]";

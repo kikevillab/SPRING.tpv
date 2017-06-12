@@ -50,8 +50,9 @@ public class Article extends Product {
         this.provider = provider;
     }
     
+    @Override
     public String getLongDescription() {
-        return "Article with " + stock + " units in stock and sold at a wholesale price of " + wholesalePrice + "€.";
+        return "Article with " + stock + " units in stock and sold at a wholesale price of €" + wholesalePrice + ".";
     }
 
     @Override

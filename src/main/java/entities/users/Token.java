@@ -23,12 +23,26 @@ public class Token {
     @JoinColumn
     private User user;
 
+    @Column(nullable = false)
+    private Date creationDate;
+
     public Token() {
+        this.creationDate = new Date();
     }
 
     public Token(User user) {
+        this();
         assert user != null;
         setUser(user);
+    }
+
+    
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
     }
 
     public int getId() {
@@ -73,6 +87,6 @@ public class Token {
 
     @Override
     public String toString() {
-        return "Token [id=" + id + ", value=" + value + ", user=" + user + "]";
+        return "Token [id=" + id + ", value=" + value + ", user=" + user + ", expirationDate=" + creationDate.toString() + "]";
     }
 }

@@ -20,7 +20,6 @@ import api.exceptions.InvalidProductAmountInNewTicketException;
 import api.exceptions.InvalidProductAmountInUpdateTicketException;
 import api.exceptions.InvalidProductDiscountException;
 import api.exceptions.InvalidUserFieldException;
-import api.exceptions.InvoiceDoesNotAllowNotClosedTicketsException;
 import api.exceptions.InvoiceNotFoundException;
 import api.exceptions.LastCashierClosureIsClosedException;
 import api.exceptions.LastCashierClosureIsOpenYetException;
@@ -70,8 +69,8 @@ public class ApiExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({MalformedHeaderException.class, InvalidUserFieldException.class, EmptyShoppingListException.class,
             InvalidProductAmountInNewTicketException.class, InvalidProductAmountInUpdateTicketException.class,
-            InvalidProductDiscountException.class, InvoiceDoesNotAllowNotClosedTicketsException.class,
-            TicketIsAlreadyAssignedToInvoiceException.class, TicketHasInvalidUserException.class, MalformedDateException.class})
+            InvalidProductDiscountException.class, TicketIsAlreadyAssignedToInvoiceException.class, TicketHasInvalidUserException.class,
+            MalformedDateException.class})
     @ResponseBody
     public ErrorMessage badRequest(ApiException exception) {
         ErrorMessage apiErrorMessage = new ErrorMessage(exception);

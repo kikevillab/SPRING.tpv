@@ -3,5 +3,5 @@
   * Github: https://github.com/sergiobanegas 
 */
 export class NewTicketResponse {
-	constructor(public ticketReference: number, public pdfByteArray: string){} 
+    constructor(public ticketReference: string, public pdfByteArray: string) { }
 }

@@ -11,10 +11,10 @@ import { LocalStorageService } from '../shared/services/local-storage.service';
 @Injectable()
 export class HomeService {
 
-  constructor (private localStorageService: LocalStorageService) {}
+    constructor(private localStorageService: LocalStorageService) { }
 
-  logout(){
-    this.localStorageService.removeItem(LOCAL_STORAGE_TOKEN_ATTRIBUTE);
-  }
+    logout() {
+        this.localStorageService.removeItem(LOCAL_STORAGE_TOKEN_ATTRIBUTE);
+    }
 
 }

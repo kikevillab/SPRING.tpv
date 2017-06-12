@@ -9,8 +9,8 @@ import {CustomersModule} from './customers/customers.module';
 import {OperatorsModule} from './operators/operators.module';
 import {ManagersModule} from './managers/managers.module';
 import {ClearAppDataModule} from './clear-app-data/clear-app-data.module';
+import {TicketsModule} from './tickets/tickets.module';
 import {AdminComponent} from './admin.component';
-import {TicketsComponent} from './tickets/tickets.component';
 import {ProductsComponent} from './products/products.component';
 import {CategoriesComponent} from './categories/categories.component';
 import {CashierClosuresComponent} from './cashier-closures/cashier-closures.component';
@@ -24,7 +24,6 @@ import {AdminGuard} from './admin.guard';
 @NgModule({
     declarations: [
         AdminComponent,
-        TicketsComponent,
         ProductsComponent,
         CategoriesComponent,
         CashierClosuresComponent,
@@ -40,7 +39,8 @@ import {AdminGuard} from './admin.guard';
         CustomersModule,
         OperatorsModule,
         ManagersModule,
-        ClearAppDataModule
+        ClearAppDataModule,
+        TicketsModule
     ],
     providers: [
         AdminGuard

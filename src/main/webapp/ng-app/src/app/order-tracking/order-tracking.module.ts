@@ -2,37 +2,22 @@
   * @author Sergio Banegas Cortijo
   * Github: https://github.com/sergiobanegas
 */
-import {NgModule} from '@angular/core';
-import {HttpModule} from '@angular/http';
-import {CommonModule} from '@angular/common';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { MaterialModule } from '@angular/material';
-import { FlexLayoutModule } from '@angular/flex-layout';
-
+import { NgModule } from '@angular/core';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
-import {OrderTrackingComponent} from './order-tracking.component';
-import {OrderTrackingRoutingModule} from './order-tracking-routing.module';
-import {OrderTrackingService} from './order-tracking.service';
+import { SharedModule } from '../shared/shared.module';
 
-import {HTTPService} from '../shared/services/http.service';
+import { OrderTrackingComponent } from './order-tracking.component';
+import { OrderTrackingRoutingModule } from './order-tracking-routing.module';
+import { OrderTrackingService } from './order-tracking.service';
 
 @NgModule({
-    declarations: [
-        OrderTrackingComponent
-    ],
+    declarations: [OrderTrackingComponent],
     imports: [
-        CommonModule,
+        NgxDatatableModule,
         OrderTrackingRoutingModule,
-        HttpModule,
-        MaterialModule,
-        FlexLayoutModule,
-        BrowserAnimationsModule,
-        NgxDatatableModule
+        SharedModule
     ],
-    providers: [
-        HTTPService, OrderTrackingService
-    ],
+    providers: [OrderTrackingService]
 })
-export class OrderTrackingModule {
-}
+export class OrderTrackingModule { }

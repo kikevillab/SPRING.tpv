@@ -31,6 +31,7 @@ import wrappers.TicketCreationResponseWrapper;
 import wrappers.TicketCreationWrapper;
 import wrappers.TicketReferenceCreatedWrapper;
 import wrappers.TicketReferenceWrapper;
+import wrappers.TicketWrapper;
 
 @Controller
 public class TicketController {
@@ -173,6 +174,10 @@ public class TicketController {
     public Ticket findOneTicket(TicketReferenceWrapper ticketReferenceWrapper) {
         return ticketDao.findFirstByReference(ticketReferenceWrapper.getTicketReference());
     }
+    
+    public Ticket findOneTicketByReference(String ticketReference){
+        return ticketDao.findFirstByReference(ticketReference);
+    }
 
     public boolean ticketIsAlreadyAssignedToInvoice(Ticket ticket) {
         return invoiceDao.findByTicketReference(ticket.getReference()) != null;
@@ -187,7 +192,16 @@ public class TicketController {
         }
         return closed;
     }
+
     public List<Ticket> findAll() {
        return ticketDao.findAll();      
+    }
+
+    public TicketWrapper associateUserToTicket(String ticketReference, Long userMobile) {
+        Ticket ticket = findOneTicketByReference(ticketReference);
+        User user = userDao.findByMobile(userMobile);
+        ticket.setUser(user);
+        return new TicketWrapper(ticketDao.saveAndFlush(ticket));
+
     }
 }

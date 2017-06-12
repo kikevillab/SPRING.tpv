@@ -77,13 +77,15 @@ public class Uris {
     public static final String CASHIER_CLOSURES_DEPOSIT = "/deposit";
 
     public static final String CASHIER_CLOSURES_WITHDRAW = "/withdraw";
-    
+
     public static final String VOUCHER_CONSUMPTION = "/consume";
-    
+
     public static final String VOUCHER_ACTIVESTOTALVALUE = "/activesvaluetotal";
 
     public static final String BARCODES = "/barcodes";
-    
+
+    public static final String DELETE_TOKEN_EXPIRED = "/deleteTokenExpired";
+
     public static final String CATEGORIES = "/categories";
 
     public static final String CATEGORY_NAME = "/{name}";
@@ -91,5 +93,7 @@ public class Uris {
     public static final String ALL = "/all";
     
     public static final String TICKET_REFERENCE = "/reference";
+
+    public static final String TICKET_USER = "/user";
 
 }

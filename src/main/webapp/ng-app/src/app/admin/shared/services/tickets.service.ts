@@ -4,16 +4,16 @@
 
 import {Injectable} from '@angular/core';
 import {Headers, URLSearchParams} from '@angular/http';
-import {Session} from '../../../../shared/models/session.model';
+import {Session} from '../../../shared/models/session.model';
 import {
     LOCAL_STORAGE_TOKEN_ATTRIBUTE,
     NOT_AUTHENTICATED_MESSAGE,
     ROLE_ADMIN
-} from '../../../../app.config';
+} from '../../../app.config';
 import {Observable} from 'rxjs/Observable';
-import {HTTPService} from '../../../../shared/services/http.service';
-import {LocalStorageService} from '../../../../shared/services/local-storage.service';
-import {TICKETS_URI} from '../../../admin.config';
+import {HTTPService} from '../../../shared/services/http.service';
+import {LocalStorageService} from '../../../shared/services/local-storage.service';
+import {TICKETS_URI} from '../../admin.config';
 import 'rxjs/add/operator/map';
 import {isNull} from "util";
 
@@ -58,6 +58,13 @@ export class TicketsService {
             params.set(fieldName, fieldValue);
             return this.httpService.get(this.endpoint, this.headers, params);
         }
+
+        return Observable.throw(NOT_AUTHENTICATED_MESSAGE);
+    }
+
+    findAll(): Observable<any> {
+        if (!isNull(this.headers) && !isNull(this.endpoint))
+            return this.httpService.get(this.endpoint, this.headers);
 
         return Observable.throw(NOT_AUTHENTICATED_MESSAGE);
     }
