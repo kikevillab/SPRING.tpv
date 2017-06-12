@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
@@ -45,6 +45,8 @@
 		<!-- Ant run task (sleep before functional api test) -->
         <antrun.version>1.8</antrun.version>
         <integration.test.skip>false</integration.test.skip>
+        <!-- swagger  version -->
+        <swagger.version>2.6.1</swagger.version>
 	</properties>
 
 	<profiles>
@@ -283,6 +285,17 @@
             <artifactId>spring-batch-test</artifactId>
             <version>${spring.batch.version}</version>
         </dependency>
+        <!-- Dependencias Swagger -->
+        <dependency>
+		    <groupId>io.springfox</groupId>
+		    <artifactId>springfox-swagger2</artifactId>
+		    <version>${swagger.version}</version>
+		</dependency> 
+		<dependency>
+		    <groupId>io.springfox</groupId>
+		    <artifactId>springfox-swagger-ui</artifactId>
+		    <version>${swagger.version}</version>
+		</dependency>
         <!-- IText PDF -->
         <dependency>
             <groupId>com.itextpdf</groupId>
