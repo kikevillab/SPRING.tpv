@@ -3,12 +3,12 @@
  */
 
 import {Component, OnInit} from '@angular/core';
-import {UsersService} from './users.service';
-import {TPVHTTPError} from '../../../shared/models/tpv-http-error.model';
-import {ToastService} from '../../../shared/services/toast.service';
-import {User} from '../../../shared/models/user.model';
+import {UsersService} from '../../services/users.service';
+import {TPVHTTPError} from '../../../../shared/models/tpv-http-error.model';
+import {ToastService} from '../../../../shared/services/toast.service';
+import {User} from '../../../../shared/models/user.model';
 import {MdDialog, MdDialogConfig} from '@angular/material';
-import {NewUserDialog} from './new-user/new-user.component';
+import {NewUserDialog} from '../new-user/new-user.component';
 import {isNull, isUndefined} from "util";
 
 @Component({

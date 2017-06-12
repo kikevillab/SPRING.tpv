@@ -10,7 +10,7 @@ import {
     DNI_ATTRIBUTE_NAME,
     EMAIL_ATTRIBUTE_NAME
 } from '../../../../shared/models/user.model';
-import {UsersService} from '../users.service';
+import {UsersService} from '../../services/users.service';
 import {RegExpFormValidatorService} from '../../../../shared/services/reg-exp-form-validator.service';
 import {ToastService} from '../../../../shared/services/toast.service';
 import {TPVHTTPError} from "../../../../shared/models/tpv-http-error.model";

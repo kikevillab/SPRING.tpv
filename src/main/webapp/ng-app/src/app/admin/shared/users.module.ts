@@ -8,24 +8,23 @@ import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {UsersComponent} from './users.component';
-import {FilterComponent} from './filter/filter.component';
-import {ResultsComponent} from './results/results.component';
-import {NewUserDialog} from './new-user/new-user.component';
-import {UserDetailsDialog} from './details/details.component';
-import {EditUserDialog} from './edit-user/edit-user.component';
-import {SharedModule} from '../../../shared/shared.module';
+import {UsersComponent} from './directives/users/users.component';
+import {FilterComponent} from './directives/filter/filter.component';
+import {ResultsComponent} from './directives/results/results.component';
+import {NewUserDialog} from './directives/new-user/new-user.component';
+import {UserDetailsDialog} from './directives/details/details.component';
+import {EditUserDialog} from './directives/edit-user/edit-user.component';
+import {SharedModule} from '../../shared/shared.module';
 import {NgxDatatableModule} from '@swimlane/ngx-datatable';
-import {AngularMaterialModule} from '../../../shared/angular-material.module';
-import {HTTPService} from '../../../shared/services/http.service';
-import {ToastService} from '../../../shared/services/toast.service';
-import {UsersService} from './users.service';
-import {TicketsService} from '../services/tickets.service';
-import {RegExpFormValidatorService} from '../../../shared/services/reg-exp-form-validator.service';
-import {UserForm} from '../services/user-form.service';
+import {AngularMaterialModule} from '../../shared/angular-material.module';
+import {HTTPService} from '../../shared/services/http.service';
+import {ToastService} from '../../shared/services/toast.service';
+import {UsersService} from './services/users.service';
+import {TicketsService} from './services/tickets.service';
+import {RegExpFormValidatorService} from '../../shared/services/reg-exp-form-validator.service';
+import {UserForm} from './services/user-form.service';
 import {InMemoryWebApiModule} from 'angular-in-memory-web-api';
-import {InMemoryDataService} from '../../../shared/services/in-memory-data.service';
-import {BooleanToStringPipe} from './details/bool-to-str.pipe';
+import {InMemoryDataService} from '../../shared/services/in-memory-data.service';
 
 @NgModule({
     imports: [
@@ -45,7 +44,6 @@ import {BooleanToStringPipe} from './details/bool-to-str.pipe';
         ResultsComponent,
         NewUserDialog,
         UserDetailsDialog,
-        BooleanToStringPipe,
         EditUserDialog
     ],
     providers: [
@@ -62,7 +60,6 @@ import {BooleanToStringPipe} from './details/bool-to-str.pipe';
         ResultsComponent,
         NewUserDialog,
         UserDetailsDialog,
-        BooleanToStringPipe,
         EditUserDialog
     ],
     entryComponents: [

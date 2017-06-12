@@ -494,215 +494,540 @@ export class InMemoryDataService implements InMemoryDbService {
         ];
         let tickets = [
             {
+                id: 1,
                 created: "12/12/2016",
                 reference: "dsfa23df1sa1f3da",
-                mobile: 600000000
+                user: 600000000
             },
             {
+                id: 2,
                 created: "11/12/2016",
                 reference: "dsf923df1sa1f3da",
-                mobile: 600000000
+                user: 600000000
             },
             {
+                id: 3,
                 created: "10/12/2016",
                 reference: "dsfb23df1sa1f3da",
-                mobile: 600000000
+                user: 600000000
             },
             {
+                id: 4,
                 created: "12/12/2016",
                 reference: "dsfa23df1sa1f3da",
-                mobile: 600000001
+                user: 600000001
             },
             {
+                id: 5,
                 created: "11/12/2016",
                 reference: "dsf923df1sa1f3da",
-                mobile: 600000001
+                user: 600000001
             },
             {
+                id: 6,
                 created: "10/12/2016",
                 reference: "dsfb23df1sa1f3da",
-                mobile: 600000001
+                user: 600000001
             },
             {
+                id: 7,
                 created: "12/12/2016",
                 reference: "dsfa23df1sa1f3da",
-                mobile: 600000002
+                user: 600000002
             },
             {
+                id: 8,
                 created: "11/12/2016",
                 reference: "dsf923df1sa1f3da",
-                mobile: 600000002
+                user: 600000002
             },
             {
+                id: 9,
                 created: "10/12/2016",
                 reference: "dsfb23df1sa1f3da",
-                mobile: 600000002
+                user: 600000002
             },
             {
+                id: 10,
                 created: "12/12/2016",
                 reference: "dsfa23df1sa1f3da",
-                mobile: 600000003
+                user: 600000003
             },
             {
+                id: 11,
                 created: "11/12/2016",
                 reference: "dsf923df1sa1f3da",
-                mobile: 600000003
+                user: 600000003
             },
             {
+                id: 12,
                 created: "10/12/2016",
                 reference: "dsfb23df1sa1f3da",
-                mobile: 600000003
+                user: 600000003
             },
             {
+                id: 13,
                 created: "12/12/2016",
                 reference: "dsfa23df1sa1f3da",
-                mobile: 600000004
+                user: 600000004
             },
             {
+                id: 14,
                 created: "11/12/2016",
                 reference: "dsf923df1sa1f3da",
-                mobile: 600000004
+                user: 600000004
             },
             {
+                id: 15,
                 created: "10/12/2016",
                 reference: "dsfb23df1sa1f3da",
-                mobile: 600000004
+                user: 600000004
             },
             {
+                id: 16,
                 created: "12/12/2016",
                 reference: "dsfa23df1sa1f3da",
-                mobile: 600000005
+                user: 600000005
             },
             {
+                id: 17,
                 created: "11/12/2016",
                 reference: "dsf923df1sa1f3da",
-                mobile: 600000005
+                user: 600000005
             },
             {
+                id: 18,
                 created: "10/12/2016",
                 reference: "dsfb23df1sa1f3da",
-                mobile: 600000005
+                user: 600000005
             },
             {
+                id: 19,
                 created: "12/12/2016",
                 reference: "dsfa23df1sa1f3da",
-                mobile: 600000006
+                user: 600000006
             },
             {
+                id: 20,
                 created: "11/12/2016",
                 reference: "dsf923df1sa1f3da",
-                mobile: 600000007
+                user: 600000007
             },
             {
+                id: 21,
                 created: "10/12/2016",
                 reference: "dsfb23df1sa1f3da",
-                mobile: 600000008
+                user: 600000008
             },
             {
+                id: 22,
                 created: "12/12/2016",
                 reference: "dsfa23df1sa1f3da",
-                mobile: 600000009
+                user: 600000009
             },
             {
+                id: 23,
                 created: "11/12/2016",
                 reference: "dsf923df1sa1f3da",
-                mobile: 600000009
+                user: 600000009
             },
             {
+                id: 24,
                 created: "10/12/2016",
                 reference: "dsfb23df1sa1f3da",
-                mobile: 600000009
+                user: 600000009
             },
             {
+                id: 24,
                 created: "12/12/2016",
                 reference: "dsfa23df1sa1f3da",
-                mobile: 600000010
+                user: 600000010
             },
             {
+                id: 25,
                 created: "11/12/2016",
                 reference: "dsf923df1sa1f3da",
-                mobile: 600000010
+                user: 600000010
             },
             {
+                id: 26,
                 created: "10/12/2016",
                 reference: "dsfb23df1sa1f3da",
-                mobile: 600000010
+                user: 600000010
             },
             {
+                id: 27,
                 created: "12/12/2016",
                 reference: "dsfa23df1sa1f3da",
-                mobile: 600000011
+                user: 600000011
             },
             {
+                id: 28,
                 created: "11/12/2016",
                 reference: "dsf923df1sa1f3da",
-                mobile: 600000011
+                user: 600000011
             },
             {
+                id: 29,
                 created: "10/12/2016",
                 reference: "dsfb23df1sa1f3da",
-                mobile: 600000011
+                user: 600000011
             },
             {
+                id: 30,
                 created: "12/12/2016",
                 reference: "dsfa23df1sa1f3da",
-                mobile: 600000012
+                user: 600000012
             },
             {
+                id: 31,
                 created: "11/12/2016",
                 reference: "dsf923df1sa1f3da",
-                mobile: 600000012
+                user: 600000012
             },
             {
+                id: 32,
                 created: "10/12/2016",
                 reference: "dsfb23df1sa1f3da",
-                mobile: 600000012
+                user: 600000012
             },
             {
+                id: 33,
                 created: "12/12/2016",
                 reference: "dsfa23df1sa1f3da",
-                mobile: 600000013
+                user: 600000013
             },
             {
+                id: 34,
                 created: "11/12/2016",
                 reference: "dsf923df1sa1f3da",
-                mobile: 600000013
+                user: 600000013
             },
             {
+                id: 35,
                 created: "10/12/2016",
                 reference: "dsfb23df1sa1f3da",
-                mobile: 600000013
+                user: 600000013
             },
             {
+                id: 36,
                 created: "12/12/2016",
                 reference: "dsfa23df1sa1f3da",
-                mobile: 600000014
+                user: 600000014
             },
             {
+                id: 37,
                 created: "11/12/2016",
                 reference: "dsf923df1sa1f3da",
-                mobile: 600000014
+                user: 600000014
             },
             {
+                id: 38,
                 created: "10/12/2016",
                 reference: "dsfb23df1sa1f3da",
-                mobile: 600000014
+                user: 600000014
             },
             {
+                id: 39,
                 created: "12/12/2016",
                 reference: "dsfa23df1sa1f3da",
-                mobile: 600000015
+                user: 600000015
             },
             {
+                id: 40,
                 created: "11/12/2016",
                 reference: "dsf923df1sa1f3da",
-                mobile: 600000015
+                user: 600000015
             },
             {
+                id: 41,
                 created: "10/12/2016",
                 reference: "dsfb23df1sa1f3da",
-                mobile: 600000015
+                user: 600000015
             }];
-        return {customers, operators, managers, tickets};
+        let users = [
+            {
+                id: 600000000,
+                mobile: 600000000,
+                username: 'manager1',
+                dni: '66666666A',
+                email: 'manager1@gmail.com',
+                address: 'address1',
+                password: 'password1',
+                active: true
+            },
+            {
+                id: 600000001,
+                mobile: 600000001,
+                username: 'manager2',
+                dni: '66666666B',
+                email: 'manager2@gmail.com',
+                address: 'address2',
+                password: 'password2',
+                active: false
+            },
+            {
+                id: 600000002,
+                mobile: 600000002,
+                username: 'manager3',
+                dni: '66666666C',
+                email: 'manager3@gmail.com',
+                address: 'address2',
+                password: 'password2',
+                active: false
+            },
+            {
+                id: 600000003,
+                mobile: 600000003,
+                username: 'manager4',
+                dni: '66666666D',
+                email: 'manager4@gmail.com',
+                address: 'address3',
+                password: 'password3',
+                active: true
+            },
+            {
+                id: 600000004,
+                mobile: 600000004,
+                username: 'manager5',
+                dni: '66666666E',
+                email: 'manager5@gmail.com',
+                address: 'address4',
+                password: 'password4',
+                active: false
+            },
+            {
+                id: 600000005,
+                mobile: 600000005,
+                username: 'manager6',
+                dni: '66666666F',
+                email: 'manager6@gmail.com',
+                address: 'address5',
+                password: 'password5',
+                active: true
+            },
+            {
+                id: 600000006,
+                mobile: 600000006,
+                username: 'manager7',
+                dni: '66666666G',
+                email: 'manager7@gmail.com',
+                address: 'address6',
+                password: 'password6',
+                active: true
+            },
+            {
+                id: 600000007,
+                mobile: 600000007,
+                username: 'manager8',
+                dni: '66666666H',
+                email: 'manager8@gmail.com',
+                address: 'address7',
+                password: 'password7',
+                active: true
+            },
+            {
+                id: 600000008,
+                mobile: 600000008,
+                username: 'manager9',
+                dni: '66666666I',
+                email: 'manager9@gmail.com',
+                address: 'address8',
+                password: 'password8',
+                active: true
+            },
+            {
+                id: 600000009,
+                mobile: 600000009,
+                username: 'manager10',
+                dni: '66666666J',
+                email: 'manager10@gmail.com',
+                address: 'address9',
+                password: 'password9',
+                active: true
+            },
+            {
+                id: 600000010,
+                mobile: 600000010,
+                username: 'manager11',
+                dni: '66666666K',
+                email: 'manager11@gmail.com',
+                address: 'address10',
+                password: 'password10',
+                active: true
+            },
+            {
+                id: 600000011,
+                mobile: 600000011,
+                username: 'manager12',
+                dni: '66666666L',
+                email: 'manager12@gmail.com',
+                address: 'address10',
+                password: 'password10',
+                active: true
+            },
+            {
+                id: 600000012,
+                mobile: 600000012,
+                username: 'manager13',
+                dni: '66666666M',
+                email: 'manager13@gmail.com',
+                address: 'address11',
+                password: 'password11',
+                active: true
+            },
+            {
+                id: 600000013,
+                mobile: 600000013,
+                username: 'manager14',
+                dni: '66666666N',
+                email: 'manager14@gmail.com',
+                address: 'address12',
+                password: 'password12',
+                active: true
+            },
+            {
+                id: 600000014,
+                mobile: 600000014,
+                username: 'manager15',
+                dni: '66666666O',
+                email: 'manager15@gmail.com',
+                address: 'address13',
+                password: 'password13',
+                active: true
+            },
+            {
+                id: 600000015,
+                mobile: 600000015,
+                username: 'manager16',
+                dni: '66666666P',
+                email: 'manager16@gmail.com',
+                address: 'address14',
+                password: 'password14',
+                active: true
+            },
+        ];
+        let shoppings = [
+            {
+                id: 1,
+                amount: 2,
+                discount: 3,
+                description: 'description1',
+                price: 6.25,
+                state: 'OPENED',
+                code: 'dfasd2fa3',
+                ticket: 1
+            },
+            {
+                id: 2,
+                amount: 3,
+                discount: 4,
+                description: 'description2',
+                price: 8.33,
+                state: 'CLOSED',
+                code: 'zaf7sd845a646',
+                ticket: 1
+            },
+            {
+                id: 3,
+                amount: 4,
+                discount: 13,
+                description: 'description3',
+                price: 9.22,
+                state: 'STARTED',
+                code: 'fgsdf5g64sdf6',
+                ticket: 1
+            },
+            {
+                id: 4,
+                amount: 2,
+                discount: 3,
+                description: 'description1',
+                price: 6.25,
+                state: 'OPENED',
+                code: 'dfasd2fa3',
+                ticket: 2
+            },
+            {
+                id: 5,
+                amount: 3,
+                discount: 4,
+                description: 'description2',
+                price: 8.33,
+                state: 'CLOSED',
+                code: 'zaf7sd845a646',
+                ticket: 2
+            },
+            {
+                id: 6,
+                amount: 4,
+                discount: 13,
+                description: 'description3',
+                price: 9.22,
+                state: 'STARTED',
+                code: 'fgsdf5g64sdf6',
+                ticket: 2
+            },
+            {
+                id: 7,
+                amount: 2,
+                discount: 3,
+                description: 'description1',
+                price: 6.25,
+                state: 'OPENED',
+                code: 'dfasd2fa3',
+                ticket: 3
+            },
+            {
+                id: 8,
+                amount: 3,
+                discount: 4,
+                description: 'description2',
+                price: 8.33,
+                state: 'CLOSED',
+                code: 'zaf7sd845a646',
+                ticket: 3
+            },
+            {
+                id: 9,
+                amount: 4,
+                discount: 13,
+                description: 'description3',
+                price: 9.22,
+                state: 'STARTED',
+                code: 'fgsdf5g64sdf6',
+                ticket: 3
+            },
+            {
+                id: 10,
+                amount: 2,
+                discount: 3,
+                description: 'description1',
+                price: 6.25,
+                state: 'OPENED',
+                code: 'dfasd2fa3',
+                ticket: 4
+            },
+            {
+                id: 11,
+                amount: 3,
+                discount: 4,
+                description: 'description2',
+                price: 8.33,
+                state: 'CLOSED',
+                code: 'zaf7sd845a646',
+                ticket: 4
+            },
+            {
+                id: 12,
+                amount: 4,
+                discount: 13,
+                description: 'description3',
+                price: 9.22,
+                state: 'STARTED',
+                code: 'fgsdf5g64sdf6',
+                ticket: 4
+            }];
+        return {customers, operators, managers, tickets, users, shoppings};
     }
 }

@@ -9,7 +9,7 @@ import {Ticket} from '../../models/ticket.model';
 import {TPVHTTPError} from '../../../../shared/models/tpv-http-error.model';
 import {ToastService} from '../../../../shared/services/toast.service';
 import {TicketsService} from '../../services/tickets.service';
-import {MOBILE_ATTRIBUTE_NAME} from '../../../../shared/models/user.model';
+import {USER_ID_ATTRIBUTE_NAME} from '../../models/ticket.model';
 import {MdDialog, MdDialogConfig} from '@angular/material';
 import {EditUserDialog} from '../edit-user/edit-user.component';
 import {isUndefined} from "util";
@@ -33,7 +33,7 @@ export class UserDetailsDialog implements OnInit {
     }
 
     ngOnInit(): void {
-        this.httpService.search(MOBILE_ATTRIBUTE_NAME, this.user.mobile).subscribe(
+        this.httpService.search(USER_ID_ATTRIBUTE_NAME, this.user.id).subscribe(
             results => this.tickets = results.data,
             error => this.handleError(error)
         );
