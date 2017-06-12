@@ -102,7 +102,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 })
 export class OrderTrackingDialog {
 
-    ticketReferenceInput: string = '';
+    ticketReferenceInput: string;
 
     constructor(public dialogRef: MdDialogRef<OrderTrackingDialog>, private router: Router) { }
 

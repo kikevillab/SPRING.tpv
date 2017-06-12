@@ -105,7 +105,7 @@ export class SearchComponent implements OnInit, OnDestroy {
         return this.pxScrolled + 5;
     }
 
-    calculateContainerHeight(): number {
+    calculateScrollContainerHeight(): number {
         return window.innerHeight - this.scrollContainer.nativeElement.offsetTop - 16;
     }
 
