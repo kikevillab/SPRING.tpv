@@ -18,7 +18,7 @@ import config.ResourceNames;
 import entities.core.Voucher;
 
 public class VoucherPdfGenerator extends PdfGenerator<Voucher> {
-    
+
     public VoucherPdfGenerator(Voucher voucher) {
         super(voucher);
     }
@@ -35,9 +35,9 @@ public class VoucherPdfGenerator extends PdfGenerator<Voucher> {
 
     @Override
     protected PdfFont font() throws IOException {
-        return PdfFontFactory.createFont(ResourceNames.FAKE_RECEIPT_REGULAR_FONT, PdfEncodings.CP1250, true);
+        return PdfFontFactory.createFont(ResourceNames.FONTS + ResourceNames.FAKE_RECEIPT_REGULAR_FONT, PdfEncodings.CP1250, true);
     }
-    
+
     @Override
     protected void buildPdf() {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -86,7 +86,5 @@ public class VoucherPdfGenerator extends PdfGenerator<Voucher> {
     protected float bottomMargin() {
         return 0;
     }
-
-
 
 }

@@ -4,21 +4,36 @@ import static config.ResourceNames.INVOICES_PDFS_ROOT;
 import static config.ResourceNames.INVOICE_PDF_FILENAME_ROOT;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 
+import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.font.PdfFont;
+import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.geom.PageSize;
+import com.itextpdf.layout.border.Border;
+import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.property.HorizontalAlignment;
 import com.itextpdf.layout.property.TextAlignment;
 
+import config.ResourceNames;
 import entities.core.Invoice;
 import entities.core.Shopping;
 import entities.core.Ticket;
+import entities.users.User;
 
 public class InvoicePdfGenerator extends PdfGenerator<Invoice> {
-    private final static float[] SHOPPING_LIST_COLUMNS_WIDTHS = new float[] {10.0f, 30.0f, 30.0f, 10.0f, 40.0f, 30.0f};
+    private final static float[] SHOPPING_LIST_COLUMNS_WIDTHS = new float[] {200, 1, 1, 1, 1, 1};
+
+    private final static float[] TABLE_COLUMNS_WIDTHS = new float[] {1, 1};
+
+    private final static SimpleDateFormat invoiceCreationDateFormatter = new SimpleDateFormat("MMM dd, yyyy");
+
+    private final static SimpleDateFormat ticketCreationDateFormatter = new SimpleDateFormat("MMM dd, yyyy - HH:mm");
 
     public InvoicePdfGenerator(Invoice entity) {
         super(entity);
@@ -36,12 +51,12 @@ public class InvoicePdfGenerator extends PdfGenerator<Invoice> {
 
     @Override
     protected PdfFont font() throws IOException {
-        return document.getPdfDocument().getDefaultFont();
+        return PdfFontFactory.createFont(ResourceNames.FONTS + ResourceNames.OPEN_SANS_REGULAR_FONT);
     }
 
     @Override
     protected float fontSize() {
-        return 5;
+        return 12;
     }
 
     @Override
@@ -56,49 +71,88 @@ public class InvoicePdfGenerator extends PdfGenerator<Invoice> {
 
     @Override
     protected float leftMargin() {
-        return 0;
+        return 15;
     }
 
     @Override
     protected float rightMargin() {
-        return 0;
+        return 15;
     }
 
     @Override
     protected float topMargin() {
-        return 0;
+        return 15;
     }
 
     @Override
     protected float bottomMargin() {
-        return 0;
+        return 15;
     }
 
     @Override
     protected void buildPdf() {
-        document.add(new Paragraph(INVOICE_PDF_FILENAME_ROOT + entity.getId()));
+        Table invoiceHeader = new Table(TABLE_COLUMNS_WIDTHS, true);
+        try {
+            Image img = new Image(ImageDataFactory.create(ResourceNames.IMAGES + ResourceNames.UPM_LOGO));
+            img.setWidth(50);
+            img.setHorizontalAlignment(HorizontalAlignment.LEFT);
+            invoiceHeader.addCell(new Cell().add(img).setBorder(Border.NO_BORDER));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        Paragraph rightAlignedParagraph = new Paragraph();
+        rightAlignedParagraph.setTextAlignment(TextAlignment.RIGHT);
+        rightAlignedParagraph.add("INVOICE " + entity.getId() + "\n");
+        rightAlignedParagraph.add(invoiceCreationDateFormatter.format(entity.getCreated().getTime()));
+        invoiceHeader.addCell(new Cell().add(rightAlignedParagraph).setBorder(Border.NO_BORDER));
+        document.add(invoiceHeader);
         Ticket ticket = entity.getTicket();
-        document.add(new Paragraph("====================== Ticket ======================"));
-        document.add(new Paragraph("Reference: " + ticket.getReference()));
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        document.add(new Paragraph("Created on: " + formatter.format(ticket.getCreated().getTime())));
-        document.add(new Paragraph("Shopping list:"));
-        Table shoppingListTable = new Table(SHOPPING_LIST_COLUMNS_WIDTHS);
-        shoppingListTable.addCell("Id");
-        shoppingListTable.addCell("Amount");
-        shoppingListTable.addCell("Discount");
-        shoppingListTable.addCell("ProductId");
-        shoppingListTable.addCell("Description");
-        shoppingListTable.addCell("Retail price");
+        User user = ticket.getUser();
+        Cell noBorderCell = new Cell().setBorder(Border.NO_BORDER);
+        noBorderCell.setTextAlignment(TextAlignment.LEFT);
+        noBorderCell.add("From:").add("Campus Sur UPM").add("Calle Nikola Tesla, s/n").add("28031 Madrid");
+        Table info = new Table(TABLE_COLUMNS_WIDTHS, true);
+        info.addCell(noBorderCell);
+        noBorderCell = noBorderCell.clone(false);
+        noBorderCell.add("To:").add(user.getUsername()).add(user.getDni()).add(user.getEmail()).add(user.getAddress());
+        info.addCell(noBorderCell);
+        document.add(info);
+        PdfFont boldFont;
+        try {
+            boldFont = PdfFontFactory.createFont(ResourceNames.FONTS + ResourceNames.OPEN_SANS_BOLD_FONT);
+        } catch (IOException e) {
+            e.printStackTrace();
+            boldFont = document.getPdfDocument().getDefaultFont();
+        }
+        Paragraph ticketDetails = new Paragraph().setFont(boldFont).add("TICKET DETAILS").add("\nReference: ").add(ticket.getReference())
+                .add("\nCreaten on:").add(ticketCreationDateFormatter.format(ticket.getCreated().getTime()));
+        document.add(ticketDetails);
+        Table shoppingListTable = new Table(SHOPPING_LIST_COLUMNS_WIDTHS, true);
+        shoppingListTable.addCell("Item").setFont(boldFont);
+        shoppingListTable.addCell("Price").setFont(boldFont);
+        shoppingListTable.addCell("Quantity").setFont(boldFont);
+        shoppingListTable.addCell("Subtotal").setFont(boldFont);
+        shoppingListTable.addCell("Discount").setFont(boldFont);
+        shoppingListTable.addCell("Total").setFont(boldFont);
         for (Shopping shopping : ticket.getShoppingList()) {
-            shoppingListTable.addCell(String.valueOf(shopping.getId()));
-            shoppingListTable.addCell(String.valueOf(shopping.getAmount()));
-            shoppingListTable.addCell(String.valueOf(shopping.getDiscount() + "%"));
-            shoppingListTable.addCell(String.valueOf(shopping.getProduct().getDescription()));
             shoppingListTable.addCell(String.valueOf(shopping.getDescription()));
-            shoppingListTable.addCell(String.valueOf(shopping.getRetailPrice() + "€"));
+            shoppingListTable
+                    .addCell(new Cell().add(String.valueOf(shopping.getRetailPrice() + "€")).setTextAlignment(TextAlignment.RIGHT));
+            shoppingListTable.addCell(new Cell().add(String.valueOf(shopping.getAmount())).setTextAlignment(TextAlignment.RIGHT));
+            shoppingListTable
+                    .addCell(new Cell().add(roundedValue(shopping.getShoppingSubtotal()) + "€").setTextAlignment(TextAlignment.RIGHT));
+            shoppingListTable.addCell(new Cell().add(String.valueOf(shopping.getDiscount())).setTextAlignment(TextAlignment.RIGHT));
+            shoppingListTable
+                    .addCell(new Cell().add(roundedValue(shopping.getShoppingTotal()) + "€").setTextAlignment(TextAlignment.RIGHT));
         }
         document.add(shoppingListTable);
+        document.add(new Paragraph().setTextAlignment(TextAlignment.RIGHT).add("Total: ")
+                .add(roundedValue(ticket.getTicketTotal().doubleValue())));
+    }
+
+    private String roundedValue(double value) {
+        DecimalFormat decFormat = new DecimalFormat("#.##");
+        return decFormat.format(value);
     }
 
 }

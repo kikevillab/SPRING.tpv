@@ -35,9 +35,9 @@ public class TicketPdfGenerator extends PdfGenerator<Ticket> {
 
     private final static float[] SHOPPING_LIST_COLUMNS_WIDTHS = new float[] {1, 1, 1, 1, 1, 1};
 
-    private final static float TICKET_WIDHT = 227;
+    private final static float TICKET_PAGE_WIDHT = 227;
 
-    private final static float TICKET_HEIGHT = 842;
+    private final static float TICKET_PAGE_HEIGHT = 842;
 
     private final static float QR_CODE_MODULE_SIZE = 2.5f;
 
@@ -52,12 +52,12 @@ public class TicketPdfGenerator extends PdfGenerator<Ticket> {
 
     @Override
     protected PageSize pageSize() {
-        return new PageSize(TICKET_WIDHT, TICKET_HEIGHT);
+        return new PageSize(TICKET_PAGE_WIDHT, TICKET_PAGE_HEIGHT);
     }
 
     @Override
     protected PdfFont font() throws IOException {
-        return PdfFontFactory.createFont(ResourceNames.FAKE_RECEIPT_REGULAR_FONT, PdfEncodings.CP1250, true);
+        return PdfFontFactory.createFont(ResourceNames.FONTS + ResourceNames.FAKE_RECEIPT_REGULAR_FONT, PdfEncodings.CP1250, true);
     }
 
     @Override
@@ -98,7 +98,7 @@ public class TicketPdfGenerator extends PdfGenerator<Ticket> {
     @Override
     protected void buildPdf() {
         try {
-            Image img = new Image(ImageDataFactory.create(ResourceNames.UPM_LOGO));
+            Image img = new Image(ImageDataFactory.create(ResourceNames.IMAGES + ResourceNames.UPM_LOGO));
             img.setWidth(50);
             img.setHorizontalAlignment(HorizontalAlignment.CENTER);
             document.add(img);
