@@ -81,7 +81,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-    	this.authSubscription && this.authSubscription.unsubscribe();
+        this.authSubscription && this.authSubscription.unsubscribe();
         this.cashierSubscription && this.cashierSubscription.unsubscribe();
     }
 
