@@ -22,3 +22,4 @@ deploy:
   on:
     repo: kikevillab/SPRING.tpv
     branch: develop
+after_deploy: $TRAVIS_TEST_RESULT = 1
