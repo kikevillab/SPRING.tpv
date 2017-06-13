@@ -38,6 +38,11 @@
 		<mysql.connector.version>5.1.34</mysql.connector.version>
 		<hibernate.version>4.3.8.Final</hibernate.version>
 		<spring.data.version>1.8.0.RELEASE</spring.data.version>
+		<!-- Deploy tomcat version -->
+		<tomcat.version>8.0.33.0</tomcat.version>
+		<!-- Ant run task (sleep before functional api test) -->
+		<antrun.version>1.8</antrun.version>
+		<integration.test.skip>false</integration.test.skip>
 	</properties>
 
 	<profiles>
@@ -102,6 +107,48 @@
 				<tomcat.url></tomcat.url>
 			</properties>
 		</profile>
+		<profile>
+            <id>functional-api-test</id>
+            <properties>
+                 <tomcat.url>http://tpv-miw.herokuapp.com/api</tomcat.url>
+                 <sleep.seconds>30</sleep.seconds>
+                 <integration.test.skip>true</integration.test.skip>
+            </properties>
+            <build>
+                <plugins>   
+                    <plugin>
+                      <groupId>org.apache.maven.plugins</groupId>
+                      <artifactId>maven-antrun-plugin</artifactId>
+                      <version>${antrun.version}</version>
+                      <executions>
+                          <execution>
+                              <id>sleep-for-a-while</id>
+                              <phase>process-test-classes</phase>
+                              <configuration>
+                                  <target>
+                                     <echo message="sleep for ${sleep.seconds} seconds..." />
+                                      <sleep seconds="${sleep.seconds}" />
+                                  </target>
+                              </configuration>
+                              <goals>
+                                  <goal>run</goal>
+                              </goals>
+                          </execution>
+                      </executions>
+                    </plugin>            
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>${maven.failsafe.version}</version>
+                        <configuration>
+                            <includes>
+                                <include>**/*FunctionalTesting*</include>
+                            </includes>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
 	</profiles>
 
 	<dependencies>
@@ -282,7 +329,7 @@
 							<goal>integration-test</goal>
 						</goals>
 						<configuration>
-							<skip>false</skip>
+							<skip>${integration.test.skip}</skip>
 						</configuration>
 					</execution>
 					<execution>
@@ -291,7 +338,7 @@
 							<goal>verify</goal>
 						</goals>
 						<configuration>
-							<skip>false</skip>
+							<skip>${integration.test.skip}</skip>
 						</configuration>
 					</execution>
 				</executions>
