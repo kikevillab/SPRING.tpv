@@ -11,7 +11,7 @@ export class CloseCashierView {
     }
 
     fillForm() {
-        element(by.id('balance-counted-input')).sendKeys(1120);
+        element(by.id('money-counted-input')).sendKeys(1120);
     }
 
     getCloseCashierButton() {

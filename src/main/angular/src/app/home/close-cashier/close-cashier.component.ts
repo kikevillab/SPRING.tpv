@@ -39,6 +39,7 @@ export class CloseCashierComponent implements OnInit, OnDestroy {
         this.cashierSubscription = this.cashierService.getCurrentCashierObservable().subscribe((cashier: CashierClosure) => {
             this.cashier = cashier;
         });
+        this.formatCountedMoney();
     }
 
     selectOption(entry: string): void {
@@ -67,7 +68,7 @@ export class CloseCashierComponent implements OnInit, OnDestroy {
 
     getDesbalance(): number {
         if (this.cashier) {
-            return (this.countedMoney == undefined || isNaN(Number(this.countedMoney.toString()))) ? this.cashier.amount : this.countedMoney - this.cashier.amount;
+            return (this.countedMoney == undefined || isNaN(Number(this.countedMoney.toString()))) ? this.cashier.amount * -1 : this.countedMoney - this.cashier.amount;
         } else {
             return 0;
         }
