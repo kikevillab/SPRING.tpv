@@ -10,10 +10,10 @@
 				</span>
 			</h3>
 			<md-input-container>
-				<input mdInput type="number" placeholder="Balance counted" [(ngModel)]="countedMoney" (blur)="formatCountedMoney()" id="balance-counted-input">
+				<input mdInput type="number" placeholder="Money counted" [(ngModel)]="countedMoney" (blur)="formatCountedMoney()" id="money-counted-input">
 			</md-input-container>
 			<b>
-				Desbalance: 
+				Imbalance: 
 				<span class="text-primary">
 					<currency [value]="getDesbalance()"></currency>
 				</span>
