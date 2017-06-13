@@ -8,6 +8,8 @@ branches:
 env:
   global:
     TRAVIS_TEST_RESULT = 0
-script: chmod 777 after_script.sh
-after_script: sudo ./after_script.sh
+script: 
+ - chmod 777 after_script.sh
+ - sudo ./after_script.sh
+
 
