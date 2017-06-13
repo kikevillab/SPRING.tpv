@@ -20,8 +20,10 @@ deploy:
   api_key:
     secure: 01fHZFO6eifs2/5SJwOcw6lAWAQYLvFhUp/k8gR+ZJ3t5va3/fdDDe4Lr1YLBXXu/W1FjKtGnq9/LVpEmHoZODQBTDvr8IcVhGO0gX32V/HxBV32cdZo4qr4EFM3Czpo88IG/Pf18ZRI3dt8lwKgHndHn5vMj7WefLb/zJTNSdqEPT85t24XciasQoEm21H49ZxNi828tXvq0Og2lndq8e7jF60C0vFl8YonpT+CVWSXWv4njOU1VtpwmKBSQQtDCoL4jE3BJfLLruf3wh9oTcnIFcy+MZHKNDJUqZpcE+4nOFqdDYSmVgHBuHpNru/hwsISs8YSvylJ2oknBloXJObJ54vnAKTOH0D5P118Y+WfjmWW4Fny0+tvxHaIAI+wCS0UGSTtpDqMyOAx9yNSaM46blBvoP3JCGXDVk/lUPa0ndaBo1j9IYIhLijoxloeGa9Q8PnvmTYyd431DfPruWxBopMpqwoYUF7eM+HZZhh7HB/ehQZfFwbDwnt8ym11srbpXXroEKpVba6Iwb5fen+Y89T9pG0xO7fSxjhYbUgyWq9PmxZdE2oVc1HEvaBwXav/8gK6+uAXh3Xn1sAoLReoJMgpN/LMZqBYAOzyEbhqHZbjnZISNTJNeSdAa0+5B0dpgLwe6SObz31kapAucUvDaewnhdp/t5XC+RMOtO8=
   app: tpv-miw
+  skip_cleanup: true
   on:
     repo: miw-upm/SPRING.tpv
     branch: develop
-#after_deploy: mvn test -Pfunctional-api-test
+after_deploy: mvn verify -Pfunctional-api-test
+
 

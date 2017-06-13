@@ -1,5 +1,6 @@
 package entities.core;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -37,7 +38,7 @@ public class Ticket {
 
     @Column(unique = true, nullable = false)
     private String reference;
-    
+
     @Lob
     @Column
     private byte[] qrReference;
@@ -60,7 +61,7 @@ public class Ticket {
 
     public Ticket(long id) {
         this();
-        setId(id);            
+        setId(id);
     }
 
     public long getId() {
@@ -101,19 +102,26 @@ public class Ticket {
         return created;
     }
 
-    public void setReference(String reference){
+    public void setReference(String reference) {
         this.reference = reference;
     }
-    
+
     public String getReference() {
         return reference;
     }
 
-    public byte[] getQrReference()
-    {
-    	return qrReference;
+    public byte[] getQrReference() {
+        return qrReference;
     }
-    
+
+    public BigDecimal getTicketTotal() {
+        double total = 0.0;
+        for (Shopping shopping : shoppingList) {
+            total += shopping.getShoppingTotal();
+        }
+        return new BigDecimal(total);
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -147,11 +155,11 @@ public class Ticket {
         String createTime = new SimpleDateFormat("HH:mm dd-MMM-yyyy ").format(created.getTime());
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Ticket[" + id + ": created=" + createTime + ", shoppingList=" + shoppingList);
-        if(user != null){
+        if (user != null) {
             stringBuilder.append(", userId=" + user.getId());
         }
         stringBuilder.append("]");
-        return stringBuilder.toString();      
+        return stringBuilder.toString();
     }
 
 }
