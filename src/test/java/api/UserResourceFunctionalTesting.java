@@ -5,9 +5,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.apache.logging.log4j.LogManager;
 import org.junit.Rule;
 import org.junit.Test;
@@ -15,8 +12,6 @@ import org.junit.rules.ExpectedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.HttpClientErrorException;
 
-import entities.core.Ticket;
-import wrappers.ArticleWrapper;
 import wrappers.UserDetailsWrapper;
 import wrappers.UserPageWrapper;
 import wrappers.UserWrapper;
