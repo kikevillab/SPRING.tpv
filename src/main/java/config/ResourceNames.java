@@ -52,7 +52,7 @@ public class ResourceNames {
 
     public final static String CATEGORIES_ROOT = "category_root";
     
-    public final static String FONTS = "./src/main/resources/fonts/";
+    public final static String FONTS = "fonts/";
     
     public final static String FAKE_RECEIPT_REGULAR_FONT = "fake-receipt.regular.ttf";
     
@@ -60,7 +60,7 @@ public class ResourceNames {
     
     public final static String OPEN_SANS_BOLD_FONT = "OpenSans-Bold.ttf";
     
-    public final static String IMAGES = "./src/main/resources/img/";
+    public final static String IMAGES = "img/";
     
     public final static String UPM_LOGO = "logo_upm.jpg";
 

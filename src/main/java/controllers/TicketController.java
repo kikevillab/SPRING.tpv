@@ -193,10 +193,15 @@ public class TicketController {
         return closed;
     }
 
+    public List<Ticket> findAll() {
+       return ticketDao.findAll();      
+    }
+
     public TicketWrapper associateUserToTicket(String ticketReference, Long userMobile) {
         Ticket ticket = findOneTicketByReference(ticketReference);
         User user = userDao.findByMobile(userMobile);
         ticket.setUser(user);
         return new TicketWrapper(ticketDao.saveAndFlush(ticket));
+
     }
 }

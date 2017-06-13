@@ -20,6 +20,9 @@ public interface UserDao extends JpaRepository<User, Integer> {
     public User findByEmail(String email);
 
     public User findByDni(String dni);
+    
+    @Query("select t.user from Ticket t where t.reference = ?1")
+    User findByTicketReference(String reference);
 
     @Query("SELECT u FROM User u , Authorization a where a.role=?1 and a.user=u.id  and u.mobile=?2")
     public User findByMobileAndRole(Role role, long mobile);

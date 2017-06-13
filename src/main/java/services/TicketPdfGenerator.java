@@ -5,6 +5,7 @@ import static config.ResourceNames.TICKET_PDF_FILENAME_ROOT;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 
 import com.itextpdf.barcodes.BarcodeQRCode;
@@ -55,8 +56,9 @@ public class TicketPdfGenerator extends PdfGenerator<Ticket> {
     }
 
     @Override
-    protected PdfFont font() throws IOException {
-        return PdfFontFactory.createFont(ResourceNames.FONTS + ResourceNames.FAKE_RECEIPT_REGULAR_FONT, PdfEncodings.CP1250, true);
+    protected PdfFont font() throws IOException, URISyntaxException {
+        String fontPath = getAbsolutePathOfResource(ResourceNames.FONTS, ResourceNames.FAKE_RECEIPT_REGULAR_FONT);
+        return PdfFontFactory.createFont(fontPath, PdfEncodings.CP1250, true);
     }
 
     @Override
@@ -97,21 +99,21 @@ public class TicketPdfGenerator extends PdfGenerator<Ticket> {
     @Override
     protected void buildPdf() {
         try {
-            Image img = new Image(ImageDataFactory.create(ResourceNames.IMAGES + ResourceNames.UPM_LOGO));
+            Image img = new Image(ImageDataFactory.create(getAbsolutePathOfResource(ResourceNames.IMAGES, ResourceNames.UPM_LOGO)));
             img.setWidth(50);
             img.setHorizontalAlignment(HorizontalAlignment.CENTER);
-            document.add(img);
+            document.add(img);         
         } catch (MalformedURLException e) {
             e.printStackTrace();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
         }
-
         document.add(new Paragraph("Campus Sur UPM, Calle Nikola Tesla, s/n, 28031 Madrid"));
         CustomDashedLineSeparator separator = new CustomDashedLineSeparator();
         separator.setDash(1);
         separator.setGap(2);
         separator.setLineWidth(0.5f);
         document.add(new LineSeparator(separator));
-
         document.add(new Paragraph("REFERENCE: " + entity.getReference()));
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         document.add(new Paragraph("CREATED ON: " + formatter.format(entity.getCreated().getTime())));

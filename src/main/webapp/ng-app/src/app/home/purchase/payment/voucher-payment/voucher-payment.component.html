@@ -1,8 +1,0 @@
-<form (ngSubmit)="addVoucher($event)" #voucherReferenceForm="ngForm" fxLayout="column">
-	<a>Use a voucher by entering his reference:</a>
-	<md-input-container >
-		<input mdInput type="text" maxLength="255" class="form-control" id="referenceInput" required placeholder="Voucher reference"
-		[(ngModel)]="referenceInput" name="referenceInput" #name="ngModel">
-	</md-input-container>				
-	<button md-raised-button color="primary" type="submit" [disabled]="!voucherReferenceForm.form.valid" id="submitReferenceInputButton">OK</button >
-</form>

@@ -5,6 +5,7 @@ import static config.ResourceNames.INVOICE_PDF_FILENAME_ROOT;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 
@@ -27,6 +28,7 @@ import entities.core.Ticket;
 import entities.users.User;
 
 public class InvoicePdfGenerator extends PdfGenerator<Invoice> {
+
     private final static float[] SHOPPING_LIST_COLUMNS_WIDTHS = new float[] {200, 1, 1, 1, 1, 1};
 
     private final static float[] TABLE_COLUMNS_WIDTHS = new float[] {1, 1};
@@ -38,7 +40,7 @@ public class InvoicePdfGenerator extends PdfGenerator<Invoice> {
     public InvoicePdfGenerator(Invoice entity) {
         super(entity);
     }
-
+    
     @Override
     protected String path() {
         return INVOICES_PDFS_ROOT + INVOICE_PDF_FILENAME_ROOT + entity.getId();
@@ -50,8 +52,9 @@ public class InvoicePdfGenerator extends PdfGenerator<Invoice> {
     }
 
     @Override
-    protected PdfFont font() throws IOException {
-        return PdfFontFactory.createFont(ResourceNames.FONTS + ResourceNames.OPEN_SANS_REGULAR_FONT);
+    protected PdfFont font() throws IOException, URISyntaxException{
+        String fontPath = getAbsolutePathOfResource(ResourceNames.FONTS, ResourceNames.OPEN_SANS_REGULAR_FONT);
+        return PdfFontFactory.createFont(fontPath);
     }
 
     @Override
@@ -93,11 +96,13 @@ public class InvoicePdfGenerator extends PdfGenerator<Invoice> {
     protected void buildPdf() {
         Table invoiceHeader = new Table(TABLE_COLUMNS_WIDTHS, true);
         try {
-            Image img = new Image(ImageDataFactory.create(ResourceNames.IMAGES + ResourceNames.UPM_LOGO));
+            Image img = new Image(ImageDataFactory.create(getAbsolutePathOfResource(ResourceNames.IMAGES, ResourceNames.UPM_LOGO)));
             img.setWidth(50);
             img.setHorizontalAlignment(HorizontalAlignment.LEFT);
             invoiceHeader.addCell(new Cell().add(img).setBorder(Border.NO_BORDER));
         } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (URISyntaxException e) {
             e.printStackTrace();
         }
         Paragraph rightAlignedParagraph = new Paragraph();
@@ -117,23 +122,17 @@ public class InvoicePdfGenerator extends PdfGenerator<Invoice> {
         noBorderCell.add("To:").add(user.getUsername()).add(user.getDni()).add(user.getEmail()).add(user.getAddress());
         info.addCell(noBorderCell);
         document.add(info);
-        PdfFont boldFont;
-        try {
-            boldFont = PdfFontFactory.createFont(ResourceNames.FONTS + ResourceNames.OPEN_SANS_BOLD_FONT);
-        } catch (IOException e) {
-            e.printStackTrace();
-            boldFont = document.getPdfDocument().getDefaultFont();
-        }
-        Paragraph ticketDetails = new Paragraph().setFont(boldFont).add("TICKET DETAILS").add("\nReference: ").add(ticket.getReference())
-                .add("\nCreaten on:").add(ticketCreationDateFormatter.format(ticket.getCreated().getTime()));
+
+        Paragraph ticketDetails = new Paragraph().add("TICKET DETAILS").add("\nReference: ").add(ticket.getReference())
+                .add("\nCreaten on: ").add(ticketCreationDateFormatter.format(ticket.getCreated().getTime()));
         document.add(ticketDetails);
         Table shoppingListTable = new Table(SHOPPING_LIST_COLUMNS_WIDTHS, true);
-        shoppingListTable.addCell("Item").setFont(boldFont);
-        shoppingListTable.addCell("Price").setFont(boldFont);
-        shoppingListTable.addCell("Quantity").setFont(boldFont);
-        shoppingListTable.addCell("Subtotal").setFont(boldFont);
-        shoppingListTable.addCell("Discount").setFont(boldFont);
-        shoppingListTable.addCell("Total").setFont(boldFont);
+        shoppingListTable.addCell("Item");
+        shoppingListTable.addCell("Price");
+        shoppingListTable.addCell("Quantity");
+        shoppingListTable.addCell("Subtotal");
+        shoppingListTable.addCell("Discount");
+        shoppingListTable.addCell("Total");
         for (Shopping shopping : ticket.getShoppingList()) {
             shoppingListTable.addCell(String.valueOf(shopping.getDescription()));
             shoppingListTable
