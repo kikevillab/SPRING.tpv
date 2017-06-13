@@ -93,7 +93,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     	<form (ngSubmit)="submitTicketReference($event)" #ticketReferenceForm="ngForm" fxLayout="column">
 			<p>Get a ticket state by entering his reference:</p>
             <md-input-container>
-				<input mdInput placeholder="Ticket reference" maxLength="255" class="form-control" id="inputTicketReference" required
+				<input mdInput placeholder="Ticket reference" maxLength="255" class="form-control" required
 				[(ngModel)]="ticketReferenceInput" name="inputTicketReference" #name="ngModel">
 			</md-input-container>
 			<button md-raised-button color="primary" type="submit" [disabled]="!ticketReferenceForm.form.valid">OK</button>
