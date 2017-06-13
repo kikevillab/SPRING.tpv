@@ -1,0 +1,5 @@
+#! /bin/bash
+echo $TRAVIS_TEST_RESULT
+set TRAVIS_TEST_RESULT = 1
+
+echo $TRAVIS_TEST_RESULT
