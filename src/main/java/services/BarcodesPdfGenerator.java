@@ -20,6 +20,7 @@ import com.itextpdf.layout.property.TextAlignment;
 import entities.core.Product;
 
 public class BarcodesPdfGenerator extends PdfGenerator<List<Product>> {
+
     private static final float DESCRIPTION_SIZE = 7;
 
     private static final float BARCODE_MARGIN = 5;
@@ -28,8 +29,8 @@ public class BarcodesPdfGenerator extends PdfGenerator<List<Product>> {
 
     private final static float[] BARCODE_COLUMN_WIDTH = new float[] {50.0f, 50.0f, 50.0f, 50.0f};
 
-    public BarcodesPdfGenerator(List<Product> productList) {
-        super(productList);
+    public BarcodesPdfGenerator(List<Product> entity) {
+        super(entity);
     }
     
     @Override

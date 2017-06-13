@@ -4,6 +4,7 @@ import static config.ResourceNames.VOUCHERS_PDFS_ROOT;
 import static config.ResourceNames.VOUCHER_PDF_FILENAME_ROOT;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 
 import com.itextpdf.io.font.PdfEncodings;
@@ -19,8 +20,8 @@ import entities.core.Voucher;
 
 public class VoucherPdfGenerator extends PdfGenerator<Voucher> {
 
-    public VoucherPdfGenerator(Voucher voucher) {
-        super(voucher);
+    public VoucherPdfGenerator(Voucher entity) {
+        super(entity);
     }
 
     @Override
@@ -34,8 +35,9 @@ public class VoucherPdfGenerator extends PdfGenerator<Voucher> {
     }
 
     @Override
-    protected PdfFont font() throws IOException {
-        return PdfFontFactory.createFont(ResourceNames.FONTS + ResourceNames.FAKE_RECEIPT_REGULAR_FONT, PdfEncodings.CP1250, true);
+    protected PdfFont font() throws IOException, URISyntaxException {
+        String fontPath = getAbsolutePathOfResource(ResourceNames.FONTS, ResourceNames.FAKE_RECEIPT_REGULAR_FONT);
+        return PdfFontFactory.createFont(fontPath, PdfEncodings.CP1250, true);
     }
 
     @Override
