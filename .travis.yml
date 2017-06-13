@@ -9,5 +9,5 @@ env:
   global:
     TRAVIS_TEST_RESULT = 0
 script: set -e
-after_script: TRAVIS_TEST_RESULT = 1
+after_script: ./after_script.sh
 
