@@ -13,6 +13,9 @@ import api.exceptions.CategoryComponentNotFoundException;
 import config.ResourceNames;
 import controllers.CategoryController;
 import entities.core.CategoryComponent;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import wrappers.CategoryComponentWrapper;
 
 @RestController
@@ -25,6 +28,17 @@ public class CategoryResource {
         this.categoryController = categoryController;
     }
 
+    @ApiOperation(value = "Find partners")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "page", dataType = "integer", paramType = "query",
+                value = "Results page you want to retrieve (0..N)"),
+        @ApiImplicitParam(name = "size", dataType = "integer", paramType = "query",
+                value = "Number of records per page."),
+        @ApiImplicitParam(name = "sort", allowMultiple = true, dataType = "string", paramType = "query",
+                value = "Sorting criteria in the format: property(,asc|desc). " +
+                        "Default sort order is ascending. " +
+                        "Multiple sort criteria are supported.")
+    })
     @RequestMapping(value = Uris.SEARCH, method = RequestMethod.GET)
     public Page<CategoryComponentWrapper> findCategoriesPaginatedByDepthLevel(Pageable pageable, @RequestParam(required = false) Long id,
             @RequestParam(required = false) String name) throws CategoryComponentNotFoundException {
