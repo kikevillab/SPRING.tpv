@@ -1,29 +1,34 @@
 language: java
 jdk:
 - oraclejdk8
+node_js: "0.10"
 branches:
   only:
   - master
   - develop
-notifications:
-  slack: tpv-miw:RR3NECTV3PaLvPZOUUd8qF7O
+notifications:  
   email:
     recipients:
-    - j.bernal@upm.es
+    - e.arranz@alumnos.upm.es
 services:
 - mysql
 before_install:
 - mysql -e 'CREATE DATABASE IF NOT EXISTS tpv;'
-script: mvn verify --settings settings.xml
+intall:
+  - npm --prefix src/main/angular run install
+  - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+script: 
+ - mvn verify --settings settings.xml
+ - npm --prefix src/main/angular run test
+before_deploy: npm --prefix src/main/angular run build
 deploy:
-  provider: heroku
-  api_key:
-    secure: 01fHZFO6eifs2/5SJwOcw6lAWAQYLvFhUp/k8gR+ZJ3t5va3/fdDDe4Lr1YLBXXu/W1FjKtGnq9/LVpEmHoZODQBTDvr8IcVhGO0gX32V/HxBV32cdZo4qr4EFM3Czpo88IG/Pf18ZRI3dt8lwKgHndHn5vMj7WefLb/zJTNSdqEPT85t24XciasQoEm21H49ZxNi828tXvq0Og2lndq8e7jF60C0vFl8YonpT+CVWSXWv4njOU1VtpwmKBSQQtDCoL4jE3BJfLLruf3wh9oTcnIFcy+MZHKNDJUqZpcE+4nOFqdDYSmVgHBuHpNru/hwsISs8YSvylJ2oknBloXJObJ54vnAKTOH0D5P118Y+WfjmWW4Fny0+tvxHaIAI+wCS0UGSTtpDqMyOAx9yNSaM46blBvoP3JCGXDVk/lUPa0ndaBo1j9IYIhLijoxloeGa9Q8PnvmTYyd431DfPruWxBopMpqwoYUF7eM+HZZhh7HB/ehQZfFwbDwnt8ym11srbpXXroEKpVba6Iwb5fen+Y89T9pG0xO7fSxjhYbUgyWq9PmxZdE2oVc1HEvaBwXav/8gK6+uAXh3Xn1sAoLReoJMgpN/LMZqBYAOzyEbhqHZbjnZISNTJNeSdAa0+5B0dpgLwe6SObz31kapAucUvDaewnhdp/t5XC+RMOtO8=
-  app: tpv-miw
-  skip_cleanup: true
-  on:
-    repo: miw-upm/SPRING.tpv
-    branch: develop
-after_deploy: mvn verify -Pfunctional-api-test
+    provider: heroku
+    skip_cleanup: true
+    api_key:
+     secure: Mj1TIaQOCdz3lBUUKd6K9qmmIq2BdvQ2K83AK7am7Esrk7gu11VmOSdzbu8UQJ++7MR8sFQWbq4f1hSf5IjfX5tXmei6m9QeADMY2N4UX12Y2W2D6iKj6pQReoDByLP7/mE9ACy3Ntpu+MbHBh1AOEQ5HuCQiLxyQS+rBK3bIIGme2gj/qC7yzVnO1L7GES/79HiJ7QHKRewPMvX+kdZJ3fSEUjYnWX8dGV95YdskP9abFvmuOe7Za8X/mWHQADBO3FHSwzDEbkp/jkAatHh2OPZSPpI9I6sJU/g1kGmq/B1V/9WAwSX8KXArZgieCpJzy3Gl1Nh7vMxBoCsUNCXW477QodfjUYdMAOV5Ub/dWkeXjLRObdrWP5njWilWDV0cDo4ZgYY3onqrUj6Cuw0q+xgOVK2XlRHOdjDyiiGZb5EQllHIlLVa6M028t3G9l99CLldfDpq52dFuOwgfRq5lpyV5a4io0fNF/m/r/4f0QQk7HfpO50eOECYKhZmSsNr818VuW4mVNbkb1oEZ8DZ0Y9o+pD03Nn6C1XSAPHBkoBzAooKdo1/LyVxoSn0rOkrBBrZZ3lF7GgGFZlyIg1KB+mJC5s9EHgbx+BFK+dGZ3bzX3UuzZz8ukViroHFrNzn7BvvbdOzxLb1tVcG9lvOL32qr/4a8g/9i0BoUiVR8c=
+    app: tpv-miw
+    on:
+      repo: kikevillab/SPRING.tpv
+      branch: develop
 
 
