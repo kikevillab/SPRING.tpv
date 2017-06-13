@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 
+import api.exceptions.NotFoundTicketReferenceException;
 import api.exceptions.NotFoundUserMobileException;
 import daos.users.AuthorizationDao;
 import daos.users.UserDao;
@@ -158,6 +159,15 @@ public class UserController {
                 this.authorizationDao.delete(auth);
 
         this.userDao.delete(user);
+    }
+    
+    public UserWrapper getByTicketReference(String ticketReference) throws NotFoundTicketReferenceException {
+        User user = this.userDao.findByTicketReference(ticketReference);
+
+        if (user == null)
+            throw new NotFoundTicketReferenceException();
+
+        return new UserWrapper(user);
     }
 
 }

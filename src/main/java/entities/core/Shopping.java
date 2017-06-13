@@ -96,9 +96,14 @@ public class Shopping {
     }
 
     public double getShoppingTotal() {
-        double retailPriceDouble = retailPrice.doubleValue();
         float discountDecimal = (float) discount / 100;
-        return amount * (retailPriceDouble - (retailPriceDouble * discountDecimal));
+        double shoppingSubtotal = getShoppingSubtotal();
+        return shoppingSubtotal - (shoppingSubtotal * discountDecimal);
+    }
+    
+    public double getShoppingSubtotal(){
+        double retailPriceDouble = retailPrice.doubleValue();
+        return amount * retailPriceDouble;
     }
 
     @Override

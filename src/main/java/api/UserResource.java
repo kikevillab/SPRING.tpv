@@ -3,20 +3,28 @@ package api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import api.exceptions.AlreadyExistUserFieldException;
 import api.exceptions.CannotDeleteUserException;
 import api.exceptions.InvalidUserFieldException;
+import api.exceptions.NotFoundTicketReferenceException;
 import api.exceptions.NotFoundUserIdException;
 import api.exceptions.NotFoundUserMobileException;
 import controllers.UserController;
 import entities.users.Role;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+import springfox.documentation.annotations.ApiIgnore;
 import wrappers.UserDetailsWrapper;
 import wrappers.UserWrapper;
 
@@ -47,9 +55,23 @@ public class UserResource {
         userController.updateUser(userWrapper);
     }
 
+
+    @ApiOperation(value = "Find partners")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "page", dataType = "integer", paramType = "query",
+                value = "Results page you want to retrieve (0..N)"),
+        @ApiImplicitParam(name = "size", dataType = "integer", paramType = "query",
+                value = "Number of records per page."),
+        @ApiImplicitParam(name = "sort", allowMultiple = true, dataType = "string", paramType = "query",
+                value = "Sorting criteria in the format: property(,asc|desc). " +
+                        "Default sort order is ascending. " +
+                        "Multiple sort criteria are supported.")
+    })
     @RequestMapping(value = Uris.USERS, method = RequestMethod.GET)
     // @PreAuthorize("hasRole('ADMIN')")
-    public Page<UserWrapper> userList(Pageable pageable, String role) throws InvalidUserFieldException {
+    @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
+    public Page<UserWrapper> userList(@ApiIgnore final Pageable pageable, String role) throws InvalidUserFieldException {
         this.validateFieldObject(pageable, "Pageable: objeto para paginar");
         if (this.StringToRole(role) == null)
             return null;
@@ -105,6 +127,15 @@ public class UserResource {
         }
     }
 
+    @RequestMapping(value = Uris.USERS +Uris.TICKET_REFERENCE+Uris.REFERENCE, method = RequestMethod.GET)
+    public UserWrapper getByTicketReference(@PathVariable (value = "reference") String reference)
+            throws NotFoundTicketReferenceException, InvalidUserFieldException {
+        validateField(reference, "ticketReference");
+        return this.userController.getByTicketReference(reference);
+    }
+    
+    
+    
     private void validateFieldObject(Object objeto, String msg) throws InvalidUserFieldException {
         if (objeto == null)
             throw new InvalidUserFieldException(msg);

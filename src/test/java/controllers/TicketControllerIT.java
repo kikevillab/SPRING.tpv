@@ -37,6 +37,7 @@ import wrappers.ShoppingUpdateWrapper;
 import wrappers.TicketCreationResponseWrapper;
 import wrappers.TicketCreationWrapper;
 import wrappers.TicketReferenceCreatedWrapper;
+import wrappers.TicketWrapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {PersistenceConfig.class, TestsPersistenceConfig.class, TestsControllerConfig.class})
@@ -258,6 +259,16 @@ public class TicketControllerIT {
         Page<TicketReferenceCreatedWrapper> ticketPage = ticketController.getTicketsByUserMobile(mobile, new PageRequest(pageNumber, pageSize));
         assertNotNull(ticketPage);
         assertEquals(pageSize, ticketPage.getNumberOfElements());
+    }
+    
+    @Test
+    public void testAssociateUserToTicket(){
+        Ticket ticketNotAssignedToAnUser = ticketDao.findOne(new TicketPK(1L));    
+        assertNull(ticketNotAssignedToAnUser.getUser());
+        Long userMobile = 666000002L;
+        TicketWrapper ticketWithUser = ticketController.associateUserToTicket(ticketNotAssignedToAnUser.getReference(), userMobile);
+        assertNotNull(ticketWithUser.getUserMobile());
+        assertEquals(userMobile, ticketWithUser.getUserMobile());
     }
     
 }

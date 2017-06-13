@@ -52,7 +52,7 @@ textilePrintingList:
     retailPrice: 20
     description: textilePrinting0_seed_test
     type: ploter
-
+            
 ticketList:
   - &ticket71
     id: 71

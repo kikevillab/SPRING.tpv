@@ -49,6 +49,11 @@ public class Article extends Product {
     public void setProvider(Provider provider) {
         this.provider = provider;
     }
+    
+    @Override
+    public String getLongDescription() {
+        return "Article with " + stock + " units in stock and sold at a wholesale price of €" + wholesalePrice + ".";
+    }
 
     @Override
     public String toString() {
