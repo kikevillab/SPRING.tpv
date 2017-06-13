@@ -335,6 +335,9 @@
 			<resource>
 				<directory>src/main/webapp</directory>
 			</resource>
+			<resource>
+                <directory>src/main/angular</directory>
+            </resource>
 		</resources>
 		<testResources>
 	        <testResource>
@@ -350,6 +353,9 @@
 				<configuration>
 					<source>${jdk.version}</source>
 					<target>${jdk.version}</target>
+                    <excludes>
+		                <exclude>angular/**</exclude>
+		            </excludes>
 				</configuration>
 			</plugin>
 			<plugin>
