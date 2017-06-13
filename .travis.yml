@@ -5,7 +5,9 @@ branches:
   only:
   - master
   - develop
-
-script: TRAVIS_TEST_RESULT = 0;
-after_script: TRAVIS_TEST_RESULT = 1;
+env:
+  global:
+    TRAVIS_TEST_RESULT = 0
+script: set -e
+after_script: TRAVIS_TEST_RESULT = 1
 
