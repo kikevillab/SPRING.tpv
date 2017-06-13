@@ -6,6 +6,6 @@ branches:
   - master
   - develop
 
-script: $TRAVIS_TEST_RESULT = 0;
-after_script: $TRAVIS_TEST_RESULT = 1;
+script: TRAVIS_TEST_RESULT = 0;
+after_script: TRAVIS_TEST_RESULT = 1;
 
