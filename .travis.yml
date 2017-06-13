@@ -14,9 +14,8 @@ services:
 - mysql
 before_install:
 - mysql -e 'CREATE DATABASE IF NOT EXISTS tpv;'
-intall:
-  - npm --prefix src/main/angular run install
-  - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+before_script:
+- npm --prefix src/main/angular run install
 script: 
  - mvn verify --settings settings.xml
  - npm --prefix src/main/angular run test
