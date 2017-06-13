@@ -30,6 +30,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     isRootCategory: boolean = true;
     scrolled: boolean = false;
     loading: boolean = true;
+    containerPosition: number;
 
     constructor(private searchService: SearchService, private shoppingService: ShoppingService, private toastService: ToastService, private dialog: MdDialog) { }
 
@@ -43,6 +44,7 @@ export class SearchComponent implements OnInit, OnDestroy {
             this.isRootCategory = this.searchService.isRootCategory();
         });
         this.searchService.getCategoryContent();
+        this.containerPosition = window.innerHeight - this.scrollContainer.nativeElement.offsetTop - 16;
     }
 
     openCategory(category: Category): void {
@@ -103,10 +105,6 @@ export class SearchComponent implements OnInit, OnDestroy {
 
     getFloatingButtonsTopPx(): number {
         return this.pxScrolled + 5;
-    }
-
-    calculateScrollContainerHeight(): number {
-        return window.innerHeight - this.scrollContainer.nativeElement.offsetTop - 16;
     }
 
     getCategoryBackgroundColor(code: string): string {

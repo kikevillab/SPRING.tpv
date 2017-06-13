@@ -1,4 +1,4 @@
-<div id="scroll-container" [style.height.px]="calculateScrollContainerHeight()" (scroll)="scrollHandler($event)" #scrollContainer>
+<div id="scroll-container" [style.height.px]="containerPosition" (scroll)="scrollHandler($event)" #scrollContainer>
 	<h1 id="page-title">Products</h1>
 	<div class="margin-sides" fxLayoutGap="1em" fxLayout="column">
 		<button md-mini-fab color="warn" mdTooltip="Reset search" mdTooltipPosition="below" (click)="resetSearch()" id="reset-search-button" *ngIf="lastNameInput">
