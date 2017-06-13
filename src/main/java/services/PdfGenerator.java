@@ -5,7 +5,10 @@ import static config.ResourceNames.PDF_FILE_EXT;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.geom.PageSize;
@@ -22,6 +25,10 @@ public abstract class PdfGenerator<T> {
     protected T entity;
 
     public PdfGenerator(T entity) {
+        this.entity = entity;
+    }
+
+    public void setEntity(T entity) {
         this.entity = entity;
     }
 
@@ -46,7 +53,7 @@ public abstract class PdfGenerator<T> {
 
     protected abstract PageSize pageSize();
 
-    protected abstract PdfFont font() throws IOException;
+    protected abstract PdfFont font() throws IOException, URISyntaxException;
 
     protected abstract float fontSize();
 
@@ -61,7 +68,7 @@ public abstract class PdfGenerator<T> {
     protected abstract float topMargin();
 
     protected abstract float bottomMargin();
-    
+
     protected abstract void buildPdf();
 
     private Document getDocument(String fullPath, PageSize pageSize) throws IOException {
@@ -75,7 +82,11 @@ public abstract class PdfGenerator<T> {
         makeDirectories(fullPath);
         document = getDocument(fullPath, pageSize());
         document.setMargins(topMargin(), rightMargin(), bottomMargin(), leftMargin());
-        document.setFont(font());
+        try{
+            document.setFont(font());
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }      
         document.setFontSize(fontSize());
         document.setHorizontalAlignment(horizontalAlignment());
         document.setTextAlignment(textAlignment());
@@ -83,7 +94,10 @@ public abstract class PdfGenerator<T> {
         document.close();
         return Files.readAllBytes(new File(fullPath).toPath());
     }
-
-
+    
+    protected String getAbsolutePathOfResource(String type, String resource) throws URISyntaxException{
+        URL resourceURL = getClass().getClassLoader().getResource(type + resource);
+        return Paths.get(resourceURL.toURI()).toFile().getAbsolutePath();
+    }
 
 }

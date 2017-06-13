@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import api.exceptions.AlreadyExistUserFieldException;
 import api.exceptions.CannotDeleteUserException;
 import api.exceptions.InvalidUserFieldException;
+import api.exceptions.NotFoundTicketReferenceException;
 import api.exceptions.NotFoundUserIdException;
 import api.exceptions.NotFoundUserMobileException;
 import controllers.UserController;
@@ -126,6 +127,15 @@ public class UserResource {
         }
     }
 
+    @RequestMapping(value = Uris.USERS +Uris.TICKET_REFERENCE+Uris.REFERENCE, method = RequestMethod.GET)
+    public UserWrapper getByTicketReference(@PathVariable (value = "reference") String reference)
+            throws NotFoundTicketReferenceException, InvalidUserFieldException {
+        validateField(reference, "ticketReference");
+        return this.userController.getByTicketReference(reference);
+    }
+    
+    
+    
     private void validateFieldObject(Object objeto, String msg) throws InvalidUserFieldException {
         if (objeto == null)
             throw new InvalidUserFieldException(msg);

@@ -328,10 +328,20 @@
 	<build>
 		<finalName>${deploy}</finalName>
 		<resources>
-			<resource>
-				<directory>src/main/resources</directory>
-				<filtering>true</filtering>
-			</resource>
+	        <resource>
+	            <filtering>true</filtering>
+	            <directory>src/main/resources</directory>
+	            <excludes>
+	                <exclude>**/*.ttf</exclude>
+	            </excludes>
+	        </resource>
+	        <resource>
+	            <filtering>false</filtering>
+	            <directory>src/main/resources</directory>
+	            <includes>
+	                <include>**/*.ttf</include>
+	            </includes>
+	        </resource>
 			<resource>
 				<directory>src/main/webapp</directory>
 			</resource>
@@ -339,6 +349,7 @@
                 <directory>src/main/angular</directory>
             </resource>
 		</resources>
+
 		<testResources>
 	        <testResource>
 	            <directory>src/test/resources</directory>

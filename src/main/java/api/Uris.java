@@ -89,6 +89,10 @@ public class Uris {
     public static final String CATEGORIES = "/categories";
 
     public static final String CATEGORY_NAME = "/{name}";
+    
+    public static final String ALL = "/all";
+    
+    public static final String TICKET_REFERENCE = "/reference";
 
     public static final String TICKET_USER = "/user";
 

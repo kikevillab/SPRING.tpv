@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.AfterClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -112,7 +113,7 @@ public class PdfGeneratorServiceIT {
         assertTrue(pdfFile.canWrite());
     }
 
-    //@AfterClass
+    @AfterClass
     public static void tearDownOnce() throws IOException {
         String path = PDFS_ROOT + INVOICES_PDFS_ROOT + INVOICE_PDF_FILENAME_ROOT + 20170001 + PDF_FILE_EXT;
         new File(path).delete();

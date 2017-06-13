@@ -266,8 +266,16 @@ public class TicketResource {
         }
     }
 
+    
+    @RequestMapping(value = Uris.ALL, method = RequestMethod.GET)
+    public List<Ticket> listTickets() {
+        return ticketController.findAll();
+    }
+
+
     private void checkVouchers(List<String> voucherReferenceList)
             throws VoucherNotFoundException, VoucherHasExpiredException, VoucherAlreadyConsumedException {
+
         for (String reference : voucherReferenceList) {
             if (!voucherController.voucherExists(reference)) {
                 throw new VoucherNotFoundException("Voucher reference: " + reference);
