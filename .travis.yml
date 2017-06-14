@@ -1,7 +1,7 @@
 language: java
 jdk:
 - oraclejdk8
-node_js: "6.11.0"
+node_js: "7"
 branches:
   only:
   - master
@@ -17,6 +17,7 @@ services:
 - mysql
 before_install:
 - mysql -e 'CREATE DATABASE IF NOT EXISTS tpv;'
+- echo $ANGULAR_HOME
 - npm --prefix $ANGULAR_HOME "run install"
 script: 
  #- mvn verify --settings settings.xml
