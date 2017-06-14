@@ -15,12 +15,12 @@ services:
 before_install:
 - mysql -e 'CREATE DATABASE IF NOT EXISTS tpv;'
 before_script:
-- npm --prefix __dirname/src/main/angular run install
+- npm --prefix /home/travis/build/kikevillab/SPRING.tpv/src/main/angular run install
 script: 
  - mvn verify --settings settings.xml
  - mvn verify -Pfunctional-api-test
- - npm --prefix __dirname/src/main/angular run test
-before_deploy: npm --prefix __dirname/src/main/angular run build
+ - npm --prefix /home/travis/build/kikevillab/SPRING.tpv/src/main/angular run test
+before_deploy: npm --prefix /home/travis/build/kikevillab/SPRING.tpv/src/main/angular run build
 deploy:
     provider: heroku
     skip_cleanup: true
