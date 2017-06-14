@@ -8,7 +8,7 @@ branches:
   - develop
 env:
   global:
-    - ANGULAR_HOME=$HOME_TRAVIS/$TRAVIS_REPO_SLUG/src/main/angular
+    - ANGULAR_HOME=$TRAVIS_REPO_SLUG/src/main/angular
 notifications:  
   email:
     recipients:
@@ -16,21 +16,21 @@ notifications:
 services:
 - mysql
 before_install:
-- echo $ANGULAR_HOME
 - mysql -e 'CREATE DATABASE IF NOT EXISTS tpv;'
+#Updating node & npm
 - . $HOME/.nvm/nvm.sh
 - nvm install stable
 - nvm use stable
 - if [[ `npm -v` != 5* ]]; then npm i -g npm@5.0.3; fi
 install:
 - npm install -g @angular/cli@latest
-- npm --prefix "/home/travis/build/kikevillab/SPRING.tpv/src/main/angular" run install
+- npm --prefix $ANGULAR_HOME run install
 #- mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 script: 
  #- mvn verify --settings settings.xml
  #- mvn verify -Pfunctional-api-test
- - npm --prefix "/home/travis/build/kikevillab/SPRING.tpv/src/main/angular" run test
-before_deploy: npm --prefix "/home/travis/build/kikevillab/SPRING.tpv/src/main/angular" run build
+ - npm --prefix $ANGULAR_HOME run test
+before_deploy: npm --prefix $ANGULAR_HOME run build
 deploy:
     provider: heroku
     skip_cleanup: true
