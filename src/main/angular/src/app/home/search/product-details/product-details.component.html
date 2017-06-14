@@ -3,7 +3,7 @@
 		<md-card id="product-details-container" fxHide.xs fxHide.sm>
 			<md-card-content fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayout.xs="column" fxLayoutAlign="space-between">
 				<div>
-					<img src="{{product.image}}" width="175"/>
+					<img src="{{product.image}}" onError="this.src='assets/img/image-placeholder.gif';" width="175"/>
 				</div>
 				<md-card id="product-details-card">
 					<md-card-content>
