@@ -1,7 +1,7 @@
 language: java
 jdk:
 - oraclejdk8
-node_js: "7"
+node_js: "6.9"
 branches:
   only:
   - master
@@ -19,7 +19,7 @@ before_install:
 - mysql -e 'CREATE DATABASE IF NOT EXISTS tpv;'
 - if [[ `npm -v` != 3* ]]; then npm i -g npm@3; fi
 install:
-- npm install -g @angular/cli
+- npm install -g @angular/cli@latest
 - npm --prefix "/home/travis/build/kikevillab/SPRING.tpv/src/main/angular" run install
 #- mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 script: 
