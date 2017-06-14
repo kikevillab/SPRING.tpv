@@ -1,14 +1,14 @@
 language: java
 jdk:
 - oraclejdk8
-node_js: "7"
+node_js: "6.9.2"
 branches:
   only:
   - master
   - develop
 env:
   global:
-    - ANGULAR_HOME = "/home/travis/build/kikevillab/SPRING.tpv/src/main/angular"
+    - ANGULAR_HOME=/home/travis/build/kikevillab/SPRING.tpv/src/main/angular
 notifications:  
   email:
     recipients:
@@ -16,8 +16,10 @@ notifications:
 services:
 - mysql
 before_install:
+- echo $ANGULAR_HOME
 - mysql -e 'CREATE DATABASE IF NOT EXISTS tpv;'
-- if [[ `npm -v` != 5* ]]; then npm i -g npm@5; fi
+- nvm use 6.9.2
+- if [[ `npm -v` != 5* ]]; then npm i -g npm@5.0.3; fi
 install:
 - npm install -g @angular/cli@latest
 - npm --prefix "/home/travis/build/kikevillab/SPRING.tpv/src/main/angular" run install
