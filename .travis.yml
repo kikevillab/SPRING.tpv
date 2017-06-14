@@ -8,7 +8,7 @@ branches:
   - develop
 env:
   global:
-    - ANGULAR_HOME = "$HOME_TRAVIS/$TRAVIS_REPO_SLUG/src/main/angular"
+    - ANGULAR_HOME = "/home/travis/build/kikevillab/SPRING.tpv/src/main/angular"
 notifications:  
   email:
     recipients:
@@ -17,8 +17,9 @@ services:
 - mysql
 before_install:
 - mysql -e 'CREATE DATABASE IF NOT EXISTS tpv;'
+- if [[ `npm -v` != 3* ]]; then npm i -g npm@3; fi
 - echo $ANGULAR_HOME
-- npm --prefix $ANGULAR_HOME "run install"
+- "npm --prefix $ANGULAR_HOME run" install
 script: 
  #- mvn verify --settings settings.xml
  #- mvn verify -Pfunctional-api-test
