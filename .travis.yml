@@ -17,8 +17,7 @@ services:
 - mysql
 before_install:
 - mysql -e 'CREATE DATABASE IF NOT EXISTS tpv;'
-- "npm run install --prefix $ANGULAR_HOME"
-- "npm --prefix $ANGULAR_HOME install"
+- npm --prefix $ANGULAR_HOME "run install"
 script: 
  #- mvn verify --settings settings.xml
  #- mvn verify -Pfunctional-api-test
