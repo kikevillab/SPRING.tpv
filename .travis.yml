@@ -18,7 +18,10 @@ services:
 before_install:
 - mysql -e 'CREATE DATABASE IF NOT EXISTS tpv;'
 - if [[ `npm -v` != 3* ]]; then npm i -g npm@3; fi
+install:
+- npm install -g @angular/cli
 - npm --prefix "/home/travis/build/kikevillab/SPRING.tpv/src/main/angular" run install
+#- mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 script: 
  #- mvn verify --settings settings.xml
  #- mvn verify -Pfunctional-api-test
