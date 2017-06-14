@@ -9,7 +9,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e --proxy-config proxy.config.json",
-    "install": "npm install -g --prefix node_modules",
+    "install": "npm install -g --prefix .",
     "build": "ng build -op ../resources/"
   },
   "private": true,
