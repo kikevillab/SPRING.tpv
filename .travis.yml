@@ -15,11 +15,12 @@ services:
 before_install:
 - mysql -e 'CREATE DATABASE IF NOT EXISTS tpv;'
 before_script:
-- npm --prefix src/main/angular run install
+- npm --prefix ./src/main/angular run install
 script: 
  - mvn verify --settings settings.xml
- - npm --prefix src/main/angular run test
-before_deploy: npm --prefix src/main/angular run build
+ - mvn verify -Pfunctional-api-test
+ - npm --prefix ./src/main/angular run test
+before_deploy: npm --prefix ./src/main/angular run build
 deploy:
     provider: heroku
     skip_cleanup: true
