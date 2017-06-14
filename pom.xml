@@ -123,26 +123,6 @@
                 <plugins>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-antrun-plugin</artifactId>
-                        <version>${antrun.version}</version>
-                        <executions>
-                            <execution>
-                                <id>sleep-for-a-while</id>
-                                <phase>process-test-classes</phase>
-                                <configuration>
-                                    <target>
-                                        <echo message="sleep for ${sleep.seconds} seconds..." />
-                                        <sleep seconds="${sleep.seconds}" />
-                                    </target>
-                                </configuration>
-                                <goals>
-                                    <goal>run</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
                         <version>${maven.failsafe.version}</version>
                         <configuration>
