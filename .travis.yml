@@ -18,8 +18,8 @@ services:
 before_install:
 - mysql -e 'CREATE DATABASE IF NOT EXISTS tpv;'
 - if [[ `npm -v` != 3* ]]; then npm i -g npm@3; fi
-- echo $ANGULAR_HOME
-- npm '--prefix $ANGULAR_HOME run install'
+- npm -v
+- npm --prefix "/home/travis/build/kikevillab/SPRING.tpv/src/main/angular" run install
 script: 
  #- mvn verify --settings settings.xml
  #- mvn verify -Pfunctional-api-test
