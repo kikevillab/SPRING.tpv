@@ -31,6 +31,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     scrolled: boolean = false;
     loading: boolean = true;
     containerPosition: number;
+    breadcrumb: string = this.searchService.getBreadcrumb();
 
     constructor(private searchService: SearchService, private shoppingService: ShoppingService, private toastService: ToastService, private dialog: MdDialog) { }
 
@@ -42,6 +43,7 @@ export class SearchComponent implements OnInit, OnDestroy {
             this.scrolled = this.loading = false;
             this.lastPage = categoriesPage;
             this.isRootCategory = this.searchService.isRootCategory();
+            this.breadcrumb = this.searchService.getBreadcrumb();
         });
         this.searchService.getCategoryContent();
         this.containerPosition = window.innerHeight - this.scrollContainer.nativeElement.offsetTop - 16;
@@ -53,7 +55,7 @@ export class SearchComponent implements OnInit, OnDestroy {
             dialogRef.componentInstance.initialize(category.code);
         } else {
             this.loading = true;
-            this.searchService.getCategoryContent(category.id);
+            this.searchService.getCategoryContent(category);
         }
     }
 
