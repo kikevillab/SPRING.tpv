@@ -268,6 +268,12 @@
 			<artifactId>spring-data-jpa</artifactId>
 			<version>${spring.data.version}</version>
 		</dependency>
+		<!-- Connection pooling -->
+		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-dbcp2</artifactId>
+		    <version>2.1.1</version>
+		</dependency>
 		<!-- YAML Parser -->
 		<dependency>
 			<groupId>org.yaml</groupId>
