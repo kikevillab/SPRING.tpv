@@ -9,6 +9,7 @@ import { Subject } from 'rxjs/Subject';
 
 import { URI_PRODUCTS, URI_CATEGORIES } from '../../../../app.config';
 
+import { Category } from '../models/category.model';
 import { CategoriesPage } from '../models/categories-page.model';
 import { Product } from '../../../../shared/models/product.model';
 import { HTTPService } from '../../../../shared/services/http.service';
@@ -17,18 +18,18 @@ import { TPVHTTPError } from '../../../../shared/models/tpv-http-error.model';
 @Injectable()
 export class SearchService {
     private static pageSize: number = 20;
-    private categoriesRoute: number[] = [];
+    private categoriesRoute: Category[] = [];
     private categoriesPageSubject: Subject<CategoriesPage> = new Subject<CategoriesPage>();
 
     constructor(private httpService: HTTPService) { }
 
-    getCategoryContent(id?: number, pageNumber: number = 0): Promise<any> {
+    getCategoryContent(category?: Category, pageNumber: number = 0): Promise<any> {
         return new Promise((resolve: Function, reject: Function) => {
-            if (!id && this.categoriesRoute.length > 0) {
-                id = this.categoriesRoute[this.categoriesRoute.length - 1];
+            if (!category && this.categoriesRoute.length > 0) {
+                category = this.categoriesRoute[this.categoriesRoute.length - 1];
             }
-            id && this.categoriesRoute.indexOf(id) === -1 && this.categoriesRoute.push(id);
-            let idString: string = id ? id.toString() : "";
+            category && this.categoriesRoute.indexOf(category) === -1 && this.categoriesRoute.push(category);
+            let idString: string = category ? category.id.toString() : "";
             let params: URLSearchParams = new URLSearchParams();
             params.append('page', pageNumber.toString());
             params.append('id', idString);
@@ -81,6 +82,14 @@ export class SearchService {
 
     isRootCategory(): boolean {
         return this.categoriesRoute.length == 0;
+    }
+
+    getBreadcrumb(): string {
+        let breadcrumb: string = '';
+        this.categoriesRoute.forEach((category: Category) => {
+            breadcrumb += `/${category.name}`;
+        });
+        return breadcrumb;
     }
 
     getCategoriesPageObservable(): Observable<CategoriesPage> {
