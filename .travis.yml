@@ -1,7 +1,7 @@
 language: java
 jdk:
 - oraclejdk8
-node_js: "3.10.10"
+node_js: "6.11.0"
 branches:
   only:
   - master
@@ -17,12 +17,12 @@ services:
 - mysql
 before_install:
 - mysql -e 'CREATE DATABASE IF NOT EXISTS tpv;'
-- npm --prefix $ANGULAR_HOME run install
+- "npm --prefix $ANGULAR_HOME run install"
 script: 
  - mvn verify --settings settings.xml
  - mvn verify -Pfunctional-api-test
- - npm --prefix $ANGULAR_HOME run test
-before_deploy: npm --prefix $ANGULAR_HOME run build
+ - "npm --prefix $ANGULAR_HOME run test"
+before_deploy: "npm --prefix $ANGULAR_HOME run build"
 deploy:
     provider: heroku
     skip_cleanup: true
