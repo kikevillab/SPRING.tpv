@@ -24,13 +24,14 @@ before_install:
 - if [[ `npm -v` != 5* ]]; then npm i -g npm@5.0.3; fi
 install:
 - npm install -g @angular/cli@1.0.0
-- npm --prefix $ANGULAR_HOME run install
+- npm --prefix "/home/travis/build/kikevillab/SPRING.tpv/src/main/angular" run install
+
 #- mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 script: 
  #- mvn verify --settings settings.xml
  #- mvn verify -Pfunctional-api-test
- - npm --prefix $ANGULAR_HOME run test
-before_deploy: npm --prefix $ANGULAR_HOME run build
+ - npm --prefix "/home/travis/build/kikevillab/SPRING.tpv/src/main/angular" run test
+before_deploy: npm --prefix "/home/travis/build/kikevillab/SPRING.tpv/src/main/angular" run build
 deploy:
     provider: heroku
     skip_cleanup: true
