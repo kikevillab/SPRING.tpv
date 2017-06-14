@@ -9,8 +9,8 @@ import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '@angular/material';
 
+import { Category } from '../models/category.model';
 import { SearchService } from './search.service';
-
 import { HTTPService } from '../../../../shared/services/http.service';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 
@@ -52,7 +52,8 @@ describe('Service: SearchService', () => {
         mockBackend.connections.subscribe((conn: MockConnection) => {
             conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(MockCategoriesPage) })));
         });
-        searchService.getCategoryContent(1234).then(() => {
+        let category: Category = new Category(1234, 'categoryTest', null, null);
+        searchService.getCategoryContent(category).then(() => {
             expect(searchService.isRootCategory()).toBeFalsy();
         });
     }));
