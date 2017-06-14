@@ -9,8 +9,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e --proxy-config proxy.config.json",
-    "install": "npm install --global --prefix ./node_modules",
-    "build": "ng build --output-path ./../resources/"
+    "install": "npm install -g --prefix node_modules",
+    "build": "ng build -op ../resources/"
   },
   "private": true,
   "dependencies": {
