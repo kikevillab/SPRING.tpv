@@ -14,4 +14,10 @@ export class Shopping {
     constructor(public id: number, public amount: number, public discount: number, public description: string,
                 public price: number, public state: string, public code: string, public ticket: number) {
     }
+
+    equals(shopping: Shopping): boolean {
+        return ((shopping.id === this.id) && (shopping.amount === this.amount) && (shopping.discount === this.discount)
+        && (shopping.description === this.description) && (shopping.price === this.price)
+        && (shopping.state === this.state) && (shopping.code === this.code) && (shopping.ticket === this.ticket))
+    }
 }

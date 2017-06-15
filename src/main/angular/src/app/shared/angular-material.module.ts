@@ -13,6 +13,7 @@ import {MdIconModule} from '@angular/material';
 import {MdChipsModule} from '@angular/material';
 import {MdDialogModule} from '@angular/material';
 import {MdCheckboxModule} from '@angular/material';
+import {MdAutocompleteModule} from '@angular/material';
 
 @NgModule({
     imports: [
@@ -23,7 +24,8 @@ import {MdCheckboxModule} from '@angular/material';
         MdIconModule,
         MdChipsModule,
         MdDialogModule,
-        MdCheckboxModule
+        MdCheckboxModule,
+        MdAutocompleteModule
     ],
     exports: [
         MdToolbarModule,
@@ -33,7 +35,8 @@ import {MdCheckboxModule} from '@angular/material';
         MdIconModule,
         MdChipsModule,
         MdDialogModule,
-        MdCheckboxModule
+        MdCheckboxModule,
+        MdAutocompleteModule
     ]
 })
 export class AngularMaterialModule {

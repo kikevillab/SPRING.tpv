@@ -913,7 +913,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 amount: 2,
                 discount: 3,
                 description: 'description1',
-                price: 6.25,
+                price: 25.2,
                 state: 'OPENED',
                 code: 'dfasd2fa3',
                 ticket: 1
@@ -923,7 +923,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 amount: 3,
                 discount: 4,
                 description: 'description2',
-                price: 8.33,
+                price: 37.6,
                 state: 'CLOSED',
                 code: 'zaf7sd845a646',
                 ticket: 1
@@ -933,7 +933,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 amount: 4,
                 discount: 13,
                 description: 'description3',
-                price: 9.22,
+                price: 19.4,
                 state: 'STARTED',
                 code: 'fgsdf5g64sdf6',
                 ticket: 1
@@ -943,7 +943,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 amount: 2,
                 discount: 3,
                 description: 'description1',
-                price: 6.25,
+                price: 25.2,
                 state: 'OPENED',
                 code: 'dfasd2fa3',
                 ticket: 2
@@ -953,7 +953,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 amount: 3,
                 discount: 4,
                 description: 'description2',
-                price: 8.33,
+                price: 37.6,
                 state: 'CLOSED',
                 code: 'zaf7sd845a646',
                 ticket: 2
@@ -963,7 +963,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 amount: 4,
                 discount: 13,
                 description: 'description3',
-                price: 9.22,
+                price: 19.4,
                 state: 'STARTED',
                 code: 'fgsdf5g64sdf6',
                 ticket: 2
@@ -973,7 +973,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 amount: 2,
                 discount: 3,
                 description: 'description1',
-                price: 6.25,
+                price: 25.2,
                 state: 'OPENED',
                 code: 'dfasd2fa3',
                 ticket: 3
@@ -983,7 +983,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 amount: 3,
                 discount: 4,
                 description: 'description2',
-                price: 8.33,
+                price: 37.6,
                 state: 'CLOSED',
                 code: 'zaf7sd845a646',
                 ticket: 3
@@ -993,7 +993,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 amount: 4,
                 discount: 13,
                 description: 'description3',
-                price: 9.22,
+                price: 19.4,
                 state: 'STARTED',
                 code: 'fgsdf5g64sdf6',
                 ticket: 3
@@ -1003,7 +1003,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 amount: 2,
                 discount: 3,
                 description: 'description1',
-                price: 6.25,
+                price: 25.2,
                 state: 'OPENED',
                 code: 'dfasd2fa3',
                 ticket: 4
@@ -1013,7 +1013,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 amount: 3,
                 discount: 4,
                 description: 'description2',
-                price: 8.33,
+                price: 37.6,
                 state: 'CLOSED',
                 code: 'zaf7sd845a646',
                 ticket: 4
@@ -1023,11 +1023,29 @@ export class InMemoryDataService implements InMemoryDbService {
                 amount: 4,
                 discount: 13,
                 description: 'description3',
-                price: 9.22,
+                price: 19.4,
                 state: 'STARTED',
                 code: 'fgsdf5g64sdf6',
                 ticket: 4
             }];
-        return {customers, operators, managers, tickets, users, shoppings};
+        let shopping_states = [
+            {
+                id: 1,
+                state: 'OPENED'
+            },
+            {
+                id: 2,
+                state: 'STARTED'
+            },
+            {
+                id: 3,
+                state: 'CLOSED'
+            },
+            {
+                id: 4,
+                state: 'COMMITED'
+            }
+        ];
+        return {customers, operators, managers, tickets, users, shoppings, shopping_states};
     }
 }
