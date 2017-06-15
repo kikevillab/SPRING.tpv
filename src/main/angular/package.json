@@ -10,7 +10,8 @@
     "lint": "ng lint",
     "e2e": "ng e2e --proxy-config proxy.config.json",
     "install-travis": "npm install",
-    "build-travis": "ng build -op ../webapp/angular/"
+    "build-travis": "ng build -op ../webapp/angular/",
+    "test-travis": "./node_modules/.bin/karma start --single-run --browsers PhantomJS"
   },
   "private": true,
   "dependencies": {
