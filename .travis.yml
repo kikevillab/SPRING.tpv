@@ -33,10 +33,10 @@ script:
  #- npm --prefix "/home/travis/build/kikevillab/SPRING.tpv/src/main/angular" run test
  pwd
 before_deploy: 
- - npm --prefix "/home/travis/build/kikevillab/SPRING.tpv/src/main/angular" run build
+ - npm --prefix "$ANGULAR_HOME" run build
  - ls "/home/travis/build/kikevillab/SPRING.tpv/src/main"
  - ls "/home/travis/build/kikevillab/SPRING.tpv/src/main/angular/dist"
- - cp -r /home/travis/build/kikevillab/SPRING.tpv/src/main/angular/dist/* /home/travis/build/kikevillab/SPRING.tpv/src/main/webapp
+ - cp -r $ANGULAR_HOME/dist/* $ANGULAR_HOME/../webapp
 deploy:
     provider: heroku
     skip_cleanup: true
@@ -44,7 +44,6 @@ deploy:
      secure: Mj1TIaQOCdz3lBUUKd6K9qmmIq2BdvQ2K83AK7am7Esrk7gu11VmOSdzbu8UQJ++7MR8sFQWbq4f1hSf5IjfX5tXmei6m9QeADMY2N4UX12Y2W2D6iKj6pQReoDByLP7/mE9ACy3Ntpu+MbHBh1AOEQ5HuCQiLxyQS+rBK3bIIGme2gj/qC7yzVnO1L7GES/79HiJ7QHKRewPMvX+kdZJ3fSEUjYnWX8dGV95YdskP9abFvmuOe7Za8X/mWHQADBO3FHSwzDEbkp/jkAatHh2OPZSPpI9I6sJU/g1kGmq/B1V/9WAwSX8KXArZgieCpJzy3Gl1Nh7vMxBoCsUNCXW477QodfjUYdMAOV5Ub/dWkeXjLRObdrWP5njWilWDV0cDo4ZgYY3onqrUj6Cuw0q+xgOVK2XlRHOdjDyiiGZb5EQllHIlLVa6M028t3G9l99CLldfDpq52dFuOwgfRq5lpyV5a4io0fNF/m/r/4f0QQk7HfpO50eOECYKhZmSsNr818VuW4mVNbkb1oEZ8DZ0Y9o+pD03Nn6C1XSAPHBkoBzAooKdo1/LyVxoSn0rOkrBBrZZ3lF7GgGFZlyIg1KB+mJC5s9EHgbx+BFK+dGZ3bzX3UuzZz8ukViroHFrNzn7BvvbdOzxLb1tVcG9lvOL32qr/4a8g/9i0BoUiVR8c=
     app: tpv-miw
     on:
-      repo: kikevillab/SPRING.tpv
+      repo: $TRAVIS_REPO_SLUG
       branch: develop
-
 
