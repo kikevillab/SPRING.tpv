@@ -9,8 +9,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e --proxy-config proxy.config.json",
-    "install": "npm install -g",
-    "build": "ng build -op ../resources/"
+    "install-travis": "npm install",
+    "build-travis": "ng build -op ../webapp/angular/"
   },
   "private": true,
   "dependencies": {
