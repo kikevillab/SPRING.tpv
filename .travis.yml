@@ -38,7 +38,7 @@ deploy:
   app: tpv-miw
   skip_cleanup: true
   on:
-    repo: miw-upm/SPRING.tpv
+    repo: $TRAVIS_REPO_SLUG
     branch: develop
 after_deploy: mvn verify -Pfunctional-api-test
 
