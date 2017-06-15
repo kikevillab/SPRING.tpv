@@ -27,7 +27,9 @@ install:
 - npm --prefix "$ANGULAR_HOME" run install-travis
 - npm install -g @angular/cli@1.0.0
 - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
-script: mvn verify --settings settings.xml
+script: 
+- mvn verify --settings settings.xml
+- npm --prefix "$ANGULAR_HOME" run test-travis
 before_deploy: 
  - npm --prefix "$ANGULAR_HOME" run build
  - cp -r $ANGULAR_HOME/dist/* $ANGULAR_HOME/../webapp
