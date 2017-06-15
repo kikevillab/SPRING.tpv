@@ -6,6 +6,9 @@ branches:
   only:
   - master
   - develop
+env:
+  global:
+    - ANGULAR_HOME=src/main/angular
 notifications:
   slack: tpv-miw:RR3NECTV3PaLvPZOUUd8qF7O
   email:
@@ -21,13 +24,13 @@ before_install:
 - nvm use stable
 - if [[ `npm -v` != 4* ]]; then npm i -g npm@4; fi
 install:
-- npm --prefix "/home/travis/build/miw-upm/SPRING.tpv/src/main/angular" run install-travis
+- npm --prefix "$ANGULAR_HOME" run install-travis
 - npm install -g @angular/cli@1.0.0
 - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 script: mvn verify --settings settings.xml
 before_deploy: 
- - npm --prefix "/home/travis/build/miw-upm/SPRING.tpv/src/main/angular" run build
- - cp -r /home/travis/build/miw-upm/SPRING.tpv/src/main/angular/dist/* /home/travis/build/miw-upm/SPRING.tpv/src/main/webapp
+ - npm --prefix "$ANGULAR_HOME" run build
+ - cp -r $ANGULAR_HOME/dist/* $ANGULAR_HOME/../webapp
 deploy:
   provider: heroku
   api_key:
