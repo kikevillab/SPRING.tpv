@@ -31,9 +31,10 @@ install:
 script: 
  #- mvn verify --settings settings.xml
  #- mvn verify -Pfunctional-api-test
- - npm --prefix "/home/travis/build/kikevillab/SPRING.tpv/src/main/angular" run test 
+ - npm --prefix "/home/travis/build/kikevillab/SPRING.tpv/src/main/angular" run test-travis 
 before_deploy: 
  - npm --prefix "/home/travis/build/kikevillab/SPRING.tpv/src/main/angular" run build
+ - pwd
  - ls "/home/travis/build/kikevillab/SPRING.tpv/src/main"
  - ls "/home/travis/build/kikevillab/SPRING.tpv/src/main/angular/dist"
  - cp /home/travis/build/kikevillab/SPRING.tpv/src/main/angular/dist/* /home/travis/build/kikevillab/SPRING.tpv/src/main/webapp
