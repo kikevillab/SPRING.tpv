@@ -29,7 +29,7 @@ install:
 - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 script: 
 - mvn verify --settings settings.xml
-- npm --prefix "$ANGULAR_HOME" run test-travis
+#- npm --prefix "$ANGULAR_HOME" run test-travis
 before_deploy: 
  - npm --prefix "$ANGULAR_HOME" run build
  - cp -r $ANGULAR_HOME/dist/* $ANGULAR_HOME/../webapp
