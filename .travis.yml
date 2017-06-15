@@ -24,7 +24,7 @@ before_install:
 - if [[ `npm -v` != 4* ]]; then npm i -g npm@4; fi
 install:
 - npm cache clear --force
-- npm --prefix "/home/travis/build/kikevillab/SPRING.tpv/src/main/angular" run install-travis
+- npm --prefix "$ANGULAR_HOME" run install-travis
 - npm install -g @angular/cli@1.0.0
 #- mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 script: 
