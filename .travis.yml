@@ -36,7 +36,7 @@ before_deploy:
  - npm --prefix "/home/travis/build/kikevillab/SPRING.tpv/src/main/angular" run build
  - ls "/home/travis/build/kikevillab/SPRING.tpv/src/main"
  - ls "/home/travis/build/kikevillab/SPRING.tpv/src/main/angular/dist"
- - cp /home/travis/build/kikevillab/SPRING.tpv/src/main/angular/dist/**/* /home/travis/build/kikevillab/SPRING.tpv/src/main/webapp
+ - cp -r /home/travis/build/kikevillab/SPRING.tpv/src/main/angular/dist/* /home/travis/build/kikevillab/SPRING.tpv/src/main/webapp
 deploy:
     provider: heroku
     skip_cleanup: true
