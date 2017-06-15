@@ -27,15 +27,13 @@ install:
 - npm --prefix "/home/travis/build/kikevillab/SPRING.tpv/src/main/angular" run install-travis
 - npm install -g @angular/cli@1.0.0
 #- mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
-before_script:
-- sh -e /etc/init.d/xvfb start
 script: 
  #- mvn verify --settings settings.xml
  #- mvn verify -Pfunctional-api-test
- - npm --prefix "/home/travis/build/kikevillab/SPRING.tpv/src/main/angular" run test-travis 
+ #- npm --prefix "/home/travis/build/kikevillab/SPRING.tpv/src/main/angular" run test
+ pwd
 before_deploy: 
  - npm --prefix "/home/travis/build/kikevillab/SPRING.tpv/src/main/angular" run build
- - pwd
  - ls "/home/travis/build/kikevillab/SPRING.tpv/src/main"
  - ls "/home/travis/build/kikevillab/SPRING.tpv/src/main/angular/dist"
  - cp /home/travis/build/kikevillab/SPRING.tpv/src/main/angular/dist/* /home/travis/build/kikevillab/SPRING.tpv/src/main/webapp
