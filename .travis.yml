@@ -1,6 +1,7 @@
 language: java
 jdk:
 - oraclejdk8
+node_js: "6.9.2"
 branches:
   only:
   - master
@@ -14,7 +15,19 @@ services:
 - mysql
 before_install:
 - mysql -e 'CREATE DATABASE IF NOT EXISTS tpv;'
+#Updating node & npm
+- . $HOME/.nvm/nvm.sh
+- nvm install stable
+- nvm use stable
+- if [[ `npm -v` != 4* ]]; then npm i -g npm@4; fi
+install:
+- npm --prefix "/home/travis/build/miw-upm/SPRING.tpv/src/main/angular" run install-travis
+- npm install -g @angular/cli@1.0.0
+- mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 script: mvn verify --settings settings.xml
+before_deploy: 
+ - npm --prefix "/home/travis/build/miw-upm/SPRING.tpv/src/main/angular" run build
+ - cp -r /home/travis/build/miw-upm/SPRING.tpv/src/main/angular/dist/* /home/travis/build/miw-upm/SPRING.tpv/src/main/webapp
 deploy:
   provider: heroku
   api_key:
