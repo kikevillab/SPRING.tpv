@@ -16,6 +16,7 @@ import {LocalStorageService} from '../../../shared/services/local-storage.servic
 import {SHOPPINGS_URI} from '../../admin.config';
 import 'rxjs/add/operator/map';
 import {isNull} from "util";
+import {Shopping} from "../models/shopping.model";
 
 @Injectable()
 export class ShoppingsService {
@@ -58,6 +59,13 @@ export class ShoppingsService {
             params.set(fieldName, fieldValue);
             return this.httpService.get(this.endpoint, this.headers, params);
         }
+
+        return Observable.throw(NOT_AUTHENTICATED_MESSAGE);
+    }
+
+    put(shopping: Shopping): Observable<any> {
+        if (!isNull(this.headers))
+            return this.httpService.put(this.endpoint + '/' + shopping.id, shopping, this.headers);
 
         return Observable.throw(NOT_AUTHENTICATED_MESSAGE);
     }
