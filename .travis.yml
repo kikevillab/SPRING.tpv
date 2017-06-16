@@ -1,14 +1,14 @@
 language: java
 jdk:
 - oraclejdk8
-node_js: "6.9.2"
+node_js: 6.9.2
 branches:
   only:
   - master
   - develop
 env:
   global:
-    - ANGULAR_HOME=src/main/angular
+  - ANGULAR_HOME=src/main/angular
 notifications:
   slack: tpv-miw:RR3NECTV3PaLvPZOUUd8qF7O
   email:
@@ -18,8 +18,7 @@ services:
 - mysql
 before_install:
 - mysql -e 'CREATE DATABASE IF NOT EXISTS tpv;'
-#Updating node & npm
-- . $HOME/.nvm/nvm.sh
+- ". $HOME/.nvm/nvm.sh"
 - nvm install stable
 - nvm use stable
 - if [[ `npm -v` != 4* ]]; then npm i -g npm@4; fi
@@ -27,21 +26,19 @@ install:
 - npm --prefix "$ANGULAR_HOME" run install-travis
 - npm install -g @angular/cli@1.0.0
 - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
-script: 
+script:
 - mvn verify --settings settings.xml
-#- npm --prefix "$ANGULAR_HOME" run test-travis
-before_deploy: 
- - npm --prefix "$ANGULAR_HOME" run build
- - cp -r $ANGULAR_HOME/dist/* $ANGULAR_HOME/../webapp
+- mvn verify -Pfunctional-api-test
+before_deploy:
+- npm --prefix "$ANGULAR_HOME" run build
+- cp -r $ANGULAR_HOME/dist/* $ANGULAR_HOME/../webapp
 deploy:
   provider: heroku
   api_key:
-    secure: 01fHZFO6eifs2/5SJwOcw6lAWAQYLvFhUp/k8gR+ZJ3t5va3/fdDDe4Lr1YLBXXu/W1FjKtGnq9/LVpEmHoZODQBTDvr8IcVhGO0gX32V/HxBV32cdZo4qr4EFM3Czpo88IG/Pf18ZRI3dt8lwKgHndHn5vMj7WefLb/zJTNSdqEPT85t24XciasQoEm21H49ZxNi828tXvq0Og2lndq8e7jF60C0vFl8YonpT+CVWSXWv4njOU1VtpwmKBSQQtDCoL4jE3BJfLLruf3wh9oTcnIFcy+MZHKNDJUqZpcE+4nOFqdDYSmVgHBuHpNru/hwsISs8YSvylJ2oknBloXJObJ54vnAKTOH0D5P118Y+WfjmWW4Fny0+tvxHaIAI+wCS0UGSTtpDqMyOAx9yNSaM46blBvoP3JCGXDVk/lUPa0ndaBo1j9IYIhLijoxloeGa9Q8PnvmTYyd431DfPruWxBopMpqwoYUF7eM+HZZhh7HB/ehQZfFwbDwnt8ym11srbpXXroEKpVba6Iwb5fen+Y89T9pG0xO7fSxjhYbUgyWq9PmxZdE2oVc1HEvaBwXav/8gK6+uAXh3Xn1sAoLReoJMgpN/LMZqBYAOzyEbhqHZbjnZISNTJNeSdAa0+5B0dpgLwe6SObz31kapAucUvDaewnhdp/t5XC+RMOtO8=
-  app: tpv-miw
+    secure: NIdMLsrbkWMbSSsARuq+wdJnFL6LNmT5Lj+ohutV2TuOUJGkV/2ZiOq/X0Q9BlukSWziwhEUSi6vW2MJ8O7wXU7a2+PfhiR9FyYe6Ny7E6zfnJYzNxHVL5pi85dh+pYnJ6Snb556g35fnn90BRQXyv1b7Uh2LbOMugV8TIZKrbdRIUXsx6qql4OJM9ZSQ7RztkP5CdpyD57LrEvk1KYex/dCZs24M4W810KRbKc7/oniYkNtsZ/8AKhKC8FwGoykpI47cZrJPJ+2OdORWaO23JfplAy1YheZ5U7Z7MbRTlsVMKR9luspa/jP96Z0hHB4glVdu82sjUGn0NdwYfakbVSDjIXbxtrZSmYQHaPf3q0vzzNgAdOaodfKi7/zKWW31AT4t2LD266rUXcVKOOxeXmuzq9NvloarvtfTiSTBbGVXPjs2SBPeyHHYfNFuE58OSzEbTWExd6JJO7GIfZL9xLUvRMk4H04XQKwk6dZfY37b9yex1DWHXV7JlEATHO48ERsYZdEAyqfl4n9AdD25T0ZLMDgQSG84pTTSJMYNF5xYJMPIxCUwXs/Y8YHvk4g+HSfp557dVYNQWxPGL5S/g/4lgAnNF4XfrG/EYOvCBqmc8EQz6p0bpUoTzQ1XdDLXAPGs+kq7LxquPOF/o4QkUR719Mi9U+KnXPIEHazJz4=
+  app: miw-upm-tpv
   skip_cleanup: true
   on:
-    repo: $TRAVIS_REPO_SLUG
+    repo: miw-upm/SPRING.tpv
     branch: develop
-after_deploy: mvn verify -Pfunctional-api-test
-
 
