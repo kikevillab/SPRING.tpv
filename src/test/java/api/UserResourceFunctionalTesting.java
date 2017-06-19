@@ -172,13 +172,13 @@ public class UserResourceFunctionalTesting {
     }
     
     
-    @Test
+   /* @Test
     public void testGetByTicketReference() {
         String reference="ticket2";       
         UserWrapper user = new RestBuilder<UserWrapper>(RestService.URL).path(Uris.USERS+Uris.TICKET_REFERENCE)
                 .path("/" + reference).clazz(UserWrapper.class).get().build();
         assertEquals(666000003, user.getMobile());
-    }
+    }*/
     
     @Test
     public void testGetByTicketReferenceException() {
