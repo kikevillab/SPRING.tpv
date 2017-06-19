@@ -28,7 +28,7 @@ install:
 - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 script:
 - mvn verify --settings settings.xml
-#- mvn verify -Pfunctional-api-test
+- mvn verify -Pfunctional-api-test
 before_deploy:
 - npm --prefix "$ANGULAR_HOME" run build
 - cp -r $ANGULAR_HOME/dist/* $ANGULAR_HOME/../webapp
