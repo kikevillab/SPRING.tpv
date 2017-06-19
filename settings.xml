@@ -19,15 +19,6 @@
 			</properties>
 		</profile>
 		<profile>
-            <id>stage</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
-            <properties>
-                <environment.type>stage</environment.type>
-            </properties>
-        </profile>
-		<profile>
 			<id>preproduction</id>
 			<activation>
 				<activeByDefault>false</activeByDefault>
