@@ -18,7 +18,7 @@ export class TicketsComponent implements OnInit {
     dataType: string;
     selected: Ticket;
 
-    constructor(private httpService: HTTPService, private toastService: ToastService) {
+    constructor(public httpService: HTTPService, public toastService: ToastService) {
         this.selected = new Ticket();
         this.dataType = TICKETS
     }

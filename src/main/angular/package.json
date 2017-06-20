@@ -10,7 +10,8 @@
     "lint": "ng lint",
     "e2e": "ng e2e --proxy-config proxy.config.json",
     "install-travis": "npm install",
-    "test-travis": "ng test --watch false"
+    "test-travis": "ng test --watch false",
+    "build-travis": "ng build --prod"
   },
   "private": true,
   "dependencies": {

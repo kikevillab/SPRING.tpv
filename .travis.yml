@@ -30,7 +30,7 @@ script:
 - mvn verify --settings settings.xml
 - mvn verify -Pfunctional-api-test
 before_deploy:
-- npm --prefix "$ANGULAR_HOME" run build
+- npm --prefix "$ANGULAR_HOME" run build-travis
 - cp -r $ANGULAR_HOME/dist/* $ANGULAR_HOME/../webapp
 deploy:
   provider: heroku
