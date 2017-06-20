@@ -67,7 +67,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
 
     openOrderTrackingDialog(): void {
-        this.dialog.open(OrderTrackingDialog);
+        this.dialog.open(OrderTrackingDialogComponent);
     }
 
     onClickLogout(): void {
@@ -100,11 +100,11 @@ export class HomeComponent implements OnInit, OnDestroy {
         </form>
     `
 })
-export class OrderTrackingDialog {
+export class OrderTrackingDialogComponent {
 
     ticketReferenceInput: string;
 
-    constructor(public dialogRef: MdDialogRef<OrderTrackingDialog>, private router: Router) { }
+    constructor(public dialogRef: MdDialogRef<OrderTrackingDialogComponent>, private router: Router) { }
 
     submitTicketReference(event: Event): void {
         event.preventDefault();
