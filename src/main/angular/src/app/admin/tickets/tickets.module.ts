@@ -18,9 +18,6 @@ import {NgxDatatableModule} from '@swimlane/ngx-datatable';
 import {AngularMaterialModule} from '../../shared/angular-material.module';
 import {HTTPService} from '../../shared/services/http.service';
 import {ToastService} from '../../shared/services/toast.service';
-import {TicketsService} from '../shared/services/tickets.service';
-import {ShoppingsService} from '../shared/services/shoppings.service';
-import {ShoppingStatesService} from '../shared/services/shopping-states.service';
 import {InMemoryWebApiModule} from 'angular-in-memory-web-api';
 import {InMemoryDataService} from '../../shared/services/in-memory-data.service';
 
@@ -45,10 +42,7 @@ import {InMemoryDataService} from '../../shared/services/in-memory-data.service'
     ],
     providers: [
         HTTPService,
-        ToastService,
-        TicketsService,
-        ShoppingsService,
-        ShoppingStatesService
+        ToastService
     ],
     exports: [
         TicketsComponent,

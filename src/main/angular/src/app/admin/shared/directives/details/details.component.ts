@@ -5,14 +5,17 @@
 import {Component, OnInit} from '@angular/core';
 import {User} from '../../../../shared/models/user.model';
 import {MdDialogRef} from '@angular/material';
-import {Ticket} from '../../models/ticket.model';
+import {Ticket, REFERENCE_ATTRIBUTE_NAME, CREATED_DATE_ATTRIBUTE_NAME} from '../../models/ticket.model';
 import {TPVHTTPError} from '../../../../shared/models/tpv-http-error.model';
 import {ToastService} from '../../../../shared/services/toast.service';
-import {TicketsService} from '../../services/tickets.service';
 import {USER_ID_ATTRIBUTE_NAME} from '../../models/ticket.model';
 import {MdDialog, MdDialogConfig} from '@angular/material';
 import {EditUserDialog} from '../edit-user/edit-user.component';
+import {CapitalizePipe} from '../../../../shared/pipes/capitalize.pipe';
 import {isUndefined} from "util";
+import {HTTPService} from "../../../../shared/services/http.service";
+import {URLSearchParams} from "@angular/http";
+import {TICKETS_URI} from '../../../admin.config';
 
 @Component({
     templateUrl: './details.component.html',
@@ -23,17 +26,24 @@ export class UserDetailsDialog implements OnInit {
     tickets: Ticket[];
     headers: Object;
     editUserDialogConfig: MdDialogConfig;
+    capitalizePipe: CapitalizePipe;
 
-    constructor(private dialogRef: MdDialogRef<UserDetailsDialog>, private httpService: TicketsService,
+    constructor(public dialogRef: MdDialogRef<UserDetailsDialog>, private httpService: HTTPService,
                 private toastService: ToastService, private editUserDialog: MdDialog) {
         this.editUserDialogConfig = new MdDialogConfig();
+        this.capitalizePipe = new CapitalizePipe();
         this.user = this.dialogRef._containerInstance.dialogConfig.data;
         this.editUserDialogConfig.data = this.user;
-        this.headers = [{name: 'Reference'}, {name: 'Created'}];
+        this.headers = [{name: this.capitalizePipe.transform(REFERENCE_ATTRIBUTE_NAME, false)},
+            {name: this.capitalizePipe.transform(CREATED_DATE_ATTRIBUTE_NAME, false)}
+        ]
     }
 
     ngOnInit(): void {
-        this.httpService.search(USER_ID_ATTRIBUTE_NAME, this.user.id).subscribe(
+        let params = new URLSearchParams();
+        params.set(USER_ID_ATTRIBUTE_NAME, this.user.id.toString());
+
+        this.httpService.get(TICKETS_URI, null, params).subscribe(
             results => this.tickets = results.data,
             error => this.handleError(error)
         );

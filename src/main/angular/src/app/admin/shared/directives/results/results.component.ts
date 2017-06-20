@@ -3,9 +3,16 @@
  */
 
 import {Component, EventEmitter} from '@angular/core';
-import {User} from '../../../../shared/models/user.model';
+import {
+    User,
+    MOBILE_ATTRIBUTE_NAME,
+    USERNAME_ATTRIBUTE_NAME,
+    DNI_ATTRIBUTE_NAME,
+    EMAIL_ATTRIBUTE_NAME
+} from '../../../../shared/models/user.model';
 import {MdDialog, MdDialogConfig} from '@angular/material';
 import {UserDetailsDialog} from '../details/details.component';
+import {CapitalizePipe} from '../../../../shared/pipes/capitalize.pipe';
 
 @Component({
     selector: 'results',
@@ -16,15 +23,22 @@ import {UserDetailsDialog} from '../details/details.component';
 })
 export class ResultsComponent {
     results: User[];
-    headers: Object = [{name: 'Mobile'}, {name: 'Username'}, {name: 'DNI'}, {name: 'Email'}];
+    headers: Object;
     dialogConfig: MdDialogConfig;
     onSelectedUser: EventEmitter<User>;
     onModifiedUser: EventEmitter<User>;
+    capitalizePipe: CapitalizePipe;
 
     constructor(private userDetailsDialog: MdDialog) {
         this.dialogConfig = new MdDialogConfig();
         this.onSelectedUser = new EventEmitter();
         this.onModifiedUser = new EventEmitter();
+        this.capitalizePipe = new CapitalizePipe();
+        this.headers = [{name: this.capitalizePipe.transform(MOBILE_ATTRIBUTE_NAME, false)},
+            {name: this.capitalizePipe.transform(USERNAME_ATTRIBUTE_NAME, false)},
+            {name: this.capitalizePipe.transform(DNI_ATTRIBUTE_NAME, false)},
+            {name: this.capitalizePipe.transform(EMAIL_ATTRIBUTE_NAME, false)}
+        ]
     }
 
     onActivate(selection: any) {

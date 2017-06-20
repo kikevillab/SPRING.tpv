@@ -19,8 +19,6 @@ import {NgxDatatableModule} from '@swimlane/ngx-datatable';
 import {AngularMaterialModule} from '../../shared/angular-material.module';
 import {HTTPService} from '../../shared/services/http.service';
 import {ToastService} from '../../shared/services/toast.service';
-import {UsersService} from './services/users.service';
-import {TicketsService} from './services/tickets.service';
 import {RegExpFormValidatorService} from '../../shared/services/reg-exp-form-validator.service';
 import {UserForm} from './services/user-form.service';
 import {InMemoryWebApiModule} from 'angular-in-memory-web-api';
@@ -49,9 +47,7 @@ import {InMemoryDataService} from '../../shared/services/in-memory-data.service'
     providers: [
         HTTPService,
         ToastService,
-        UsersService,
         RegExpFormValidatorService,
-        TicketsService,
         UserForm
     ],
     exports: [
