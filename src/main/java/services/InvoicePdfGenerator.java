@@ -30,7 +30,7 @@ import entities.users.User;
 
 public class InvoicePdfGenerator extends PdfGenerator<Invoice> {
 
-    private final static float[] SHOPPING_LIST_COLUMNS_WIDTHS = new float[] {200, 1, 1, 1, 1, 1};
+    private final static float[] SHOPPING_LIST_COLUMNS_WIDTHS = new float[] {200, 10, 10, 10, 10, 10};
 
     private final static float[] TABLE_COLUMNS_WIDTHS = new float[] {1, 1};
 
@@ -41,7 +41,7 @@ public class InvoicePdfGenerator extends PdfGenerator<Invoice> {
     public InvoicePdfGenerator(Invoice entity) {
         super(entity);
     }
-    
+
     @Override
     protected String path() {
         return INVOICES_PDFS_ROOT + INVOICE_PDF_FILENAME_ROOT + entity.getId();
@@ -53,7 +53,7 @@ public class InvoicePdfGenerator extends PdfGenerator<Invoice> {
     }
 
     @Override
-    protected PdfFont font() throws IOException, URISyntaxException{
+    protected PdfFont font() throws IOException, URISyntaxException {
         String fontPath = getAbsolutePathOfResource(ResourceNames.FONTS, ResourceNames.OPEN_SANS_REGULAR_FONT);
         return PdfFontFactory.createFont(fontPath);
     }
@@ -135,20 +135,19 @@ public class InvoicePdfGenerator extends PdfGenerator<Invoice> {
         shoppingListTable.addHeaderCell("Discount");
         shoppingListTable.addHeaderCell("Total");
         for (Shopping shopping : ticket.getShoppingList()) {
-            shoppingListTable.addCell(String.valueOf(shopping.getDescription()));
+            shoppingListTable.addCell(new Cell().add(String.valueOf(shopping.getDescription())));
             shoppingListTable
                     .addCell(new Cell().add(String.valueOf(shopping.getRetailPrice() + "€")).setTextAlignment(TextAlignment.RIGHT));
             shoppingListTable.addCell(new Cell().add(String.valueOf(shopping.getAmount())).setTextAlignment(TextAlignment.RIGHT));
-            shoppingListTable
-                    .addCell(new Cell().add(new BigDecimal(shopping.getShoppingSubtotal()).setScale(2, RoundingMode.HALF_UP) + "€").setTextAlignment(TextAlignment.RIGHT));
+            shoppingListTable.addCell(new Cell().add(new BigDecimal(shopping.getShoppingSubtotal()).setScale(2, RoundingMode.HALF_UP) + "€")
+                    .setTextAlignment(TextAlignment.RIGHT));
             shoppingListTable.addCell(new Cell().add(String.valueOf(shopping.getDiscount()) + "%").setTextAlignment(TextAlignment.RIGHT));
-            shoppingListTable
-                    .addCell(new Cell().add(new BigDecimal(shopping.getShoppingTotal()).setScale(2, RoundingMode.HALF_UP) + "€").setTextAlignment(TextAlignment.RIGHT));
+            shoppingListTable.addCell(new Cell().add(new BigDecimal(shopping.getShoppingTotal()).setScale(2, RoundingMode.HALF_UP) + "€")
+                    .setTextAlignment(TextAlignment.RIGHT));
         }
+        shoppingListTable.addCell(new Cell(1, 6).setTextAlignment(TextAlignment.RIGHT)
+                .add("Total: " + String.valueOf(ticket.getTicketTotal().setScale(2, RoundingMode.HALF_UP)) + "€"));
         document.add(shoppingListTable);
-        document.add(new Paragraph().setTextAlignment(TextAlignment.RIGHT).add("Total: ")
-                .add(String.valueOf(ticket.getTicketTotal().setScale(2, RoundingMode.HALF_UP))).add("€"));
-        
     }
 
 }

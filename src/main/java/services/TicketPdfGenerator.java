@@ -35,7 +35,7 @@ import entities.core.Ticket;
 
 public class TicketPdfGenerator extends PdfGenerator<Ticket> {
 
-    private final static float[] SHOPPING_LIST_COLUMNS_WIDTHS = new float[] {20, 20, 100, 40, 40};
+    private final static float[] SHOPPING_LIST_COLUMNS_WIDTHS = new float[] {20, 20, 100, 40, 50};
 
     private final static float TICKET_PAGE_WIDHT = 227;
 
