@@ -6,11 +6,12 @@ import {Component, OnInit} from '@angular/core';
 import {Shopping} from '../../shared/models/shopping.model';
 import {MdDialogRef} from '@angular/material';
 import {isNumeric} from "rxjs/util/isNumeric";
-import {ShoppingStatesService} from "../../shared/services/shopping-states.service";
 import {ToastService} from "../../../shared/services/toast.service";
 import {TPVHTTPError} from "../../../shared/models/tpv-http-error.model";
 import {ShoppingState} from "../../shared/models/shopping-state.model";
 import {FormControl} from "@angular/forms";
+import {HTTPService} from "../../../shared/services/http.service";
+import {SHOPPING_STATES_URI} from '../../admin.config';
 
 @Component({
     templateUrl: './edit-shopping.component.html',
@@ -22,14 +23,14 @@ export class EditShoppingDialog implements OnInit {
     stateCtrl: FormControl;
     filteredStates: any;
 
-    constructor(private dialogRef: MdDialogRef<EditShoppingDialog>,
-                private shoppingStatesService: ShoppingStatesService, private toastService: ToastService) {
+    constructor(public dialogRef: MdDialogRef<EditShoppingDialog>,
+                private httpService: HTTPService, private toastService: ToastService) {
         this.shopping = this.dialogRef._containerInstance.dialogConfig.data;
         this.stateCtrl = new FormControl();
     }
 
     ngOnInit() {
-        this.shoppingStatesService.findAll().subscribe(
+        this.httpService.get(SHOPPING_STATES_URI).subscribe(
             results => this.setShoppingStates(results.data),
             error => this.handleError(error)
         );
