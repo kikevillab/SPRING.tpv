@@ -33,10 +33,6 @@ export const MockUser = {
     address: 'address'
 }
 
-export const MockTicket = {
-    ticketReference: '12341234'
-}
-
 describe('Service: ShoppingService', () => {
 
     let product_code: string = '12341234';
