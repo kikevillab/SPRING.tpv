@@ -22,10 +22,6 @@ export class CalculatorView {
         return element(by.id('calculate-button')).click();
     }
 
-    clickResetButton() {
-        return element(by.id('reset-button')).click();
-    }
-
     getResultText() {
         return element(by.id('calculator-result')).getText();
     }
