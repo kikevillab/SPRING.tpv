@@ -3,7 +3,7 @@
  */
 
 import {Component, OnInit} from '@angular/core';
-import {UsersService} from '../../services/users.service';
+import {HTTPService} from '../../../../shared/services/http.service';
 import {TPVHTTPError} from '../../../../shared/models/tpv-http-error.model';
 import {ToastService} from '../../../../shared/services/toast.service';
 import {User} from '../../../../shared/models/user.model';
@@ -24,16 +24,15 @@ export class UsersComponent implements OnInit {
     dialogConfig: MdDialogConfig;
     selected: User;
 
-    constructor(private httpService: UsersService, private toastService: ToastService,
+    constructor(private httpService: HTTPService, private toastService: ToastService,
                 private newUserDialog: MdDialog) {
         this.dialogConfig = new MdDialogConfig();
-        this.dialogConfig.data = this.httpService;
         this.selected = new User();
     }
 
     ngOnInit(): void {
-        this.httpService.setEndpoint(this.endpoint);
-        this.httpService.findAll().subscribe(
+        this.dialogConfig.data = this.endpoint;
+        this.httpService.get(this.endpoint).subscribe(
             results => this.results = results.data,
             error => this.handleError(error)
         );
@@ -61,12 +60,12 @@ export class UsersComponent implements OnInit {
 
     onModifiedUser(user: User) {
         if (isNull(user))
-            this.httpService.delete(this.selected.mobile).subscribe(
+            this.httpService.delete(this.endpoint + '/' + this.selected.mobile).subscribe(
                 results => this.ngOnInit(),
                 error => this.handleError(error)
             );
         else if (!isUndefined(user) && !user.equals(this.selected)) {
-            this.httpService.put(user).subscribe(
+            this.httpService.put(this.endpoint + '/' + user.id, user).subscribe(
                 results => this.ngOnInit(),
                 error => this.handleError(error)
             );

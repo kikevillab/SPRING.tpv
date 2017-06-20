@@ -3,11 +3,11 @@
  */
 
 import {Component, OnInit} from '@angular/core';
-import {TicketsService} from '../shared/services/tickets.service';
 import {TPVHTTPError} from '../../shared/models/tpv-http-error.model';
 import {ToastService} from '../../shared/services/toast.service';
 import {Ticket} from '../shared/models/ticket.model';
 import {TICKETS, TICKETS_URI} from '../admin.config';
+import {HTTPService} from "../../shared/services/http.service";
 
 @Component({
     templateUrl: './tickets.component.html',
@@ -15,18 +15,16 @@ import {TICKETS, TICKETS_URI} from '../admin.config';
 })
 export class TicketsComponent implements OnInit {
     results = [];
-    endpoint: string;
     dataType: string;
     selected: Ticket;
 
-    constructor(private httpService: TicketsService, private toastService: ToastService) {
+    constructor(private httpService: HTTPService, private toastService: ToastService) {
         this.selected = new Ticket();
-        this.endpoint = TICKETS_URI;
         this.dataType = TICKETS
     }
 
     ngOnInit(): void {
-        this.httpService.findAll().subscribe(
+        this.httpService.get(TICKETS_URI).subscribe(
             results => this.results = results.data,
             error => this.handleError(error)
         );

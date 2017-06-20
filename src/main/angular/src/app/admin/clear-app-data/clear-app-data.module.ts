@@ -13,7 +13,6 @@ import {NgxDatatableModule} from '@swimlane/ngx-datatable';
 import {AngularMaterialModule} from '../../shared/angular-material.module';
 import {HTTPService} from '../../shared/services/http.service';
 import {ToastService} from '../../shared/services/toast.service';
-import {ClearAppDataService} from './clear-app-data.service';
 import {InMemoryWebApiModule} from 'angular-in-memory-web-api';
 import {InMemoryDataService} from '../../shared/services/in-memory-data.service';
 
@@ -33,8 +32,7 @@ import {InMemoryDataService} from '../../shared/services/in-memory-data.service'
     ],
     providers: [
         HTTPService,
-        ToastService,
-        ClearAppDataService
+        ToastService
     ],
     exports: [
         ClearAppDataDialog

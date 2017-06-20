@@ -8,9 +8,10 @@ import {FormGroup, FormBuilder} from '@angular/forms';
 import {TPVHTTPError} from '../../shared/models/tpv-http-error.model';
 import {MdDialogRef} from '@angular/material';
 import {ToastService} from '../../shared/services/toast.service';
-import {ClearAppDataService} from './clear-app-data.service';
 import {LocalStorageService} from '../../shared/services/local-storage.service';
 import {LOCAL_STORAGE_TOKEN_ATTRIBUTE} from '../../app.config';
+import {HTTPService} from "../../shared/services/http.service";
+import {API_GENERIC_URI} from '../../app.config';
 
 @Component({
     templateUrl: './clear-app-data.component.html',
@@ -18,14 +19,16 @@ import {LOCAL_STORAGE_TOKEN_ATTRIBUTE} from '../../app.config';
 })
 export class ClearAppDataDialog implements OnInit {
     clearAppDataForm: FormGroup;
+    endpoint: string;
 
-    constructor(private dialogRef: MdDialogRef<ClearAppDataDialog>, private formBuilder: FormBuilder, 
-                private toastService: ToastService, private clearAppDataService: ClearAppDataService,
+    constructor(private dialogRef: MdDialogRef<ClearAppDataDialog>, private formBuilder: FormBuilder,
+                private toastService: ToastService, private httpService: HTTPService,
                 private router: Router, private localStorageService: LocalStorageService) {
+        this.endpoint = API_GENERIC_URI + '/admins';
     }
 
     onSubmit(): void {
-        this.clearAppDataService.clearData().subscribe(
+        this.httpService.delete(this.endpoint).subscribe(
             result => this.handleOK(),
             error => this.handleError(error)
         );
