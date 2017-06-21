@@ -43,11 +43,9 @@ export class TicketsOfTheDayComponent implements OnInit, OnDestroy {
             this.loading = false;
         });
         this.ticketsOfTheDayService.getTickets().then((tickets: TicketOfTheDay[]) => {
-            this.ticketsOfTheDay = tickets;
-            this.error = this.loading = false;
+            this.error = false;
         }).catch((error: string) => {
             this.error = true;
-            this.loading = false;
         });
     }
 
