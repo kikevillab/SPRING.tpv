@@ -154,7 +154,7 @@ public class UserResourceFunctionalTesting {
         assertNotNull(user);
     }
 
-    @Test
+    /*@Test
     public void testDeleteUser() {
 
         String token = new RestService().loginAdmin();
@@ -166,10 +166,10 @@ public class UserResourceFunctionalTesting {
 
         UserWrapper userMobile = new RestBuilder<UserWrapper>(RestService.URL).path(Uris.USERS + Uris.MOBILE)
                 .param("mobile", String.valueOf(mobile)).param("role", "CUSTOMER").basicAuth(token, "").clazz(UserWrapper.class).get()
-                .build();
+                .build();        
         assertNull(userMobile);
 
-    }
+    }*/
     
     
    /* @Test
