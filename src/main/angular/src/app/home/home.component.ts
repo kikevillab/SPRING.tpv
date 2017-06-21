@@ -22,19 +22,19 @@ import { ToastService } from '../shared/services/toast.service';
             padding: 1em;
         }
         
-		@media only screen and (max-width: 600px) {
+		@media only screen and (max-width: 599px) {
 			md-sidenav {
 				width: 100%;
 			}
 		}
 
-		@media only screen and (min-width: 768px) {
+		@media only screen and (min-width: 600px) {
 			md-sidenav {
 				width: 45em;
 			}
 		}
         
-		@media only screen and (min-width: 1024px) {
+		@media only screen and (min-width: 960px) {
 			md-sidenav {
 				width: 50em;
 			}
