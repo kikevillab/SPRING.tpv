@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
@@ -34,8 +34,8 @@
 		<jackson.databind.version>2.5.3</jackson.databind.version>
 		<!-- EMail -->
 		<javax.mail.version>1.4.3</javax.mail.version>
-		<!--  Spring Batch -->
-        <spring.batch.version>3.0.7.RELEASE</spring.batch.version>
+		<!-- Spring Batch -->
+		<spring.batch.version>3.0.7.RELEASE</spring.batch.version>
 		<!-- Data Base -->
 		<mysql.connector.version>5.1.34</mysql.connector.version>
 		<hibernate.version>4.3.8.Final</hibernate.version>
@@ -43,8 +43,10 @@
 		<!-- Deploy tomcat version -->
 		<tomcat.version>8.0.33.0</tomcat.version>
 		<!-- Ant run task (sleep before functional api test) -->
-        <antrun.version>1.8</antrun.version>
-        <integration.test.skip>false</integration.test.skip>
+		<antrun.version>1.8</antrun.version>
+		<integration.test.skip>false</integration.test.skip>
+		<!-- swagger version -->
+		<swagger.version>2.6.1</swagger.version>
 	</properties>
 
 	<profiles>
@@ -63,12 +65,12 @@
 				<logs.path>target/logs</logs.path>
 				<database.url>jdbc:mysql://localhost:3306/tpv</database.url>
 				<database.user>root</database.user>
-				<database.password></database.password>				
+				<database.password></database.password>
 				<hibernate.hbm2ddl.auto>create</hibernate.hbm2ddl.auto>
 				<tomcat.url>http://localhost:8080/${project.artifactId}.${project.version}/api</tomcat.url>
 			</properties>
-		</profile>
-		
+		</profile>		
+
 		<!-- mvn install -Denvironment.type=preproduction -->
 		<profile>
 			<id>preproduction</id>
@@ -82,10 +84,10 @@
 				<logs.level>error</logs.level>
 				<logs.path>../logs</logs.path>
 				<database.url>jdbc:mysql://test.clmwkhi0u7og.eu-west-1.rds.amazonaws.com:3306/tpv</database.url>
-                <database.user>admin</database.user>
-                <database.password>admin1234</database.password>                
-                <hibernate.hbm2ddl.auto>create</hibernate.hbm2ddl.auto>
-				<tomcat.url>http://tpv-miw.herokuapp.com/api</tomcat.url>
+				<database.user>admin</database.user>
+				<database.password>admin1234</database.password>
+				<hibernate.hbm2ddl.auto>update</hibernate.hbm2ddl.auto>
+				<tomcat.url>http://miw-upm-tpv.herokuapp.com/api</tomcat.url>
 			</properties>
 		</profile>
 		<!-- mvn install -Denvironment.type=production -->
@@ -104,41 +106,20 @@
 				<database.user>root</database.user>
 				<database.password></database.password>
 				<!-- validate, create sólo una vez, cada vez que cambie la estructura 
-                    de las tablas -->
+					de las tablas -->
 				<hibernate.hbm2ddl.auto>validate</hibernate.hbm2ddl.auto>
 				<tomcat.url></tomcat.url>
 			</properties>
 		</profile>
-		
-		<profile>
+
+        <profile>
             <id>functional-api-test</id>
             <properties>
-                 <tomcat.url>http://tpv-miw.herokuapp.com/api</tomcat.url>
-                 <sleep.seconds>30</sleep.seconds>
-                 <integration.test.skip>true</integration.test.skip>
+                <tomcat.url>http://dev-miw-upm-tpv.herokuapp.com/api</tomcat.url>
+                <integration.test.skip>true</integration.test.skip>
             </properties>
             <build>
-                <plugins>   
-                    <plugin>
-                      <groupId>org.apache.maven.plugins</groupId>
-                      <artifactId>maven-antrun-plugin</artifactId>
-                      <version>${antrun.version}</version>
-                      <executions>
-                          <execution>
-                              <id>sleep-for-a-while</id>
-                              <phase>process-test-classes</phase>
-                              <configuration>
-                                  <target>
-                                     <echo message="sleep for ${sleep.seconds} seconds..." />
-                                      <sleep seconds="${sleep.seconds}" />
-                                  </target>
-                              </configuration>
-                              <goals>
-                                  <goal>run</goal>
-                              </goals>
-                          </execution>
-                      </executions>
-                    </plugin>            
+                <plugins>                   
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
@@ -152,7 +133,8 @@
                 </plugins>
             </build>
         </profile>
-        
+		
+
 	</profiles>
 
 	<dependencies>
@@ -266,80 +248,97 @@
 			<artifactId>spring-data-jpa</artifactId>
 			<version>${spring.data.version}</version>
 		</dependency>
-		<!-- YAML Parser -->
-        <dependency>
-            <groupId>org.yaml</groupId>
-            <artifactId>snakeyaml</artifactId>
-            <version>1.18</version>
-        </dependency>
-        <!-- Spring Batch -->
-        <dependency>
-            <groupId>org.springframework.batch</groupId>
-            <artifactId>spring-batch-core</artifactId>
-            <version>${spring.batch.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.batch</groupId>
-            <artifactId>spring-batch-test</artifactId>
-            <version>${spring.batch.version}</version>
-        </dependency>
-        <!-- IText PDF -->
-        <dependency>
-            <groupId>com.itextpdf</groupId>
-            <artifactId>kernel</artifactId>
-            <version>7.0.2</version>
-        </dependency>
-        <dependency>
-            <groupId>com.itextpdf</groupId>
-            <artifactId>layout</artifactId>
-            <version>7.0.2</version>
-        </dependency>
+		<!-- Connection pooling -->
 		<dependency>
-		    <groupId>com.itextpdf</groupId>
-		    <artifactId>barcodes</artifactId>
-		    <version>7.0.0</version>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-dbcp2</artifactId>
+		    <version>2.1.1</version>
 		</dependency>
-        <!-- Fix RestBuilder to support PATCH -->
-        <dependency>
-		    <groupId>org.apache.httpcomponents</groupId>
-		    <artifactId>httpclient</artifactId>
-		    <version>4.4.1</version>
+		<!-- YAML Parser -->
+		<dependency>
+			<groupId>org.yaml</groupId>
+			<artifactId>snakeyaml</artifactId>
+			<version>1.18</version>
+		</dependency>
+		<!-- Spring Batch -->
+		<dependency>
+			<groupId>org.springframework.batch</groupId>
+			<artifactId>spring-batch-core</artifactId>
+			<version>${spring.batch.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.batch</groupId>
+			<artifactId>spring-batch-test</artifactId>
+			<version>${spring.batch.version}</version>
+		</dependency>
+		<!-- Dependencias Swagger -->
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>${swagger.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>${swagger.version}</version>
+		</dependency>
+		<!-- IText PDF -->
+		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>kernel</artifactId>
+			<version>7.0.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>layout</artifactId>
+			<version>7.0.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>barcodes</artifactId>
+			<version>7.0.0</version>
+		</dependency>
+		<!-- Fix RestBuilder to support PATCH -->
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.4.1</version>
 		</dependency>
 		<!-- QR Generator -->
 		<dependency>
-		    <groupId>net.glxn</groupId>
-		    <artifactId>qrgen</artifactId>
-		    <version>1.4</version>
+			<groupId>net.glxn</groupId>
+			<artifactId>qrgen</artifactId>
+			<version>1.4</version>
 		</dependency>
 	</dependencies>
 	<build>
 		<finalName>${deploy}</finalName>
 		<resources>
-	        <resource>
-	            <filtering>true</filtering>
-	            <directory>src/main/resources</directory>
-	            <excludes>
-	                <exclude>**/*.ttf</exclude>
-	            </excludes>
-	        </resource>
-	        <resource>
-	            <filtering>false</filtering>
-	            <directory>src/main/resources</directory>
-	            <includes>
-	                <include>**/*.ttf</include>
-	            </includes>
-	        </resource>
+			<resource>
+				<filtering>true</filtering>
+				<directory>src/main/resources</directory>
+				<excludes>
+					<exclude>**/*.ttf</exclude>
+				</excludes>
+			</resource>
+			<resource>
+				<filtering>false</filtering>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>**/*.ttf</include>
+				</includes>
+			</resource>
 			<resource>
 				<directory>src/main/webapp</directory>
 			</resource>
 		</resources>
 
 		<testResources>
-	        <testResource>
-	            <directory>src/test/resources</directory>
-	            <filtering>true</filtering>
-	        </testResource>
-	    </testResources>
+			<testResource>
+				<directory>src/test/resources</directory>
+				<filtering>true</filtering>
+			</testResource>
+		</testResources>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -387,28 +386,30 @@
 					<password>pass</password>
 				</configuration>
 			</plugin>
-			<!-- Web app runner for heroku deployment version tomcat 8.0.33.0-->
+			<!-- Web app runner for heroku deployment version tomcat 8.0.33.0 -->
 			<plugin>
-		          <groupId>org.apache.maven.plugins</groupId>
-		          <artifactId>maven-dependency-plugin</artifactId>
-		          <version>2.3</version>
-		          <executions>
-		              <execution>
-		                  <phase>package</phase>
-		                  <goals><goal>copy</goal></goals>
-		                  <configuration>
-		                      <artifactItems>
-		                          <artifactItem>
-		                              <groupId>com.github.jsimone</groupId>
-		                              <artifactId>webapp-runner</artifactId>
-		                              <version>${tomcat.version}</version>
-		                              <destFileName>webapp-runner.jar</destFileName>
-		                          </artifactItem>
-		                      </artifactItems>
-		                  </configuration>
-		              </execution>
-		          </executions>
-		      </plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.3</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>copy</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>com.github.jsimone</groupId>
+									<artifactId>webapp-runner</artifactId>
+									<version>${tomcat.version}</version>
+									<destFileName>webapp-runner.jar</destFileName>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 

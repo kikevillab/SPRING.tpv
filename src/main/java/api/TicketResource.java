@@ -40,6 +40,9 @@ import entities.core.Article;
 import entities.core.Product;
 import entities.core.Shopping;
 import entities.core.Ticket;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import wrappers.DayTicketWrapper;
 import wrappers.ShoppingCreationWrapper;
 import wrappers.ShoppingTrackingWrapper;
@@ -240,6 +243,17 @@ public class TicketResource {
         return ticketController.getTicketTracking(reference);
     }
 
+    @ApiOperation(value = "Find partners")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "page", dataType = "integer", paramType = "query",
+                value = "Results page you want to retrieve (0..N)"),
+        @ApiImplicitParam(name = "size", dataType = "integer", paramType = "query",
+                value = "Number of records per page."),
+        @ApiImplicitParam(name = "sort", allowMultiple = true, dataType = "string", paramType = "query",
+                value = "Sorting criteria in the format: property(,asc|desc). " +
+                        "Default sort order is ascending. " +
+                        "Multiple sort criteria are supported.")
+    })
     @RequestMapping(method = RequestMethod.GET)
     // @PreAuthorize("hasRole('ADMIN')or hasRole('MANAGER') or hasRole('OPERATOR')")
     public Page<TicketReferenceCreatedWrapper> getTicketsByUserMobile(@RequestParam long mobile, Pageable pageable) {
@@ -252,8 +266,16 @@ public class TicketResource {
         }
     }
 
+    
+    @RequestMapping(value = Uris.ALL, method = RequestMethod.GET)
+    public List<Ticket> listTickets() {
+        return ticketController.findAll();
+    }
+
+
     private void checkVouchers(List<String> voucherReferenceList)
             throws VoucherNotFoundException, VoucherHasExpiredException, VoucherAlreadyConsumedException {
+
         for (String reference : voucherReferenceList) {
             if (!voucherController.voucherExists(reference)) {
                 throw new VoucherNotFoundException("Voucher reference: " + reference);

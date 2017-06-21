@@ -1,5 +1,8 @@
 package entities.users;
 
+import io.swagger.annotations.ApiModel;
+
+@ApiModel
 public enum Role {
     ADMIN, MANAGER, OPERATOR, CUSTOMER, ANONYMOUS, AUTHENTICATED;
 

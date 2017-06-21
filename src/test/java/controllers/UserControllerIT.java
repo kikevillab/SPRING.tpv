@@ -9,6 +9,7 @@ import static org.junit.Assert.fail;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +19,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import api.exceptions.NotFoundTicketReferenceException;
 import api.exceptions.NotFoundUserMobileException;
 import config.PersistenceConfig;
 import config.TestsControllerConfig;
 import config.TestsPersistenceConfig;
 import daos.users.UserDao;
+import entities.core.Ticket;
 import entities.users.Role;
 import entities.users.User;
 import wrappers.UserDetailsWrapper;
@@ -45,6 +48,8 @@ public class UserControllerIT {
     private static final String USER_EMAIL = "tpv@tpv.com";
     
     private static final boolean USER_ACTIVATE = true;
+
+    private static final String INVALID_TICKET_REFERENCE = "wg_yXs1LJmSvNsld-aXBg27P1jA";
     
     @Autowired
     UserController userController;
@@ -52,6 +57,8 @@ public class UserControllerIT {
     @Autowired
     UserDao userDao;
     
+    @Autowired
+    private TicketController ticketController;
 
     @Test
     public void testFindUserByMobilePhone() {
@@ -245,6 +252,30 @@ public class UserControllerIT {
     }
 
     @Test
+    public void testGetByTicketReference() {
+        List<Ticket> tickets = this.ticketController.findAll();
+
+        try {
+            UserWrapper user = this.userController.getByTicketReference(tickets.get(1).getReference());
+            assertEquals(tickets.get(1).getUser().getMobile(), user.getMobile());
+        } catch (NotFoundTicketReferenceException exception) {
+            LogManager.getLogger(this.getClass()).info("testGetByTicketReference was wrong:  " + exception.getMessage());
+            fail();
+        }
+    }
+    
+    @Test
+    public void testGetByTicketReferenceWithWrongTicketReference() {
+        try {
+            this.userController.getByTicketReference(INVALID_TICKET_REFERENCE);
+            fail();
+        } catch (NotFoundTicketReferenceException exception) {
+            assertTrue(true);
+        }
+    }
+
+    
+    @Test
     public void testDeleteUser() {
         try {
             long mobile=666000099;
@@ -255,5 +286,7 @@ public class UserControllerIT {
             fail();
         }
     }
+    
+    
 
 }
