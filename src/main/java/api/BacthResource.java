@@ -5,23 +5,28 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import services.RemoveTokenExpiredService;
+import controllers.RemoveTokenExpiredController;
 
 @RestController
 @EnableScheduling
 @RequestMapping(Uris.VERSION)
 public class BacthResource {
 
-    private RemoveTokenExpiredService removeTokenExpiredService;
+    private RemoveTokenExpiredController RemoveTokenExpiredController;
 
     
     @Autowired
-    public void setRemoveTokenExpiredService(RemoveTokenExpiredService removeTokenExpiredService) {
-        this.removeTokenExpiredService = removeTokenExpiredService;
+    public void setRemoveTokenExpiredController(RemoveTokenExpiredController RemoveTokenExpiredController) {
+        this.RemoveTokenExpiredController = RemoveTokenExpiredController;
     }
 
     @RequestMapping(value = Uris.DELETE_TOKEN_EXPIRED)
-    public void EliminarTokensCaducados()  {
-        removeTokenExpiredService.removeTokenExpired();
+    public Boolean EliminarTokensCaducados()  {
+        int retorno= RemoveTokenExpiredController.removeTokenExpired();
+        if (retorno==0) 
+            return false;
+        else
+            return true;
+     
     }
 }
