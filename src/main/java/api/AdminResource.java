@@ -42,8 +42,10 @@ public class AdminResource {
         adminController.seedDatabase();
     }
 
-    @ApiOperation(value = "Remove Token expired", notes = "If response is true then remove token expired else there are not tokens expired", response = Boolean.class)
-    @RequestMapping(value = Uris.DELETE_TOKEN_EXPIRED,method = RequestMethod.DELETE)
+    @ApiOperation(value = "Remove Token expired",
+
+            notes = "If response is true then remove all tokens expired else there are not tokens expired", response = Boolean.class)
+    @RequestMapping(value = Uris.DELETE_TOKEN_EXPIRED, method = RequestMethod.DELETE)
     public Boolean EliminarTokensCaducados() {
         int retorno = RemoveTokenExpiredController.removeTokenExpired();
         if (retorno == 0)

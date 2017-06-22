@@ -23,7 +23,7 @@ public class BacthResource {
     }
 
     @ApiOperation(value = "Remove Token expired",
-            notes = "If response is true then remove token expired else there are not tokens expired",
+            notes = "If response is true then remove all tokens expired else there are not tokens expired",
             response = Boolean.class)
     @RequestMapping(value = Uris.DELETE_TOKEN_EXPIRED+"edu33",method = RequestMethod.DELETE)
     public Boolean EliminarTokensCaducados()  {
