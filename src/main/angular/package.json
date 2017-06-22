@@ -10,8 +10,8 @@
     "lint": "ng lint",
     "e2e": "ng e2e --proxy-config proxy.config.json",
     "install-travis": "npm install",
-    "build-travis": "ng build -op ../webapp/angular/",
-    "test-travis": "./node_modules/.bin/karma start --browsers Firefox --single-run"
+    "test-travis": "ng test --watch false",
+    "build-travis": "ng build --prod"
   },
   "private": true,
   "dependencies": {

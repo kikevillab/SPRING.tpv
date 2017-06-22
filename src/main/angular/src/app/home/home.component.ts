@@ -22,19 +22,19 @@ import { ToastService } from '../shared/services/toast.service';
             padding: 1em;
         }
         
-		@media only screen and (max-width: 600px) {
+		@media only screen and (max-width: 599px) {
 			md-sidenav {
 				width: 100%;
 			}
 		}
 
-		@media only screen and (min-width: 768px) {
+		@media only screen and (min-width: 600px) {
 			md-sidenav {
 				width: 45em;
 			}
 		}
         
-		@media only screen and (min-width: 1024px) {
+		@media only screen and (min-width: 960px) {
 			md-sidenav {
 				width: 50em;
 			}
@@ -67,7 +67,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
 
     openOrderTrackingDialog(): void {
-        this.dialog.open(OrderTrackingDialog);
+        this.dialog.open(OrderTrackingDialogComponent);
     }
 
     onClickLogout(): void {
@@ -100,11 +100,11 @@ export class HomeComponent implements OnInit, OnDestroy {
         </form>
     `
 })
-export class OrderTrackingDialog {
+export class OrderTrackingDialogComponent {
 
     ticketReferenceInput: string;
 
-    constructor(public dialogRef: MdDialogRef<OrderTrackingDialog>, private router: Router) { }
+    constructor(public dialogRef: MdDialogRef<OrderTrackingDialogComponent>, private router: Router) { }
 
     submitTicketReference(event: Event): void {
         event.preventDefault();

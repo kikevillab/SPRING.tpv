@@ -16,7 +16,7 @@ export class EditUserDialog implements OnInit {
     user: User;
     userForm: FormGroup;
 
-    constructor(private dialogRef: MdDialogRef<EditUserDialog>, private userFormService: UserForm) {
+    constructor(public dialogRef: MdDialogRef<EditUserDialog>, private userFormService: UserForm) {
         this.user = this.dialogRef._containerInstance.dialogConfig.data;
         this.userFormService.setUser(this.user);
     }

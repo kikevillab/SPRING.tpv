@@ -4,6 +4,8 @@ import static config.ResourceNames.TICKETS_PDFS_ROOT;
 import static config.ResourceNames.TICKET_PDF_FILENAME_ROOT;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
@@ -33,7 +35,7 @@ import entities.core.Ticket;
 
 public class TicketPdfGenerator extends PdfGenerator<Ticket> {
 
-    private final static float[] SHOPPING_LIST_COLUMNS_WIDTHS = new float[] {20, 20, 100, 40, 40};
+    private final static float[] SHOPPING_LIST_COLUMNS_WIDTHS = new float[] {20, 20, 100, 40, 50};
 
     private final static float TICKET_PAGE_WIDHT = 227;
 
@@ -131,19 +133,19 @@ public class TicketPdfGenerator extends PdfGenerator<Ticket> {
             shoppingListTable.addCell(String.valueOf(i + 1));
             shoppingListTable.addCell(String.valueOf(shopping.getAmount()));
             shoppingListTable.addCell(String.valueOf(shopping.getDescription()));
-            shoppingListTable.addCell(String.valueOf(shopping.getDiscount() + "100%"));
-            shoppingListTable.addCell(String.valueOf(shopping.getShoppingSubtotal() + "€"));
+            shoppingListTable.addCell(String.valueOf(shopping.getDiscount() + "%"));
+            shoppingListTable.addCell(String.valueOf(new BigDecimal(shopping.getShoppingTotal()).setScale(2, RoundingMode.HALF_UP) + "€"));
         }
         Cell sixColumsCell = new Cell(1, 6);
         sixColumsCell.setTextAlignment(TextAlignment.RIGHT);
-        sixColumsCell.add("TOTAL: " + String.valueOf(entity.getTicketTotal()) + "€");
+        sixColumsCell.add("TOTAL: " + String.valueOf(entity.getTicketTotal().setScale(2, RoundingMode.HALF_UP)) + "€");
         shoppingListTable.addCell(sixColumsCell);
         document.add(shoppingListTable);
         document.add(new LineSeparator(separator));
         document.add(new Cell().add("TICKET TRACKING"));
         document.add(qrCodeImage(entity.getReference(), document.getPdfDocument()));
         document.add(new LineSeparator(separator));
-        document.add(new Paragraph("PLAZO DEVOLUC. 15 DIAS. CONSERVE TICKET"));
+        document.add(new Paragraph("RETURN PERIOD. 15 DAYS. KEEP TICKET"));
     }
 
     private Image qrCodeImage(String reference, PdfDocument pdfDocument) {

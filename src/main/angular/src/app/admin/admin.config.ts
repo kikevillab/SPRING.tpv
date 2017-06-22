@@ -8,6 +8,7 @@ export const MANAGERS_URI: string = 'api/managers';
 export const TICKETS_URI: string = 'api/tickets';
 export const USERS_URI: string = 'api/users';
 export const SHOPPINGS_URI: string = 'api/shoppings';
+export const SHOPPING_STATES_URI: string = 'api/shopping_states';
 
 export const CUSTOMERS: string = 'customers';
 export const OPERATORS: string = 'operators';

@@ -4,9 +4,10 @@ import static config.ResourceNames.INVOICES_PDFS_ROOT;
 import static config.ResourceNames.INVOICE_PDF_FILENAME_ROOT;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 
 import com.itextpdf.io.image.ImageDataFactory;
@@ -29,7 +30,7 @@ import entities.users.User;
 
 public class InvoicePdfGenerator extends PdfGenerator<Invoice> {
 
-    private final static float[] SHOPPING_LIST_COLUMNS_WIDTHS = new float[] {200, 1, 1, 1, 1, 1};
+    private final static float[] SHOPPING_LIST_COLUMNS_WIDTHS = new float[] {200, 10, 10, 10, 10, 10};
 
     private final static float[] TABLE_COLUMNS_WIDTHS = new float[] {1, 1};
 
@@ -40,7 +41,7 @@ public class InvoicePdfGenerator extends PdfGenerator<Invoice> {
     public InvoicePdfGenerator(Invoice entity) {
         super(entity);
     }
-    
+
     @Override
     protected String path() {
         return INVOICES_PDFS_ROOT + INVOICE_PDF_FILENAME_ROOT + entity.getId();
@@ -52,7 +53,7 @@ public class InvoicePdfGenerator extends PdfGenerator<Invoice> {
     }
 
     @Override
-    protected PdfFont font() throws IOException, URISyntaxException{
+    protected PdfFont font() throws IOException, URISyntaxException {
         String fontPath = getAbsolutePathOfResource(ResourceNames.FONTS, ResourceNames.OPEN_SANS_REGULAR_FONT);
         return PdfFontFactory.createFont(fontPath);
     }
@@ -127,31 +128,26 @@ public class InvoicePdfGenerator extends PdfGenerator<Invoice> {
                 .add("\nCreaten on: ").add(ticketCreationDateFormatter.format(ticket.getCreated().getTime()));
         document.add(ticketDetails);
         Table shoppingListTable = new Table(SHOPPING_LIST_COLUMNS_WIDTHS, true);
-        shoppingListTable.addCell("Item");
-        shoppingListTable.addCell("Price");
-        shoppingListTable.addCell("Quantity");
-        shoppingListTable.addCell("Subtotal");
-        shoppingListTable.addCell("Discount");
-        shoppingListTable.addCell("Total");
+        shoppingListTable.addHeaderCell("Item");
+        shoppingListTable.addHeaderCell("Price");
+        shoppingListTable.addHeaderCell("Quantity");
+        shoppingListTable.addHeaderCell("Subtotal");
+        shoppingListTable.addHeaderCell("Discount");
+        shoppingListTable.addHeaderCell("Total");
         for (Shopping shopping : ticket.getShoppingList()) {
-            shoppingListTable.addCell(String.valueOf(shopping.getDescription()));
+            shoppingListTable.addCell(new Cell().add(String.valueOf(shopping.getDescription())));
             shoppingListTable
                     .addCell(new Cell().add(String.valueOf(shopping.getRetailPrice() + "€")).setTextAlignment(TextAlignment.RIGHT));
             shoppingListTable.addCell(new Cell().add(String.valueOf(shopping.getAmount())).setTextAlignment(TextAlignment.RIGHT));
-            shoppingListTable
-                    .addCell(new Cell().add(roundedValue(shopping.getShoppingSubtotal()) + "€").setTextAlignment(TextAlignment.RIGHT));
-            shoppingListTable.addCell(new Cell().add(String.valueOf(shopping.getDiscount())).setTextAlignment(TextAlignment.RIGHT));
-            shoppingListTable
-                    .addCell(new Cell().add(roundedValue(shopping.getShoppingTotal()) + "€").setTextAlignment(TextAlignment.RIGHT));
+            shoppingListTable.addCell(new Cell().add(new BigDecimal(shopping.getShoppingSubtotal()).setScale(2, RoundingMode.HALF_UP) + "€")
+                    .setTextAlignment(TextAlignment.RIGHT));
+            shoppingListTable.addCell(new Cell().add(String.valueOf(shopping.getDiscount()) + "%").setTextAlignment(TextAlignment.RIGHT));
+            shoppingListTable.addCell(new Cell().add(new BigDecimal(shopping.getShoppingTotal()).setScale(2, RoundingMode.HALF_UP) + "€")
+                    .setTextAlignment(TextAlignment.RIGHT));
         }
+        shoppingListTable.addCell(new Cell(1, 6).setTextAlignment(TextAlignment.RIGHT)
+                .add("Total: " + String.valueOf(ticket.getTicketTotal().setScale(2, RoundingMode.HALF_UP)) + "€"));
         document.add(shoppingListTable);
-        document.add(new Paragraph().setTextAlignment(TextAlignment.RIGHT).add("Total: ")
-                .add(roundedValue(ticket.getTicketTotal().doubleValue())));
-    }
-
-    private String roundedValue(double value) {
-        DecimalFormat decFormat = new DecimalFormat("#.##");
-        return decFormat.format(value);
     }
 
 }
