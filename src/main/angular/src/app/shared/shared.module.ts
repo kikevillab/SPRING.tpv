@@ -26,10 +26,10 @@ import { BooleanToStringPipe } from './pipes/bool-to-str.pipe';
         ToastyModule
     ],
     declarations: [
-    	DateComponent,
-    	CurrencyComponent,
-    	CapitalizePipe,
-    	BooleanToStringPipe
+        DateComponent,
+        CurrencyComponent,
+        CapitalizePipe,
+        BooleanToStringPipe
     ],
     exports: [
         CommonModule,
