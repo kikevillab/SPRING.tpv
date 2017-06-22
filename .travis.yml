@@ -31,9 +31,9 @@ script:
 - mvn verify --settings settings.xml
 #Nos aseguramos de que este creado el administrador en la base de datos (PRE)
 #- mvn test -Dtest=DatabaseSeederServiceIT#testCreateDefaultAdmin -Denviroment.type=preproduction
-- mvn test -Dtest=DatabaseSeedResourceFunctionalTesting#testSeedDatabase -Pfunctional-api-test
+#- mvn test -Dtest=DatabaseSeedResourceFunctionalTesting#testSeedDatabase -Pfunctional-api-test
 #Lanzamos los test de api sobre PRE
-- mvn verify -Pfunctional-api-test
+#- mvn verify -Pfunctional-api-test
 #before_deploy:
 #- npm --prefix "$ANGULAR_HOME" run build-travis
 #- cp -r $ANGULAR_HOME/dist/* $ANGULAR_HOME/../webapp
