@@ -3,9 +3,11 @@ package api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import controllers.RemoveTokenExpiredController;
+import io.swagger.annotations.ApiOperation;
 
 @RestController
 @EnableScheduling
@@ -20,7 +22,10 @@ public class BacthResource {
         this.RemoveTokenExpiredController = RemoveTokenExpiredController;
     }
 
-    @RequestMapping(value = Uris.DELETE_TOKEN_EXPIRED)
+    @ApiOperation(value = "Remove Token expired",
+            notes = "If response is true then remove token expired else there are not tokens expired",
+            response = Boolean.class)
+    @RequestMapping(value = Uris.DELETE_TOKEN_EXPIRED+"edu33",method = RequestMethod.DELETE)
     public Boolean EliminarTokensCaducados()  {
         int retorno= RemoveTokenExpiredController.removeTokenExpired();
         if (retorno==0) 
