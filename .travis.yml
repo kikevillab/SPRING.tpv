@@ -15,8 +15,8 @@ before_install:
 - mysql -e 'CREATE DATABASE IF NOT EXISTS tpv;'
 script: 
  - mvn verify --settings settings.xml
- - mvn clean package -DskipTests=true -Denviroment.type=preproduction
- - java $JAVA_OPTS -jar target/dependency/webapp-runner.jar --port 8080 target/*.war
+ - mvn install -DskipTests=true -Denvironment.type=preproduction
+ - mvn test -Dtest=DatabaseSeederServiceIT#testCreateDefaultAdmin -Denvironment.type=preproduction
  - mvn verify -Pfunctional-api-test
 #deploy:
 #    provider: heroku

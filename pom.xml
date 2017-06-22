@@ -115,7 +115,7 @@
         <profile>
             <id>functional-api-test</id>
             <properties>
-                <tomcat.url>http://localhost:8080/api</tomcat.url>
+                <tomcat.url>http://dev-miw-upm-tpv.herokuapp.com/api</tomcat.url>
                 <integration.test.skip>true</integration.test.skip>
             </properties>
             <build>
