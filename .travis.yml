@@ -17,6 +17,7 @@ script:
  - mvn verify --settings settings.xml
  - mvn install -DskipTests=true -Denvironment.type=preproduction
  - mvn test -Dtest=DatabaseSeederServiceIT#testCreateDefaultAdmin -Denvironment.type=preproduction
+ - mvn test -Dtest=DatabaseSeedResourceFunctionalTesting#testSeedDatabase -Pfunctional-api-test
  - mvn verify -Pfunctional-api-test
 #deploy:
 #    provider: heroku
