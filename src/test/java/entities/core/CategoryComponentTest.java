@@ -1,6 +1,5 @@
 package entities.core;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -24,16 +23,6 @@ public class CategoryComponentTest {
                         return "";
                     }
                 }));
-    }
-
-    @Test
-    public void testToString() {
-        assertEquals(
-                "CategoryComponent [id=0, code=null, name=ROPA, icon=null"
-                + "[ Component = CategoryComponent [id=0, code=null, name=CAMISAS, icon=null]"
-                + "[ Component = CategoryComponent [id=0, code=84000015410, name=Nike's Air Sneakers, icon=null"
-                + "Product [code=84000015410, reference=sadJGHDshdjh, description=Nike's Air Sneakers, retailPrice=0, discontinued=false, image=null]]]",
-                categoryComposite.toString());
     }
 
     @Test

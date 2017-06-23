@@ -4,6 +4,11 @@
 	</button>
 	<md-card-title>Money received</md-card-title>
 	<md-card-content>
+		<p>Paid with card: 
+			<b class="text-primary">
+				<currency [value]="amountPaidWithCard"></currency>
+			</b>
+		</p>
 		<p>Cash: 
 			<b class="text-primary">
 				<currency [value]="cashReceived"></currency>

@@ -1,14 +1,14 @@
 language: java
 jdk:
 - oraclejdk8
-node_js: 6.9.2
+#node_js: 6.9.2
 branches:
   only:
   - master
   - develop
-env:
-  global:
-  - ANGULAR_HOME=src/main/angular
+#env:
+#  global:
+#  - ANGULAR_HOME=src/main/angular
 notifications:
   slack: tpv-miw:RR3NECTV3PaLvPZOUUd8qF7O
   email:
@@ -18,20 +18,26 @@ services:
 - mysql
 before_install:
 - mysql -e 'CREATE DATABASE IF NOT EXISTS tpv;'
-- ". $HOME/.nvm/nvm.sh"
-- nvm install stable
-- nvm use stable
-- if [[ `npm -v` != 4* ]]; then npm i -g npm@4; fi
+#- ". $HOME/.nvm/nvm.sh"
+#- nvm install stable
+#- nvm use stable
+#- if [[ `npm -v` != 4* ]]; then npm i -g npm@4; fi
 install:
-- npm --prefix "$ANGULAR_HOME" run install-travis
-- npm install -g @angular/cli@1.0.0
+#- npm --prefix "$ANGULAR_HOME" run install-travis
+#- npm install -g @angular/cli@1.0.0
 - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 script:
+#Test unitario y de integracion
 - mvn verify --settings settings.xml
-#- mvn verify -Pfunctional-api-test
-before_deploy:
-- npm --prefix "$ANGULAR_HOME" run build
-- cp -r $ANGULAR_HOME/dist/* $ANGULAR_HOME/../webapp
+#Nos aseguramos de que este creado el administrador en la base de datos (PRE)
+- mvn install -DskipTests=true -Denvironment.type=preproduction
+- mvn test -Dtest=DatabaseSeederServiceIT#testCreateDefaultAdmin -Denvironment.type=preproduction
+- mvn test -Dtest=DatabaseSeedResourceFunctionalTesting#testSeedDatabase -Pfunctional-api-test
+#Lanzamos los test de api sobre PRE
+- mvn verify -Pfunctional-api-test
+#before_deploy:
+#- npm --prefix "$ANGULAR_HOME" run build-travis
+#- cp -r $ANGULAR_HOME/dist/* $ANGULAR_HOME/../webapp
 deploy:
   provider: heroku
   api_key:

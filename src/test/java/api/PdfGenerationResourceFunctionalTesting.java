@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.springframework.http.HttpStatus;
 
+import entities.core.Voucher;
 import wrappers.InvoiceIdWrapper;
 import wrappers.TicketIdWrapper;
 import wrappers.VoucherIdWrapper;
@@ -63,16 +64,17 @@ public class PdfGenerationResourceFunctionalTesting {
         .build();
     }
     
-    /*@Test
+    @Test
     public void testGenerateVoucherPdfWithManagerLoggedIn() {
         String token = new RestService().registerAndLoginManager();
+        Voucher voucher = Arrays
+        .asList(new RestBuilder<Voucher[]>(RestService.URL).path(Uris.VOUCHERS).clazz(Voucher[].class).get().build()).get(0);
         new RestBuilder<Object>(RestService.URL).path(Uris.PDF_GENERATION + Uris.VOUCHERS)
-        .body(new VoucherIdWrapper(1))
+        .body(new VoucherIdWrapper(voucher.getId()))
         .basicAuth(token, "")
         .post()
         .build();
     }
-    */
     
     @Test
     public void testGenerateBarcodesPdfWithManagerLoggedIn() {

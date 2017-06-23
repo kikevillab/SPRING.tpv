@@ -8,6 +8,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { MdDialog, MdDialogRef } from '@angular/material';
 
 import { CashPaymentComponent } from './cash-payment/cash-payment.component';
+import { CardPaymentComponent } from './card-payment/card-payment.component';
 import { VoucherPaymentComponent } from './voucher-payment/voucher-payment.component';
 
 import { CartProduct } from '../../shared/models/cart-product.model';
@@ -34,12 +35,14 @@ export class PaymentComponent implements OnInit, OnDestroy {
     paidOut: boolean = false;
     shoppingCartSubscription: Subscription;
     cashReceivedSubscription: Subscription;
+    amountPaidWithCardSubscription: Subscription;
     vouchersSubscription: Subscription;
     submittedSubscription: Subscription;
     vouchers: Voucher[] = [];
     submitted: boolean = this.shoppingService.isSubmitted();
 
-    constructor(private shoppingService: ShoppingService, private pdfService: PDFService, private toastService: ToastService, public dialog: MdDialog, private router: Router) { }
+    constructor(private shoppingService: ShoppingService, private pdfService: PDFService, private toastService: ToastService,
+        public dialog: MdDialog, private router: Router) { }
 
     ngOnInit() {
         this.shoppingCartSubscription = this.shoppingService.getCartProductsObservable().subscribe((cartProducts: CartProduct[]) => {
@@ -48,6 +51,9 @@ export class PaymentComponent implements OnInit, OnDestroy {
             this.totalPrice = this.shoppingService.getTotalPrice();
         });
         this.cashReceivedSubscription = this.shoppingService.getCashReceivedObservable().subscribe((cashReceived: number) => {
+            this.paidOut = this.shoppingService.isPaidOut();
+        });
+        this.amountPaidWithCardSubscription = this.shoppingService.getAmountPaidWithCardObservable().subscribe((amountPaidWithCard: number) => {
             this.paidOut = this.shoppingService.isPaidOut();
         });
         this.vouchersSubscription = this.shoppingService.getVouchersObservable().subscribe((vouchers: Voucher[]) => {
@@ -86,6 +92,13 @@ export class PaymentComponent implements OnInit, OnDestroy {
         this.dialog.open(VoucherPaymentComponent);
     }
 
+    openCardPaymentDialog(): void {
+        let dialogRef: MdDialogRef<CardPaymentComponent> = this.dialog.open(CardPaymentComponent);
+        dialogRef.afterClosed().subscribe(() => {
+            this.paidOut = this.shoppingService.isPaidOut();
+        });
+    }
+
     cancel(): void {
         this.shoppingService.clear();
         this.router.navigate(['/home']);
@@ -94,6 +107,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         this.shoppingCartSubscription && this.shoppingCartSubscription.unsubscribe();
         this.cashReceivedSubscription && this.cashReceivedSubscription.unsubscribe();
+        this.amountPaidWithCardSubscription && this.amountPaidWithCardSubscription.unsubscribe();
         this.vouchersSubscription && this.vouchersSubscription.unsubscribe();
         this.submittedSubscription && this.submittedSubscription.unsubscribe();
     }

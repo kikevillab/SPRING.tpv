@@ -8,8 +8,8 @@ import {User} from '../../../../shared/models/user.model';
 import {TPVHTTPError} from '../../../../shared/models/tpv-http-error.model';
 import {MdDialogRef} from '@angular/material';
 import {ToastService} from '../../../../shared/services/toast.service';
-import {UsersService} from '../../services/users.service';
 import {UserForm} from '../../services/user-form.service';
+import {HTTPService} from '../../../../shared/services/http.service';
 
 @Component({
     templateUrl: './new-user.component.html',
@@ -18,17 +18,18 @@ import {UserForm} from '../../services/user-form.service';
 export class NewUserDialog implements OnInit {
     user: User;
     userForm: FormGroup;
+    endpoint: string;
 
-    constructor(private dialogRef: MdDialogRef<NewUserDialog>, private toastService: ToastService,
-                private httpService: UsersService, private userFormService: UserForm) {
+    constructor(public dialogRef: MdDialogRef<NewUserDialog>, private toastService: ToastService,
+                private httpService: HTTPService, private userFormService: UserForm) {
         this.user = new User();
-        this.httpService = this.dialogRef._containerInstance.dialogConfig.data;
+        this.endpoint = this.dialogRef._containerInstance.dialogConfig.data;
         this.userFormService.setUser(this.user);
     }
 
     onSubmit(): void {
         this.user = this.userFormService.getFormGroup().value;
-        this.httpService.create(this.user).subscribe(
+        this.httpService.post(this.endpoint, this.user).subscribe(
             result => this.dialogRef.close(this.user),
             error => this.handleError(error)
         );

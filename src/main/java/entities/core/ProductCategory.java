@@ -32,11 +32,6 @@ public class ProductCategory extends CategoryComponent {
     }
 
     @Override
-    protected String print() {
-        return product.toString();
-    }
-
-    @Override
     public List<CategoryComponent> components() {
         return Arrays.asList(this);
     }
@@ -50,5 +45,12 @@ public class ProductCategory extends CategoryComponent {
     public Product product() {
         return getProduct();
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + "ProductCategory [productCode=" + product.getCode() + "]";
+    }
+
+
 
 }

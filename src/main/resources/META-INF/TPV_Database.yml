@@ -247,6 +247,30 @@ textilePrintingList:
     image: /assets/img/products/img-product-4.png
     type: ploter
 
+productCategoryList:
+  - &pC000000001
+    code : 8400000003336
+    name: textilePrinting3
+    icon: /assets/test
+    product: *textilePrinting8400000003336
+  - &pC000000002
+    code : 8400000003335
+    name: textilePrinting2
+    icon: /assets/test2
+    product: *textilePrinting8400000003335
+
+categoryCompositeList:
+  - &cC000000001
+    name: CATEGORY1
+    icon: /assets/ctest
+    categoryComponents:
+      - *pC000000001
+  - &cC000000002
+    name: CATEGORY2
+    icon: /assets/ctest2
+    categoryComponents:
+      - *pC000000002    
+      
 ticketList:
   - id: 1
     reference : ticket1

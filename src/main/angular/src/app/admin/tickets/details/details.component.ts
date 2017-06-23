@@ -18,13 +18,14 @@ import {
 } from '../../shared/models/shopping.model';
 import {CapitalizePipe} from '../../../shared/pipes/capitalize.pipe';
 import {ToastService} from "../../../shared/services/toast.service";
-import {UsersService} from "../../shared/services/users.service";
 import {USERS_URI} from '../../admin.config';
 import {ID_ATTRIBUTE_NAME} from '../../../shared/models/user.model';
 import {TPVHTTPError} from "../../../shared/models/tpv-http-error.model";
-import {ShoppingsService} from "../../shared/services/shoppings.service";
 import {EditShoppingDialog} from '../edit-shopping/edit-shopping.component';
 import {isUndefined} from "util";
+import {HTTPService} from "../../../shared/services/http.service";
+import {URLSearchParams} from "@angular/http";
+import {SHOPPINGS_URI} from '../../admin.config';
 
 @Component({
     templateUrl: './details.component.html',
@@ -39,12 +40,10 @@ export class TicketDetailsDialog implements OnInit {
     dialogConfig: MdDialogConfig;
     selected: Shopping;
 
-    constructor(private dialogRef: MdDialogRef<TicketDetailsDialog>, private usersService: UsersService,
-                private shoppingsService: ShoppingsService, private toastService: ToastService,
-                private editShoppingDialog: MdDialog) {
+    constructor(public dialogRef: MdDialogRef<TicketDetailsDialog>, private httpService: HTTPService,
+                private toastService: ToastService, private editShoppingDialog: MdDialog) {
         this.user = new User();
         this.ticket = this.dialogRef._containerInstance.dialogConfig.data;
-        this.usersService.setEndpoint(USERS_URI);
         this.dialogConfig = new MdDialogConfig();
         this.capitalizePipe = new CapitalizePipe();
         this.headers = [{name: this.capitalizePipe.transform(CODE_ATTRIBUTE_NAME, false)},
@@ -57,17 +56,24 @@ export class TicketDetailsDialog implements OnInit {
     }
 
     getShoppings() {
-        this.shoppingsService.search(TICKET_ATTRIBUTE_NAME, this.ticket.id).subscribe(
+        let params = new URLSearchParams();
+
+        params.set(TICKET_ATTRIBUTE_NAME, this.ticket.id.toString());
+        this.httpService.get(SHOPPINGS_URI, null, params).subscribe(
             results => this.shoppings = results.data,
             error => this.handleError(error)
         );
     }
 
     ngOnInit(): void {
-        this.usersService.search(ID_ATTRIBUTE_NAME, this.ticket.user).subscribe(
+        let params = new URLSearchParams();
+        params.set(ID_ATTRIBUTE_NAME, this.ticket.user.toString());
+
+        this.httpService.get(USERS_URI, null, params).subscribe(
             results => this.user = results.data[0],
             error => this.handleError(error)
         );
+
         this.getShoppings();
     }
 
@@ -93,7 +99,7 @@ export class TicketDetailsDialog implements OnInit {
 
     editShopping(shopping: Shopping) {
         if (!isUndefined(shopping) && !shopping.equals(this.selected)) {
-            this.shoppingsService.put(shopping).subscribe(
+            this.httpService.put(SHOPPINGS_URI + '/' + shopping.id, shopping).subscribe(
                 results => this.getShoppings(),
                 error => this.handleError(error)
             );

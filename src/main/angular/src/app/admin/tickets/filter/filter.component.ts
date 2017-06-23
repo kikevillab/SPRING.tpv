@@ -6,11 +6,13 @@ import {Component, OnInit, EventEmitter} from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import {Ticket, REFERENCE_ATTRIBUTE_NAME, USER_ID_ATTRIBUTE_NAME} from '../../shared/models/ticket.model';
 import {Filter, START_DATE_ATTRIBUTE_NAME, END_DATE_ATTRIBUTE_NAME} from './filter.model';
-import {TicketsService} from '../../shared/services/tickets.service';
 import {ToastService} from '../../../shared/services/toast.service';
 import {RegExpFormValidatorService} from '../../../shared/services/reg-exp-form-validator.service';
 import {TPVHTTPError} from "../../../shared/models/tpv-http-error.model";
 import {isNull} from "util";
+import {HTTPService} from "../../../shared/services/http.service";
+import {URLSearchParams} from "@angular/http";
+import {TICKETS_URI} from '../../admin.config';
 
 @Component({
     selector: 'filter',
@@ -21,7 +23,7 @@ import {isNull} from "util";
 })
 export class FilterComponent implements OnInit {
     filter: Filter;
-    httpService: TicketsService;
+    httpService: HTTPService;
     filterForm: FormGroup;
     validationMessages = {
         'user': {
@@ -59,6 +61,7 @@ export class FilterComponent implements OnInit {
 
     onSubmit(): void {
         let formValues = this.filterForm.value;
+        let params = new URLSearchParams();
         this.filter = new Filter(formValues.user, formValues.reference, formValues.start_date, formValues.end_date);
         let fieldName: string = null;
         let fieldValue = null;
@@ -80,7 +83,8 @@ export class FilterComponent implements OnInit {
             fieldValue = this.filter.end_date;
         }
 
-        this.httpService.search(fieldName, fieldValue).subscribe(
+        params.set(fieldName, fieldValue);
+        this.httpService.get(TICKETS_URI, null, params).subscribe(
             data => {
                 this.clearForm();
                 this.handleOK(data.data)

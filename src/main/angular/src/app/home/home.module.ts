@@ -16,7 +16,7 @@ import { PurchaseModule } from './purchase/purchase.module';
 import { TicketsOfTheDayModule } from './tickets-of-the-day/tickets-of-the-day.module';
 import { HomeSharedModule } from './shared/home-shared.module';
 
-import { HomeComponent, OrderTrackingDialog } from './home.component';
+import { HomeComponent, OrderTrackingDialogComponent } from './home.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { HomeService } from './home.service';
 import { AuthService } from './shared/services/auth.service';
@@ -42,7 +42,7 @@ import { CashierService } from './shared/services/cashier.service';
     declarations: [
         HomeComponent,
         ShoppingCartComponent,
-        OrderTrackingDialog
+        OrderTrackingDialogComponent
     ],
     providers: [
         HomeGuard,
@@ -54,7 +54,7 @@ import { CashierService } from './shared/services/cashier.service';
         CashierService,
         AuthService
     ],
-    entryComponents: [OrderTrackingDialog],
+    entryComponents: [OrderTrackingDialogComponent],
     exports: [HomeSharedModule]
 })
 export class HomeModule { }

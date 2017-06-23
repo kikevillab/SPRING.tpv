@@ -22,8 +22,10 @@ import org.yaml.snakeyaml.constructor.Constructor;
 import daos.core.ArticleDao;
 import daos.core.CashierClosureDao;
 import daos.core.CategoryComponentDao;
+import daos.core.CategoryCompositeDao;
 import daos.core.EmbroideryDao;
 import daos.core.InvoiceDao;
+import daos.core.ProductCategoryDao;
 import daos.core.ProviderDao;
 import daos.core.TextilePrintingDao;
 import daos.core.TicketDao;
@@ -77,6 +79,12 @@ public class DatabaseSeederService {
 
     @Autowired
     private CategoryComponentDao categoryComponentDao;
+    
+    @Autowired
+    private CategoryCompositeDao categoryCompositeDao;
+    
+    @Autowired
+    private ProductCategoryDao productCategoryDao;
 
     @Autowired
     private CashierClosureDao cashierClosureDao;
@@ -120,7 +128,8 @@ public class DatabaseSeederService {
                 articleDao.save(tpvGraph.getArticleList());
                 embroideryDao.save(tpvGraph.getEmbroideryList());
                 textilePrintingDao.save(tpvGraph.getTextilePrintingList());
-                categoryComponentDao.save(buildCategoryComponentList());
+                productCategoryDao.save(tpvGraph.getProductCategoryList());
+                categoryCompositeDao.save(tpvGraph.getCategoryCompositeList()); 
                 ticketDao.save(tpvGraph.getTicketList());
                 invoiceDao.save(tpvGraph.getInvoiceList());
                 cashierClosureDao.save(tpvGraph.getCashierClosureList());
@@ -130,41 +139,7 @@ public class DatabaseSeederService {
             }
         }
     }
-
-    private List<CategoryComponent> buildCategoryComponentList() {
-        List<CategoryComponent> categoryComponents = new ArrayList<>();
-        CategoryComposite categoryCompositeRoot = new CategoryComposite(null, "category_root");
-        CategoryComposite embroideriesCategoryComposite = new CategoryComposite(null, "Embroideries");
-        CategoryComposite articlesCategoryComposite = new CategoryComposite(null, "Articles");
-        CategoryComposite textilePrintingsCategoryComposite = new CategoryComposite(null, "TextilePrintings");
-        CategoryComposite textilePrintingsCategoryComposite1 = new CategoryComposite(null, "TextilePrintings1");
-        CategoryComposite textilePrintingsCategoryComposite2 = new CategoryComposite(null, "TextilePrintings2");
-        CategoryComposite textilePrintingsCategoryComposite3 = new CategoryComposite(null, "TextilePrintings3");
-        ProductCategory textilePrinting7400000003333 = new ProductCategory(textilePrintingDao.findAll().get(0));
-        ProductCategory article7400000001111 = new ProductCategory(articleDao.findAll().get(0));
-        ProductCategory embroidery7400000002222 = new ProductCategory(embroideryDao.findAll().get(0));
-        textilePrintingsCategoryComposite1 = categoryComponentDao.save(textilePrintingsCategoryComposite1);
-        textilePrintingsCategoryComposite2 = categoryComponentDao.save(textilePrintingsCategoryComposite2);
-        textilePrintingsCategoryComposite3 = categoryComponentDao.save(textilePrintingsCategoryComposite3);
-        textilePrinting7400000003333 = categoryComponentDao.save(textilePrinting7400000003333);
-        article7400000001111 = categoryComponentDao.save(article7400000001111);
-        embroidery7400000002222 = categoryComponentDao.save(embroidery7400000002222);
-        embroideriesCategoryComposite.addCategoryComponent(embroidery7400000002222);
-        articlesCategoryComposite.addCategoryComponent(article7400000001111);
-        textilePrintingsCategoryComposite.addCategoryComponent(textilePrinting7400000003333);
-        embroideriesCategoryComposite = categoryComponentDao.save(embroideriesCategoryComposite);
-        articlesCategoryComposite = categoryComponentDao.save(articlesCategoryComposite);
-        textilePrintingsCategoryComposite = categoryComponentDao.save(textilePrintingsCategoryComposite);
-        categoryCompositeRoot.addCategoryComponent(embroideriesCategoryComposite);
-        categoryCompositeRoot.addCategoryComponent(articlesCategoryComposite);
-        categoryCompositeRoot.addCategoryComponent(textilePrintingsCategoryComposite);
-        categoryCompositeRoot.addCategoryComponent(textilePrintingsCategoryComposite1);
-        categoryCompositeRoot.addCategoryComponent(textilePrintingsCategoryComposite2);
-        categoryCompositeRoot.addCategoryComponent(textilePrintingsCategoryComposite3);
-        categoryComponents.add(categoryCompositeRoot);
-        return categoryComponents;
-    }
-
+    
     public boolean existsYamlFile(String fileName) {
         Resource resource = appContext.getResource(YAML_FILES_ROOT + fileName);
         return resource.exists();
@@ -185,6 +160,7 @@ public class DatabaseSeederService {
             }
         }
         categoryComponentDao.deleteAll();
+        
         articleDao.deleteAll();
         embroideryDao.deleteAll();
         textilePrintingDao.deleteAll();

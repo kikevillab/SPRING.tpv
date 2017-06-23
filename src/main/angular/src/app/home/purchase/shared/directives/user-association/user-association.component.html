@@ -20,7 +20,7 @@
 	<ng-template #newClient>
 		<form (ngSubmit)="newUser($event)" #userCreationForm="ngForm">
 			<div class="form-group" fxLayout="column" fxLayoutGap="1em">
-				<p>Fill the form in order to create the a client:</p>
+				<p>Fill the form in order to create a client:</p>
 				<div fxLayout="column" fxLayout.gt-md="row" fxLayoutGap="1em">
 					<md-input-container>
 				    	<input mdInput placeholder="Mobile" type="number" class="form-control" required [(ngModel)]="newUserInput.mobile" name="inputUserMobile" #mobileInput (blur)="formatNewUserMobileNumberInput()">

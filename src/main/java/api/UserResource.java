@@ -106,7 +106,7 @@ public class UserResource {
     }
 
     @RequestMapping(value = Uris.USERS, method = RequestMethod.POST)
-    public void customerRegistration(@RequestBody UserWrapper userWrapper, String role)
+    public void userRegistration(@RequestBody UserWrapper userWrapper, String role)
             throws InvalidUserFieldException, AlreadyExistUserFieldException {
         this.validateFieldRegiter(userWrapper, "UserWrapper:usuario");
         validateField(userWrapper.getUsername(), "username");

@@ -3,17 +3,17 @@
  * @author Sergio Banegas Cortijo
  * Github: https://github.com/sergiobanegas
  */
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {HttpModule, JsonpModule} from '@angular/http';
-import {MaterialModule} from '@angular/material';
-import {FlexLayoutModule} from '@angular/flex-layout';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {ToastyModule} from 'ng2-toasty';
-import {DateComponent} from './directives/date.component';
-import {CurrencyComponent} from './directives/currency.component';
-import {CapitalizePipe} from './pipes/capitalize.pipe';
-import {BooleanToStringPipe} from './pipes/bool-to-str.pipe';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { HttpModule, JsonpModule } from '@angular/http';
+import { MaterialModule } from '@angular/material';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastyModule } from 'ng2-toasty';
+import { DateComponent } from './directives/date.component';
+import { CurrencyComponent } from './directives/currency.component';
+import { CapitalizePipe } from './pipes/capitalize.pipe';
+import { BooleanToStringPipe } from './pipes/bool-to-str.pipe';
 
 @NgModule({
     imports: [
@@ -25,7 +25,12 @@ import {BooleanToStringPipe} from './pipes/bool-to-str.pipe';
         FlexLayoutModule,
         ToastyModule
     ],
-    declarations: [DateComponent, CurrencyComponent, CapitalizePipe, BooleanToStringPipe],
+    declarations: [
+        DateComponent,
+        CurrencyComponent,
+        CapitalizePipe,
+        BooleanToStringPipe
+    ],
     exports: [
         CommonModule,
         HttpModule,
@@ -40,5 +45,4 @@ import {BooleanToStringPipe} from './pipes/bool-to-str.pipe';
         BooleanToStringPipe
     ]
 })
-export class SharedModule {
-}
+export class SharedModule { }

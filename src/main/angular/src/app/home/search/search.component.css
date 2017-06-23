@@ -47,12 +47,12 @@ md-spinner {
 	z-index: 2;
 }
 
-#floating-buttons-container>button {
+#floating-buttons-container > button {
 	margin-bottom: 0.5em;
 	display: block;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 599px) {
 	#breadcrumb {
 		display: block;
 	}
@@ -82,7 +82,7 @@ md-spinner {
 	#search-results-container {
 		padding-left: 2em;
 	}
-	#search-results-container>a {
+	#search-results-container > a {
 		font-size: 1.5em;
 	}
 	.margin-sides {

@@ -6,8 +6,10 @@ import java.util.List;
 import entities.core.Article;
 import entities.core.CashierClosure;
 import entities.core.CategoryComponent;
+import entities.core.CategoryComposite;
 import entities.core.Embroidery;
 import entities.core.Invoice;
+import entities.core.ProductCategory;
 import entities.core.Provider;
 import entities.core.TextilePrinting;
 import entities.core.Ticket;
@@ -41,6 +43,10 @@ public class TpvGraph {
     private List<CategoryComponent> categoryComponentList;
 
     private List<CashierClosure> cashierClosureList;
+    
+    private List<CategoryComposite> categoryCompositeList;
+    
+    private List<ProductCategory>  productCategoryList;
 
     public TpvGraph() {
         super();
@@ -56,7 +62,7 @@ public class TpvGraph {
         invoiceList = new ArrayList<>();
 
         categoryComponentList = new ArrayList<>();
-
+        productCategoryList = new ArrayList<>();
         cashierClosureList = new ArrayList<>();
 
     }
@@ -157,4 +163,21 @@ public class TpvGraph {
         this.cashierClosureList = cashierClosureList;
     }
 
+    public List<CategoryComposite> getCategoryCompositeList() {
+        return categoryCompositeList;
+    }
+
+    public void setCategoryCompositeList(List<CategoryComposite> categoryCompositeList) {
+        this.categoryCompositeList = categoryCompositeList;
+    }
+
+    public List<ProductCategory> getProductCategoryList() {
+        return productCategoryList;
+    }
+
+    public void setProductCategoryList(List<ProductCategory> productCategoryList) {
+        this.productCategoryList = productCategoryList;
+    }
+
+    
 }
