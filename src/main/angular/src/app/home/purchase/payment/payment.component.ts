@@ -35,6 +35,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
     paidOut: boolean = false;
     shoppingCartSubscription: Subscription;
     cashReceivedSubscription: Subscription;
+    amountPaidWithCardSubscription: Subscription;
     vouchersSubscription: Subscription;
     submittedSubscription: Subscription;
     vouchers: Voucher[] = [];
@@ -50,6 +51,9 @@ export class PaymentComponent implements OnInit, OnDestroy {
             this.totalPrice = this.shoppingService.getTotalPrice();
         });
         this.cashReceivedSubscription = this.shoppingService.getCashReceivedObservable().subscribe((cashReceived: number) => {
+            this.paidOut = this.shoppingService.isPaidOut();
+        });
+        this.amountPaidWithCardSubscription = this.shoppingService.getAmountPaidWithCardObservable().subscribe((amountPaidWithCard: number) => {
             this.paidOut = this.shoppingService.isPaidOut();
         });
         this.vouchersSubscription = this.shoppingService.getVouchersObservable().subscribe((vouchers: Voucher[]) => {
@@ -103,6 +107,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         this.shoppingCartSubscription && this.shoppingCartSubscription.unsubscribe();
         this.cashReceivedSubscription && this.cashReceivedSubscription.unsubscribe();
+        this.amountPaidWithCardSubscription && this.amountPaidWithCardSubscription.unsubscribe();
         this.vouchersSubscription && this.vouchersSubscription.unsubscribe();
         this.submittedSubscription && this.submittedSubscription.unsubscribe();
     }

@@ -66,6 +66,7 @@ export class ChangeComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.cashReceivedSubscription && this.cashReceivedSubscription.unsubscribe();
+        this.amountPaidWithCardSubscription && this.amountPaidWithCardSubscription.unsubscribe();
         this.vouchersSubscription && this.vouchersSubscription.unsubscribe();
     }
 
