@@ -219,6 +219,10 @@ export class ShoppingService {
         return this.cashReceivedSubject.asObservable();
     }
 
+    getAmountPaidWithCard(): number {
+        return this.amountPaidWithCard;
+    }
+
     getAmountPaidWithCardObservable(): Observable<number> {
         return this.amountPaidWithCardSubject.asObservable();
     }
@@ -246,10 +250,6 @@ export class ShoppingService {
         return this.totalPrice - this.getVouchersTotalPaid();
     }
 
-    getAmountPaidWithCard(): number {
-        return this.amountPaidWithCard;
-    }
-
     private getVouchersTotalPaid(): number {
         let total: number = 0.0;
         this.vouchers.forEach((voucher: Voucher) => {
@@ -271,7 +271,5 @@ export class ShoppingService {
         this.amountPaidWithCard = amount;
         this.amountPaidWithCardSubject.next(this.amountPaidWithCard);
     }
-
-
 
 }
