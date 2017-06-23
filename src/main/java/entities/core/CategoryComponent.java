@@ -64,8 +64,6 @@ public abstract class CategoryComponent {
     public boolean isCategory(){
         return code == null;
     }
-
-    protected abstract String print();
     
     public abstract void addComponent(CategoryComponent component);
     
@@ -75,7 +73,7 @@ public abstract class CategoryComponent {
     
     @Override
     public String toString() {
-        return "CategoryComponent [id=" + id + ", code=" + code + ", name=" + name + ", icon=" + icon + print() + "]";
+        return "CategoryComponent [id=" + id + ", code=" + code + ", name=" + name + ", icon=" + icon + "]";
     }
 
 }
