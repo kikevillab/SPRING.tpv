@@ -9,6 +9,7 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class CategoryComposite extends CategoryComponent {
+
     @OneToMany(fetch = FetchType.EAGER)
     private List<CategoryComponent> categoryComponents;
 
@@ -44,13 +45,6 @@ public class CategoryComposite extends CategoryComponent {
     }
 
     @Override
-    protected String print() {
-        StringBuilder str = new StringBuilder();
-        categoryComponents.forEach(component -> str.append("[ Component = " + component));
-        return str.toString();
-    }
-
-    @Override
     public void addComponent(CategoryComponent component) {
         this.categoryComponents.add(component);
     }
@@ -60,4 +54,8 @@ public class CategoryComposite extends CategoryComponent {
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public String toString() {
+        return super.toString() + "CategoryComposite [categoryComponents=" + categoryComponents + "]";
+    }
 }
