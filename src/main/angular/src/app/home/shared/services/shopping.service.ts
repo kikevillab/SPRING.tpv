@@ -27,12 +27,14 @@ export class ShoppingService {
     private cartProductsSubject: Subject<CartProduct[]> = new Subject<CartProduct[]>();
     private vouchersSubject: Subject<Voucher[]> = new Subject<Voucher[]>();
     private cashReceivedSubject: Subject<number> = new Subject<number>();
+    private amountPaidWithCardSubject: Subject<number> = new Subject<number>();
     private submittedSubject: Subject<boolean> = new Subject<boolean>();
     private userMobileSubject: Subject<number> = new Subject<number>();
     private cartProducts: CartProduct[] = JSON.parse(this.storageService.getItem(this.storage_key)) || [];
     private totalPrice: number;
     private userMobile: number;
     private cashReceived: number = 0;
+    private amountPaidWithCard: number = 0;
     private vouchers: Voucher[] = [];
     private submitted: boolean = false;
     private ticketReference: string;
@@ -148,8 +150,10 @@ export class ShoppingService {
 
     resetPayment(): void {
         this.cashReceived = 0.0;
+        this.amountPaidWithCard = 0.0;
         this.vouchers = [];
         this.cashReceivedSubject.next(this.cashReceived);
+        this.amountPaidWithCardSubject.next(this.amountPaidWithCard);
         this.vouchersSubject.next(this.vouchers);
     }
 
@@ -215,6 +219,10 @@ export class ShoppingService {
         return this.cashReceivedSubject.asObservable();
     }
 
+    getAmountPaidWithCardObservable(): Observable<number> {
+        return this.amountPaidWithCardSubject.asObservable();
+    }
+
     getTicketReference(): string {
         return this.ticketReference;
     }
@@ -229,12 +237,17 @@ export class ShoppingService {
 
     getTotalPaid(): number {
         let total: number = this.cashReceived;
+        total += this.amountPaidWithCard;
         total += this.getVouchersTotalPaid();
         return total;
     }
 
     getCashToPay(): number {
         return this.totalPrice - this.getVouchersTotalPaid();
+    }
+
+    getAmountPaidWithCard(): number {
+        return this.amountPaidWithCard;
     }
 
     private getVouchersTotalPaid(): number {
@@ -253,5 +266,12 @@ export class ShoppingService {
         this.cashReceived = cash;
         this.cashReceivedSubject.next(this.cashReceived);
     }
+
+    setAmountPaidWithCard(amount: number): void {
+        this.amountPaidWithCard = amount;
+        this.amountPaidWithCardSubject.next(this.amountPaidWithCard);
+    }
+
+
 
 }
