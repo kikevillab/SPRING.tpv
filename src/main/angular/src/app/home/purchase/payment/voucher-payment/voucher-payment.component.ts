@@ -10,7 +10,7 @@ import { ShoppingService } from '../../../shared/services/shopping.service';
 import { ToastService } from '../../../../shared/services/toast.service';
 
 @Component({
-    selector: 'voucher-payment.view',
+    selector: 'voucher-payment-view',
     templateUrl: './voucher-payment.component.html'
 })
 export class VoucherPaymentComponent {

@@ -29,7 +29,9 @@ export class ChangeComponent implements OnInit, OnDestroy {
     change: number = 0;
     totalPaid: number = 0;
     cashReceived: number = this.shoppingService.getCashReceived();
+    amountPaidWithCard: number = this.shoppingService.getAmountPaidWithCard();
     cashReceivedSubscription: Subscription;
+    amountPaidWithCardSubscription: Subscription;
     vouchersSubscription: Subscription;
 
     constructor(private shoppingService: ShoppingService, private toastService: ToastService, public dialog: MdDialog) { }
@@ -37,6 +39,10 @@ export class ChangeComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.cashReceivedSubscription = this.shoppingService.getCashReceivedObservable().subscribe((cashReceived: number) => {
             this.cashReceived = cashReceived;
+            this.updateChange();
+        });
+        this.amountPaidWithCardSubscription = this.shoppingService.getAmountPaidWithCardObservable().subscribe((amountPaidWithCard: number) => {
+            this.amountPaidWithCard = amountPaidWithCard;
             this.updateChange();
         });
         this.vouchersSubscription = this.shoppingService.getVouchersObservable().subscribe((vouchers: Voucher[]) => {

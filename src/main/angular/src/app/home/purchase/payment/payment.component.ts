@@ -8,6 +8,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { MdDialog, MdDialogRef } from '@angular/material';
 
 import { CashPaymentComponent } from './cash-payment/cash-payment.component';
+import { CardPaymentComponent } from './card-payment/card-payment.component';
 import { VoucherPaymentComponent } from './voucher-payment/voucher-payment.component';
 
 import { CartProduct } from '../../shared/models/cart-product.model';
@@ -84,6 +85,13 @@ export class PaymentComponent implements OnInit, OnDestroy {
 
     openAddVoucherDialog(): void {
         this.dialog.open(VoucherPaymentComponent);
+    }
+
+    openCardPaymentDialog(): void {
+        let dialogRef: MdDialogRef<CardPaymentComponent> = this.dialog.open(CardPaymentComponent);
+        dialogRef.afterClosed().subscribe(() => {
+            this.paidOut = this.shoppingService.isPaidOut();
+        });
     }
 
     cancel(): void {
