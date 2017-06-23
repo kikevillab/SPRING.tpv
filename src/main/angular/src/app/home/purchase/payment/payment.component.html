@@ -18,9 +18,9 @@
 				<div fxLayout="row" fxLayout.xs="column" fxLayoutGap="1em">
 					<md-card >
 						<md-card-content fxLayout="column" fxLayoutGap="1em" >
-							<button md-raised-button color="primary" (click)="openCashPaymentDialog()" [disabled]="isShoppingCartEmpty() || paidOut" id="cash-payment-button">Cash</button>
-							<button md-raised-button color="primary" (click)="openAddVoucherDialog()" [disabled]="isShoppingCartEmpty() || vouchers.length > 4 || paidOut">Voucher</button>
-							<button md-raised-button color="primary" (click)="openCardPaymentDialog()" [disabled]="isShoppingCartEmpty() || paidOut">Credit card</button>
+							<button md-raised-button color="primary" (click)="openCashPaymentDialog()" [disabled]="isShoppingCartEmpty() || paidOut" id="cash-payment-button" mdTooltip="Cash payment" mdTooltipPosition="right">Cash</button>
+							<button md-raised-button color="primary" (click)="openAddVoucherDialog()" [disabled]="isShoppingCartEmpty() || vouchers.length > 4 || paidOut" mdTooltip="Voucher payment" mdTooltipPosition="right">Voucher</button>
+							<button md-raised-button color="primary" (click)="openCardPaymentDialog()" [disabled]="isShoppingCartEmpty() || paidOut" mdTooltip="Credit card payment" mdTooltipPosition="right">Credit card</button>
 						</md-card-content>
 					</md-card>
 					<md-card>
