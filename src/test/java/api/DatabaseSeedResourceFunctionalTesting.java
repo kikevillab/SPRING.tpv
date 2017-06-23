@@ -36,21 +36,6 @@ public class DatabaseSeedResourceFunctionalTesting {
                 .build();
     }
 
-  /*SE HA COMENTADO POR QUE SE AHORA SE PERMITE A TODOS EN SECURITY CONFIG (permitAll())
-   *   @Test
-    public void testSeedDatabaseUnauthorized() {
-        thrown.expect(new HttpMatcher(HttpStatus.UNAUTHORIZED));
-        new RestBuilder<Object>(RestService.URL).path(Uris.DATABASE_SEED).body(new FileNameWrapper(DEFAULT_SEED_FILE)).post().build();
-    }
-
-    @Test
-    public void testSeedDatabaseForbidden() {
-        thrown.expect(new HttpMatcher(HttpStatus.FORBIDDEN));
-        String token = new RestService().registerAndLoginManager();
-        new RestBuilder<Object>(RestService.URL).path(Uris.DATABASE_SEED).body(new FileNameWrapper(DEFAULT_SEED_FILE)).basicAuth(token, "").post()
-                .build();
-    }*/
-
     @After
     public void tearDown() {
         new RestService().deleteAll();
