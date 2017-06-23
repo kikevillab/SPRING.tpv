@@ -40,7 +40,8 @@ export class PaymentComponent implements OnInit, OnDestroy {
     vouchers: Voucher[] = [];
     submitted: boolean = this.shoppingService.isSubmitted();
 
-    constructor(private shoppingService: ShoppingService, private pdfService: PDFService, private toastService: ToastService, public dialog: MdDialog, private router: Router) { }
+    constructor(private shoppingService: ShoppingService, private pdfService: PDFService, private toastService: ToastService,
+        public dialog: MdDialog, private router: Router) { }
 
     ngOnInit() {
         this.shoppingCartSubscription = this.shoppingService.getCartProductsObservable().subscribe((cartProducts: CartProduct[]) => {
