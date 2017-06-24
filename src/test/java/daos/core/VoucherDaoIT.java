@@ -20,7 +20,7 @@ public class VoucherDaoIT {
 
     @Test
     public void testCreate() {
-        assertTrue(voucherDao.count() >= 5);
+        assertTrue(5 <= voucherDao.count());
     }
 
 }

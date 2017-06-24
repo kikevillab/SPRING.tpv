@@ -24,7 +24,7 @@ public class ResourceNames {
 
     public static final String YAML_FILES_ROOT = "classpath:META-INF/";
 
-    public static final String DEFAULT_SEED_FILE = "TPV_Database.yml";
+    public static final String TEST_SEED_FILE = "test-database.yml";
 
     public static final String ADMIN_FILE = "admin.yml";
 

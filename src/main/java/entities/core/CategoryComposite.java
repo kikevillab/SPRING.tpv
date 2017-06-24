@@ -14,8 +14,7 @@ public class CategoryComposite extends CategoryComponent {
     private List<CategoryComponent> categoryComponents;
 
     public CategoryComposite() {
-        super();
-        categoryComponents = new ArrayList<>();
+        this(null,"");
     }
 
     public CategoryComposite(String code, String name) {
@@ -23,20 +22,8 @@ public class CategoryComposite extends CategoryComponent {
         categoryComponents = new ArrayList<>();
     }
 
-    public List<CategoryComponent> getCategoryComponents() {
-        return categoryComponents;
-    }
-
     public void setCategoryComponents(List<CategoryComponent> categoryComponents) {
         this.categoryComponents = categoryComponents;
-    }
-
-    public void addCategoryComponent(CategoryComponent categoryComponent) {
-        this.categoryComponents.add(categoryComponent);
-    }
-
-    public void removeCategoryComponent(CategoryComponent categoryComponent) {
-        this.categoryComponents.remove(categoryComponent);
     }
 
     @Override

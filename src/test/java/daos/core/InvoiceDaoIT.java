@@ -29,7 +29,7 @@ public class InvoiceDaoIT {
 
     @Test
     public void testCount() {
-        assertTrue(invoiceDao.count() >= 2);
+        assertTrue(2 <= invoiceDao.count());
     }
 
     @Test

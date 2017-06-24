@@ -9,7 +9,6 @@ import entities.users.AllEntitiesUsersTests;
 
 @RunWith(Suite.class)
 @SuiteClasses({AllEntitiesUsersTests.class, AllEntitiesCoreTests.class})
-
 public class AllEntitiesTests {
 
 }

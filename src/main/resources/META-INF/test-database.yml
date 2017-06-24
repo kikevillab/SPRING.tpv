@@ -261,7 +261,7 @@ categoryCompositeList:
       - *pC001
   - &cC002
     name: category_root
-    icon: /assets/img/categories/img-category-1.png
+    icon: /assets/img/categories/img-category-root.png
     categoryComponents:
       - *cC001
       - *pC002    
