@@ -47,6 +47,8 @@
 		<integration.test.skip>false</integration.test.skip>
 		<!-- swagger version -->
 		<swagger.version>2.6.1</swagger.version>
+		<!-- this is a trick to avoid resolve variables in maven compilation time, more info at: http://johnjianfang.blogspot.com.es/2009/03/escape-properties-in-maven-archetypes.html -->
+		<dollar>$</dollar>
 	</properties>
 
 	<profiles>
@@ -102,9 +104,9 @@
 			<properties>
 				<logs.level>error</logs.level>
 				<logs.path>../logs</logs.path>
-				<database.url>jdbc:mysql://localhost:3306/tpv</database.url>
-				<database.user>root</database.user>
-				<database.password></database.password>
+				<database.url>jdbc:mysql://${dollar}{OPENSHIFT_MYSQL_DB_HOST}:${dollar}{OPENSHIFT_MYSQL_DB_PORT}/backend</database.url>
+				<database.user>${dollar}{OPENSHIFT_MYSQL_DB_USERNAME}</database.user>
+				<database.password>${dollar}{OPENSHIFT_MYSQL_DB_PASSWORD}</database.password>
 				<!-- validate, create sólo una vez, cada vez que cambie la estructura 
 					de las tablas -->
 				<hibernate.hbm2ddl.auto>validate</hibernate.hbm2ddl.auto>
@@ -134,7 +136,6 @@
             </build>
         </profile>
 		
-
 	</profiles>
 
 	<dependencies>
