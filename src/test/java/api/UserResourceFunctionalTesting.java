@@ -2,7 +2,6 @@ package api;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
 import org.apache.logging.log4j.LogManager;
@@ -13,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.client.HttpClientErrorException;
 
 import wrappers.UserDetailsWrapper;
-import wrappers.UserPageWrapper;
 import wrappers.UserWrapper;
 
 public class UserResourceFunctionalTesting {
