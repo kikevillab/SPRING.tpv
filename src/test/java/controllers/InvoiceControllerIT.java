@@ -47,7 +47,7 @@ public class InvoiceControllerIT {
         Invoice latestInvoice = invoiceDao.findFirstByOrderByCreatedDescIdDesc();
         InvoiceCreationResponseWrapper responseWrapper = invoiceController.createInvoice(ticket);
         assertNotNull(responseWrapper);
-        assertEquals(Calendar.getInstance().get(Calendar.YEAR) + latestInvoice.getId() + 1, responseWrapper.getInvoiceId());
+        assertEquals(latestInvoice.getId() + 1, responseWrapper.getInvoiceId());
         invoiceDao.delete(new InvoicePK(responseWrapper.getInvoiceId()));
     }
 
@@ -57,7 +57,8 @@ public class InvoiceControllerIT {
         Ticket ticket = ticketDao.findOne(new TicketPK(2L));
         InvoiceCreationResponseWrapper responseWrapper = invoiceController.createInvoice(ticket);
         assertNotNull(responseWrapper);
-        assertEquals(Calendar.getInstance().get(Calendar.YEAR) + 1, responseWrapper.getInvoiceId());
+        int resultInvoiceId = Integer.parseInt(String.valueOf(Calendar.getInstance().get(Calendar.YEAR)) + 1);
+        assertEquals(resultInvoiceId, responseWrapper.getInvoiceId());
         invoiceDao.delete(new InvoicePK(responseWrapper.getInvoiceId()));
     }
 }
