@@ -255,7 +255,7 @@ productCategoryList:
 
 categoryCompositeList:
   - &cC001
-    name: CATEGORY1
+    name: category1
     icon: /assets/img/categories/img-category-1.png
     categoryComponents:
       - *pC001

@@ -72,7 +72,7 @@ public class TicketController {
     }
 
     public TicketCreationResponseWrapper createTicket(TicketCreationWrapper ticketCreationWrapper) throws IOException {
-        Ticket ticket = new Ticket(getNextId());
+        Ticket ticket = new Ticket(this.nextId());
         Long userMobile = ticketCreationWrapper.getUserMobile();
         if (userMobile != null) {
             User user = userDao.findByMobile(userMobile);
@@ -96,7 +96,7 @@ public class TicketController {
         return new TicketCreationResponseWrapper(ticketPdfByteArray, ticket.getReference());
     }
 
-    private long getNextId() {
+    private long nextId() {
         long nextId = 1;
         Ticket ticket = ticketDao.findFirstByOrderByCreatedDescIdDesc();
 
@@ -153,7 +153,7 @@ public class TicketController {
         return ticket != null;
     }
 
-    public List<DayTicketWrapper> getWholeDayTickets(Calendar dayToGetTickets) {
+    public List<DayTicketWrapper> wholeDayTickets(Calendar dayToGetTickets) {
         List<DayTicketWrapper> dayTicketsList = new ArrayList<>();
         List<Ticket> ticketList = ticketDao.findByCreated(dayToGetTickets);
         for (Ticket ticket : ticketList) {
@@ -162,7 +162,7 @@ public class TicketController {
         return dayTicketsList;
     }
     
-    public Page<TicketReferenceCreatedWrapper> getTicketsByUserMobile(long mobile, Pageable pageable) {
+    public Page<TicketReferenceCreatedWrapper> ticketsByUserMobile(long mobile, Pageable pageable) {
         Page<Ticket> ticketPage = ticketDao.findByUserMobile(mobile, pageable);
         List<TicketReferenceCreatedWrapper> ticketWrapperList = new ArrayList<>(); 
         for (Ticket ticket : ticketPage.getContent()) {
@@ -183,7 +183,7 @@ public class TicketController {
         return invoiceDao.findByTicketReference(ticket.getReference()) != null;
     }
 
-    public boolean isTicketClosed(Ticket ticket) {
+    public boolean ticketClosed(Ticket ticket) {
         boolean closed = true;
         for (Shopping shopping : ticket.getShoppingList()) {
             if (shopping.getShoppingState() != ShoppingState.CLOSED) {

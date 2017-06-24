@@ -233,7 +233,7 @@ public class TicketResource {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return ticketController.getWholeDayTickets(dayToGetTickets);
+        return ticketController.wholeDayTickets(dayToGetTickets);
     }
 
     @RequestMapping(value = Uris.TRACKING + Uris.REFERENCE, method = RequestMethod.GET)
@@ -257,7 +257,7 @@ public class TicketResource {
     @RequestMapping(method = RequestMethod.GET)
     // @PreAuthorize("hasRole('ADMIN')or hasRole('MANAGER') or hasRole('OPERATOR')")
     public Page<TicketReferenceCreatedWrapper> getTicketsByUserMobile(@RequestParam long mobile, Pageable pageable) {
-        return ticketController.getTicketsByUserMobile(mobile, pageable);
+        return ticketController.ticketsByUserMobile(mobile, pageable);
     }
 
     private void checkTicketReferenceExists(String reference) throws NotFoundTicketReferenceException {

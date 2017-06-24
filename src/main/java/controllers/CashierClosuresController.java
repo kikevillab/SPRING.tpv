@@ -10,59 +10,56 @@ import java.util.GregorianCalendar;
 @Controller
 public class CashierClosuresController {
 
-	@Autowired
-	private CashierClosureDao cashierClosureDao;
+    @Autowired
+    private CashierClosureDao cashierClosureDao;
 
-	public CashierClosure createCashierClosures() {
+    public CashierClosure createCashierClosures() {
+        CashierClosure cashierClosure = new CashierClosure();
+        cashierClosure.setAmount(getLastCashierClosureAmount());
+        cashierClosure.setOpeningDate(new GregorianCalendar());
+        cashierClosureDao.saveAndFlush(cashierClosure);
+        return cashierClosure;
+    }
 
-		CashierClosure cashierClosure = new CashierClosure();
+    private double getLastCashierClosureAmount() {
+        return getLastCashierClosure() != null ? getLastCashierClosure().getAmount() : 0;
+    }
 
-		cashierClosure.setAmount(getLastCashierClosureAmount());
-		cashierClosure.setOpeningDate(new GregorianCalendar());
-		cashierClosureDao.saveAndFlush(cashierClosure);
+    public boolean isLastCashierClosuresClosed() {
+        if (this.getLastCashierClosure() == null) {
+            return true;
+        }
+        return getLastCashierClosure().getClosureDate() != null;
+    }
 
-		return cashierClosure;
-	}
+    public CashierClosure getLastCashierClosure() throws NullPointerException {
+        return cashierClosureDao.findFirstByOrderByOpeningDateDesc();
+    }
 
-	private double getLastCashierClosureAmount() {
-		return getLastCashierClosure() != null ? getLastCashierClosure().getAmount() : 0;
-	}
+    public CashierClosure closeCashierRequest(double amount, String comment) {
+        CashierClosure lastCashierClosure = this.getLastCashierClosure();
+        lastCashierClosure.setAmount(amount);
+        lastCashierClosure.setComment(comment);
+        lastCashierClosure.setClosureDate(new GregorianCalendar());
 
-	public boolean isLastCashierClosuresClosed() {
-		if(this.getLastCashierClosure() == null)
-			return true;
-		
-		return getLastCashierClosure().getClosureDate() != null;
-	}
+        cashierClosureDao.saveAndFlush(lastCashierClosure);
 
-	public CashierClosure getLastCashierClosure() throws NullPointerException {
-		return cashierClosureDao.findFirstByOrderByOpeningDateDesc();
-	}
+        return lastCashierClosure;
+    }
 
-	public CashierClosure closeCashierRequest(double amount, String comment) {
-		CashierClosure lastCashierClosure = this.getLastCashierClosure();
-		lastCashierClosure.setAmount(amount);
-		lastCashierClosure.setComment(comment);
-		lastCashierClosure.setClosureDate(new GregorianCalendar());
+    public CashierClosure depositCashierRequest(double amount) {
+        CashierClosure lastCashierClosures = this.getLastCashierClosure();
+        lastCashierClosures.setAmount(getLastCashierClosureAmount() + amount);
+        cashierClosureDao.saveAndFlush(lastCashierClosures);
 
-		cashierClosureDao.saveAndFlush(lastCashierClosure);
+        return lastCashierClosures;
+    }
 
-		return lastCashierClosure;
-	}
+    public CashierClosure withDrawCashierRequest(double amount) {
+        CashierClosure lastCashierClosures = this.getLastCashierClosure();
+        lastCashierClosures.setAmount(getLastCashierClosureAmount() - amount);
+        cashierClosureDao.saveAndFlush(lastCashierClosures);
 
-	public CashierClosure depositCashierRequest(double amount) {
-		CashierClosure lastCashierClosures = this.getLastCashierClosure();
-		lastCashierClosures.setAmount(getLastCashierClosureAmount() + amount);
-		cashierClosureDao.saveAndFlush(lastCashierClosures);
-
-		return lastCashierClosures;
-	}
-
-	public CashierClosure withDrawCashierRequest(double amount) {
-		CashierClosure lastCashierClosures = this.getLastCashierClosure();
-		lastCashierClosures.setAmount(getLastCashierClosureAmount() - amount);
-		cashierClosureDao.saveAndFlush(lastCashierClosures);
-
-		return lastCashierClosures;
-	}
+        return lastCashierClosures;
+    }
 }

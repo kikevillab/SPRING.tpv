@@ -4,6 +4,7 @@ import entities.core.CategoryComponent;
 import entities.core.Product;
 
 public class ProductCategoryWrapper extends CategoryComponentWrapper{
+    
     private Product product;
 
     public ProductCategoryWrapper(){

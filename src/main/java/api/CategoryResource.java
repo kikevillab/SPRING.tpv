@@ -30,15 +30,10 @@ public class CategoryResource {
 
     @ApiOperation(value = "Find partners")
     @ApiImplicitParams({
-        @ApiImplicitParam(name = "page", dataType = "integer", paramType = "query",
-                value = "Results page you want to retrieve (0..N)"),
-        @ApiImplicitParam(name = "size", dataType = "integer", paramType = "query",
-                value = "Number of records per page."),
-        @ApiImplicitParam(name = "sort", allowMultiple = true, dataType = "string", paramType = "query",
-                value = "Sorting criteria in the format: property(,asc|desc). " +
-                        "Default sort order is ascending. " +
-                        "Multiple sort criteria are supported.")
-    })
+            @ApiImplicitParam(name = "page", dataType = "integer", paramType = "query", value = "Results page you want to retrieve (0..N)"),
+            @ApiImplicitParam(name = "size", dataType = "integer", paramType = "query", value = "Number of records per page."),
+            @ApiImplicitParam(name = "sort", allowMultiple = true, dataType = "string", paramType = "query", value = "Sorting criteria in the format: property(,asc|desc). "
+                    + "Default sort order is ascending. " + "Multiple sort criteria are supported.")})
     @RequestMapping(value = Uris.SEARCH, method = RequestMethod.GET)
     public Page<CategoryComponentWrapper> findCategoriesPaginatedByDepthLevel(Pageable pageable, @RequestParam(required = false) Long id,
             @RequestParam(required = false) String name) throws CategoryComponentNotFoundException {
@@ -47,11 +42,11 @@ public class CategoryResource {
             categoryComponentWrapperPage = categoryController.findCategoryChildrenPaginatedByParentId(pageable, id.longValue());
         } else {
             if (name == null || name.isEmpty()) {
-                name = ResourceNames.CATEGORIES_ROOT;
-                categoryComponentWrapperPage = categoryController.findCategoriesChildrenPaginatedByParentName(pageable, name);
+                categoryComponentWrapperPage = categoryController.findCategoriesChildrenPaginatedByParentName(pageable,
+                        ResourceNames.CATEGORIES_ROOT);
             } else {
                 categoryComponentWrapperPage = categoryController.findCategoriesPaginatedByNameContaining(pageable, name);
-            }           
+            }
         }
         return categoryComponentWrapperPage;
     }

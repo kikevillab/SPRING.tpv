@@ -34,7 +34,7 @@ public class ProductControllerIT {
 
     @Test
     public void testGetNonexistentProductByCode() {
-        String productCode = "justTesting-123";
+        String productCode = "nonexistent";
         Product product = productController.getProductByCode(productCode);
         assertNull(product);
     }
@@ -47,7 +47,7 @@ public class ProductControllerIT {
 
     @Test
     public void testNonexistentProductCode() {
-        String productCode = "justTesting-123";
+        String productCode = "nonexistent";
         assertFalse(productController.productCodeExists(productCode));
     }
 }

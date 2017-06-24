@@ -77,12 +77,12 @@ public class VoucherControllerIT {
     }
 
     @Test
-    public void testFindVoucherByReference(){
+    public void testFindVoucherByReference() {
         Voucher voucher = voucherDao.findOne(1);
         assertNotNull(voucherController.findVoucherByReference(voucher.getReference()));
         assertNull(voucherController.findVoucherByReference("reference"));
     }
-    
+
     @Test
     public void testVoucherHasExpired() {
         Voucher expiredVoucher = voucherDao.findOne(5);

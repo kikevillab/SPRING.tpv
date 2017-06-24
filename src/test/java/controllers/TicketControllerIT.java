@@ -119,6 +119,7 @@ public class TicketControllerIT {
         ticketDao.delete(ticket);
     }
 
+    //TODO mejorar wrapper
     @Test
     public void testUpdateTicket() throws IOException {
         String productCode = "8400000003333";
@@ -163,9 +164,7 @@ public class TicketControllerIT {
     public void testGetTicket() {
         List<Ticket> ticketList = ticketDao.findAll();
         Ticket ticket = ticketList.get(new Random().nextInt(ticketList.size()));
-
         Ticket ticketObtained = ticketController.getTicket(ticket.getReference());
-
         assertNotNull(ticketObtained);
         assertEquals(ticket.getId(), ticketObtained.getId());
         assertEquals(ticket.getCreated(), ticketObtained.getCreated());
@@ -187,9 +186,7 @@ public class TicketControllerIT {
     public void testGetTicketTracking() {
         List<Ticket> ticketList = ticketDao.findAll();
         Ticket ticket = ticketList.get(new Random().nextInt(ticketList.size()));
-
         List<ShoppingTrackingWrapper> shoppingTrackingWrapperList = ticketController.getTicketTracking(ticket.getReference());
-
         assertNotNull(shoppingTrackingWrapperList);
         assertFalse(shoppingTrackingWrapperList.isEmpty());
         for (int i = 0; i < shoppingTrackingWrapperList.size(); i++) {
@@ -200,19 +197,19 @@ public class TicketControllerIT {
             assertEquals(shopping.getShoppingState(), shoppingTrackingWrapper.getShoppingState());
         }
     }
-       
+
     @Test
-    public void testTicketIsClosedWithATicketWithAllShoppingsClosed(){
+    public void testTicketIsClosedWithATicketWithAllShoppingsClosed() {
         Ticket ticketWithAllShoppingsClosed = new Ticket();
         Shopping shoppingClosed = new Shopping();
         shoppingClosed.setShoppingState(ShoppingState.CLOSED);
         ticketWithAllShoppingsClosed.addShopping(shoppingClosed);
         ticketWithAllShoppingsClosed.addShopping(shoppingClosed);
-        assertTrue(ticketController.isTicketClosed(ticketWithAllShoppingsClosed));
-     }
-    
+        assertTrue(ticketController.ticketClosed(ticketWithAllShoppingsClosed));
+    }
+
     @Test
-    public void testTicketIsClosedWithATicketWithAtLeastOneShoppingNotClosed(){
+    public void testTicketIsClosedWithATicketWithAtLeastOneShoppingNotClosed() {
         Ticket ticketWithAtLeastOneShoppingNotClosed = new Ticket();
         Shopping shoppingOpened = new Shopping();
         shoppingOpened.setShoppingState(ShoppingState.OPENED);
@@ -220,18 +217,18 @@ public class TicketControllerIT {
         shoppingClosed.setShoppingState(ShoppingState.CLOSED);
         ticketWithAtLeastOneShoppingNotClosed.addShopping(shoppingClosed);
         ticketWithAtLeastOneShoppingNotClosed.addShopping(shoppingOpened);
-        assertFalse(ticketController.isTicketClosed(ticketWithAtLeastOneShoppingNotClosed));
+        assertFalse(ticketController.ticketClosed(ticketWithAtLeastOneShoppingNotClosed));
     }
-    
+
     @Test
-    public void testTicketIsAssignedToInvoice(){
-        Ticket ticketAssignedToAnInvoice = ticketDao.findOne(new TicketPK(3L));     
+    public void testTicketIsAssignedToInvoice() {
+        Ticket ticketAssignedToAnInvoice = ticketDao.findOne(new TicketPK(3L));
         assertTrue(ticketController.ticketIsAlreadyAssignedToInvoice(ticketAssignedToAnInvoice));
     }
-    
+
     @Test
-    public void testTicketIsNotAssignedToInvoice(){
-        Ticket ticketNotAssignedToAnInvoice = ticketDao.findOne(new TicketPK(1L));     
+    public void testTicketIsNotAssignedToInvoice() {
+        Ticket ticketNotAssignedToAnInvoice = ticketDao.findOne(new TicketPK(1L));
         assertFalse(ticketController.ticketIsAlreadyAssignedToInvoice(ticketNotAssignedToAnInvoice));
     }
 
@@ -239,36 +236,35 @@ public class TicketControllerIT {
     public void testGetWholeDayTickets() {
         int totalNumTickets = 6;
         double totalTicketsPrice = 1294.09;
-
         Calendar today = Calendar.getInstance();
-        List<DayTicketWrapper> dayTicketsList = ticketController.getWholeDayTickets(today);
+        List<DayTicketWrapper> dayTicketsList = ticketController.wholeDayTickets(today);
         double total = 0;
         for (DayTicketWrapper dayTicketWrapper : dayTicketsList) {
             total += dayTicketWrapper.getTotal();
         }
-
         assertEquals(totalNumTickets, dayTicketsList.size());
         assertEquals(totalTicketsPrice, total, 0.01);
     }
-    
+
     @Test
     public void testGetTicketsByUserMobile() {
         long mobile = 666000002L;
         int pageNumber = 1;
         int pageSize = 1;
-        Page<TicketReferenceCreatedWrapper> ticketPage = ticketController.getTicketsByUserMobile(mobile, new PageRequest(pageNumber, pageSize));
+        Page<TicketReferenceCreatedWrapper> ticketPage = ticketController.ticketsByUserMobile(mobile,
+                new PageRequest(pageNumber, pageSize));
         assertNotNull(ticketPage);
         assertEquals(pageSize, ticketPage.getNumberOfElements());
     }
-    
+
     @Test
-    public void testAssociateUserToTicket(){
-        Ticket ticketNotAssignedToAnUser = ticketDao.findOne(new TicketPK(1L));    
+    public void testAssociateUserToTicket() {
+        Ticket ticketNotAssignedToAnUser = ticketDao.findOne(new TicketPK(1L));
         assertNull(ticketNotAssignedToAnUser.getUser());
         Long userMobile = 666000002L;
         TicketWrapper ticketWithUser = ticketController.associateUserToTicket(ticketNotAssignedToAnUser.getReference(), userMobile);
         assertNotNull(ticketWithUser.getUserMobile());
         assertEquals(userMobile, ticketWithUser.getUserMobile());
     }
-    
+
 }

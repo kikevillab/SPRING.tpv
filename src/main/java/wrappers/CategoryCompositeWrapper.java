@@ -6,6 +6,7 @@ import java.util.List;
 import entities.core.CategoryComponent;
 
 public class CategoryCompositeWrapper extends CategoryComponentWrapper {
+    
     private List<CategoryComponentWrapper> components;
 
     public CategoryCompositeWrapper() {

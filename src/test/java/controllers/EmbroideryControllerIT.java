@@ -29,6 +29,7 @@ public class EmbroideryControllerIT {
     @Autowired
     private EmbroideryDao embroideryDao;
 
+    // TODO Mejorar el wraper
     @Test
     public void testCreateEmbroidery() {
         EmbroideryCreationWrapper embroideryCreationWrapper = new EmbroideryCreationWrapper();
@@ -47,6 +48,7 @@ public class EmbroideryControllerIT {
         embroideryDao.delete("CODE");
     }
 
+    //TODO Mejorar el wraper
     @Test
     public void testUpdateEmbroidery() {
         String desc = "test_desc";

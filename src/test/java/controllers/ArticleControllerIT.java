@@ -33,27 +33,24 @@ public class ArticleControllerIT {
 
     @Test
     public void testExistentArticleCode() {
-        String articleCode = "8400000001111";
-        assertTrue(articleController.articleCodeExists(articleCode));
+        assertTrue(articleController.articleCodeExists("8400000001111"));
     }
 
     @Test
     public void testNonexistentArticleCode() {
-        String articleCode = "justTesting-123";
-        assertFalse(articleController.articleCodeExists(articleCode));
+        assertFalse(articleController.articleCodeExists("notCode"));
     }
     
     @Test
     public void testConsumeArticle() {
-        String articleCode = "8400000001111";
-        int amount = 2;
+        final String articleCode = "8400000001111";
+        final int amount = 2;
         
         Article article = articleDao.findOne(articleCode);
         int previousStock = article.getStock();
         assertTrue(articleController.hasEnoughStock(articleCode, amount));
         articleController.consumeArticle(articleCode, amount);
-        article = articleDao.findOne(articleCode);
-        assertEquals(amount, previousStock - article.getStock());
+        assertEquals(amount, previousStock - articleDao.findOne(articleCode).getStock());
         
         //Leave database as it was
         article.setStock(previousStock);
@@ -62,11 +59,11 @@ public class ArticleControllerIT {
     
     @Test
     public void testArticleHasNotEnoughStock() {
-        String articleCode = "article0";
-        int amount = 100;
-        assertFalse(articleController.hasEnoughStock(articleCode, amount));
+        assertFalse(articleController.hasEnoughStock("8400000001111", 100));
+        assertFalse(articleController.hasEnoughStock("notCode", 1));
     }
     
+    //TODO Mejorar el wraper
     @Test
     public void testCreateArticle() {
         ArticleCreationWrapper articleCreationWrapper = new ArticleCreationWrapper();
@@ -84,6 +81,7 @@ public class ArticleControllerIT {
         articleDao.delete("CODE");
     }
 
+    //TODO mejorar el wrapper
     @Test
     public void testUpdateArticle() {
         String desc = "test_desc";
