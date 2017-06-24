@@ -6,8 +6,6 @@ import static config.ResourceNames.YAML_FILES_ROOT;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
@@ -34,8 +32,6 @@ import daos.users.AuthorizationDao;
 import daos.users.TokenDao;
 import daos.users.UserDao;
 import entities.core.CategoryComponent;
-import entities.core.CategoryComposite;
-import entities.core.ProductCategory;
 import entities.users.Authorization;
 import entities.users.Role;
 import entities.users.User;
@@ -79,10 +75,10 @@ public class DatabaseSeederService {
 
     @Autowired
     private CategoryComponentDao categoryComponentDao;
-    
+
     @Autowired
     private CategoryCompositeDao categoryCompositeDao;
-    
+
     @Autowired
     private ProductCategoryDao productCategoryDao;
 
@@ -129,7 +125,7 @@ public class DatabaseSeederService {
                 embroideryDao.save(tpvGraph.getEmbroideryList());
                 textilePrintingDao.save(tpvGraph.getTextilePrintingList());
                 productCategoryDao.save(tpvGraph.getProductCategoryList());
-                categoryCompositeDao.save(tpvGraph.getCategoryCompositeList()); 
+                categoryCompositeDao.save(tpvGraph.getCategoryCompositeList());
                 ticketDao.save(tpvGraph.getTicketList());
                 invoiceDao.save(tpvGraph.getInvoiceList());
                 cashierClosureDao.save(tpvGraph.getCashierClosureList());
@@ -139,7 +135,7 @@ public class DatabaseSeederService {
             }
         }
     }
-    
+
     public boolean existsYamlFile(String fileName) {
         Resource resource = appContext.getResource(YAML_FILES_ROOT + fileName);
         return resource.exists();
@@ -160,7 +156,7 @@ public class DatabaseSeederService {
             }
         }
         categoryComponentDao.deleteAll();
-        
+
         articleDao.deleteAll();
         embroideryDao.deleteAll();
         textilePrintingDao.deleteAll();

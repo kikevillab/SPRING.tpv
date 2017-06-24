@@ -19,8 +19,7 @@ public class ProductCategory extends CategoryComponent {
     }
 
     public ProductCategory(Product product) {
-        super(product.getCode(), product.getDescription());
-        this.product = product;
+        this.setProduct(product);
     }
 
     public Product getProduct() {
@@ -29,6 +28,9 @@ public class ProductCategory extends CategoryComponent {
 
     public void setProduct(Product product) {
         this.product = product;
+        this.setCode(product.getCode());
+        this.setName(product.getReference());
+        this.setIcon(product.getImage());
     }
 
     @Override
@@ -50,7 +52,5 @@ public class ProductCategory extends CategoryComponent {
     public String toString() {
         return super.toString() + "ProductCategory [productCode=" + product.getCode() + "]";
     }
-
-
 
 }
