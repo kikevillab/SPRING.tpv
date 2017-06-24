@@ -11,6 +11,7 @@ import javax.persistence.InheritanceType;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public abstract class CategoryComponent {
+
     @Id
     @GeneratedValue
     private long id;
@@ -23,7 +24,7 @@ public abstract class CategoryComponent {
 
     public CategoryComponent() {
     }
-    
+
     public CategoryComponent(String code, String name) {
         this.code = code;
         this.name = name;
@@ -60,17 +61,17 @@ public abstract class CategoryComponent {
     public void setCode(String code) {
         this.code = code;
     }
-    
-    public boolean isCategory(){
+
+    public boolean isCategory() {
         return code == null;
     }
-    
+
     public abstract void addComponent(CategoryComponent component);
-    
+
     public abstract List<CategoryComponent> components();
-    
+
     public abstract Product product();
-    
+
     @Override
     public String toString() {
         return "CategoryComponent [id=" + id + ", code=" + code + ", name=" + name + ", icon=" + icon + "]";

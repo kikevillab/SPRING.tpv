@@ -33,14 +33,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests()//
                 .antMatchers(HttpMethod.GET, Uris.SERVLET_MAP + Uris.VERSION + Uris.ADMINS).permitAll()//
+                .antMatchers(Uris.SERVLET_MAP + Uris.VERSION + Uris.DATABASE_SEED + "/**").permitAll()//.hasRole(Role.ADMIN.name())//
                 .antMatchers(Uris.SERVLET_MAP + Uris.VERSION + Uris.TOKENS + "/**").authenticated()//
                 .antMatchers(Uris.SERVLET_MAP + Uris.VERSION + Uris.ADMINS + "/**").hasRole(Role.ADMIN.name())//
                 .antMatchers(HttpMethod.POST, Uris.SERVLET_MAP + Uris.VERSION + Uris.USERS + "/**").hasRole(Role.ADMIN.name())//
                 .antMatchers(HttpMethod.POST, Uris.SERVLET_MAP + Uris.VERSION + Uris.CUSTOMERS + "/**")
-                .hasAnyRole(Role.MANAGER.name(), Role.OPERATOR.name())//
-                .antMatchers(Uris.SERVLET_MAP + Uris.VERSION + Uris.DATABASE_SEED + "/**").hasRole(Role.ADMIN.name())//
+                    .hasAnyRole(Role.MANAGER.name(), Role.OPERATOR.name())//                
                 .antMatchers(Uris.SERVLET_MAP + Uris.VERSION + Uris.PDF_GENERATION + "/**")
-                .hasAnyRole(Role.MANAGER.name(), Role.OPERATOR.name())
+                    .hasAnyRole(Role.MANAGER.name(), Role.OPERATOR.name())
                 .and().httpBasic();//
     }
 
