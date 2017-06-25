@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNotNull;
 
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -53,6 +54,7 @@ public class InvoiceControllerIT {
 
     @Test
     public void testCreateInvoiceWithNoInvoicesThisYear() throws IOException {
+        List<Invoice> invoiceList = invoiceDao.findAll();
         invoiceDao.deleteAll();
         Ticket ticket = ticketDao.findOne(new TicketPK(2L));
         InvoiceCreationResponseWrapper responseWrapper = invoiceController.createInvoice(ticket);
@@ -60,5 +62,6 @@ public class InvoiceControllerIT {
         int resultInvoiceId = Integer.parseInt(String.valueOf(Calendar.getInstance().get(Calendar.YEAR)) + 1);
         assertEquals(resultInvoiceId, responseWrapper.getInvoiceId());
         invoiceDao.delete(new InvoicePK(responseWrapper.getInvoiceId()));
+        invoiceDao.save(invoiceList);
     }
 }

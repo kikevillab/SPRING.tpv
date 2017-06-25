@@ -48,7 +48,7 @@ public class InvoiceController {
     }
 
     public InvoiceCreationResponseWrapper createInvoice(Ticket ticket) throws IOException {
-        Invoice invoice = new Invoice(getNextInvoiceId(), ticket);
+        Invoice invoice = new Invoice(this.getNextInvoiceId(), ticket);
         Invoice invoiceCreated = invoiceDao.save(invoice);
         byte[] pdfByteArray = pdfGenService.generateInvoicePdf(invoiceCreated);
         return new InvoiceCreationResponseWrapper(invoiceCreated.getId(), pdfByteArray);

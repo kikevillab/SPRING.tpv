@@ -36,7 +36,6 @@ public class TokenDaoIT {
 
     @Test
     public void testFindByUser() {
-        System.out.println(">>>>"+ userDao.findAll());
         User user = userDao.findByMobile(666000000);
         assertNotNull(tokenDao.findByUser(user));
         assertNull(tokenDao.findByUser(userDao.findByMobile(666000001)));
