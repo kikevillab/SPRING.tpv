@@ -41,12 +41,9 @@ public class VoucherResource {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType("application/pdf"));
         String filename = "VOUCHER" + responseWrapper.getVoucherId() + ResourceNames.PDF_FILE_EXT;
-        headers.set(HttpHeaders.CONTENT_DISPOSITION,
-                "inline; filename=" + filename);
-        headers.setCacheControl("must-revalidate, post-check=0, pre-"
-                + "hcheck=0");
-        ResponseEntity<byte[]> voucherPdf = new ResponseEntity<byte[]>(responseWrapper.getPdfByteArray(), headers,
-                HttpStatus.OK);
+        headers.set(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=" + filename);
+        headers.setCacheControl("must-revalidate, post-check=0, pre-" + "hcheck=0");
+        ResponseEntity<byte[]> voucherPdf = new ResponseEntity<byte[]>(responseWrapper.getPdfByteArray(), headers, HttpStatus.OK);
         return voucherPdf;
     }
 
@@ -54,15 +51,15 @@ public class VoucherResource {
     public List<Voucher> findAllVouchers() {
         return voucherController.findAllVouchers();
     }
-    
+
     @RequestMapping(value = Uris.REFERENCE, method = RequestMethod.GET)
-    public Voucher findVoucherByReference(@PathVariable String reference) throws VoucherNotFoundException{
+    public Voucher findVoucherByReference(@PathVariable String reference) throws VoucherNotFoundException {
         throwExceptionIfVoucherDoesNotExist(reference);
         return voucherController.findVoucherByReference(reference);
     }
-    
+
     @RequestMapping(value = Uris.VOUCHER_ACTIVESTOTALVALUE, method = RequestMethod.GET)
-    public ActiveVouchersTotalValueWrapper getActiveVouchersTotalValue(){
+    public ActiveVouchersTotalValueWrapper getActiveVouchersTotalValue() {
         return voucherController.getActiveVouchersTotalValue();
     }
 
@@ -78,8 +75,8 @@ public class VoucherResource {
         }
         voucherController.consumeVoucher(reference);
     }
-    
-    private void throwExceptionIfVoucherDoesNotExist(String reference) throws VoucherNotFoundException{
+
+    private void throwExceptionIfVoucherDoesNotExist(String reference) throws VoucherNotFoundException {
         if (!voucherController.voucherExists(reference)) {
             throw new VoucherNotFoundException("Reference: " + reference);
         }
