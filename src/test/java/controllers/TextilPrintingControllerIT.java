@@ -29,6 +29,7 @@ public class TextilPrintingControllerIT {
     @Autowired
     private TextilePrintingDao textilePrintingDao;
 
+    //TODO Mejorar wrapper
     @Test
     public void testCreateTextilePrinting() {
         TextilePrintingCreationWrapper textilePrintingCreationWrapper = new TextilePrintingCreationWrapper();
@@ -45,6 +46,7 @@ public class TextilPrintingControllerIT {
         textilePrintingDao.delete("CODE");
     }
 
+    //TODO Mejorar wrapper
     @Test
     public void testUpdateTextilePrinting() {
         String desc = "test_desc";

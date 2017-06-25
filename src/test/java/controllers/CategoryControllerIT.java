@@ -1,5 +1,6 @@
 package controllers;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
@@ -20,8 +21,13 @@ public class CategoryControllerIT {
     private CategoryController categoryController;
 
     @Test
+    public void testFindCategoryByName() {
+        assertNotNull(categoryController.findCategoryComponentByName("category1"));
+    }
+    
+    @Test
     public void testFindCategoryByNameWithNonExistentName() {
-        assertNull(categoryController.findCategoryComponentByName("non_existent"));
+        assertNull(categoryController.findCategoryComponentByName("nonexistent"));
     }
 
 }

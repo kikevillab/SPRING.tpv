@@ -30,7 +30,7 @@ public class TokenDaoIT {
 
     @Autowired
     private TokenDao tokenDao;
-    
+
     @Autowired
     private Environment environment;
 
@@ -40,13 +40,17 @@ public class TokenDaoIT {
         assertNotNull(tokenDao.findByUser(user));
         assertNull(tokenDao.findByUser(userDao.findByMobile(666000001)));
     }
-    
+
     @Test
     public void testDeleteByCreationDateLessThan() {
         List<Token> t = tokenDao.findAll();
-        assertEquals(0,tokenDao.deleteByCreationDateLessThan(new Date(new Date().getTime() - Integer.parseInt(environment.getProperty("tokenTime.user")))));
+        assertEquals(0, tokenDao.deleteByCreationDateLessThan(
+                new Date(new Date().getTime() - Integer.parseInt(environment.getProperty("tokenTime.user")))));
         assertEquals(1, tokenDao.count());
-        assertEquals(1,tokenDao.deleteByCreationDateLessThan(new Date(new Date().getTime() - Integer.parseInt(environment.getProperty("tokenTime.user")) + Integer.parseInt(environment.getProperty("tokenTime.user")) + 1000 )));
+        assertEquals(1,
+                tokenDao.deleteByCreationDateLessThan(
+                        new Date(new Date().getTime() - Integer.parseInt(environment.getProperty("tokenTime.user"))
+                                + Integer.parseInt(environment.getProperty("tokenTime.user")) + 1000)));
         assertEquals(0, tokenDao.count());
         tokenDao.save(t);
     }

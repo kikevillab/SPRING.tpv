@@ -35,11 +35,6 @@ public class CategoryController {
         return categoryComponentDao.findByName(name);
     }
 
-    public CategoryComponentWrapper findCategoryComponentWrapperByName(String name) {
-        CategoryComponent categoryComponent = findCategoryComponentByName(name);
-        return getCategoryComponentWrapper(categoryComponent);
-    }
-
     public Page<CategoryComponentWrapper> findCategoriesPaginatedByNameContaining(Pageable pageable, String name) {
         Page<CategoryComponent> categoryComponentPage = categoryComponentDao.findByNameContaining(pageable, name);
         List<CategoryComponentWrapper> componentWrappers = new ArrayList<>();
@@ -53,12 +48,12 @@ public class CategoryController {
         Page<CategoryComponent> categoryComponentPage = categoryComponentDao.findChildrenByParentName(pageable, name);
         List<CategoryComponentWrapper> componentWrappers = new ArrayList<>();
         for (CategoryComponent component : categoryComponentPage.getContent()) {
-            componentWrappers.add(getCategoryComponentWrapper(component));
+            componentWrappers.add(createCategoryComponentWrapper(component));
         }
         return new PageImpl<CategoryComponentWrapper>(componentWrappers, pageable, categoryComponentPage.getTotalElements());
     }
 
-    private CategoryComponentWrapper getCategoryComponentWrapper(CategoryComponent categoryComponent) {
+    private CategoryComponentWrapper createCategoryComponentWrapper(CategoryComponent categoryComponent) {
         if (categoryComponent.isCategory()) {
             return new CategoryCompositeWrapper(categoryComponent);
         } else {
@@ -74,7 +69,7 @@ public class CategoryController {
         Page<CategoryComponent> categoryComponentPage = categoryComponentDao.findChildrenByParentId(pageable, id);
         List<CategoryComponentWrapper> componentWrappers = new ArrayList<>();
         for (CategoryComponent component : categoryComponentPage.getContent()) {
-            componentWrappers.add(getCategoryComponentWrapper(component));
+            componentWrappers.add(createCategoryComponentWrapper(component));
         }
         return new PageImpl<CategoryComponentWrapper>(componentWrappers, pageable, categoryComponentPage.getTotalElements());
     }

@@ -43,10 +43,8 @@ public class UserDaoIT {
         assertNull(userDao.findByTokenValue("kk"));
     }
 
-
     @Test
     public void testFindAllAndRole() {
-
         Pageable pageable = new PageRequest(0, 4);
         Page<User> userCustomer = userDao.findAllAndRole(pageable, Role.CUSTOMER);
         assertNotNull(userCustomer);
@@ -58,10 +56,9 @@ public class UserDaoIT {
         assertNotNull(userManager);
         assertTrue(userManager.getSize() > 0);
     }
-    
+
     @Test
     public void testFindByMobileAndRole() {
-
         long mobileCustomer = 666000001;
         long mobileManager = 666000005;
         long mobileOperator = 666000004;
@@ -81,7 +78,6 @@ public class UserDaoIT {
 
     @Test
     public void testFindByDniAndRole() {
-
         String dniCustomer = "1235678X";
         String dniOperator = "1245538L";
         String dniManager = "1232578M";
@@ -101,7 +97,6 @@ public class UserDaoIT {
 
     @Test
     public void testFindByEmailAndRole() {
-
         String emailCustomer = "user2@user2.com";
         String emailOperator = "userO@userO.com";
         String emailManager = "userM@userM.com";
@@ -121,7 +116,6 @@ public class UserDaoIT {
 
     @Test
     public void testFindAllAndRoleExtrem() {
-
         Pageable pageable = new PageRequest(0, 4);
         Page<User> userCustomer = userDao.findAllAndRole(null, Role.CUSTOMER);
         assertNotNull(userCustomer);
@@ -135,7 +129,6 @@ public class UserDaoIT {
 
     @Test
     public void testFindByMobileAndRoleExtrem() {
-
         long mobileCustomer = -1;
         long mobileOperator = 666000004;
 
@@ -143,12 +136,10 @@ public class UserDaoIT {
         assertNull(userCustomer);
         User userOperator = userDao.findByMobileAndRole(null, mobileOperator);
         assertNull(userOperator);
-
     }
 
     @Test
     public void testFindByDniAndRoleExtrem() {
-
         String dniCustomer = null;
         String dniOperator = "1245538L";
         String dniManager = "-1-1-1";
@@ -159,12 +150,10 @@ public class UserDaoIT {
         assertNull(userOperator);
         User userManager = userDao.findByDniAndRole(Role.MANAGER, dniManager);
         assertNull(userManager);
-
     }
 
     @Test
     public void testFindByEmailAndRoleExtrem() {
-
         String emailCustomer = null;
         String emailOperator = "userO@userO.com";
         String emailManager = "-1";
@@ -175,7 +164,6 @@ public class UserDaoIT {
         assertNull(userOperator);
         User userManager = userDao.findByEmailAndRole(Role.MANAGER, emailManager);
         assertNull(userManager);
-
     }
 
 }

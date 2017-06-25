@@ -1,6 +1,6 @@
 package api;
 
-import static config.ResourceNames.DEFAULT_SEED_FILE;
+import static config.ResourceNames.TEST_SEED_FILE;
 
 import org.junit.After;
 import org.junit.Before;
@@ -32,7 +32,7 @@ public class DatabaseSeedResourceFunctionalTesting {
     @Test
     public void testSeedDatabase() {
         String token = new RestService().loginAdmin();
-        new RestBuilder<Object>(RestService.URL).path(Uris.DATABASE_SEED).body(new FileNameWrapper(DEFAULT_SEED_FILE)).basicAuth(token, "").post()
+        new RestBuilder<Object>(RestService.URL).path(Uris.DATABASE_SEED).body(new FileNameWrapper(TEST_SEED_FILE)).basicAuth(token, "").post()
                 .build();
     }
 

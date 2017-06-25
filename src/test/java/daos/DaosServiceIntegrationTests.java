@@ -1,6 +1,6 @@
 package daos;
 
-import static config.ResourceNames.DEFAULT_SEED_FILE;
+import static config.ResourceNames.TEST_SEED_FILE;
 
 import javax.annotation.PostConstruct;
 
@@ -17,10 +17,6 @@ public class DaosServiceIntegrationTests {
 
     @PostConstruct
     public void populate() {
-        databaseSeederService.seedDatabase(DEFAULT_SEED_FILE);
-    }
-
-    public void deleteAll() {
-        databaseSeederService.deleteAllExceptAdmin();
+        databaseSeederService.seedDatabase(TEST_SEED_FILE);
     }
 }

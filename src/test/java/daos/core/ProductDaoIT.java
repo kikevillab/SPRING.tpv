@@ -26,17 +26,17 @@ public class ProductDaoIT {
 
     @Test
     public void testCreateArticle() {
-        assertTrue(articleDao.count() >= 8);
+        assertTrue(5 <= articleDao.count());
     }
 
     @Test
     public void testCreateEmbroidery() {
-        assertTrue(embroideryDao.count() >= 5);
+        assertTrue(5 <= embroideryDao.count());
     }
 
     @Test
     public void testCreateTextilePrinting() {
-        assertTrue(textilePrintingDao.count() >= 5);
+        assertTrue(5 <= textilePrintingDao.count());
     }
 
 }

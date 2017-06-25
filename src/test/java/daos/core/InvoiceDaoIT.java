@@ -29,12 +29,12 @@ public class InvoiceDaoIT {
 
     @Test
     public void testCount() {
-        assertTrue(invoiceDao.count() >= 2);
+        assertTrue(2 <= invoiceDao.count());
     }
 
     @Test
     public void testFindFirstByOrderByIdDesc() {
-        assertEquals(20170002, invoiceDao.findFirstByOrderByCreatedDescIdDesc().getId());
+        assertEquals(20172, invoiceDao.findFirstByOrderByCreatedDescIdDesc().getId());
     }
 
     @Test

@@ -1,7 +1,7 @@
 package services;
 
 import static config.ResourceNames.ADMIN_FILE;
-import static config.ResourceNames.DEFAULT_SEED_FILE;
+import static config.ResourceNames.TEST_SEED_FILE;
 import static config.ResourceNames.YAML_FILES_ROOT;
 
 import java.io.IOException;
@@ -168,6 +168,6 @@ public class DatabaseSeederService {
     }
 
     public void seed() {
-        seedDatabase(DEFAULT_SEED_FILE);
+        seedDatabase(TEST_SEED_FILE);
     }
 }
