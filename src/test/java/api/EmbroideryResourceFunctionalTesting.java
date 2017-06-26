@@ -110,7 +110,7 @@ public class EmbroideryResourceFunctionalTesting {
     
     @After
     public void tearDownOnce(){
-        new RestService().deleteAll();
+        new RestService().deleteAllExceptAdmin();
     }
 }
         

@@ -20,7 +20,19 @@ public class AdminController {
     }
     
     public void seedDatabase(){
-        databaseSeederService.seed();
+        databaseSeederService.seedDatabase();
     }
+    
+    public void seedDatabase(String ymlFileName) {
+        databaseSeederService.seedDatabase(ymlFileName);
+    }
+    
+    public boolean existsYamlFile(String ymlFileName) {
+        return databaseSeederService.existsYamlFile(ymlFileName);
+    }
+    
+
+    
+    
 
 }

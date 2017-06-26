@@ -112,6 +112,6 @@ public class TextilePrintingResourceFunctionalTesting {
 
     @After
     public void tearDownOnce() {
-        new RestService().deleteAll();
+        new RestService().deleteAllExceptAdmin();
     }
 }

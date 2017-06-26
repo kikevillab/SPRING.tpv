@@ -1,7 +1,7 @@
 package services;
 
-import static config.ResourceNames.ADMIN_FILE;
-import static config.ResourceNames.TEST_SEED_FILE;
+import static config.ResourceNames.ADMIN_YAML_FILE_NAME;
+import static config.ResourceNames.TEST_SEED_YAML_FILE_NAME;
 import static config.ResourceNames.YAML_FILES_ROOT;
 
 import java.io.IOException;
@@ -10,6 +10,7 @@ import java.io.InputStream;
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 
+import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.Resource;
@@ -88,7 +89,7 @@ public class DatabaseSeederService {
     @PostConstruct
     public void createDefaultAdmin() {
         Yaml adminYaml = new Yaml();
-        Resource resource = appContext.getResource(YAML_FILES_ROOT + ADMIN_FILE);
+        Resource resource = appContext.getResource(YAML_FILES_ROOT + ADMIN_YAML_FILE_NAME);
         InputStream input;
         try {
             input = resource.getInputStream();
@@ -100,22 +101,25 @@ public class DatabaseSeederService {
                 authorizationDao.save(new Authorization(admin, Role.ADMIN));
             }
         } catch (IOException e) {
-            System.err.println("ERROR: File " + ADMIN_FILE + " doesn't exist or can't be opened");
-            e.printStackTrace();
+            LogManager.getLogger(this.getClass().getSimpleName())
+                    .error("File " + ADMIN_YAML_FILE_NAME + " doesn't exist or can't be opened");
         }
     }
 
-    public void seedDatabase(String fileName) {
-        assert fileName != null && !fileName.isEmpty();
-        if (!fileName.equals(ADMIN_FILE)) {
+    public void seedDatabase() {
+        seedDatabase(TEST_SEED_YAML_FILE_NAME);
+    }
+
+    public void seedDatabase(String ymlFileName) {
+        assert ymlFileName != null && !ymlFileName.isEmpty();
+        if (!ymlFileName.equals(ADMIN_YAML_FILE_NAME)) {
             Constructor constructor = new Constructor(TpvGraph.class);
             Yaml yamlParser = new Yaml(constructor);
-            Resource resource = appContext.getResource(YAML_FILES_ROOT + fileName);
+            Resource resource = appContext.getResource(YAML_FILES_ROOT + ymlFileName);
             InputStream input;
             try {
                 input = resource.getInputStream();
                 TpvGraph tpvGraph = (TpvGraph) yamlParser.load(input);
-
                 userDao.save(tpvGraph.getUserList());
                 authorizationDao.save(tpvGraph.getAuthorizationList());
                 tokenDao.save(tpvGraph.getTokenList());
@@ -130,8 +134,7 @@ public class DatabaseSeederService {
                 invoiceDao.save(tpvGraph.getInvoiceList());
                 cashierClosureDao.save(tpvGraph.getCashierClosureList());
             } catch (IOException e) {
-                System.err.println("ERROR: File " + fileName + " doesn't exist or can't be opened");
-                e.printStackTrace();
+                LogManager.getLogger(this.getClass().getSimpleName()).error("File " + ymlFileName + " doesn't exist or can't be opened");
             }
         }
     }
@@ -167,7 +170,4 @@ public class DatabaseSeederService {
         createDefaultAdmin();
     }
 
-    public void seed() {
-        seedDatabase(TEST_SEED_FILE);
-    }
 }

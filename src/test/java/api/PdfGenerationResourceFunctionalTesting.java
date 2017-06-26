@@ -46,7 +46,7 @@ public class PdfGenerationResourceFunctionalTesting {
 
     @Test
     public void testGenerateInvoicePdfWithManagerLoggedIn() {
-        String token = new RestService().registerAndLoginManager();
+        String token = new RestService().loginManager();
         new RestBuilder<Object>(RestService.URL).path(Uris.PDF_GENERATION + Uris.INVOICES)
         .body(new InvoiceIdWrapper(20170001))
         .basicAuth(token, "")
@@ -56,7 +56,7 @@ public class PdfGenerationResourceFunctionalTesting {
     
     @Test
     public void testGenerateTicketPdfWithManagerLoggedIn() {
-        String token = new RestService().registerAndLoginManager();
+        String token = new RestService().loginManager();
         new RestBuilder<Object>(RestService.URL).path(Uris.PDF_GENERATION + Uris.TICKETS)
         .body(new TicketIdWrapper(1))
         .basicAuth(token, "")
@@ -66,7 +66,7 @@ public class PdfGenerationResourceFunctionalTesting {
     
     @Test
     public void testGenerateVoucherPdfWithManagerLoggedIn() {
-        String token = new RestService().registerAndLoginManager();
+        String token = new RestService().loginManager();
         Voucher voucher = Arrays
         .asList(new RestBuilder<Voucher[]>(RestService.URL).path(Uris.VOUCHERS).clazz(Voucher[].class).get().build()).get(0);
         new RestBuilder<Object>(RestService.URL).path(Uris.PDF_GENERATION + Uris.VOUCHERS)
@@ -79,7 +79,7 @@ public class PdfGenerationResourceFunctionalTesting {
     @Test
     public void testGenerateBarcodesPdfWithManagerLoggedIn() {
         String[] productCodeList = {"8400000002222", "8400000002225", "8400000003334", "8400000003335"};
-        String token = new RestService().registerAndLoginManager();
+        String token = new RestService().loginManager();
         new RestBuilder<Object>(RestService.URL).path(Uris.PDF_GENERATION + Uris.BARCODES)
         .body(Arrays.asList(productCodeList))
         .basicAuth(token, "")
@@ -89,6 +89,6 @@ public class PdfGenerationResourceFunctionalTesting {
     
     @After
     public void tearDown(){
-        new RestService().deleteAll();
+        new RestService().deleteAllExceptAdmin();
     }
 }

@@ -12,6 +12,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+//TODO Cambiar clave a int-int, cuando se imprime se realiza mediante int/int
 @Entity
 @IdClass(InvoicePK.class)
 public class Invoice {

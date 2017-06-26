@@ -33,7 +33,7 @@ public class VoucherResourceFunctionalTesting {
 
     @AfterClass
     public static void tearDown() {
-        new RestService().deleteAll();
+        new RestService().deleteAllExceptAdmin();
     }
 
     @Test

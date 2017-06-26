@@ -63,6 +63,6 @@ public class InvoiceResourceFunctionalTesting {
 
     @AfterClass
     public static void tearDownOnce() {
-        new RestService().deleteAll();
+        new RestService().deleteAllExceptAdmin();
     }
 }

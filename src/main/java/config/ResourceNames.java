@@ -24,9 +24,9 @@ public class ResourceNames {
 
     public static final String YAML_FILES_ROOT = "classpath:META-INF/";
 
-    public static final String TEST_SEED_FILE = "test-database.yml";
+    public static final String TEST_SEED_YAML_FILE_NAME = "test-database.yml";
 
-    public static final String ADMIN_FILE = "admin.yml";
+    public static final String ADMIN_YAML_FILE_NAME = "admin.yml";
 
     public final static String PDFS_ROOT = System.getProperty("user.home") + "/tpv/pdfs";
 

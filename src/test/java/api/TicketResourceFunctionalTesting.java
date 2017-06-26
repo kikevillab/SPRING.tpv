@@ -525,7 +525,7 @@ public class TicketResourceFunctionalTesting {
 
     @After
     public void tearDown() {
-        new RestService().deleteAll();
+        new RestService().deleteAllExceptAdmin();
     }
 
 }

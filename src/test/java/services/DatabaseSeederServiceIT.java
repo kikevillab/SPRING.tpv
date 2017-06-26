@@ -1,6 +1,6 @@
 package services;
 
-import static config.ResourceNames.TEST_SEED_FILE;
+import static config.ResourceNames.TEST_SEED_YAML_FILE_NAME;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -183,7 +183,7 @@ public class DatabaseSeederServiceIT {
 
     @Test
     public void testExistentFile() {
-        assertTrue(databaseSeederService.existsYamlFile(TEST_SEED_FILE));
+        assertTrue(databaseSeederService.existsYamlFile(TEST_SEED_YAML_FILE_NAME));
     }
 
     @Test
@@ -194,6 +194,6 @@ public class DatabaseSeederServiceIT {
     @After
     public void tearDown() {
         databaseSeederService.deleteAllExceptAdmin();
-        databaseSeederService.seedDatabase(TEST_SEED_FILE);
+        databaseSeederService.seedDatabase(TEST_SEED_YAML_FILE_NAME);
     }
 }

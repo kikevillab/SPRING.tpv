@@ -1,10 +1,12 @@
 package api;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import api.exceptions.NotFoundYamlFileException;
 import controllers.AdminController;
 import controllers.RemoveTokenExpiredController;
 import io.swagger.annotations.ApiOperation;
@@ -32,19 +34,26 @@ public class AdminResource {
         return "{\"version\":\"" + Uris.VERSION + "\"}";
     }
 
-    @RequestMapping(method = RequestMethod.DELETE)
+    @RequestMapping(value = Uris.DATABASE, method = RequestMethod.POST)
+    public void seedDatabase(@RequestBody(required = false) String ymlFileName) throws NotFoundYamlFileException {
+        if (ymlFileName == null) {
+            adminController.seedDatabase();
+        } else {
+            if (!adminController.existsYamlFile(ymlFileName)) {
+                throw new NotFoundYamlFileException();
+            } else {
+                adminController.seedDatabase(ymlFileName);
+            }
+        }
+    }
+
+    @RequestMapping(value = Uris.DATABASE, method = RequestMethod.DELETE)
     public void deleteAllExceptAdmin() {
         adminController.deleteAllExceptAdmin();
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    public void seedDatabase() {
-        adminController.seedDatabase();
-    }
-
-    @ApiOperation(value = "Remove Token expired", 
-     notes = "If response is true then remove all tokens expired else there are not tokens expired", 
-     response = Boolean.class)
+    // TODO eliminar
+    @ApiOperation(value = "Remove Token expired", notes = "If response is true then remove all tokens expired else there are not tokens expired", response = Boolean.class)
     @RequestMapping(value = Uris.DELETE_TOKEN_EXPIRED, method = RequestMethod.DELETE)
     public Boolean EliminarTokensCaducados() {
         int retorno = RemoveTokenExpiredController.removeTokenExpired();

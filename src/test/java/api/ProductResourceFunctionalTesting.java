@@ -103,6 +103,6 @@ public class ProductResourceFunctionalTesting {
 
     @AfterClass
     public static void tearDownOnce() {
-        new RestService().deleteAll();
+        new RestService().deleteAllExceptAdmin();
     }
 }
