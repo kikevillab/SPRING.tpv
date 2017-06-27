@@ -6,6 +6,9 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({
+    ArticleResourceFunctionalTesting.class,
+    EmbroideryResourceFunctionalTesting.class,
+    TextilePrintingResourceFunctionalTesting.class,
     TokenResourceFunctionalTesting.class,
     UserResourceFunctionalTesting.class,
     //DatabaseSeedResourceFunctionalTesting.class,
@@ -13,9 +16,6 @@ import org.junit.runners.Suite.SuiteClasses;
     //PdfGenerationResourceFunctionalTesting.class,
     //TicketResourceFunctionalTesting.class,
     //InvoiceResourceFunctionalTesting.class,
-    //EmbroideryResourceFunctionalTesting.class,
-    //TextilePrintingResourceFunctionalTesting.class,
-    //ArticleResourceFunctionalTesting.class,
     //VoucherResourceFunctionalTesting.class,
     //CategoryResourceFunctionalTesting.class
 })

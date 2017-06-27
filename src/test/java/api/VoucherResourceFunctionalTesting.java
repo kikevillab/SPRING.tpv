@@ -20,6 +20,7 @@ import wrappers.ActiveVouchersTotalValueWrapper;
 import wrappers.VoucherCreationWrapper;
 
 public class VoucherResourceFunctionalTesting {
+    
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 

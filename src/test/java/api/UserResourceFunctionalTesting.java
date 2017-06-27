@@ -28,11 +28,10 @@ public class UserResourceFunctionalTesting {
 
     @Test
     public void testCreateDelete() {
-        String token = restService.loginAdmin();
         new RestBuilder<Object>(restService.getUrl()).path(Uris.USERS).body(new UserWrapper(777700000, "userApi", "pass"))
-                .param("role", "MANAGER").basicAuth(token, "").post().build();
-        new RestBuilder<String>(restService.getUrl()).path(Uris.USERS + "/" + 777700000).clazz(String.class).basicAuth(token, "").delete()
-                .build();
+                .param("role", "MANAGER").basicAuth(restService.loginAdmin(), "").post().build();
+        new RestBuilder<String>(restService.getUrl()).path(Uris.USERS + "/" + 777700000).clazz(String.class)
+                .basicAuth(restService.loginAdmin(), "").delete().build();
     }
 
     @Test

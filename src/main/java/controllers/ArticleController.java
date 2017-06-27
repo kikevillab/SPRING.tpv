@@ -96,6 +96,7 @@ public class ArticleController {
     private ArticleWrapper entityToWrapper(Article article) {
         ArticleWrapper articleWrapper = new ArticleWrapper();
         articleWrapper.setCode(article.getCode());
+        articleWrapper.setReference(article.getReference());
         articleWrapper.setDescription(article.getDescription());
         articleWrapper.setDiscontinued(article.isDiscontinued());
         articleWrapper.setImage(article.getImage());
