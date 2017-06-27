@@ -7,6 +7,7 @@ import org.junit.runners.Suite.SuiteClasses;
 @RunWith(Suite.class)
 @SuiteClasses({
     TokenResourceFunctionalTesting.class,
+    UserResourceFunctionalTesting.class,
     //DatabaseSeedResourceFunctionalTesting.class,
     //ProductResourceFunctionalTesting.class, 
     //PdfGenerationResourceFunctionalTesting.class,

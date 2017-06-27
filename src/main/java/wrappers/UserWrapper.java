@@ -40,20 +40,6 @@ public class UserWrapper {
         this.password = password;
     }
     
-    
-
-    public UserWrapper(int id, long mobile, String username, String password, String dni, String email, String address, boolean active) {
-        super();
-        this.id = id;
-        this.mobile = mobile;
-        this.username = username;
-        this.password = password;
-        this.dni = dni;
-        this.email = email;
-        this.address = address;
-        this.active = active;
-    }
-
     public UserWrapper(long mobile, String username, String password, String dni, String email, String address, boolean active) {
         super();
         this.mobile = mobile;
