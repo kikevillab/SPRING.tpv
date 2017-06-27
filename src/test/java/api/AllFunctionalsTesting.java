@@ -11,12 +11,12 @@ import org.junit.runners.Suite.SuiteClasses;
     TextilePrintingResourceFunctionalTesting.class,
     TokenResourceFunctionalTesting.class,
     UserResourceFunctionalTesting.class,
+    VoucherResourceFunctionalTesting.class,
     //DatabaseSeedResourceFunctionalTesting.class,
     //ProductResourceFunctionalTesting.class, 
     //PdfGenerationResourceFunctionalTesting.class,
     //TicketResourceFunctionalTesting.class,
     //InvoiceResourceFunctionalTesting.class,
-    //VoucherResourceFunctionalTesting.class,
     //CategoryResourceFunctionalTesting.class
 })
 
