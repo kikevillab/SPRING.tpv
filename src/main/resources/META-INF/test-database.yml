@@ -101,7 +101,7 @@ articleList:
     retailPrice: 20
     description: article0
     wholesalePrice: 10
-    stock: 5
+    stock: 90
     provider: *provider666100000
     image: /assets/img/products/img-product-5.png
   - &article8400000001112

@@ -29,6 +29,6 @@ public class ArticleUpdateWrapper extends ProductWrapper{
 
     @Override
     public String toString() {
-        return "ArticleWrapper [stock=" + stock + ", wholesalePrice=" + wholesalePrice + "]";
+        return "ArticleWrapper [stock=" + stock + ", wholesalePrice=" + wholesalePrice + super.toString()+ "]";
     }
 }

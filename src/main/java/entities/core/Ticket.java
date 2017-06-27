@@ -25,6 +25,7 @@ import entities.users.User;
 import net.glxn.qrgen.QRCode;
 import net.glxn.qrgen.image.ImageType;
 
+//TODO Cambiar clave a int-int, cuando se imprime se realiza mediante int/int
 @Entity
 @IdClass(TicketPK.class)
 public class Ticket {

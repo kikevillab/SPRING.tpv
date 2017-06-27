@@ -96,4 +96,6 @@ public class Uris {
 
     public static final String TICKET_USER = "/user";
 
+    public static final String DATABASE = "/database";
+
 }

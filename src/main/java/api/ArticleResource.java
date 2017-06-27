@@ -32,6 +32,7 @@ public class ArticleResource {
         articleController.createArticle(articleCreationWrapper);
     }
 
+    //TODO ArticleUpdateWrapper codigo repetido respecto ArticleWrapper
     @RequestMapping(value = Uris.CODE, method = RequestMethod.PUT)
     public void updateArticle(@PathVariable String code, @RequestBody ArticleUpdateWrapper articleUpdateWrapper) throws ArticleNotFoundException {
         throwExceptionIfArticleDoesNotExist(code);

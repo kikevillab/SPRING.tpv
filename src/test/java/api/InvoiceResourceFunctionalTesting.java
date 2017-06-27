@@ -6,32 +6,35 @@ import static org.junit.Assert.assertNotNull;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import config.TestsApiConfig;
 import entities.core.Invoice;
 import wrappers.InvoiceWrapper;
 import wrappers.TicketReferenceWrapper;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = {TestsApiConfig.class})
 public class InvoiceResourceFunctionalTesting {
+
+    @Autowired
+    private RestService restService;
+
     @Rule
     public ExpectedException thrown = ExpectedException.none();
-
-    @BeforeClass
-    public static void setUpOnce() {
-        new RestService().seedDatabase();
-    }
 
     @Test
     public void testCreateInvoiceWithInvalidUser() {
         thrown.expect(new HttpMatcher(HttpStatus.BAD_REQUEST));
         TicketReferenceWrapper ticketReferenceWrapper = new TicketReferenceWrapper("ticket1");        
-        String token = new RestService().loginAdmin();
-        new RestBuilder<Object>(RestService.URL).path(Uris.INVOICES).body(ticketReferenceWrapper).basicAuth(token, "").post()
+        new RestBuilder<Object>(restService.getUrl()).path(Uris.INVOICES).body(ticketReferenceWrapper).post()
                 .build();
     }
 
@@ -39,30 +42,23 @@ public class InvoiceResourceFunctionalTesting {
     public void testCreateInvoiceWithTicketAlreadyAssignedToAnInvoice() {
         thrown.expect(new HttpMatcher(HttpStatus.BAD_REQUEST));
         TicketReferenceWrapper ticketReferenceWrapper = new TicketReferenceWrapper("ticket3");   
-        String token = new RestService().loginAdmin();
-        new RestBuilder<InvoiceWrapper>(RestService.URL).path(Uris.INVOICES).body(ticketReferenceWrapper).basicAuth(token, "").post()
+        new RestBuilder<InvoiceWrapper>(restService.getUrl()).path(Uris.INVOICES).body(ticketReferenceWrapper).basicAuth(restService.loginAdmin(), "").post()
                 .build();
     }
 
     @Test
     public void testCreateInvoice() {
         TicketReferenceWrapper ticketReferenceWrapper = new TicketReferenceWrapper("ticket6");   
-        String token = new RestService().loginAdmin();
-        new RestBuilder<Object>(RestService.URL).path(Uris.INVOICES).body(ticketReferenceWrapper).basicAuth(token, "")
+        new RestBuilder<Object>(restService.getUrl()).path(Uris.INVOICES).body(ticketReferenceWrapper).basicAuth(restService.loginAdmin(), "")
                 .post().build();
     }
 
     @Test
     public void testFindAllInvoices() {
-        String token = new RestService().loginAdmin();
-        List<Invoice> invoices = Arrays.asList(new RestBuilder<Invoice[]>(RestService.URL).path(Uris.INVOICES).basicAuth(token, "")
+        List<Invoice> invoices = Arrays.asList(new RestBuilder<Invoice[]>(restService.getUrl()).path(Uris.INVOICES).basicAuth(restService.loginAdmin(), "")
                 .clazz(Invoice[].class).get().build());
         assertNotNull(invoices);
         assertFalse(invoices.isEmpty());
     }
 
-    @AfterClass
-    public static void tearDownOnce() {
-        new RestService().deleteAll();
-    }
 }

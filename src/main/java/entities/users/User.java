@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Entity
 public class User {
 
+    //TODO Eliminar Id
     @Id
     @GeneratedValue
     private int id;

@@ -1,43 +1,41 @@
 package api;
 
-import static config.ResourceNames.TEST_SEED_FILE;
+import static config.ResourceNames.TEST_SEED_YAML_FILE_NAME;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import config.TestsApiConfig;
 import wrappers.FileNameWrapper;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = {TestsApiConfig.class})
 public class DatabaseSeedResourceFunctionalTesting {
+
+    @Autowired
+    private RestService restService;
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    @Before
-    public void setUp() {
-        new RestService().deleteAll();
-    }
-
     @Test
     public void testNonexistentFile() {
         thrown.expect(new HttpMatcher(HttpStatus.NOT_FOUND));
-        String token = new RestService().loginAdmin();
-        new RestBuilder<Object>(RestService.URL).path(Uris.DATABASE_SEED).body(new FileNameWrapper("nonexistent.yml")).basicAuth(token, "").post()
-                .build();
+        new RestBuilder<Object>(restService.getUrl()).path(Uris.DATABASE_SEED).body(new FileNameWrapper("nonexistent.yml"))
+                .basicAuth(restService.loginAdmin(), "").post().build();
     }
 
     @Test
     public void testSeedDatabase() {
-        String token = new RestService().loginAdmin();
-        new RestBuilder<Object>(RestService.URL).path(Uris.DATABASE_SEED).body(new FileNameWrapper(TEST_SEED_FILE)).basicAuth(token, "").post()
-                .build();
+        restService.deleteAllExceptAdmin();
+        new RestBuilder<Object>(restService.getUrl()).path(Uris.DATABASE_SEED).body(new FileNameWrapper(TEST_SEED_YAML_FILE_NAME))
+                .basicAuth(restService.loginAdmin(), "").post().build();
     }
 
-    @After
-    public void tearDown() {
-        new RestService().deleteAll();
-    }
 }
