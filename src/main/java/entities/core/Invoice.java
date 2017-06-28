@@ -5,20 +5,13 @@ import java.util.Calendar;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@IdClass(InvoicePK.class)
 public class Invoice {
 
-    @Id
-    private int year;
-    
     @Id
     private int id;
 
@@ -26,8 +19,6 @@ public class Invoice {
     private Calendar created;
 
     @OneToOne
-    @JoinColumns({@JoinColumn(name = "ticket_id", referencedColumnName = "id"),
-            @JoinColumn(name = "ticket_date", referencedColumnName = "date")})
     private Ticket ticket;
 
     public Invoice() {
@@ -36,17 +27,8 @@ public class Invoice {
 
     public Invoice(int id, Ticket ticket) {
         this();
-        year = Calendar.getInstance().get(Calendar.YEAR);
         this.id = id;
         this.ticket = ticket;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
     }
 
     public int getId() {
@@ -75,11 +57,7 @@ public class Invoice {
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + id;
-        result = prime * result + year;
-        return result;
+        return id;
     }
 
     @Override
@@ -93,13 +71,13 @@ public class Invoice {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        return (id == ((Invoice) obj).id) && (year == ((Invoice) obj).year);
+        return (id == ((Invoice) obj).id);
     }
 
     @Override
     public String toString() {
         String createdStr = new SimpleDateFormat("dd-MMM-yyyy").format(created.getTime());
-        return "Invoice [year=" + year + ", id=" + id + ", created=" + createdStr + ", ticket=" + ticket + "]";
+        return "Invoice [id=" + id + ", created=" + createdStr + ", ticket=" + ticket + "]";
     }
 
 }

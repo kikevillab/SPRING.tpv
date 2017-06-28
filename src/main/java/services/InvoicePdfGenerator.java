@@ -108,7 +108,7 @@ public class InvoicePdfGenerator extends PdfGenerator<Invoice> {
         }
         Paragraph rightAlignedParagraph = new Paragraph();
         rightAlignedParagraph.setTextAlignment(TextAlignment.RIGHT);
-        rightAlignedParagraph.add("INVOICE " + entity.getYear() + "/" + entity.getId());
+        rightAlignedParagraph.add("INVOICE " + entity.getId());
         rightAlignedParagraph.add(invoiceCreationDateFormatter.format(entity.getCreated().getTime()));
         invoiceHeader.addCell(new Cell().add(rightAlignedParagraph).setBorder(Border.NO_BORDER));
         document.add(invoiceHeader);

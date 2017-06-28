@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 
 import daos.core.InvoiceDao;
 import entities.core.Invoice;
-import entities.core.InvoicePK;
 import entities.core.Ticket;
 import services.PdfGenerationService;
 import wrappers.InvoiceCreationResponseWrapper;
@@ -44,14 +43,14 @@ public class InvoiceController {
     }
 
     public Invoice findOneInvoice(InvoiceIdWrapper invoiceIdWrapper) {
-        return invoiceDao.findOne(new InvoicePK(invoiceIdWrapper.getId()));
+        return invoiceDao.findOne(invoiceIdWrapper.getId());
     }
 
     public InvoiceCreationResponseWrapper createInvoice(Ticket ticket) throws IOException {
         Invoice invoice = new Invoice(this.getNextInvoiceId(), ticket);
         Invoice invoiceCreated = invoiceDao.save(invoice);
         byte[] pdfByteArray = pdfGenService.generateInvoicePdf(invoiceCreated);
-        return new InvoiceCreationResponseWrapper(Integer.parseInt(invoiceCreated.getYear() + "" + invoiceCreated.getId()), pdfByteArray);
+        return new InvoiceCreationResponseWrapper(invoiceCreated.getId(), pdfByteArray);
     }
 
     private int getNextInvoiceId() {

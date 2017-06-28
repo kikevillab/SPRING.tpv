@@ -11,7 +11,6 @@ import org.junit.runners.Suite.SuiteClasses;
     DatabaseSeedResourceFunctionalTesting.class,
     EmbroideryResourceFunctionalTesting.class,
     InvoiceResourceFunctionalTesting.class,
-    PdfGenerationResourceFunctionalTesting.class,
     ProductResourceFunctionalTesting.class, 
     TextilePrintingResourceFunctionalTesting.class,
     TicketResourceFunctionalTesting.class,

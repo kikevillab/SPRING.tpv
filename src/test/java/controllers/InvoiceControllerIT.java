@@ -19,7 +19,6 @@ import config.TestsPersistenceConfig;
 import daos.core.InvoiceDao;
 import daos.core.TicketDao;
 import entities.core.Invoice;
-import entities.core.InvoicePK;
 import entities.core.Ticket;
 import entities.core.TicketPK;
 import wrappers.InvoiceCreationResponseWrapper;
@@ -49,7 +48,7 @@ public class InvoiceControllerIT {
         InvoiceCreationResponseWrapper responseWrapper = invoiceController.createInvoice(ticket);
         assertNotNull(responseWrapper);
         assertEquals(latestInvoice.getId() + 1, responseWrapper.getInvoiceId());
-        invoiceDao.delete(new InvoicePK(responseWrapper.getInvoiceId()));
+        invoiceDao.delete(responseWrapper.getInvoiceId());
     }
 
     @Test
@@ -61,7 +60,7 @@ public class InvoiceControllerIT {
         assertNotNull(responseWrapper);
         int resultInvoiceId = Integer.parseInt(String.valueOf(Calendar.getInstance().get(Calendar.YEAR)) + 1);
         assertEquals(resultInvoiceId, responseWrapper.getInvoiceId());
-        invoiceDao.delete(new InvoicePK(responseWrapper.getInvoiceId()));
+        invoiceDao.delete(responseWrapper.getInvoiceId());
         invoiceDao.save(invoiceList);
     }
 }
