@@ -41,7 +41,7 @@ public class PdfGenerationResource {
 
     @RequestMapping(value = Uris.TICKETS, method = RequestMethod.POST)
     public void generateTicketPdf(@RequestBody TicketIdWrapper ticketIdWrapper) throws IOException, TicketNotFoundException {
-        long ticketId = ticketIdWrapper.getId();
+        int ticketId = ticketIdWrapper.getId();
         if (pdfGenController.ticketExists(ticketId)) {
             pdfGenController.generateTicketPdf(ticketId);
         } else {

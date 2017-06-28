@@ -39,7 +39,7 @@ public class InvoiceDaoIT {
 
     @Test
     public void testFindByTicket() {
-        Ticket ticket = ticketDao.findOne(new TicketPK(3L));
+        Ticket ticket = ticketDao.findOne(new TicketPK(3));
         Invoice invoice = invoiceDao.findByTicketReference(ticket.getReference());
         assertNotNull(invoice);
     }

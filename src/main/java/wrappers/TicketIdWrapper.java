@@ -1,20 +1,20 @@
 package wrappers;
 
 public class TicketIdWrapper {
-    long id;
+    int id;
 
     public TicketIdWrapper(){}
     
-    public TicketIdWrapper(long id) {
+    public TicketIdWrapper(int id) {
         super();
         this.id = id;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

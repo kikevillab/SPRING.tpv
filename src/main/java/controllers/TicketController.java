@@ -96,8 +96,8 @@ public class TicketController {
         return new TicketCreationResponseWrapper(ticketPdfByteArray, ticket.getReference());
     }
 
-    private long nextId() {
-        long nextId = 1;
+    private int nextId() {
+        int nextId = 1;
         Ticket ticket = ticketDao.findFirstByOrderByCreatedDescIdDesc();
 
         if (ticket != null) {

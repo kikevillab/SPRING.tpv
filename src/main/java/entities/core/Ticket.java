@@ -25,15 +25,16 @@ import entities.users.User;
 import net.glxn.qrgen.QRCode;
 import net.glxn.qrgen.image.ImageType;
 
-//TODO Cambiar clave a int-int, cuando se imprime se realiza mediante int/int
 @Entity
 @IdClass(TicketPK.class)
 public class Ticket {
 
     @Id
-    private long id;
-
+    private int date;
+    
     @Id
+    private int id;
+
     @Temporal(TemporalType.DATE)
     private Calendar created;
 
@@ -53,30 +54,32 @@ public class Ticket {
 
     public Ticket() {
         created = Calendar.getInstance();
-        created.set(Calendar.HOUR_OF_DAY, 0);
-        created.set(Calendar.MINUTE, 0);
-        created.set(Calendar.SECOND, 0);
         created.set(Calendar.MILLISECOND, 0);
+        date = Integer.parseInt((new SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().getTime())));
+        reference = new Encrypting().encryptInBase64UrlSafe("" + this.getId() + Long.toString(new Date().getTime()));
+        qrReference = QRCode.from(reference).to(ImageType.JPG).stream().toByteArray();
         shoppingList = new ArrayList<>();
     }
 
-    public Ticket(long id) {
+    public Ticket(int id) {
         this();
-        setId(id);
+        this.id = id;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
-        updateReference();
     }
 
-    private void updateReference() {
-        reference = new Encrypting().encryptInBase64UrlSafe("" + this.getId() + Long.toString(new Date().getTime()));
-        qrReference = QRCode.from(reference).to(ImageType.JPG).stream().toByteArray();
+    public void setDate(int date) {
+        this.date = date;
+    }
+
+    public int getDate() {
+        return date;
     }
 
     public void addShopping(Shopping shopping) {
@@ -103,12 +106,12 @@ public class Ticket {
         return created;
     }
 
-    public void setReference(String reference) {
-        this.reference = reference;
-    }
-
     public String getReference() {
         return reference;
+    }
+
+    public void setReference(String reference) {
+        this.reference = reference;
     }
 
     public byte[] getQrReference() {
@@ -127,28 +130,23 @@ public class Ticket {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((created == null) ? 0 : created.hashCode());
-        result = prime * result + (int) (id ^ (id >>> 32));
+        result = prime * result + id;
+        result = prime * result + date;
         return result;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
-        Ticket other = (Ticket) obj;
-        if (created == null) {
-            if (other.created != null)
-                return false;
-        } else if (!created.equals(other.created))
-            return false;
-        if (id != other.id)
-            return false;
-        return true;
+        }
+        return (id == ((Ticket) obj).id) && (date == ((Ticket) obj).date);
     }
 
     @Override

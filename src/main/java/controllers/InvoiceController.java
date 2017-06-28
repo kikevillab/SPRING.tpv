@@ -22,16 +22,16 @@ import wrappers.TicketIdWrapper;
 public class InvoiceController {
 
     private InvoiceDao invoiceDao;
-    
+
     private PdfGenerationService pdfGenService;
 
     @Autowired
     public void setInvoiceDao(InvoiceDao invoiceDao) {
         this.invoiceDao = invoiceDao;
     }
-    
+
     @Autowired
-    public void setPdfGenerationService(PdfGenerationService pdfGenService){
+    public void setPdfGenerationService(PdfGenerationService pdfGenService) {
         this.pdfGenService = pdfGenService;
     }
 
@@ -51,7 +51,7 @@ public class InvoiceController {
         Invoice invoice = new Invoice(this.getNextInvoiceId(), ticket);
         Invoice invoiceCreated = invoiceDao.save(invoice);
         byte[] pdfByteArray = pdfGenService.generateInvoicePdf(invoiceCreated);
-        return new InvoiceCreationResponseWrapper(invoiceCreated.getId(), pdfByteArray);
+        return new InvoiceCreationResponseWrapper(Integer.parseInt(invoiceCreated.getYear() + "" + invoiceCreated.getId()), pdfByteArray);
     }
 
     private int getNextInvoiceId() {

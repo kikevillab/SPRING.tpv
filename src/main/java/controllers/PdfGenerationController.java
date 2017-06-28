@@ -61,7 +61,7 @@ public class PdfGenerationController {
         pdfGenService.generateInvoicePdf(invoice);
     }
 
-    public void generateTicketPdf(long ticketId) throws IOException {
+    public void generateTicketPdf(int ticketId) throws IOException {
         Ticket ticket = ticketDao.findOne(new TicketPK(ticketId));
         pdfGenService.generateTicketPdf(ticket);
     }
@@ -76,7 +76,7 @@ public class PdfGenerationController {
         pdfGenService.generateBarcodesPdf(productList);
     }
 
-    public boolean ticketExists(long ticketId) {
+    public boolean ticketExists(int ticketId) {
         return ticketDao.findOne(new TicketPK(ticketId)) != null;
     }
 

@@ -44,7 +44,7 @@ public class InvoiceControllerIT {
 
     @Test
     public void testCreateInvoiceWithAtLeastOneInvoiceThisYear() throws IOException {
-        Ticket ticket = ticketDao.findOne(new TicketPK(2L));
+        Ticket ticket = ticketDao.findOne(new TicketPK(2));
         Invoice latestInvoice = invoiceDao.findFirstByOrderByCreatedDescIdDesc();
         InvoiceCreationResponseWrapper responseWrapper = invoiceController.createInvoice(ticket);
         assertNotNull(responseWrapper);
@@ -56,7 +56,7 @@ public class InvoiceControllerIT {
     public void testCreateInvoiceWithNoInvoicesThisYear() throws IOException {
         List<Invoice> invoiceList = invoiceDao.findAll();
         invoiceDao.deleteAll();
-        Ticket ticket = ticketDao.findOne(new TicketPK(2L));
+        Ticket ticket = ticketDao.findOne(new TicketPK(2));
         InvoiceCreationResponseWrapper responseWrapper = invoiceController.createInvoice(ticket);
         assertNotNull(responseWrapper);
         int resultInvoiceId = Integer.parseInt(String.valueOf(Calendar.getInstance().get(Calendar.YEAR)) + 1);
