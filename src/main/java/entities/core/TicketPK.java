@@ -1,67 +1,70 @@
 package entities.core;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class TicketPK implements Serializable {
-
-    private long id;
-    
-    private Calendar created;
-    
     private static final long serialVersionUID = 8700895349515977988L;
+
+    private int date;
+
+    private int id;
 
     public TicketPK() {
     }
 
-    public TicketPK(long id) {
-        super();
+    public TicketPK(int id) {
+        this(Integer.parseInt((new SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().getTime()))), id);
+    }
+
+    public TicketPK(int date, int id) {
+        this.date = date;
         this.id = id;
-        this.created = Calendar.getInstance();
     }
 
     public long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public Calendar getCreated() {
-        return created;
+    public int getDate() {
+        return date;
     }
 
-    public void setCreated(Calendar created) {
-        this.created = created;
+    public void setDate(int date) {
+        this.date = date;
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((created == null) ? 0 : created.hashCode());
-        result = prime * result + (int) (id ^ (id >>> 32));
+        result = prime * result + id;
+        result = prime * result + date;
         return result;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
-        TicketPK other = (TicketPK) obj;
-        if (created == null) {
-            if (other.created != null)
-                return false;
-        } else if (!created.equals(other.created))
-            return false;
-        if (id != other.id)
-            return false;
-        return true;
+        }
+        return (id == ((TicketPK) obj).id) && (date == ((TicketPK) obj).date);
+    }
+
+    @Override
+    public String toString() {
+        return "TicketPK [date=" + date + ", id=" + id + "]";
     }
 
 }

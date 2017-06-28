@@ -12,7 +12,6 @@ public class InvoiceCreationResponseWrapper {
     }
 
     public InvoiceCreationResponseWrapper(int invoiceId, byte[] pdfByteArray) {
-        super();
         this.invoiceId = invoiceId;
         this.pdfByteArray = pdfByteArray;
     }

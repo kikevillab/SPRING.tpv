@@ -123,8 +123,7 @@ public class UserResourceFunctionalTesting {
 
     @Test
     public void testFindUserByMobilePhoneWithExistentPhone() {
-        String mobilePhone = String.valueOf(123456789L);
-        UserDetailsWrapper user = new RestBuilder<UserDetailsWrapper>(restService.getUrl()).path(Uris.USERS).pathId(mobilePhone)
+        UserDetailsWrapper user = new RestBuilder<UserDetailsWrapper>(restService.getUrl()).path(Uris.USERS).pathId("123456789")
                 .basicAuth(restService.loginAdmin(), "").clazz(UserDetailsWrapper.class).get().build();
         assertNotNull(user);
     }

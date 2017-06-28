@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 
 import daos.core.InvoiceDao;
 import entities.core.Invoice;
-import entities.core.InvoicePK;
 import entities.core.Ticket;
 import services.PdfGenerationService;
 import wrappers.InvoiceCreationResponseWrapper;
@@ -22,16 +21,16 @@ import wrappers.TicketIdWrapper;
 public class InvoiceController {
 
     private InvoiceDao invoiceDao;
-    
+
     private PdfGenerationService pdfGenService;
 
     @Autowired
     public void setInvoiceDao(InvoiceDao invoiceDao) {
         this.invoiceDao = invoiceDao;
     }
-    
+
     @Autowired
-    public void setPdfGenerationService(PdfGenerationService pdfGenService){
+    public void setPdfGenerationService(PdfGenerationService pdfGenService) {
         this.pdfGenService = pdfGenService;
     }
 
@@ -44,7 +43,7 @@ public class InvoiceController {
     }
 
     public Invoice findOneInvoice(InvoiceIdWrapper invoiceIdWrapper) {
-        return invoiceDao.findOne(new InvoicePK(invoiceIdWrapper.getId()));
+        return invoiceDao.findOne(invoiceIdWrapper.getId());
     }
 
     public InvoiceCreationResponseWrapper createInvoice(Ticket ticket) throws IOException {

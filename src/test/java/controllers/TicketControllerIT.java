@@ -222,13 +222,13 @@ public class TicketControllerIT {
 
     @Test
     public void testTicketIsAssignedToInvoice() {
-        Ticket ticketAssignedToAnInvoice = ticketDao.findOne(new TicketPK(3L));
+        Ticket ticketAssignedToAnInvoice = ticketDao.findOne(new TicketPK(3));
         assertTrue(ticketController.ticketIsAlreadyAssignedToInvoice(ticketAssignedToAnInvoice));
     }
 
     @Test
     public void testTicketIsNotAssignedToInvoice() {
-        Ticket ticketNotAssignedToAnInvoice = ticketDao.findOne(new TicketPK(1L));
+        Ticket ticketNotAssignedToAnInvoice = ticketDao.findOne(new TicketPK(1));
         assertFalse(ticketController.ticketIsAlreadyAssignedToInvoice(ticketNotAssignedToAnInvoice));
     }
 
@@ -259,7 +259,7 @@ public class TicketControllerIT {
 
     @Test
     public void testAssociateUserToTicket() {
-        Ticket ticketNotAssignedToAnUser = ticketDao.findOne(new TicketPK(1L));
+        Ticket ticketNotAssignedToAnUser = ticketDao.findOne(new TicketPK(1));
         assertNull(ticketNotAssignedToAnUser.getUser());
         Long userMobile = 666000002L;
         TicketWrapper ticketWithUser = ticketController.associateUserToTicket(ticketNotAssignedToAnUser.getReference(), userMobile);
