@@ -46,6 +46,11 @@ public class AdminResource {
             }
         }
     }
+    
+    @RequestMapping(value = Uris.DATABASE + Uris.ADMINS_DATABASE_VARIOUS, method = RequestMethod.POST)
+    public void seedDatabaseVarious() {
+        adminController.seedDatabaseVarious();
+    }
 
     @RequestMapping(value = Uris.DATABASE, method = RequestMethod.DELETE)
     public void deleteAllExceptAdmin() {
