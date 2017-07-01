@@ -3,7 +3,6 @@ package config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,7 +13,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import api.Uris;
-import entities.users.Role;
 
 @Configuration
 @EnableWebSecurity
@@ -32,15 +30,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests()//
-                .antMatchers(HttpMethod.GET, Uris.SERVLET_MAP + Uris.VERSION + Uris.ADMINS).permitAll()//
+            .antMatchers(Uris.SERVLET_MAP + Uris.VERSION + Uris.TOKENS + "/**").authenticated()//
+/*                .antMatchers(HttpMethod.GET, Uris.SERVLET_MAP + Uris.VERSION + Uris.ADMINS).permitAll()//
                 .antMatchers(Uris.SERVLET_MAP + Uris.VERSION + Uris.DATABASE_SEED + "/**").permitAll()//.hasRole(Role.ADMIN.name())//
-                .antMatchers(Uris.SERVLET_MAP + Uris.VERSION + Uris.TOKENS + "/**").authenticated()//
                 .antMatchers(Uris.SERVLET_MAP + Uris.VERSION + Uris.ADMINS + "/**").hasRole(Role.ADMIN.name())//
                 .antMatchers(HttpMethod.POST, Uris.SERVLET_MAP + Uris.VERSION + Uris.USERS + "/**").hasRole(Role.ADMIN.name())//
                 .antMatchers(HttpMethod.POST, Uris.SERVLET_MAP + Uris.VERSION + Uris.CUSTOMERS + "/**")
                     .hasAnyRole(Role.MANAGER.name(), Role.OPERATOR.name())//                
                 .antMatchers(Uris.SERVLET_MAP + Uris.VERSION + Uris.PDF_GENERATION + "/**")
-                    .hasAnyRole(Role.ADMIN.name(),Role.MANAGER.name(), Role.OPERATOR.name())
+                    .hasAnyRole(Role.ADMIN.name(),Role.MANAGER.name(), Role.OPERATOR.name())*/
                 .and().httpBasic();//
     }
 

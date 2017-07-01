@@ -8,11 +8,18 @@ import controllers.AllControllersIntegrationTests;
 import controllers.AllControllersTests;
 import daos.AllDaosIntegrationTests;
 import entities.AllEntitiesTests;
+import services.AllServicesTests;
 import services.AllServicesIntegrationTests;
 
 @RunWith(Suite.class)
-@SuiteClasses({AllEntitiesTests.class, AllControllersTests.class, AllDaosIntegrationTests.class, AllControllersIntegrationTests.class,
-        AllServicesIntegrationTests.class})
+@SuiteClasses({
+    AllEntitiesTests.class, 
+    AllControllersTests.class, 
+    AllDaosIntegrationTests.class, 
+    AllControllersIntegrationTests.class,
+    AllServicesTests.class,
+    AllServicesIntegrationTests.class
+})
 public class AllTests {
 
 }

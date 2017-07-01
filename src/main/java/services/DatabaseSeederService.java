@@ -7,6 +7,8 @@ import static config.ResourceNames.YAML_FILES_ROOT;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
@@ -35,6 +37,8 @@ import daos.users.TokenDao;
 import daos.users.UserDao;
 import entities.core.Article;
 import entities.core.CategoryComponent;
+import entities.core.CategoryComposite;
+import entities.core.ProductCategory;
 import entities.core.Provider;
 import entities.users.Authorization;
 import entities.users.Role;
@@ -128,11 +132,15 @@ public class DatabaseSeederService {
                 tokenDao.save(tpvGraph.getTokenList());
                 voucherDao.save(tpvGraph.getVoucherList());
                 providerDao.save(tpvGraph.getProviderList());
+                // this.expandSize(tpvGraph);
+                // this.saveProducts(tpvGraph);
+                // this.expandArticlesAndProductCategory(tpvGraph.getArticleList(), tpvGraph.getProductCategoryList());
                 articleDao.save(tpvGraph.getArticleList());
                 embroideryDao.save(tpvGraph.getEmbroideryList());
                 textilePrintingDao.save(tpvGraph.getTextilePrintingList());
                 productCategoryDao.save(tpvGraph.getProductCategoryList());
                 categoryCompositeDao.save(tpvGraph.getCategoryCompositeList());
+
                 ticketDao.save(tpvGraph.getTicketList());
                 invoiceDao.save(tpvGraph.getInvoiceList());
                 cashierClosureDao.save(tpvGraph.getCashierClosureList());
@@ -140,6 +148,16 @@ public class DatabaseSeederService {
                 LogManager.getLogger(this.getClass().getSimpleName()).error("File " + ymlFileName + " doesn't exist or can't be opened");
             }
         }
+    }
+
+    protected void expandSize(TpvGraph tpvGraph) {
+        List<CategoryComposite> categoryCompositeList = tpvGraph.getCategoryCompositeList();
+        for (CategoryComposite categoryComposite : categoryCompositeList) {
+        }
+    }
+
+    protected void saveProducts(TpvGraph tpvGraph) {
+        // TODO Auto-generated method stub
     }
 
     public boolean existsYamlFile(String fileName) {

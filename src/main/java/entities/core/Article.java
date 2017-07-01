@@ -19,7 +19,8 @@ public class Article extends Product {
     public Article() {
     }
 
-    public Article(String code, String reference, BigDecimal retailPrice, String description, BigDecimal wholesalePrice, Provider provider) {
+    public Article(String code, String reference, BigDecimal retailPrice, String description, BigDecimal wholesalePrice,
+            Provider provider) {
         super(code, reference, retailPrice, description);
         this.stock = 0;
         this.wholesalePrice = wholesalePrice;
@@ -49,7 +50,7 @@ public class Article extends Product {
     public void setProvider(Provider provider) {
         this.provider = provider;
     }
-    
+
     @Override
     public String getLongDescription() {
         return "Article with " + stock + " units in stock and sold at a wholesale price of €" + wholesalePrice + ".";
@@ -57,7 +58,11 @@ public class Article extends Product {
 
     @Override
     public String toString() {
-        return "Article [" + super.toString() + "stock=" + stock + ", wholesalePrice=" + wholesalePrice + ", providerId=" + provider.getId()
+        String providerId = "null";
+        if (provider != null) {
+            providerId = "" + provider.getId();
+        }
+        return "Article [" + super.toString() + "stock=" + stock + ", wholesalePrice=" + wholesalePrice + ", providerId=" + providerId
                 + "]";
     }
 
