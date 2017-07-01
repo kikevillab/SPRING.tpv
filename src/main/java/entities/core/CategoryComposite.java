@@ -35,6 +35,14 @@ public class CategoryComposite extends CategoryComponent {
     public void addComponent(CategoryComponent component) {
         this.categoryComponents.add(component);
     }
+    
+    public void addComponents(List<ProductCategory> productCategoryExpandedList) {
+        this.categoryComponents.addAll(productCategoryExpandedList);
+    }
+    
+    public void removeComponent(CategoryComponent component){
+        this.categoryComponents.remove(component);
+    }
 
     @Override
     public Product product() {
@@ -45,4 +53,5 @@ public class CategoryComposite extends CategoryComponent {
     public String toString() {
         return super.toString() + "CategoryComposite [categoryComponents=" + categoryComponents + "]";
     }
+
 }

@@ -132,9 +132,7 @@ public class DatabaseSeederService {
                 tokenDao.save(tpvGraph.getTokenList());
                 voucherDao.save(tpvGraph.getVoucherList());
                 providerDao.save(tpvGraph.getProviderList());
-                // this.expandSize(tpvGraph);
-                // this.saveProducts(tpvGraph);
-                // this.expandArticlesAndProductCategory(tpvGraph.getArticleList(), tpvGraph.getProductCategoryList());
+                this.expandSize(tpvGraph);
                 articleDao.save(tpvGraph.getArticleList());
                 embroideryDao.save(tpvGraph.getEmbroideryList());
                 textilePrintingDao.save(tpvGraph.getTextilePrintingList());
@@ -151,13 +149,88 @@ public class DatabaseSeederService {
     }
 
     protected void expandSize(TpvGraph tpvGraph) {
-        List<CategoryComposite> categoryCompositeList = tpvGraph.getCategoryCompositeList();
-        for (CategoryComposite categoryComposite : categoryCompositeList) {
+        List<Article> articleListForRemove = new ArrayList<>();
+        List<Article> articleListForAdd = new ArrayList<>();
+        for (Article article : tpvGraph.getArticleList()) {
+            if (article.getReference().indexOf("[") != -1) {
+                List<Article> articleExpandList = this.expandArticle(article);
+                ProductCategory productCategory = findProductCategoryOfArticle(tpvGraph.getProductCategoryList(), article);
+                if (productCategory != null) {
+                    List<ProductCategory> productCategoryExpandedList = expandProductCategory(articleExpandList);
+                    changeCategoryCompositeOfProductCategory(tpvGraph.getCategoryCompositeList(), productCategory,
+                            productCategoryExpandedList);
+                    // Qitar de tpvGraph de ProductCategory el simple y añadir la lista
+                    tpvGraph.getProductCategoryList().remove(productCategory);
+                    tpvGraph.getProductCategoryList().addAll(productCategoryExpandedList);
+                }
+                // Preparar lista de add y remove
+                articleListForAdd.addAll(articleExpandList);
+                articleListForRemove.add(article);
+            }
         }
+        tpvGraph.getArticleList().removeAll(articleListForRemove);
+        tpvGraph.getArticleList().addAll(articleListForAdd);
     }
 
-    protected void saveProducts(TpvGraph tpvGraph) {
-        // TODO Auto-generated method stub
+    // Buscar los compuestos
+    // Cada compuesto cambiar a la lista de expandidos si le apunta
+    private void changeCategoryCompositeOfProductCategory(List<CategoryComposite> categoryCompositeList, ProductCategory productCategory,
+            List<ProductCategory> productCategoryExpandedList) {
+        for (CategoryComposite categoryComposite : categoryCompositeList) {
+            for (CategoryComponent categoryComponent : categoryComposite.components()) {
+                if (categoryComponent == productCategory) {
+                    categoryComposite.removeComponent(categoryComponent);
+                    categoryComposite.addComponents(productCategoryExpandedList);
+                    break;
+                }
+            }
+        }
+
+    }
+
+    protected List<Article> expandArticle(Article article) {
+        Barcode barcode = new Barcode();
+        List<Article> articlesExpanded = new ArrayList<>();
+        String articleReferenceBase = article.getReference().substring(0, article.getReference().indexOf("["));
+        int from = Integer
+                .parseInt(article.getReference().substring(article.getReference().indexOf("[") + 1, article.getReference().indexOf("..")));
+        int to = Integer
+                .parseInt(article.getReference().substring(article.getReference().indexOf("..") + 2, article.getReference().indexOf("]")));
+        for (int i = from; i <= to; i += 2) {
+            Article articleExpanded = new Article();
+            articleExpanded.setRetailPrice(article.getRetailPrice());
+            articleExpanded.setWholesalePrice(article.getWholesalePrice());
+            articleExpanded.setStock(article.getStock());
+            articleExpanded.setProvider(article.getProvider());
+            articleExpanded.setImage(article.getImage());
+            String base = article.getCode();
+            if (i < 10) {
+                base += "0";
+            }
+            articleExpanded.setCode(base + (i) + "000" + barcode.ean13ControlCodeCalculator(base + "000"));
+            articleExpanded.setReference(articleReferenceBase + i);
+            articleExpanded.setDescription(article.getDescription() + i);
+            articlesExpanded.add(articleExpanded);
+        }
+        return articlesExpanded;
+    }
+
+    private ProductCategory findProductCategoryOfArticle(List<ProductCategory> productCategoryList, Article article) {
+        for (ProductCategory productCategory : productCategoryList) {
+            if (productCategory.getProduct() == article) {
+                return productCategory;
+            }
+        }
+        return null;
+    }
+
+    private List<ProductCategory> expandProductCategory(List<Article> articleExpandList) {
+        List<ProductCategory> expandProductCategoryList = new ArrayList<>();
+        for (Article article : articleExpandList) {
+            expandProductCategoryList.add(new ProductCategory(article));
+        }
+        return expandProductCategoryList;
+
     }
 
     public boolean existsYamlFile(String fileName) {
