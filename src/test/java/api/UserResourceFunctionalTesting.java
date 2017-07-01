@@ -34,7 +34,7 @@ public class UserResourceFunctionalTesting {
                 .basicAuth(restService.loginAdmin(), "").delete().build();
     }
 
-    @Test
+    //@Test
     public void testCreateUnauthorized() {
         thrown.expect(new HttpMatcher(HttpStatus.UNAUTHORIZED));
         new RestBuilder<Object>(restService.getUrl()).path(Uris.USERS).body(new UserWrapper(667000000, "user", "pass"))

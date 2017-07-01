@@ -5,11 +5,10 @@ import java.util.List;
 
 import entities.core.Article;
 import entities.core.CashierClosure;
-import entities.core.CategoryComponent;
 import entities.core.CategoryComposite;
 import entities.core.Embroidery;
 import entities.core.Invoice;
-import entities.core.ProductCategory;
+import entities.core.CategoryProduct;
 import entities.core.Provider;
 import entities.core.TextilePrinting;
 import entities.core.Ticket;
@@ -40,31 +39,32 @@ public class TpvGraph {
 
     private List<Invoice> invoiceList;
 
-    private List<CategoryComponent> categoryComponentList;
-
-    private List<CashierClosure> cashierClosureList;
-    
     private List<CategoryComposite> categoryCompositeList;
     
-    private List<ProductCategory>  productCategoryList;
+    private List<CategoryProduct>  productCategoryList;
+    
+    private List<CashierClosure> cashierClosureList;
+    
 
     public TpvGraph() {
         super();
         userList = new ArrayList<>();
         authorizationList = new ArrayList<>();
         tokenList = new ArrayList<>();
-        voucherList = new ArrayList<>();
+        
+        providerList = new ArrayList<>();
+        
         articleList = new ArrayList<>();
         embroideryList = new ArrayList<>();
         textilePrintingList = new ArrayList<>();
-        providerList = new ArrayList<>();
+        
+        voucherList = new ArrayList<>();
         ticketList = new ArrayList<>();
         invoiceList = new ArrayList<>();
-
-        categoryComponentList = new ArrayList<>();
-        productCategoryList = new ArrayList<>();
         cashierClosureList = new ArrayList<>();
 
+        categoryCompositeList = new ArrayList<>();
+        productCategoryList = new ArrayList<>();
     }
 
     public List<User> getUserList() {
@@ -147,15 +147,7 @@ public class TpvGraph {
         this.invoiceList = invoiceList;
     }
 
-    public List<CategoryComponent> getCategoryComponentList() {
-        return categoryComponentList;
-    }
-
-    public void setCategoryComponentList(List<CategoryComponent> categoryComponentList) {
-        this.categoryComponentList = categoryComponentList;
-    }
-
-    public List<CashierClosure> getCashierClosureList() {
+     public List<CashierClosure> getCashierClosureList() {
         return cashierClosureList;
     }
 
@@ -171,11 +163,11 @@ public class TpvGraph {
         this.categoryCompositeList = categoryCompositeList;
     }
 
-    public List<ProductCategory> getProductCategoryList() {
+    public List<CategoryProduct> getProductCategoryList() {
         return productCategoryList;
     }
 
-    public void setProductCategoryList(List<ProductCategory> productCategoryList) {
+    public void setProductCategoryList(List<CategoryProduct> productCategoryList) {
         this.productCategoryList = productCategoryList;
     }
 

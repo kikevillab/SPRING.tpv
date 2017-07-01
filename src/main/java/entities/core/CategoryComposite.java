@@ -14,11 +14,12 @@ public class CategoryComposite extends CategoryComponent {
     private List<CategoryComponent> categoryComponents;
 
     public CategoryComposite() {
-        this(null,"");
+        this("");
+        this.setCode(null);
     }
 
-    public CategoryComposite(String code, String name) {
-        super(code, name);
+    public CategoryComposite(String name) {
+        this.setName(name);
         categoryComponents = new ArrayList<>();
     }
 
@@ -36,7 +37,7 @@ public class CategoryComposite extends CategoryComponent {
         this.categoryComponents.add(component);
     }
     
-    public void addComponents(List<ProductCategory> productCategoryExpandedList) {
+    public void addComponents(List<CategoryProduct> productCategoryExpandedList) {
         this.categoryComponents.addAll(productCategoryExpandedList);
     }
     

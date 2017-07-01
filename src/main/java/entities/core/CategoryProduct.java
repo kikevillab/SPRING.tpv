@@ -8,17 +8,17 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 @Entity
-public class ProductCategory extends CategoryComponent {
+public class CategoryProduct extends CategoryComponent {
 
     @OneToOne
     @JoinColumn
     private Product product;
 
-    public ProductCategory() {
+    public CategoryProduct() {
         super();
     }
 
-    public ProductCategory(Product product) {
+    public CategoryProduct(Product product) {
         this.setProduct(product);
     }
 

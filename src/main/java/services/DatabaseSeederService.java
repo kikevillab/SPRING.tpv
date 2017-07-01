@@ -38,7 +38,7 @@ import daos.users.UserDao;
 import entities.core.Article;
 import entities.core.CategoryComponent;
 import entities.core.CategoryComposite;
-import entities.core.ProductCategory;
+import entities.core.CategoryProduct;
 import entities.core.Provider;
 import entities.users.Authorization;
 import entities.users.Role;
@@ -154,9 +154,9 @@ public class DatabaseSeederService {
         for (Article article : tpvGraph.getArticleList()) {
             if (article.getReference().indexOf("[") != -1) {
                 List<Article> articleExpandList = this.expandArticle(article);
-                ProductCategory productCategory = findProductCategoryOfArticle(tpvGraph.getProductCategoryList(), article);
+                CategoryProduct productCategory = findProductCategoryOfArticle(tpvGraph.getProductCategoryList(), article);
                 if (productCategory != null) {
-                    List<ProductCategory> productCategoryExpandedList = expandProductCategory(articleExpandList);
+                    List<CategoryProduct> productCategoryExpandedList = expandProductCategory(articleExpandList);
                     changeCategoryCompositeOfProductCategory(tpvGraph.getCategoryCompositeList(), productCategory,
                             productCategoryExpandedList);
                     // Qitar de tpvGraph de ProductCategory el simple y añadir la lista
@@ -174,8 +174,8 @@ public class DatabaseSeederService {
 
     // Buscar los compuestos
     // Cada compuesto cambiar a la lista de expandidos si le apunta
-    private void changeCategoryCompositeOfProductCategory(List<CategoryComposite> categoryCompositeList, ProductCategory productCategory,
-            List<ProductCategory> productCategoryExpandedList) {
+    private void changeCategoryCompositeOfProductCategory(List<CategoryComposite> categoryCompositeList, CategoryProduct productCategory,
+            List<CategoryProduct> productCategoryExpandedList) {
         for (CategoryComposite categoryComposite : categoryCompositeList) {
             for (CategoryComponent categoryComponent : categoryComposite.components()) {
                 if (categoryComponent == productCategory) {
@@ -215,8 +215,8 @@ public class DatabaseSeederService {
         return articlesExpanded;
     }
 
-    private ProductCategory findProductCategoryOfArticle(List<ProductCategory> productCategoryList, Article article) {
-        for (ProductCategory productCategory : productCategoryList) {
+    private CategoryProduct findProductCategoryOfArticle(List<CategoryProduct> productCategoryList, Article article) {
+        for (CategoryProduct productCategory : productCategoryList) {
             if (productCategory.getProduct() == article) {
                 return productCategory;
             }
@@ -224,10 +224,10 @@ public class DatabaseSeederService {
         return null;
     }
 
-    private List<ProductCategory> expandProductCategory(List<Article> articleExpandList) {
-        List<ProductCategory> expandProductCategoryList = new ArrayList<>();
+    private List<CategoryProduct> expandProductCategory(List<Article> articleExpandList) {
+        List<CategoryProduct> expandProductCategoryList = new ArrayList<>();
         for (Article article : articleExpandList) {
-            expandProductCategoryList.add(new ProductCategory(article));
+            expandProductCategoryList.add(new CategoryProduct(article));
         }
         return expandProductCategoryList;
 
