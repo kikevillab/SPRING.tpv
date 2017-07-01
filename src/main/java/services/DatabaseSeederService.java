@@ -6,6 +6,9 @@ import static config.ResourceNames.YAML_FILES_ROOT;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
@@ -32,7 +35,11 @@ import daos.core.VoucherDao;
 import daos.users.AuthorizationDao;
 import daos.users.TokenDao;
 import daos.users.UserDao;
+import entities.core.Article;
 import entities.core.CategoryComponent;
+import entities.core.CategoryComposite;
+import entities.core.CategoryProduct;
+import entities.core.Provider;
 import entities.users.Authorization;
 import entities.users.Role;
 import entities.users.User;
@@ -125,11 +132,13 @@ public class DatabaseSeederService {
                 tokenDao.save(tpvGraph.getTokenList());
                 voucherDao.save(tpvGraph.getVoucherList());
                 providerDao.save(tpvGraph.getProviderList());
+                this.expandSize(tpvGraph);
                 articleDao.save(tpvGraph.getArticleList());
                 embroideryDao.save(tpvGraph.getEmbroideryList());
                 textilePrintingDao.save(tpvGraph.getTextilePrintingList());
                 productCategoryDao.save(tpvGraph.getProductCategoryList());
                 categoryCompositeDao.save(tpvGraph.getCategoryCompositeList());
+
                 ticketDao.save(tpvGraph.getTicketList());
                 invoiceDao.save(tpvGraph.getInvoiceList());
                 cashierClosureDao.save(tpvGraph.getCashierClosureList());
@@ -139,9 +148,105 @@ public class DatabaseSeederService {
         }
     }
 
+    protected void expandSize(TpvGraph tpvGraph) {
+        List<Article> articleListForRemove = new ArrayList<>();
+        List<Article> articleListForAdd = new ArrayList<>();
+        for (Article article : tpvGraph.getArticleList()) {
+            if (article.getReference().indexOf("[") != -1) {
+                List<Article> articleExpandList = this.expandArticle(article);
+                CategoryProduct productCategory = findProductCategoryOfArticle(tpvGraph.getProductCategoryList(), article);
+                if (productCategory != null) {
+                    List<CategoryProduct> productCategoryExpandedList = expandProductCategory(articleExpandList);
+                    changeCategoryCompositeOfProductCategory(tpvGraph.getCategoryCompositeList(), productCategory,
+                            productCategoryExpandedList);
+                    // Qitar de tpvGraph de ProductCategory el simple y añadir la lista
+                    tpvGraph.getProductCategoryList().remove(productCategory);
+                    tpvGraph.getProductCategoryList().addAll(productCategoryExpandedList);
+                }
+                // Preparar lista de add y remove
+                articleListForAdd.addAll(articleExpandList);
+                articleListForRemove.add(article);
+            }
+        }
+        tpvGraph.getArticleList().removeAll(articleListForRemove);
+        tpvGraph.getArticleList().addAll(articleListForAdd);
+    }
+
+    // Buscar los compuestos
+    // Cada compuesto cambiar a la lista de expandidos si le apunta
+    private void changeCategoryCompositeOfProductCategory(List<CategoryComposite> categoryCompositeList, CategoryProduct productCategory,
+            List<CategoryProduct> productCategoryExpandedList) {
+        for (CategoryComposite categoryComposite : categoryCompositeList) {
+            for (CategoryComponent categoryComponent : categoryComposite.components()) {
+                if (categoryComponent == productCategory) {
+                    categoryComposite.removeComponent(categoryComponent);
+                    categoryComposite.addComponents(productCategoryExpandedList);
+                    break;
+                }
+            }
+        }
+
+    }
+
+    protected List<Article> expandArticle(Article article) {
+        Barcode barcode = new Barcode();
+        List<Article> articlesExpanded = new ArrayList<>();
+        String articleReferenceBase = article.getReference().substring(0, article.getReference().indexOf("["));
+        int from = Integer
+                .parseInt(article.getReference().substring(article.getReference().indexOf("[") + 1, article.getReference().indexOf("..")));
+        int to = Integer
+                .parseInt(article.getReference().substring(article.getReference().indexOf("..") + 2, article.getReference().indexOf("]")));
+        for (int i = from; i <= to; i += 2) {
+            Article articleExpanded = new Article();
+            articleExpanded.setRetailPrice(article.getRetailPrice());
+            articleExpanded.setWholesalePrice(article.getWholesalePrice());
+            articleExpanded.setStock(article.getStock());
+            articleExpanded.setProvider(article.getProvider());
+            articleExpanded.setImage(article.getImage());
+            String base = article.getCode();
+            if (i < 10) {
+                base += "0";
+            }
+            articleExpanded.setCode(base + (i) + "000" + barcode.ean13ControlCodeCalculator(base + "000"));
+            articleExpanded.setReference(articleReferenceBase + i);
+            articleExpanded.setDescription(article.getDescription() + i);
+            articlesExpanded.add(articleExpanded);
+        }
+        return articlesExpanded;
+    }
+
+    private CategoryProduct findProductCategoryOfArticle(List<CategoryProduct> productCategoryList, Article article) {
+        for (CategoryProduct productCategory : productCategoryList) {
+            if (productCategory.getProduct() == article) {
+                return productCategory;
+            }
+        }
+        return null;
+    }
+
+    private List<CategoryProduct> expandProductCategory(List<Article> articleExpandList) {
+        List<CategoryProduct> expandProductCategoryList = new ArrayList<>();
+        for (Article article : articleExpandList) {
+            expandProductCategoryList.add(new CategoryProduct(article));
+        }
+        return expandProductCategoryList;
+
+    }
+
     public boolean existsYamlFile(String fileName) {
         Resource resource = appContext.getResource(YAML_FILES_ROOT + fileName);
         return resource.exists();
+    }
+
+    public void seedDatabaseVarious() {
+        Provider provider = new Provider("Anonimo", "", 0, 0, "", "");
+        providerDao.save(provider);
+        for (int i = 1; i < 10000; i++) {
+            Article article = new Article(String.valueOf(i), "Varios (" + i / 100 + "," + i % 100 + ")", new BigDecimal(i).movePointLeft(2),
+                    "Varios, sin cod. barras", new BigDecimal(i).movePointLeft(2), provider);
+            article.setStock(100000);
+            articleDao.save(article);
+        }
     }
 
     public void deleteAllExceptAdmin() {

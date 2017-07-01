@@ -11,6 +11,9 @@ public class Uris {
     public static final String CODE = "/{code}";
 
     public static final String ADMINS = "/admins";
+    
+    public static final String ADMINS_DATABASE_VARIOUS = "/various-articles";
+
 
     public static final String USERS = "/users";
 

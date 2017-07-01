@@ -25,11 +25,6 @@ public abstract class CategoryComponent {
     public CategoryComponent() {
     }
 
-    public CategoryComponent(String code, String name) {
-        this.code = code;
-        this.name = name;
-    }
-
     public long getId() {
         return id;
     }

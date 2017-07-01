@@ -88,7 +88,7 @@
 				<database.url>jdbc:mysql://test.clmwkhi0u7og.eu-west-1.rds.amazonaws.com:3306/tpv</database.url>
 				<database.user>admin</database.user>
 				<database.password>admin1234</database.password>
-				<hibernate.hbm2ddl.auto>create</hibernate.hbm2ddl.auto>
+				<hibernate.hbm2ddl.auto>create-drop</hibernate.hbm2ddl.auto>
 				<tomcat.url>http://miw-upm-tpv.herokuapp.com/api</tomcat.url>
 			</properties>
 		</profile>

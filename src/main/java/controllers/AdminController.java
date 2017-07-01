@@ -15,24 +15,24 @@ public class AdminController {
         this.databaseSeederService = databaseSeederService;
     }
 
+    public void seedDatabaseVarious() {
+        databaseSeederService.seedDatabaseVarious();
+    }
+
     public void deleteAllExceptAdmin() {
         databaseSeederService.deleteAllExceptAdmin();
     }
-    
-    public void seedDatabase(){
+
+    public void seedDatabase() {
         databaseSeederService.seedDatabase();
     }
-    
+
     public void seedDatabase(String ymlFileName) {
         databaseSeederService.seedDatabase(ymlFileName);
     }
-    
+
     public boolean existsYamlFile(String ymlFileName) {
         return databaseSeederService.existsYamlFile(ymlFileName);
     }
-    
-
-    
-    
 
 }

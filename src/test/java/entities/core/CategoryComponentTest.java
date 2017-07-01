@@ -13,10 +13,10 @@ public class CategoryComponentTest {
 
     @BeforeClass
     public static void setUpOnce() {
-        categoryComponent = new CategoryComposite(null, "ROPA");
-        categoryComponent.addComponent(new CategoryComposite(null, "CAMISAS"));
+        categoryComponent = new CategoryComposite("ROPA");
+        categoryComponent.addComponent(new CategoryComposite("CAMISAS"));
         categoryComponent.addComponent(
-                new ProductCategory(new Product("84000015410", "sadJGHDshdjh", new BigDecimal(0.0), "Nike's Air Sneakers") {
+                new CategoryProduct(new Product("84000015410", "sadJGHDshdjh", new BigDecimal(0.0), "Nike's Air Sneakers") {
                     @Override
                     public String getLongDescription() {
                         return "";
