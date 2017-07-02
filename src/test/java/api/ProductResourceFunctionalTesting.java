@@ -56,7 +56,7 @@ public class ProductResourceFunctionalTesting {
     public void testSetProductAsDiscontinued() {
         PatchChangeDescriptionWrapper patchChangeDescription = new PatchChangeDescriptionWrapper();
         patchChangeDescription.setOp(PatchOperations.REPLACE);
-        patchChangeDescription.setPath(Uris.DISCONTINUED);
+        patchChangeDescription.setPath(Uris.PRODUCT_DISCONTINUED);
         patchChangeDescription.setValue("true");
         List<PatchChangeDescriptionWrapper> patchChangeDescriptions = new ArrayList<>();
         patchChangeDescriptions.add(patchChangeDescription);
@@ -74,7 +74,7 @@ public class ProductResourceFunctionalTesting {
         List<ProductBarcodeWrapper> productBarcodeWrappers = new ArrayList<>();
         productBarcodeWrappers.add(productBarcode8400000002223);
         productBarcodeWrappers.add(productBarcode8400000001111);
-        new RestBuilder<Object>(restService.getUrl()).path(Uris.PRODUCTS + Uris.BARCODES).body(productBarcodeWrappers).post().build();
+        new RestBuilder<Object>(restService.getUrl()).path(Uris.PRODUCTS + Uris.PRODUCT_BARCODES).body(productBarcodeWrappers).post().build();
     }
 
     @Test
@@ -85,7 +85,7 @@ public class ProductResourceFunctionalTesting {
         List<ProductBarcodeWrapper> productBarcodeWrappers = new ArrayList<>();
         productBarcodeWrappers.add(productBarcode8400000002223);
         productBarcodeWrappers.add(productBarcode8400000001111);
-        new RestBuilder<Object>(restService.getUrl()).path(Uris.PRODUCTS + Uris.BARCODES).body(productBarcodeWrappers).post().build();
+        new RestBuilder<Object>(restService.getUrl()).path(Uris.PRODUCTS + Uris.PRODUCT_BARCODES).body(productBarcodeWrappers).post().build();
     }
 
  }

@@ -52,7 +52,7 @@ public class VoucherResource {
         return voucherController.findAllVouchers();
     }
 
-    @RequestMapping(value = Uris.REFERENCE, method = RequestMethod.GET)
+    @RequestMapping(value = Uris.TICKET_REFERENCE_ID, method = RequestMethod.GET)
     public Voucher findVoucherByReference(@PathVariable String reference) throws VoucherNotFoundException {
         throwExceptionIfVoucherDoesNotExist(reference);
         return voucherController.findVoucherByReference(reference);
@@ -63,7 +63,7 @@ public class VoucherResource {
         return voucherController.getActiveVouchersTotalValue();
     }
 
-    @RequestMapping(value = Uris.REFERENCE + Uris.VOUCHER_CONSUMPTION, method = RequestMethod.PUT)
+    @RequestMapping(value = Uris.TICKET_REFERENCE_ID + Uris.VOUCHER_CONSUMPTION, method = RequestMethod.PUT)
     public void consumeVoucher(@PathVariable String reference)
             throws VoucherNotFoundException, VoucherAlreadyConsumedException, VoucherHasExpiredException {
         throwExceptionIfVoucherDoesNotExist(reference);

@@ -54,7 +54,7 @@ public class VoucherController {
     }
 
     public ActiveVouchersTotalValueWrapper getActiveVouchersTotalValue() {
-        double totalValue = 0.0;
+        Double totalValue = 0.0;
         for (Voucher voucher : findAllActiveVouchers()) {
             totalValue += voucher.getValue().doubleValue();
         }

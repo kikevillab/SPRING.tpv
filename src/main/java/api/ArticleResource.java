@@ -33,7 +33,7 @@ public class ArticleResource {
     }
 
     //TODO ArticleUpdateWrapper codigo repetido respecto ArticleWrapper
-    @RequestMapping(value = Uris.CODE, method = RequestMethod.PUT)
+    @RequestMapping(value = Uris.PRODUCT_CODE_ID, method = RequestMethod.PUT)
     public void updateArticle(@PathVariable String code, @RequestBody ArticleUpdateWrapper articleUpdateWrapper) throws ArticleNotFoundException {
         throwExceptionIfArticleDoesNotExist(code);
         articleController.updateArticle(articleUpdateWrapper);
@@ -44,13 +44,13 @@ public class ArticleResource {
         return articleController.findAllArticles();
     }
 
-    @RequestMapping(value = Uris.CODE, method = RequestMethod.GET)
+    @RequestMapping(value = Uris.PRODUCT_CODE_ID, method = RequestMethod.GET)
     public ArticleWrapper findOneArticle(@PathVariable String code) throws ArticleNotFoundException {
         throwExceptionIfArticleDoesNotExist(code);
         return articleController.findOneArticle(code);
     }
     
-    @RequestMapping(value = Uris.CODE, method = RequestMethod.DELETE)
+    @RequestMapping(value = Uris.PRODUCT_CODE_ID, method = RequestMethod.DELETE)
     public void deleteArticle(@PathVariable String code) throws ArticleNotFoundException{
         throwExceptionIfArticleDoesNotExist(code);
         articleController.deleteArticle(code);        

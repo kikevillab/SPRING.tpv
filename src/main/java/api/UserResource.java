@@ -39,12 +39,12 @@ public class UserResource {
         this.userController = userController;
     }
 
-    @RequestMapping(value = Uris.USERS + Uris.PHONE, method = RequestMethod.GET)
-    public UserDetailsWrapper findUserByMobilePhone(@PathVariable long mobilePhone) throws UserMobileNotFoundException {
-        if (!userController.userExists(mobilePhone)) {
+    @RequestMapping(value = Uris.USERS + Uris.USER_MOBILE_ID, method = RequestMethod.GET)
+    public UserDetailsWrapper findUserByMobilePhone(@PathVariable long mobile) throws UserMobileNotFoundException {
+        if (!userController.userExists(mobile)) {
             throw new UserMobileNotFoundException();
         }
-        return userController.findUserByMobilePhone(mobilePhone);
+        return userController.findUserByMobilePhone(mobile);
     }
 
     @RequestMapping(value = Uris.USERS, method = RequestMethod.PUT)
@@ -55,30 +55,25 @@ public class UserResource {
         userController.updateUser(userWrapper);
     }
 
-
     @ApiOperation(value = "Find partners")
     @ApiImplicitParams({
-        @ApiImplicitParam(name = "page", dataType = "integer", paramType = "query",
-                value = "Results page you want to retrieve (0..N)"),
-        @ApiImplicitParam(name = "size", dataType = "integer", paramType = "query",
-                value = "Number of records per page."),
-        @ApiImplicitParam(name = "sort", allowMultiple = true, dataType = "string", paramType = "query",
-                value = "Sorting criteria in the format: property(,asc|desc). " +
-                        "Default sort order is ascending. " +
-                        "Multiple sort criteria are supported.")
-    })
+            @ApiImplicitParam(name = "page", dataType = "integer", paramType = "query", value = "Results page you want to retrieve (0..N)"),
+            @ApiImplicitParam(name = "size", dataType = "integer", paramType = "query", value = "Number of records per page."),
+            @ApiImplicitParam(name = "sort", allowMultiple = true, dataType = "string", paramType = "query", value = "Sorting criteria in the format: property(,asc|desc). "
+                    + "Default sort order is ascending. " + "Multiple sort criteria are supported.")})
     @RequestMapping(value = Uris.USERS, method = RequestMethod.GET)
     // @PreAuthorize("hasRole('ADMIN')")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    public Page<UserWrapper> userList(@ApiIgnore final Pageable pageable, String role) throws UserInvalidFieldException {
+    public Page<UserWrapper> userList(@ApiIgnore
+    final Pageable pageable, String role) throws UserInvalidFieldException {
         this.validateFieldObject(pageable, "Pageable: objeto para paginar");
         if (this.StringToRole(role) == null)
             return null;
         return userController.getAllAndRole(pageable, Role.valueOf(Role.class, role));
     }
 
-    @RequestMapping(value = Uris.USERS + Uris.MOBILE, method = RequestMethod.GET)
+    @RequestMapping(value = Uris.USERS + Uris.USER_MOBILE, method = RequestMethod.GET)
     // @PreAuthorize("hasRole('ADMIN')")
     public UserWrapper userMobile(long mobile, String role) throws UserInvalidFieldException {
         this.validateFieldObject(mobile, "mobile");
@@ -87,7 +82,7 @@ public class UserResource {
         return userController.getByMobileAndRole(mobile, Role.valueOf(Role.class, role));
     }
 
-    @RequestMapping(value = Uris.USERS + Uris.IDENTIFICATION, method = RequestMethod.GET)
+    @RequestMapping(value = Uris.USERS + Uris.USER_IDENTIFICATION, method = RequestMethod.GET)
     // @PreAuthorize("hasRole('ADMIN')")
     public UserWrapper userIdentificacion(String identification, String role) throws UserInvalidFieldException {
         this.validateField(identification, "identification:dni");
@@ -96,7 +91,7 @@ public class UserResource {
         return userController.getByDniAndRole(identification, Role.valueOf(Role.class, role));
     }
 
-    @RequestMapping(value = Uris.USERS + Uris.EMAIL, method = RequestMethod.GET)
+    @RequestMapping(value = Uris.USERS + Uris.USER_EMAIL, method = RequestMethod.GET)
     // @PreAuthorize("hasRole('ADMIN')")
     public UserWrapper userEmail(@RequestParam(value = "email") String email, String role) throws UserInvalidFieldException {
         this.validateField(email, "email");
@@ -117,7 +112,7 @@ public class UserResource {
         }
     }
 
-    @RequestMapping(value = Uris.USERS + Uris.USER_MOBILE, method = RequestMethod.DELETE)
+    @RequestMapping(value = Uris.USERS + Uris.USER_MOBILE_ID, method = RequestMethod.DELETE)
     // @PreAuthorize("hasRole('ADMIN')")
     public void deleteUser(@PathVariable long mobile) throws UserNotErasableException {
         try {
@@ -127,15 +122,13 @@ public class UserResource {
         }
     }
 
-    @RequestMapping(value = Uris.USERS +Uris.TICKET_REFERENCE+Uris.REFERENCE, method = RequestMethod.GET)
-    public UserWrapper getByTicketReference(@PathVariable (value = "reference") String reference)
+    @RequestMapping(value = Uris.USERS + Uris.TICKET_REFERENCE + Uris.TICKET_REFERENCE_ID, method = RequestMethod.GET)
+    public UserWrapper getByTicketReference(@PathVariable(value = "reference") String reference)
             throws TicketReferenceNotFoundException, UserInvalidFieldException {
         validateField(reference, "ticketReference");
         return this.userController.getByTicketReference(reference);
     }
-    
-    
-    
+
     private void validateFieldObject(Object objeto, String msg) throws UserInvalidFieldException {
         if (objeto == null)
             throw new UserInvalidFieldException(msg);

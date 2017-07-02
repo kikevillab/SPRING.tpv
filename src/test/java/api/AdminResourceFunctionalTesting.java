@@ -27,14 +27,14 @@ public class AdminResourceFunctionalTesting {
     @Test
     public void testSeedDatabaseFileNotFound() {
         thrown.expect(new HttpMatcher(HttpStatus.NOT_FOUND));
-        new RestBuilder<Object>(restService.getUrl()).path(Uris.ADMINS).path(Uris.DATABASE).body(new FileNameWrapper("nonExistent.yml"))
+        new RestBuilder<Object>(restService.getUrl()).path(Uris.ADMINS).path(Uris.ADMINS_DATABASE).body(new FileNameWrapper("nonExistent.yml"))
                 .basicAuth(restService.loginAdmin(), "").post().build();
     }
 
     @Test
     public void testSeedDatabase() {
         restService.deleteAllExceptAdmin();
-        new RestBuilder<Object>(restService.getUrl()).path(Uris.ADMINS).path(Uris.DATABASE)
+        new RestBuilder<Object>(restService.getUrl()).path(Uris.ADMINS).path(Uris.ADMINS_DATABASE)
                 .body(TEST_SEED_YAML_FILE_NAME).basicAuth(restService.loginAdmin(), "").post().build();
     }
 
