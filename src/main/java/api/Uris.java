@@ -14,16 +14,11 @@ public class Uris {
     
     public static final String ADMINS_DATABASE_VARIOUS = "/various-articles";
 
-
     public static final String USERS = "/users";
-
-    public static final String CUSTOMERS = "/customers";
 
     public static final String TOKENS = "/tokens";
 
     public static final String ACTIVE = "/active";
-
-    public static final String DATABASE_SEED = "/db_seed";
 
     public static final String PRODUCTS = "/products";
 
@@ -52,10 +47,6 @@ public class Uris {
     public static final String USER_IDENTIFICATION = "/{identification}";
 
     public static final String USER_EMAIL = "/{email}";
-
-    public static final String OPERATORS = "/operators";
-
-    public static final String MANAGERS = "/managers";
 
     public static final String PHONE = "/{mobilePhone}";
 

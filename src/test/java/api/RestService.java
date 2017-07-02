@@ -13,8 +13,6 @@ import wrappers.TokenWrapper;
 @Component
 public class RestService {
 
-    public static final String URL = Uris.VERSION;
-
     private String url;
 
     private String adminToken;
