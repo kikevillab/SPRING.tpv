@@ -4,7 +4,7 @@ public class CategoryComponentNotFoundException extends ApiException {
 
     private static final long serialVersionUID = -4101618007964666528L;
 
-    private static final String DESCRIPTION = "Category not found. ";
+    private static final String DESCRIPTION = "Nombre de categoria no encontrado";
 
     private static final int CODE = 31;
 

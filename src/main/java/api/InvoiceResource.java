@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import api.exceptions.TicketHasInvalidUserException;
-import api.exceptions.TicketIsAlreadyAssignedToInvoiceException;
+import api.exceptions.TicketUserInvalidException;
+import api.exceptions.TicketInvoiceAlreadyAssignedException;
 import config.ResourceNames;
 import controllers.InvoiceController;
 import controllers.TicketController;
@@ -51,13 +51,13 @@ public class InvoiceResource {
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<byte[]> createInvoice(@RequestBody TicketReferenceWrapper ticketReferenceWrapper)
-            throws TicketHasInvalidUserException, TicketIsAlreadyAssignedToInvoiceException, IOException {
+            throws TicketUserInvalidException, TicketInvoiceAlreadyAssignedException, IOException {
         Ticket ticket = ticketController.findOneTicket(ticketReferenceWrapper);
         if (!userController.userIsValid(ticket.getUser())) {
-            throw new TicketHasInvalidUserException("User: " + ticket.getUser());
+            throw new TicketUserInvalidException("User: " + ticket.getUser());
         }
         if (ticketController.ticketIsAlreadyAssignedToInvoice(ticket)) {
-            throw new TicketIsAlreadyAssignedToInvoiceException("Ticket: " + ticket);
+            throw new TicketInvoiceAlreadyAssignedException("Ticket: " + ticket);
         }
         InvoiceCreationResponseWrapper invoiceWrapper = invoiceController.createInvoice(ticket);
         HttpHeaders headers = new HttpHeaders();

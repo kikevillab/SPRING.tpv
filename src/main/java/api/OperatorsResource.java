@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import api.exceptions.AlreadyExistUserFieldException;
-import api.exceptions.InvalidUserFieldException;
+import api.exceptions.UserFieldAlreadyExistException;
+import api.exceptions.UserInvalidFieldException;
 import controllers.UserController;
 import entities.users.Role;
 import io.swagger.annotations.ApiImplicitParam;
@@ -42,14 +42,14 @@ public class OperatorsResource {
     })
     @RequestMapping(method = RequestMethod.GET)
     //@PreAuthorize("hasRole('ADMIN')")
-    public Page<UserWrapper> userList(Pageable pageable) throws InvalidUserFieldException {
+    public Page<UserWrapper> userList(Pageable pageable) throws UserInvalidFieldException {
         this.validateFieldObject(pageable, "Pageable: objeto para paginar");
         return userController.getAllAndRole(pageable,Role.OPERATOR);
     }
 
     @RequestMapping(value = Uris.MOBILE+ Uris.USER_MOBILE, method = RequestMethod.GET)
     //@PreAuthorize("hasRole('ADMIN')")
-    public UserWrapper userMobile(@PathVariable long mobile) throws InvalidUserFieldException {
+    public UserWrapper userMobile(@PathVariable long mobile) throws UserInvalidFieldException {
         this.validateFieldObject(mobile,"mobile");
         return userController.getByMobileAndRole(mobile,Role.OPERATOR);
     }
@@ -58,47 +58,47 @@ public class OperatorsResource {
 
     @RequestMapping(value = Uris.IDENTIFICATION + Uris.USER_IDENTIFICATION, method = RequestMethod.GET)
    // @PreAuthorize("hasRole('ADMIN')")
-    public UserWrapper userIdentificacion(@PathVariable(value = "identification") String identification) throws InvalidUserFieldException {
+    public UserWrapper userIdentificacion(@PathVariable(value = "identification") String identification) throws UserInvalidFieldException {
         this.validateField(identification, "identification:dni");
         return userController.getByDniAndRole(identification,Role.OPERATOR);
     }
 
     @RequestMapping(value = Uris.EMAIL , method = RequestMethod.GET)
     //@PreAuthorize("hasRole('ADMIN')")
-    public UserWrapper userEmail(@RequestParam(value = "email") String email) throws InvalidUserFieldException {
+    public UserWrapper userEmail(@RequestParam(value = "email") String email) throws UserInvalidFieldException {
         this.validateField(email, "email");
         return userController.getByEmailAndRole(email,Role.OPERATOR);
     }
     
     @RequestMapping(method = RequestMethod.POST)
     public void customerRegistration(@RequestBody UserWrapper userWrapper)
-            throws InvalidUserFieldException, AlreadyExistUserFieldException {
+            throws UserInvalidFieldException, UserFieldAlreadyExistException {
         this.validateFieldRegiter(userWrapper, "UserWrapper:usuario");
         if (!this.userController.registration(userWrapper, Role.OPERATOR)) {
-            throw new AlreadyExistUserFieldException();
+            throw new UserFieldAlreadyExistException();
         }
     }
     
     
     
-    private void validateFieldObject (Object objeto, String msg) throws InvalidUserFieldException{
+    private void validateFieldObject (Object objeto, String msg) throws UserInvalidFieldException{
         if (objeto==null)
-            throw new InvalidUserFieldException(msg);
+            throw new UserInvalidFieldException(msg);
     }
 
-    private void validateField(String field, String msg) throws InvalidUserFieldException {
+    private void validateField(String field, String msg) throws UserInvalidFieldException {
         if (field == null || field.isEmpty()) {
-            throw new InvalidUserFieldException(msg);
+            throw new UserInvalidFieldException(msg);
         }
     }
 
-    private void validateFieldRegiter(UserWrapper user, String msg) throws InvalidUserFieldException {
+    private void validateFieldRegiter(UserWrapper user, String msg) throws UserInvalidFieldException {
         if (user == null) {
-            throw new InvalidUserFieldException(msg);
+            throw new UserInvalidFieldException(msg);
         }
         else{
             if ((user.getPassword()==null)||(user.getUsername()==null))
-                throw new InvalidUserFieldException(msg);
+                throw new UserInvalidFieldException(msg);
         }
     }
 
