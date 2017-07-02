@@ -4,7 +4,7 @@ public class VoucherNotFoundException extends ApiException {
     
     private static final long serialVersionUID = 3949949430958694740L;
 
-    public static final String DESCRIPTION = "Voucher not found.";
+    public static final String DESCRIPTION = "Vale no encontrado";
 
     public static final int CODE = 22;
 

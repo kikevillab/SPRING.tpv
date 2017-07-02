@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import api.exceptions.NotFoundYamlFileException;
+import api.exceptions.FileNameNotFoundException;
 import controllers.AdminController;
 import controllers.RemoveTokenExpiredController;
 import io.swagger.annotations.ApiOperation;
@@ -35,12 +35,12 @@ public class AdminResource {
     }
 
     @RequestMapping(value = Uris.DATABASE, method = RequestMethod.POST)
-    public void seedDatabase(@RequestBody(required = false) String ymlFileName) throws NotFoundYamlFileException {
+    public void seedDatabase(@RequestBody(required = false) String ymlFileName) throws FileNameNotFoundException {
         if (ymlFileName == null) {
             adminController.seedDatabase();
         } else {
             if (!adminController.existsYamlFile(ymlFileName)) {
-                throw new NotFoundYamlFileException();
+                throw new FileNameNotFoundException();
             } else {
                 adminController.seedDatabase(ymlFileName);
             }

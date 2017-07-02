@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import api.exceptions.AlreadyExistUserFieldException;
-import api.exceptions.CannotDeleteUserException;
-import api.exceptions.InvalidUserFieldException;
-import api.exceptions.NotFoundTicketReferenceException;
-import api.exceptions.NotFoundUserIdException;
-import api.exceptions.NotFoundUserMobileException;
+import api.exceptions.UserFieldAlreadyExistException;
+import api.exceptions.UserNotErasableException;
+import api.exceptions.UserInvalidFieldException;
+import api.exceptions.TicketReferenceNotFoundException;
+import api.exceptions.UserIdNotFoundException;
+import api.exceptions.UserMobileNotFoundException;
 import controllers.UserController;
 import entities.users.Role;
 import io.swagger.annotations.ApiImplicitParam;
@@ -40,17 +40,17 @@ public class UserResource {
     }
 
     @RequestMapping(value = Uris.USERS + Uris.PHONE, method = RequestMethod.GET)
-    public UserDetailsWrapper findUserByMobilePhone(@PathVariable long mobilePhone) throws NotFoundUserMobileException {
+    public UserDetailsWrapper findUserByMobilePhone(@PathVariable long mobilePhone) throws UserMobileNotFoundException {
         if (!userController.userExists(mobilePhone)) {
-            throw new NotFoundUserMobileException();
+            throw new UserMobileNotFoundException();
         }
         return userController.findUserByMobilePhone(mobilePhone);
     }
 
     @RequestMapping(value = Uris.USERS, method = RequestMethod.PUT)
-    public void updateUser(@RequestBody UserWrapper userWrapper) throws NotFoundUserIdException {
+    public void updateUser(@RequestBody UserWrapper userWrapper) throws UserIdNotFoundException {
         if (!userController.userExists(userWrapper.getId())) {
-            throw new NotFoundUserIdException("User id: " + userWrapper.getId());
+            throw new UserIdNotFoundException("User id: " + userWrapper.getId());
         }
         userController.updateUser(userWrapper);
     }
@@ -71,7 +71,7 @@ public class UserResource {
     // @PreAuthorize("hasRole('ADMIN')")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    public Page<UserWrapper> userList(@ApiIgnore final Pageable pageable, String role) throws InvalidUserFieldException {
+    public Page<UserWrapper> userList(@ApiIgnore final Pageable pageable, String role) throws UserInvalidFieldException {
         this.validateFieldObject(pageable, "Pageable: objeto para paginar");
         if (this.StringToRole(role) == null)
             return null;
@@ -80,7 +80,7 @@ public class UserResource {
 
     @RequestMapping(value = Uris.USERS + Uris.MOBILE, method = RequestMethod.GET)
     // @PreAuthorize("hasRole('ADMIN')")
-    public UserWrapper userMobile(long mobile, String role) throws InvalidUserFieldException {
+    public UserWrapper userMobile(long mobile, String role) throws UserInvalidFieldException {
         this.validateFieldObject(mobile, "mobile");
         if (this.StringToRole(role) == null)
             return null;
@@ -89,7 +89,7 @@ public class UserResource {
 
     @RequestMapping(value = Uris.USERS + Uris.IDENTIFICATION, method = RequestMethod.GET)
     // @PreAuthorize("hasRole('ADMIN')")
-    public UserWrapper userIdentificacion(String identification, String role) throws InvalidUserFieldException {
+    public UserWrapper userIdentificacion(String identification, String role) throws UserInvalidFieldException {
         this.validateField(identification, "identification:dni");
         if (this.StringToRole(role) == null)
             return null;
@@ -98,7 +98,7 @@ public class UserResource {
 
     @RequestMapping(value = Uris.USERS + Uris.EMAIL, method = RequestMethod.GET)
     // @PreAuthorize("hasRole('ADMIN')")
-    public UserWrapper userEmail(@RequestParam(value = "email") String email, String role) throws InvalidUserFieldException {
+    public UserWrapper userEmail(@RequestParam(value = "email") String email, String role) throws UserInvalidFieldException {
         this.validateField(email, "email");
         if (this.StringToRole(role) == null)
             return null;
@@ -107,52 +107,52 @@ public class UserResource {
 
     @RequestMapping(value = Uris.USERS, method = RequestMethod.POST)
     public void userRegistration(@RequestBody UserWrapper userWrapper, String role)
-            throws InvalidUserFieldException, AlreadyExistUserFieldException {
+            throws UserInvalidFieldException, UserFieldAlreadyExistException {
         this.validateFieldRegiter(userWrapper, "UserWrapper:usuario");
         validateField(userWrapper.getUsername(), "username");
         if (this.StringToRole(role) == null)
             return;
         if (!this.userController.registration(userWrapper, Role.valueOf(Role.class, role))) {
-            throw new AlreadyExistUserFieldException();
+            throw new UserFieldAlreadyExistException();
         }
     }
 
     @RequestMapping(value = Uris.USERS + Uris.USER_MOBILE, method = RequestMethod.DELETE)
     // @PreAuthorize("hasRole('ADMIN')")
-    public void deleteUser(@PathVariable long mobile) throws CannotDeleteUserException {
+    public void deleteUser(@PathVariable long mobile) throws UserNotErasableException {
         try {
             this.userController.deleteUser(mobile);
         } catch (Exception e) {
-            throw new CannotDeleteUserException();
+            throw new UserNotErasableException();
         }
     }
 
     @RequestMapping(value = Uris.USERS +Uris.TICKET_REFERENCE+Uris.REFERENCE, method = RequestMethod.GET)
     public UserWrapper getByTicketReference(@PathVariable (value = "reference") String reference)
-            throws NotFoundTicketReferenceException, InvalidUserFieldException {
+            throws TicketReferenceNotFoundException, UserInvalidFieldException {
         validateField(reference, "ticketReference");
         return this.userController.getByTicketReference(reference);
     }
     
     
     
-    private void validateFieldObject(Object objeto, String msg) throws InvalidUserFieldException {
+    private void validateFieldObject(Object objeto, String msg) throws UserInvalidFieldException {
         if (objeto == null)
-            throw new InvalidUserFieldException(msg);
+            throw new UserInvalidFieldException(msg);
     }
 
-    private void validateFieldRegiter(UserWrapper user, String msg) throws InvalidUserFieldException {
+    private void validateFieldRegiter(UserWrapper user, String msg) throws UserInvalidFieldException {
         if (user == null) {
-            throw new InvalidUserFieldException(msg);
+            throw new UserInvalidFieldException(msg);
         } else {
             if ((user.getPassword() == null) || (user.getUsername() == null))
-                throw new InvalidUserFieldException(msg);
+                throw new UserInvalidFieldException(msg);
         }
     }
 
-    private void validateField(String field, String msg) throws InvalidUserFieldException {
+    private void validateField(String field, String msg) throws UserInvalidFieldException {
         if (field == null || field.isEmpty()) {
-            throw new InvalidUserFieldException(msg);
+            throw new UserInvalidFieldException(msg);
         }
     }
 

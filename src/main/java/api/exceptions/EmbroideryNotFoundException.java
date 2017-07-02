@@ -4,7 +4,7 @@ public class EmbroideryNotFoundException extends ApiException {
 
     private static final long serialVersionUID = 7540534828581910301L;
     
-    private static final String DESCRIPTION = "Embroidery not found.";
+    private static final String DESCRIPTION = "Bordado no encontrado";
 
     private static final int CODE = 28;
 

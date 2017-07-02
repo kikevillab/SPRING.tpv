@@ -4,7 +4,7 @@ public class TicketNotFoundException extends ApiException {
 
     private static final long serialVersionUID = -9070950214395814630L;
 
-    public static final String DESCRIPTION = "Ticket not found";
+    public static final String DESCRIPTION = "Ticket no encontrado";
 
     public static final int CODE = 21;
     

@@ -19,8 +19,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import api.exceptions.NotFoundTicketReferenceException;
-import api.exceptions.NotFoundUserMobileException;
+import api.exceptions.TicketReferenceNotFoundException;
+import api.exceptions.UserMobileNotFoundException;
 import config.PersistenceConfig;
 import config.TestsControllerConfig;
 import config.TestsPersistenceConfig;
@@ -246,7 +246,7 @@ public class UserControllerIT {
             long invalidNumber=-1;
             this.userController.deleteUser(invalidNumber);
             fail();
-        } catch (NotFoundUserMobileException exception) {
+        } catch (UserMobileNotFoundException exception) {
             assertTrue(true);
         }
     }
@@ -258,7 +258,7 @@ public class UserControllerIT {
         try {
             UserWrapper user = this.userController.getByTicketReference(tickets.get(1).getReference());
             assertEquals(tickets.get(1).getUser().getMobile(), user.getMobile());
-        } catch (NotFoundTicketReferenceException exception) {
+        } catch (TicketReferenceNotFoundException exception) {
             LogManager.getLogger(this.getClass()).info("testGetByTicketReference was wrong:  " + exception.getMessage());
             fail();
         }
@@ -269,7 +269,7 @@ public class UserControllerIT {
         try {
             this.userController.getByTicketReference(INVALID_TICKET_REFERENCE);
             fail();
-        } catch (NotFoundTicketReferenceException exception) {
+        } catch (TicketReferenceNotFoundException exception) {
             assertTrue(true);
         }
     }
@@ -282,7 +282,7 @@ public class UserControllerIT {
             userController.registration(new UserWrapper(mobile, "usuarioDelete", "passDelete"), Role.CUSTOMER);
             this.userController.deleteUser(mobile);
             assertFalse(this.userController.userMobileExists(mobile));
-        } catch (NotFoundUserMobileException exception) {
+        } catch (UserMobileNotFoundException exception) {
             fail();
         }
     }

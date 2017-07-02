@@ -1,8 +1,8 @@
 package api;
 
-import api.exceptions.LastCashierClosureIsClosedException;
-import api.exceptions.LastCashierClosureIsOpenYetException;
-import api.exceptions.NotExistsCashierClosuresException;
+import api.exceptions.LastCashierClosedException;
+import api.exceptions.LastCashierOpenException;
+import api.exceptions.CashierClosingNotFoundException;
 import controllers.CashierClosuresController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,18 +27,18 @@ public class CashierClosuresResource {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public CashierClosuresCreationWrapper createCashierClosures() throws LastCashierClosureIsOpenYetException {
+    public CashierClosuresCreationWrapper createCashierClosures() throws LastCashierOpenException {
         if (!cashierClosuresController.isLastCashierClosuresClosed()) {
-            throw new LastCashierClosureIsOpenYetException();
+            throw new LastCashierOpenException();
         }
 
         return new CashierClosuresCreationWrapper(cashierClosuresController.createCashierClosures());
     }
 
     @RequestMapping(method = RequestMethod.GET, path = Uris.CASHIER_CLOSURES_LAST)
-    public CashierClosuresWrapper getLastCashierClosure() throws NotExistsCashierClosuresException {
+    public CashierClosuresWrapper getLastCashierClosure() throws CashierClosingNotFoundException {
         if (cashierClosuresController.getLastCashierClosure() == null) {
-            throw new NotExistsCashierClosuresException();
+            throw new CashierClosingNotFoundException();
         }
 
         return new CashierClosuresWrapper(cashierClosuresController.getLastCashierClosure());
@@ -46,9 +46,9 @@ public class CashierClosuresResource {
 
     @RequestMapping(method = RequestMethod.PUT, path = Uris.CASHIER_CLOSURES_CLOSE)
     public CashierClosuresWrapper closeCashierRequest(@RequestBody CashierClosingWrapper cashierClosingWrapper)
-            throws LastCashierClosureIsClosedException {
+            throws LastCashierClosedException {
         if (cashierClosuresController.isLastCashierClosuresClosed()) {
-            throw new LastCashierClosureIsClosedException();
+            throw new LastCashierClosedException();
         }
 
         return new CashierClosuresWrapper(
@@ -57,18 +57,18 @@ public class CashierClosuresResource {
 
     @RequestMapping(method = RequestMethod.PUT, path = Uris.CASHIER_CLOSURES_DEPOSIT)
     public CashierClosuresWrapper depositCashierRequest(@RequestBody AmountWrapper amountWrapper)
-            throws LastCashierClosureIsClosedException {
+            throws LastCashierClosedException {
         if (cashierClosuresController.isLastCashierClosuresClosed()) {
-            throw new LastCashierClosureIsClosedException();
+            throw new LastCashierClosedException();
         }
         return new CashierClosuresWrapper(cashierClosuresController.depositCashierRequest(amountWrapper.getAmount()));
     }
 
     @RequestMapping(method = RequestMethod.PUT, path = Uris.CASHIER_CLOSURES_WITHDRAW)
     public CashierClosuresWrapper withDrawCashierRequest(@RequestBody AmountWrapper amountWrapper)
-            throws LastCashierClosureIsClosedException {
+            throws LastCashierClosedException {
         if (cashierClosuresController.isLastCashierClosuresClosed()) {
-            throw new LastCashierClosureIsClosedException();
+            throw new LastCashierClosedException();
         }
 
         return new CashierClosuresWrapper(cashierClosuresController.withDrawCashierRequest(amountWrapper.getAmount()));

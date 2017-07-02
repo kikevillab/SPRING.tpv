@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import api.exceptions.NotFoundYamlFileException;
+import api.exceptions.FileNameNotFoundException;
 import controllers.DatabaseSeederController;
 import wrappers.FileNameWrapper;
 
@@ -22,10 +22,10 @@ public class DatabaseSeedResource {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public void seedDatabase(@RequestBody FileNameWrapper fileNameWrapper) throws NotFoundYamlFileException {
+    public void seedDatabase(@RequestBody FileNameWrapper fileNameWrapper) throws FileNameNotFoundException {
         String fileName = fileNameWrapper.getFileName();
         if (!databaseSeederController.existsYamlFile(fileName)) {
-            throw new NotFoundYamlFileException();
+            throw new FileNameNotFoundException();
         } else {
             databaseSeederController.seedDatabase(fileName);
         }
