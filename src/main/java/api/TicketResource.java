@@ -160,7 +160,7 @@ public class TicketResource {
         return ticketController.createTicket(ticketCreationWrapper);
     }
 
-    @RequestMapping(value = Uris.REFERENCE, method = RequestMethod.PATCH)
+    @RequestMapping(value = Uris.TICKET_REFERENCE_ID, method = RequestMethod.PATCH)
     public TicketReferenceWrapper updateTicket(@PathVariable String reference, @RequestBody TicketUpdateWrapper ticketUpdateWrapper)
             throws TicketReferenceNotFoundException, TicketProductCodeNotFoundException, TicketShoppingAmountForUpdateInvalidFieldException,
             StockNotEnoughException, VoucherNotFoundException, VoucherHasExpiredException, VoucherAlreadyConsumedException {
@@ -213,14 +213,14 @@ public class TicketResource {
         return new TicketReferenceWrapper(ticket.getReference());
     }
 
-    @RequestMapping(value = Uris.REFERENCE, method = RequestMethod.GET)
+    @RequestMapping(value = Uris.TICKET_REFERENCE_ID, method = RequestMethod.GET)
     public TicketWrapper getTicket(@PathVariable String reference) throws TicketReferenceNotFoundException {
         checkTicketReferenceExists(reference);
 
         return new TicketWrapper(ticketController.getTicket(reference));
     }
 
-    @RequestMapping(value = Uris.DAY_TICKETS + Uris.DATE, method = RequestMethod.GET)
+    @RequestMapping(value = Uris.DAY_TICKETS + Uris.TICKET_DATE_ID, method = RequestMethod.GET)
     public List<DayTicketWrapper> getWholeDayTickets(@PathVariable String date) throws DateMalformedException {
         String dateFormat = Constants.US_DATE_FORMAT;
         SimpleDateFormat dateFormatter = new SimpleDateFormat(dateFormat);
@@ -236,7 +236,7 @@ public class TicketResource {
         return ticketController.wholeDayTickets(dayToGetTickets);
     }
 
-    @RequestMapping(value = Uris.TRACKING + Uris.REFERENCE, method = RequestMethod.GET)
+    @RequestMapping(value = Uris.TICKET_TRACKING + Uris.TICKET_REFERENCE_ID, method = RequestMethod.GET)
     public List<ShoppingTrackingWrapper> getTicketTracking(@PathVariable String reference) throws TicketReferenceNotFoundException {
         checkTicketReferenceExists(reference);
 
@@ -295,7 +295,7 @@ public class TicketResource {
         }
     }
 
-    @RequestMapping(value = Uris.REFERENCE + Uris.TICKET_USER, method = RequestMethod.PATCH)
+    @RequestMapping(value = Uris.TICKET_REFERENCE_ID + Uris.TICKET_USER, method = RequestMethod.PATCH)
     public TicketWrapper associateUserToTicket(@PathVariable String reference,
             @RequestBody TicketUserPatchBodyWrapper ticketUserPatchWrapper) throws TicketReferenceNotFoundException, UserMobileNotFoundException {
         checkTicketReferenceExists(reference);

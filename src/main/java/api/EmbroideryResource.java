@@ -32,7 +32,7 @@ public class EmbroideryResource {
         embroideryController.createEmbroidery(embroideryCreationWrapper);
     }
 
-    @RequestMapping(value = Uris.CODE, method = RequestMethod.PUT)
+    @RequestMapping(value = Uris.PRODUCT_CODE_ID, method = RequestMethod.PUT)
     public void updateEmbroidery(@PathVariable String code, @RequestBody EmbroideryUpdateWrapper embroideryUpdateWrapper) throws EmbroideryNotFoundException {
         throwExceptionIfEmbroideryDoesNotExist(code);
         embroideryController.updateEmbroidery(code, embroideryUpdateWrapper);
@@ -43,13 +43,13 @@ public class EmbroideryResource {
         return embroideryController.findAllEmbroideries();
     }
     
-    @RequestMapping(value = Uris.CODE, method = RequestMethod.GET)
+    @RequestMapping(value = Uris.PRODUCT_CODE_ID, method = RequestMethod.GET)
     public EmbroideryWrapper findOneEmbroidery(@PathVariable String code) throws EmbroideryNotFoundException{
         throwExceptionIfEmbroideryDoesNotExist(code);
         return embroideryController.findOneEmbroidery(code);
     }
     
-    @RequestMapping(value = Uris.CODE, method = RequestMethod.DELETE)
+    @RequestMapping(value = Uris.PRODUCT_CODE_ID, method = RequestMethod.DELETE)
     public void deleteEmbroidery(@PathVariable String code) throws EmbroideryNotFoundException{
         throwExceptionIfEmbroideryDoesNotExist(code);
         embroideryController.deleteEmbroidery(code);        

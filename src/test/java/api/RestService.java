@@ -40,14 +40,14 @@ public class RestService {
     }
 
     public void deleteAllExceptAdmin() {
-        new RestBuilder<>(url).path(Uris.ADMINS).path(Uris.DATABASE).basicAuth(this.loginAdmin(), "").delete().build();
+        new RestBuilder<>(url).path(Uris.ADMINS).path(Uris.ADMINS_DATABASE).basicAuth(this.loginAdmin(), "").delete().build();
         adminToken = null;
         managerToken = null;
         operatorToken = null;
     }
 
     public void seedDatabase() {
-        new RestBuilder<>(url).path(Uris.ADMINS).path(Uris.DATABASE).basicAuth(this.loginAdmin(), "").post().build();
+        new RestBuilder<>(url).path(Uris.ADMINS).path(Uris.ADMINS_DATABASE).basicAuth(this.loginAdmin(), "").post().build();
     }
 
     public String loginAdmin() {

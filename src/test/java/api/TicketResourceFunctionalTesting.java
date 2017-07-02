@@ -394,7 +394,7 @@ public class TicketResourceFunctionalTesting {
         this.openCashier();
         thrown.expect(new HttpMatcher(HttpStatus.NOT_FOUND));
         String ticketReference = "justTesting-123";
-        new RestBuilder<ShoppingTrackingWrapper[]>(restService.getUrl()).path(Uris.TICKETS).path(Uris.TRACKING).pathId(ticketReference)
+        new RestBuilder<ShoppingTrackingWrapper[]>(restService.getUrl()).path(Uris.TICKETS).path(Uris.TICKET_TRACKING).pathId(ticketReference)
                 .basicAuth(restService.loginAdmin(), "").clazz(ShoppingTrackingWrapper[].class).get().build();
     }
 
@@ -478,7 +478,7 @@ public class TicketResourceFunctionalTesting {
                 .body(ticketCreationWrapper).basicAuth(restService.loginAdmin(), "").clazz(TicketReferenceWrapper.class).post().build();
 
         List<ShoppingTrackingWrapper> shoppingTrackingWrapperList = Arrays
-                .asList(new RestBuilder<ShoppingTrackingWrapper[]>(restService.getUrl()).path(Uris.TICKETS).path(Uris.TRACKING)
+                .asList(new RestBuilder<ShoppingTrackingWrapper[]>(restService.getUrl()).path(Uris.TICKETS).path(Uris.TICKET_TRACKING)
                         .pathId(ticketReference.getTicketReference()).basicAuth(restService.loginAdmin(), "")
                         .clazz(ShoppingTrackingWrapper[].class).get().build());
 

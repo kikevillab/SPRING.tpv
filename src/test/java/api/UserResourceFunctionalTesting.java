@@ -89,7 +89,7 @@ public class UserResourceFunctionalTesting {
 
     @Test
     public void testUserMobile() {
-        UserWrapper userMobile = new RestBuilder<UserWrapper>(restService.getUrl()).path(Uris.USERS + Uris.MOBILE)
+        UserWrapper userMobile = new RestBuilder<UserWrapper>(restService.getUrl()).path(Uris.USERS + Uris.USER_MOBILE)
                 .param("mobile", "666000003").param("role", "CUSTOMER").basicAuth(restService.loginAdmin(), "").clazz(UserWrapper.class)
                 .get().build();
         assertNotNull(userMobile);
@@ -98,7 +98,7 @@ public class UserResourceFunctionalTesting {
 
     @Test
     public void testUserIdentificacion() {
-        UserWrapper userIdentifaction = new RestBuilder<UserWrapper>(restService.getUrl()).path(Uris.USERS + Uris.IDENTIFICATION)
+        UserWrapper userIdentifaction = new RestBuilder<UserWrapper>(restService.getUrl()).path(Uris.USERS + Uris.USER_IDENTIFICATION)
                 .param("identification", "1235678X").param("role", "CUSTOMER").basicAuth(restService.loginAdmin(), "")
                 .clazz(UserWrapper.class).get().build();
         assertNotNull(userIdentifaction);
@@ -107,7 +107,7 @@ public class UserResourceFunctionalTesting {
 
     @Test
     public void testUserEmail() {
-        UserWrapper userEmail = new RestBuilder<UserWrapper>(restService.getUrl()).path(Uris.USERS + Uris.EMAIL)
+        UserWrapper userEmail = new RestBuilder<UserWrapper>(restService.getUrl()).path(Uris.USERS + Uris.USER_EMAIL)
                 .param("email", "user@user.com").param("role", "CUSTOMER").basicAuth(restService.loginAdmin(), "").clazz(UserWrapper.class)
                 .get().build();
         assertNotNull(userEmail);

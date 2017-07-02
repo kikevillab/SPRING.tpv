@@ -34,13 +34,13 @@ public class ProductResource {
     }
 
     // @PreAuthorize("hasRole('ADMIN')or hasRole('MANAGER') or hasRole('OPERATOR')")
-    @RequestMapping(value = Uris.CODE, method = RequestMethod.GET)
+    @RequestMapping(value = Uris.PRODUCT_CODE_ID, method = RequestMethod.GET)
     public ProductWrapper getProductByCode(@PathVariable(value = "code") String code) throws ProductCodeNotFoundException {
         throwExceptionIfProductDoesNotExists(code);
         return new ProductWrapper(productController.getProductByCode(code));
     }
 
-    @RequestMapping(value = Uris.CODE, method = RequestMethod.PATCH)
+    @RequestMapping(value = Uris.PRODUCT_CODE_ID, method = RequestMethod.PATCH)
     public void setProductAsDiscontinued(@PathVariable String code,
             @RequestBody List<PatchChangeDescriptionWrapper> patchChangeDescriptionsWrapper) throws ProductCodeNotFoundException {
         throwExceptionIfProductDoesNotExists(code);
@@ -49,14 +49,14 @@ public class ProductResource {
             String path = patchRequestBodyWrapper.getPath();
             String value = patchRequestBodyWrapper.getValue();
             if (operation.equals(PatchOperations.REPLACE)) {
-                if (path.equals(Uris.DISCONTINUED)) {
+                if (path.equals(Uris.PRODUCT_DISCONTINUED)) {
                     productController.setProductAsDiscontinued(code, Boolean.parseBoolean(value));
                 }
             }
         }
     }
 
-    @RequestMapping(value = Uris.BARCODES, method = RequestMethod.POST)
+    @RequestMapping(value = Uris.PRODUCT_BARCODES, method = RequestMethod.POST)
     public ResponseEntity<byte[]> generateBarcodesPdf(@RequestBody List<ProductBarcodeWrapper> productBarcodeWrappers)
             throws ProductCodeNotFoundException, IOException {
         productBarcodeWrappers = productBarcodeWrappers.stream()
