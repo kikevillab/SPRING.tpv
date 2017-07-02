@@ -16,7 +16,7 @@ import wrappers.FileNameWrapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {TestsApiConfig.class})
-public class DatabaseSeedResourceFunctionalTesting {
+public class AdminResourceFunctionalTesting {
 
     @Autowired
     private RestService restService;
@@ -25,17 +25,17 @@ public class DatabaseSeedResourceFunctionalTesting {
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void testNonexistentFile() {
+    public void testSeedDatabaseFileNotFound() {
         thrown.expect(new HttpMatcher(HttpStatus.NOT_FOUND));
-        new RestBuilder<Object>(restService.getUrl()).path(Uris.DATABASE_SEED).body(new FileNameWrapper("nonexistent.yml"))
+        new RestBuilder<Object>(restService.getUrl()).path(Uris.ADMINS).path(Uris.DATABASE).body(new FileNameWrapper("nonExistent.yml"))
                 .basicAuth(restService.loginAdmin(), "").post().build();
     }
 
     @Test
     public void testSeedDatabase() {
         restService.deleteAllExceptAdmin();
-        new RestBuilder<Object>(restService.getUrl()).path(Uris.DATABASE_SEED).body(new FileNameWrapper(TEST_SEED_YAML_FILE_NAME))
-                .basicAuth(restService.loginAdmin(), "").post().build();
+        new RestBuilder<Object>(restService.getUrl()).path(Uris.ADMINS).path(Uris.DATABASE)
+                .body(TEST_SEED_YAML_FILE_NAME).basicAuth(restService.loginAdmin(), "").post().build();
     }
 
 }

@@ -11,26 +11,35 @@ import java.util.Random;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import config.TestsApiConfig;
 import wrappers.TextilePrintingCreationWrapper;
 import wrappers.TextilePrintingUpdateWrapper;
 import wrappers.TextilePrintingWrapper;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = {TestsApiConfig.class})
 public class TextilePrintingResourceFunctionalTesting {
-    
+
+    @Autowired
+    private RestService restService;
+
     @Rule
     public ExpectedException thrown = ExpectedException.none();
-    
+
     @Test
-    public void none(){
-        
+    public void none() {
+
     }
 
-    //TODO Replantearse los test con herencia, ahora resultan muy repetitivos
-    //@Test 
+    // TODO Replantearse los test con herencia, ahora resultan muy repetitivos
+    // @Test
     public void testCreateTextilePrinting() {
-        String token = new RestService().loginAdmin();
         TextilePrintingCreationWrapper textilePrintingCreationWrapper = new TextilePrintingCreationWrapper();
         textilePrintingCreationWrapper.setCode("CODE");
         textilePrintingCreationWrapper.setReference("REFERENCE");
@@ -39,15 +48,14 @@ public class TextilePrintingResourceFunctionalTesting {
         textilePrintingCreationWrapper.setImage("IMAGE_URL");
         textilePrintingCreationWrapper.setRetailPrice(new BigDecimal(new Random().nextDouble()));
         textilePrintingCreationWrapper.setType("TYPE");
-        new RestBuilder<Object>(RestService.URL).path(Uris.TEXTILE_PRINTINGS).body(textilePrintingCreationWrapper).basicAuth(token, "")
-                .clazz(Object.class).post().build();
+        new RestBuilder<Object>(restService.getUrl()).path(Uris.TEXTILE_PRINTINGS).body(textilePrintingCreationWrapper)
+                .basicAuth(restService.loginAdmin(), "").clazz(Object.class).post().build();
     }
 
     // @Test
     public void testUpdateTextilePrintingWithNonExistentTextilePrinting() {
         thrown.expect(new HttpMatcher(HttpStatus.NOT_FOUND));
         String code = "00000000000";
-        String token = new RestService().loginAdmin();
         String desc = "test_desc";
         boolean discontinued = true;
         String image = "test_url";
@@ -60,14 +68,13 @@ public class TextilePrintingResourceFunctionalTesting {
         textilePrintingUpdateWrapper.setImage(image);
         textilePrintingUpdateWrapper.setRetailPrice(new BigDecimal(new Random().nextDouble()));
         textilePrintingUpdateWrapper.setType(type);
-        new RestBuilder<Object>(RestService.URL).path(Uris.TEXTILE_PRINTINGS).pathId(code).body(textilePrintingUpdateWrapper)
-                .basicAuth(token, "").clazz(Object.class).put().build();
+        new RestBuilder<Object>(restService.getUrl()).path(Uris.TEXTILE_PRINTINGS).pathId(code).body(textilePrintingUpdateWrapper)
+                .basicAuth(restService.loginAdmin(), "").clazz(Object.class).put().build();
     }
 
     // @Test
     public void testUpdateTextilePrinting() {
         String code = "8400000003333";
-        String token = new RestService().loginAdmin();
         String desc = "test_desc";
         boolean discontinued = true;
         String image = "test_url";
@@ -80,24 +87,23 @@ public class TextilePrintingResourceFunctionalTesting {
         textilePrintingUpdateWrapper.setImage(image);
         textilePrintingUpdateWrapper.setRetailPrice(new BigDecimal(new Random().nextDouble()));
         textilePrintingUpdateWrapper.setType(type);
-        new RestBuilder<Object>(RestService.URL).path(Uris.TEXTILE_PRINTINGS).pathId(code).body(textilePrintingUpdateWrapper)
-                .basicAuth(token, "").clazz(Object.class).put().build();
+        new RestBuilder<Object>(restService.getUrl()).path(Uris.TEXTILE_PRINTINGS).pathId(code).body(textilePrintingUpdateWrapper)
+                .basicAuth(restService.loginAdmin(), "").clazz(Object.class).put().build();
     }
 
     // @Test
     public void testFindOneTextilePrinting() {
         String code = "8400000003333";
-        String token = new RestService().loginAdmin();
-        TextilePrintingWrapper textilePrintingWrapper = new RestBuilder<TextilePrintingWrapper>(RestService.URL)
-                .path(Uris.TEXTILE_PRINTINGS).pathId(code).basicAuth(token, "").clazz(TextilePrintingWrapper.class).get().build();
+        TextilePrintingWrapper textilePrintingWrapper = new RestBuilder<TextilePrintingWrapper>(restService.getUrl())
+                .path(Uris.TEXTILE_PRINTINGS).pathId(code).basicAuth(restService.loginAdmin(), "").clazz(TextilePrintingWrapper.class).get()
+                .build();
         assertNotNull(textilePrintingWrapper);
     }
 
     // @Test
     public void testFindAllTextilePrintings() {
-        String token = new RestService().loginAdmin();
-        List<TextilePrintingWrapper> textilePrintingWrappers = Arrays.asList(new RestBuilder<TextilePrintingWrapper[]>(RestService.URL)
-                .path(Uris.TEXTILE_PRINTINGS).basicAuth(token, "").clazz(TextilePrintingWrapper[].class).get().build());
+        List<TextilePrintingWrapper> textilePrintingWrappers = Arrays.asList(new RestBuilder<TextilePrintingWrapper[]>(restService.getUrl())
+                .path(Uris.TEXTILE_PRINTINGS).basicAuth(restService.loginAdmin(), "").clazz(TextilePrintingWrapper[].class).get().build());
         assertNotNull(textilePrintingWrappers);
         assertFalse(textilePrintingWrappers.isEmpty());
     }
@@ -105,9 +111,8 @@ public class TextilePrintingResourceFunctionalTesting {
     // @Test
     public void testDeleteTextilePrinting() {
         String code = "8400000003337";
-        String token = new RestService().loginAdmin();
-        new RestBuilder<Object>(RestService.URL).path(Uris.TEXTILE_PRINTINGS).pathId(code).basicAuth(token, "").clazz(Object.class).delete()
-                .build();
+        new RestBuilder<Object>(restService.getUrl()).path(Uris.TEXTILE_PRINTINGS).pathId(code).basicAuth(restService.loginAdmin(), "")
+                .clazz(Object.class).delete().build();
     }
 
 }
