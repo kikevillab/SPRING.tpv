@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -132,7 +133,7 @@ public class DatabaseSeederService {
                 tokenDao.save(tpvGraph.getTokenList());
                 voucherDao.save(tpvGraph.getVoucherList());
                 providerDao.save(tpvGraph.getProviderList());
-                this.expandSize(tpvGraph);
+                this.expandAllSizes(tpvGraph);
                 articleDao.save(tpvGraph.getArticleList());
                 embroideryDao.save(tpvGraph.getEmbroideryList());
                 textilePrintingDao.save(tpvGraph.getTextilePrintingList());
@@ -148,7 +149,7 @@ public class DatabaseSeederService {
         }
     }
 
-    protected void expandSize(TpvGraph tpvGraph) {
+    protected void expandAllSizes(TpvGraph tpvGraph) {
         List<Article> articleListForRemove = new ArrayList<>();
         List<Article> articleListForAdd = new ArrayList<>();
         for (Article article : tpvGraph.getArticleList()) {
@@ -192,11 +193,10 @@ public class DatabaseSeederService {
         Barcode barcode = new Barcode();
         List<Article> articlesExpanded = new ArrayList<>();
         String articleReferenceBase = article.getReference().substring(0, article.getReference().indexOf("["));
-        int from = Integer
-                .parseInt(article.getReference().substring(article.getReference().indexOf("[") + 1, article.getReference().indexOf("..")));
-        int to = Integer
-                .parseInt(article.getReference().substring(article.getReference().indexOf("..") + 2, article.getReference().indexOf("]")));
-        for (int i = from; i <= to; i += 2) {
+        String fromString = article.getReference().substring(article.getReference().indexOf("[") + 1, article.getReference().indexOf(".."));
+        String toString = article.getReference().substring(article.getReference().indexOf("..") + 2, article.getReference().indexOf("]"));
+        String[] sizes = this.expandSize(fromString, toString);
+        for (int i = 0; i < sizes.length; i++) {
             Article articleExpanded = new Article();
             articleExpanded.setRetailPrice(article.getRetailPrice());
             articleExpanded.setWholesalePrice(article.getWholesalePrice());
@@ -204,15 +204,43 @@ public class DatabaseSeederService {
             articleExpanded.setProvider(article.getProvider());
             articleExpanded.setImage(article.getImage());
             String base = article.getCode();
-            if (i < 10) {
-                base += "0";
-            }
-            articleExpanded.setCode(base + (i) + "000" + barcode.ean13ControlCodeCalculator(base + "000"));
-            articleExpanded.setReference(articleReferenceBase + i);
-            articleExpanded.setDescription(article.getDescription() + i);
+            articleExpanded.setCode(base + this.convertSizeInCode(sizes[i]) + "000" + barcode.ean13ControlCodeCalculator(base + "000"));
+            articleExpanded.setReference(articleReferenceBase + sizes[i]);
+
+            articleExpanded.setDescription(article.getDescription() + sizes[i]);
             articlesExpanded.add(articleExpanded);
         }
         return articlesExpanded;
+    }
+
+    private String[] expandSize(String from, String to) {
+        final String size[] = {"S", "M", "L", "XL"};
+        List<String> result = new ArrayList<>();
+        int ini = Arrays.asList(size).indexOf(from);
+        int end = Arrays.asList(size).indexOf(to);
+        if (ini == -1 || end == -1) {
+            for (int i = Integer.parseInt(from); i <= Integer.parseInt(to); i += 2) {
+                result.add("" + i);
+            }
+        } else {
+            for (int i = ini; i <= end; i++) {
+                result.add(size[i]);
+            }
+        }
+        return result.toArray(new String[0]);
+    }
+
+    private String convertSizeInCode(String size) {
+        int code = Arrays.asList(new String[] {"S", "M", "L", "XL"}).indexOf(size);
+        if (code != -1) {
+            return "0" + (code + 1);
+        } else {
+            if (size.length() == 1) {
+                return "0" + size;
+            } else {
+                return size;
+            }
+        }
     }
 
     private CategoryProduct findProductCategoryOfArticle(List<CategoryProduct> productCategoryList, Article article) {
