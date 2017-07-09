@@ -28,11 +28,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import config.PersistenceConfig;
 import config.TestsPersistenceConfig;
 import daos.core.EmbroideryDao;
-import daos.core.InvoiceDao;
 import daos.core.TextilePrintingDao;
 import daos.core.VoucherDao;
 import entities.core.Embroidery;
-import entities.core.Invoice;
 import entities.core.Product;
 import entities.core.TextilePrinting;
 import entities.core.Voucher;
@@ -46,9 +44,6 @@ public class PdfGeneratorServiceIT {
     private PdfGenerationService pdfGenService;
 
     @Autowired
-    private InvoiceDao invoiceDao;
-
-    @Autowired
     private VoucherDao voucherDao;
 
     @Autowired
@@ -56,18 +51,6 @@ public class PdfGeneratorServiceIT {
 
     @Autowired
     private TextilePrintingDao textilePrintingDao;
-
-    @Test
-    public void testGenerateInvoicePdf() throws IOException {
-        Invoice invoice = invoiceDao.findAll().get(0);
-        byte[] pdfByteArray = pdfGenService.generateInvoicePdf(invoice);
-        String path = PDFS_ROOT + INVOICES_PDFS_ROOT + INVOICE_PDF_FILENAME_ROOT + invoice.getId() + PDF_FILE_EXT;
-        File pdfFile = new File(path);
-        assertFalse(pdfByteArray.length == 0);
-        assertTrue(pdfFile.exists());
-        assertTrue(pdfFile.canRead());
-        assertTrue(pdfFile.canWrite());
-    }
 
     @Test
     public void testGenerateVoucherPdf() throws IOException {
