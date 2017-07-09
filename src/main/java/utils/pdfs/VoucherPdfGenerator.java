@@ -1,4 +1,4 @@
-package services;
+package utils.pdfs;
 
 import static config.ResourceNames.VOUCHERS_PDFS_ROOT;
 import static config.ResourceNames.VOUCHER_PDF_FILENAME_ROOT;

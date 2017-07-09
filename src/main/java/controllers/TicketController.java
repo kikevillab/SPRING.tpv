@@ -1,6 +1,5 @@
 package controllers;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
@@ -22,7 +21,7 @@ import entities.core.Shopping;
 import entities.core.ShoppingState;
 import entities.core.Ticket;
 import entities.users.User;
-import services.PdfGenerationService;
+import utils.pdfs.TicketPdf;
 import wrappers.DayTicketWrapper;
 import wrappers.ShoppingCreationWrapper;
 import wrappers.ShoppingTrackingWrapper;
@@ -44,8 +43,8 @@ public class TicketController {
 
     private InvoiceDao invoiceDao;
 
-    private PdfGenerationService pdfGenService;
-    
+    private TicketPdf ticketPdf;
+
     @Autowired
     public void setTicketDao(TicketDao ticketDao) {
         this.ticketDao = ticketDao;
@@ -65,13 +64,13 @@ public class TicketController {
     public void setInvoiceDao(InvoiceDao invoiceDao) {
         this.invoiceDao = invoiceDao;
     }
-    
+
     @Autowired
-    public void setPdfGenerationService(PdfGenerationService pdfGenService){
-        this.pdfGenService = pdfGenService;
+    public void setTicketPdf(TicketPdf ticketPdf) {
+        this.ticketPdf = ticketPdf;
     }
 
-    public TicketCreationResponseWrapper createTicket(TicketCreationWrapper ticketCreationWrapper) throws IOException {
+    public TicketCreationResponseWrapper createTicket(TicketCreationWrapper ticketCreationWrapper) {
         Ticket ticket = new Ticket(this.nextId());
         Long userMobile = ticketCreationWrapper.getUserMobile();
         if (userMobile != null) {
@@ -92,7 +91,7 @@ public class TicketController {
         ticket.setShoppingList(shoppingList);
         ticketDao.save(ticket);
         ticket = ticketDao.findFirstByReference(ticket.getReference());
-        byte[] ticketPdfByteArray = pdfGenService.generateTicketPdf(ticket);
+        byte[] ticketPdfByteArray = ticketPdf.generate(ticket);
         return new TicketCreationResponseWrapper(ticketPdfByteArray, ticket.getReference());
     }
 
@@ -161,21 +160,21 @@ public class TicketController {
         }
         return dayTicketsList;
     }
-    
+
     public Page<TicketReferenceCreatedWrapper> ticketsByUserMobile(long mobile, Pageable pageable) {
         Page<Ticket> ticketPage = ticketDao.findByUserMobile(mobile, pageable);
-        List<TicketReferenceCreatedWrapper> ticketWrapperList = new ArrayList<>(); 
+        List<TicketReferenceCreatedWrapper> ticketWrapperList = new ArrayList<>();
         for (Ticket ticket : ticketPage.getContent()) {
             ticketWrapperList.add(new TicketReferenceCreatedWrapper(ticket));
         }
         return new PageImpl<TicketReferenceCreatedWrapper>(ticketWrapperList, pageable, ticketPage.getTotalElements());
     }
-       
+
     public Ticket findOneTicket(TicketReferenceWrapper ticketReferenceWrapper) {
         return ticketDao.findFirstByReference(ticketReferenceWrapper.getTicketReference());
     }
-    
-    public Ticket findOneTicketByReference(String ticketReference){
+
+    public Ticket findOneTicketByReference(String ticketReference) {
         return ticketDao.findFirstByReference(ticketReference);
     }
 
@@ -194,7 +193,7 @@ public class TicketController {
     }
 
     public List<Ticket> findAll() {
-       return ticketDao.findAll();      
+        return ticketDao.findAll();
     }
 
     public TicketWrapper associateUserToTicket(String ticketReference, Long userMobile) {

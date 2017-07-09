@@ -11,7 +11,7 @@ import org.springframework.stereotype.Controller;
 import daos.core.InvoiceDao;
 import entities.core.Invoice;
 import entities.core.Ticket;
-import services.PdfGenerationService;
+import utils.pdfs.PdfGenerationService;
 import wrappers.InvoiceCreationResponseWrapper;
 import wrappers.InvoiceIdWrapper;
 import wrappers.InvoiceWrapper;

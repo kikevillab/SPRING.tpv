@@ -1,6 +1,5 @@
 package api;
 
-import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -109,7 +108,7 @@ public class TicketResource {
     @RequestMapping(method = RequestMethod.POST)
     public TicketCreationResponseWrapper createTicket(@RequestBody TicketCreationWrapper ticketCreationWrapper)
             throws TicketShoppingListEmptyException, ProductCodeNotFoundException, UserMobileNotFoundException, StockNotEnoughException,
-            TicketShoppingAmountInvalidFieldException, TicketShoppingDiscountInvalidFieldException, IOException, VoucherNotFoundException,
+            TicketShoppingAmountInvalidFieldException, TicketShoppingDiscountInvalidFieldException, VoucherNotFoundException,
             VoucherHasExpiredException, VoucherAlreadyConsumedException {
 
         Long userMobile = ticketCreationWrapper.getUserMobile();
@@ -138,7 +137,8 @@ public class TicketResource {
             if (shoppingCreationWrapper.getDiscount() < MIN_PRODUCT_DISCOUNT
                     || shoppingCreationWrapper.getDiscount() > MAX_PRODUCT_DISCOUNT) {
                 Product product = productController.getProductByCode(productCode);
-                throw new TicketShoppingDiscountInvalidFieldException("Product: '" + product.getDescription() + "'. Product code: " + productCode);
+                throw new TicketShoppingDiscountInvalidFieldException(
+                        "Product: '" + product.getDescription() + "'. Product code: " + productCode);
             }
             // If the product is an article, check if there is enough stock and update it
             if (articleController.articleCodeExists(productCode)) {
@@ -245,15 +245,10 @@ public class TicketResource {
 
     @ApiOperation(value = "Find partners")
     @ApiImplicitParams({
-        @ApiImplicitParam(name = "page", dataType = "integer", paramType = "query",
-                value = "Results page you want to retrieve (0..N)"),
-        @ApiImplicitParam(name = "size", dataType = "integer", paramType = "query",
-                value = "Number of records per page."),
-        @ApiImplicitParam(name = "sort", allowMultiple = true, dataType = "string", paramType = "query",
-                value = "Sorting criteria in the format: property(,asc|desc). " +
-                        "Default sort order is ascending. " +
-                        "Multiple sort criteria are supported.")
-    })
+            @ApiImplicitParam(name = "page", dataType = "integer", paramType = "query", value = "Results page you want to retrieve (0..N)"),
+            @ApiImplicitParam(name = "size", dataType = "integer", paramType = "query", value = "Number of records per page."),
+            @ApiImplicitParam(name = "sort", allowMultiple = true, dataType = "string", paramType = "query", value = "Sorting criteria in the format: property(,asc|desc). "
+                    + "Default sort order is ascending. " + "Multiple sort criteria are supported.")})
     @RequestMapping(method = RequestMethod.GET)
     // @PreAuthorize("hasRole('ADMIN')or hasRole('MANAGER') or hasRole('OPERATOR')")
     public Page<TicketReferenceCreatedWrapper> getTicketsByUserMobile(@RequestParam long mobile, Pageable pageable) {
@@ -266,12 +261,10 @@ public class TicketResource {
         }
     }
 
-    
     @RequestMapping(value = Uris.ALL, method = RequestMethod.GET)
     public List<Ticket> listTickets() {
         return ticketController.findAll();
     }
-
 
     private void checkVouchers(List<String> voucherReferenceList)
             throws VoucherNotFoundException, VoucherHasExpiredException, VoucherAlreadyConsumedException {
@@ -288,16 +281,17 @@ public class TicketResource {
             }
         }
     }
-    
+
     private void throwExceptionIfUserDoesNotExist(Long userMobile) throws UserMobileNotFoundException {
-        if(!userController.userExists(userMobile)){
+        if (!userController.userExists(userMobile)) {
             throw new UserMobileNotFoundException("User mobile: " + userMobile);
         }
     }
 
     @RequestMapping(value = Uris.TICKET_REFERENCE_ID + Uris.TICKET_USER, method = RequestMethod.PATCH)
     public TicketWrapper associateUserToTicket(@PathVariable String reference,
-            @RequestBody TicketUserPatchBodyWrapper ticketUserPatchWrapper) throws TicketReferenceNotFoundException, UserMobileNotFoundException {
+            @RequestBody TicketUserPatchBodyWrapper ticketUserPatchWrapper)
+            throws TicketReferenceNotFoundException, UserMobileNotFoundException {
         checkTicketReferenceExists(reference);
         throwExceptionIfUserDoesNotExist(ticketUserPatchWrapper.getUserMobile());
         return ticketController.associateUserToTicket(reference, ticketUserPatchWrapper.getUserMobile());

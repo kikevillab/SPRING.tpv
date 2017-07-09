@@ -94,6 +94,8 @@ public class DatabaseSeederService {
     @Autowired
     private CashierClosureDao cashierClosureDao;
 
+    private Company company;
+
     @PostConstruct
     public void createDefaultAdmin() {
         Yaml adminYaml = new Yaml();
@@ -101,10 +103,10 @@ public class DatabaseSeederService {
         InputStream input;
         try {
             input = resource.getInputStream();
-            User admin = adminYaml.loadAs(input, User.class);
-
-            User adminSaved = userDao.findByMobile(admin.getMobile());
+            company = adminYaml.loadAs(input, Company.class);
+            User adminSaved = userDao.findByMobile(Long.parseLong(company.getMobile()));
             if (adminSaved == null) {
+                User admin = new User(Long.parseLong(company.getMobile()), company.getUsername(), company.getPassword());
                 userDao.save(admin);
                 authorizationDao.save(new Authorization(admin, Role.ADMIN));
             }
@@ -112,6 +114,10 @@ public class DatabaseSeederService {
             LogManager.getLogger(this.getClass().getSimpleName())
                     .error("File " + ADMIN_YAML_FILE_NAME + " doesn't exist or can't be opened");
         }
+    }
+
+    public Company getCompany() {
+        return company;
     }
 
     public void seedDatabase() {
