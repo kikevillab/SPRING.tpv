@@ -19,7 +19,7 @@ import com.itextpdf.layout.property.TextAlignment;
 
 import entities.core.Product;
 
-public class BarcodesPdfGenerator extends PdfGenerator<List<Product>> {
+public class BarcodesPdfGenerator extends PdfGeneratorOld<List<Product>> {
 
     private static final float DESCRIPTION_SIZE = 7;
 

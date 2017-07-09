@@ -28,7 +28,7 @@ import entities.core.Shopping;
 import entities.core.Ticket;
 import entities.users.User;
 
-public class InvoicePdfGenerator extends PdfGenerator<Invoice> {
+public class InvoicePdfGenerator extends PdfGeneratorOld<Invoice> {
 
     private final static float[] SHOPPING_LIST_COLUMNS_WIDTHS = new float[] {200, 10, 10, 10, 10, 10};
 
