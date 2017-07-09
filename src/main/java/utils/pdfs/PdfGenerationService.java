@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import entities.core.Invoice;
 import entities.core.Product;
-import entities.core.Ticket;
 import entities.core.Voucher;
 
 @Service
@@ -18,10 +17,6 @@ public class PdfGenerationService {
 
     public byte[] generateInvoicePdf(Invoice invoice) throws IOException {
         return new InvoicePdfGenerator(invoice).generatePdf();
-    }
-
-    public byte[] generateTicketPdf(Ticket ticket) throws IOException {
-        return new TicketPdfGenerator(ticket).generatePdf();
     }
 
     public byte[] generateVoucherPdf(Voucher voucher) throws IOException {

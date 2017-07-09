@@ -30,13 +30,11 @@ import config.TestsPersistenceConfig;
 import daos.core.EmbroideryDao;
 import daos.core.InvoiceDao;
 import daos.core.TextilePrintingDao;
-import daos.core.TicketDao;
 import daos.core.VoucherDao;
 import entities.core.Embroidery;
 import entities.core.Invoice;
 import entities.core.Product;
 import entities.core.TextilePrinting;
-import entities.core.Ticket;
 import entities.core.Voucher;
 import utils.pdfs.PdfGenerationService;
 
@@ -49,9 +47,6 @@ public class PdfGeneratorServiceIT {
 
     @Autowired
     private InvoiceDao invoiceDao;
-
-    @Autowired
-    private TicketDao ticketDao;
 
     @Autowired
     private VoucherDao voucherDao;
@@ -67,18 +62,6 @@ public class PdfGeneratorServiceIT {
         Invoice invoice = invoiceDao.findAll().get(0);
         byte[] pdfByteArray = pdfGenService.generateInvoicePdf(invoice);
         String path = PDFS_ROOT + INVOICES_PDFS_ROOT + INVOICE_PDF_FILENAME_ROOT + invoice.getId() + PDF_FILE_EXT;
-        File pdfFile = new File(path);
-        assertFalse(pdfByteArray.length == 0);
-        assertTrue(pdfFile.exists());
-        assertTrue(pdfFile.canRead());
-        assertTrue(pdfFile.canWrite());
-    }
-
-    @Test
-    public void testGenerateTicketPdf() throws IOException {
-        Ticket ticket = ticketDao.findAll().get(0);
-        byte[] pdfByteArray = pdfGenService.generateTicketPdf(ticket);
-        String path = PDFS_ROOT + TICKETS_PDFS_ROOT + TICKET_PDF_FILENAME_ROOT + ticket.getId() + PDF_FILE_EXT;
         File pdfFile = new File(path);
         assertFalse(pdfByteArray.length == 0);
         assertTrue(pdfFile.exists());

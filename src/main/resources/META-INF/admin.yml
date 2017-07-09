@@ -3,3 +3,9 @@ mobile: 123456789
 username: admin
 password: admin
 email: admin@gmail.com
+# Company data
+company: UPM
+logo: logo_upm.jpg
+nif: 12345678U
+phone: 123.456.789
+postalAddress: Calle Alan Turing s/n (Ctra. Valencia km7), 28031 Madrid.

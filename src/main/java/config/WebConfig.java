@@ -16,7 +16,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @EnableAsync
 @EnableScheduling
 @ComponentScan(basePackages = {ResourceNames.REST_API, ResourceNames.CONTROLLERS, ResourceNames.DAOS_USERS, ResourceNames.DAOS_CORE,ResourceNames.BATCH,
-        ResourceNames.SERVICES})
+        ResourceNames.SERVICES, ResourceNames.UTILS_PDFS})
 public class WebConfig extends WebMvcConfigurerAdapter {
 
     // CORS
