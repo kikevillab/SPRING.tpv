@@ -15,6 +15,14 @@ import services.DatabaseSeederService;
 
 @Component
 public class TicketPdf {
+    
+    private static final String PDF_PATH = "/tickets/ticket-";
+
+    private static final float[] TABLE_COLUMNS_SIZES= {20, 85, 20, 30, 40, 15};
+
+    private static final String[] TABLE_COLUMNS_HEADERS= {" ", "Desc.", "Ud.", "Dto.", "€", "E."};
+    
+    private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm";
 
     private Company company;
 
@@ -24,14 +32,17 @@ public class TicketPdf {
     }
 
     public byte[] generate(Ticket ticket) {
-        PdfBuilder pdf = new PdfBuilder("/tickets/ticket-" + ticket.getDate() + ticket.getId()).pageTermic();
+        PdfBuilder pdf = new PdfBuilder(PDF_PATH + ticket.getDate() + ticket.getId()).pageTermic();
         pdf.addImage(company.getLogo());
+        
         pdf.paragraphEmphasized("Tfno: " + company.getPhone()).paragraph("NIF: " + company.getNif()).paragraph(company.getPostalAddress());
+        
         pdf.barCode(ticket.getDate() + "" + ticket.getId()).separator();
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        
+        SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT);
         pdf.paragraphEmphasized(formatter.format(ticket.getCreated().getTimeInMillis()));
-        pdf.table(20, 85, 20, 30, 40, 15).tableHeader(" ", "Desc.", "Ud.", "Dto.", "€", "E.");
-
+        
+        pdf.table(TABLE_COLUMNS_SIZES).tableHeader(TABLE_COLUMNS_HEADERS);
         for (int i = 0; i < ticket.getShoppingList().size(); i++) {
             Shopping shopping = ticket.getShoppingList().get(i);
             String state = "";

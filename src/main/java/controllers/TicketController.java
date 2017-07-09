@@ -1,6 +1,5 @@
 package controllers;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
@@ -71,7 +70,7 @@ public class TicketController {
         this.ticketPdf = ticketPdf;
     }
 
-    public TicketCreationResponseWrapper createTicket(TicketCreationWrapper ticketCreationWrapper) throws IOException {
+    public TicketCreationResponseWrapper createTicket(TicketCreationWrapper ticketCreationWrapper) {
         Ticket ticket = new Ticket(this.nextId());
         Long userMobile = ticketCreationWrapper.getUserMobile();
         if (userMobile != null) {
