@@ -23,7 +23,7 @@ import com.itextpdf.layout.property.TextAlignment;
 import config.ResourceNames;
 import entities.core.Voucher;
 
-public class VoucherPdfGenerator extends PdfGenerator<Voucher> {
+public class VoucherPdfGenerator extends PdfGeneratorOld<Voucher> {
 
     private final static float VOUCHER_PAGE_WIDHT = 227;
 

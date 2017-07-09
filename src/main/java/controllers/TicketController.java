@@ -21,7 +21,7 @@ import entities.core.Shopping;
 import entities.core.ShoppingState;
 import entities.core.Ticket;
 import entities.users.User;
-import utils.pdfs.TicketPdf;
+import utils.pdfs.PdfGenerator;
 import wrappers.DayTicketWrapper;
 import wrappers.ShoppingCreationWrapper;
 import wrappers.ShoppingTrackingWrapper;
@@ -43,7 +43,7 @@ public class TicketController {
 
     private InvoiceDao invoiceDao;
 
-    private TicketPdf ticketPdf;
+    private PdfGenerator pdfGenerator;
 
     @Autowired
     public void setTicketDao(TicketDao ticketDao) {
@@ -66,8 +66,8 @@ public class TicketController {
     }
 
     @Autowired
-    public void setTicketPdf(TicketPdf ticketPdf) {
-        this.ticketPdf = ticketPdf;
+    public void setPdfGenerator(PdfGenerator pdfGenerator) {
+        this.pdfGenerator = pdfGenerator;
     }
 
     public TicketCreationResponseWrapper createTicket(TicketCreationWrapper ticketCreationWrapper) {
@@ -91,7 +91,7 @@ public class TicketController {
         ticket.setShoppingList(shoppingList);
         ticketDao.save(ticket);
         ticket = ticketDao.findFirstByReference(ticket.getReference());
-        byte[] ticketPdfByteArray = ticketPdf.generate(ticket);
+        byte[] ticketPdfByteArray = pdfGenerator.generate(ticket);
         return new TicketCreationResponseWrapper(ticketPdfByteArray, ticket.getReference());
     }
 

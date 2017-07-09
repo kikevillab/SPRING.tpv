@@ -1,103 +1,95 @@
 package utils.pdfs;
 
-import static config.ResourceNames.PDFS_ROOT;
-import static config.ResourceNames.PDF_FILE_EXT;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.SimpleDateFormat;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import com.itextpdf.kernel.font.PdfFont;
-import com.itextpdf.kernel.geom.PageSize;
-import com.itextpdf.kernel.pdf.PdfDocument;
-import com.itextpdf.kernel.pdf.PdfWriter;
-import com.itextpdf.layout.Document;
-import com.itextpdf.layout.property.HorizontalAlignment;
-import com.itextpdf.layout.property.TextAlignment;
+import entities.core.Invoice;
+import entities.core.Shopping;
+import entities.core.ShoppingState;
+import entities.core.Ticket;
+import services.Company;
+import services.DatabaseSeederService;
 
-public abstract class PdfGenerator<T> {
+@Component
+public class PdfGenerator {
 
-    protected Document document;
+    private static final float[] TABLE_COLUMNS_SIZES = {20, 85, 20, 30, 40, 15};
 
-    protected T entity;
+    private static final String[] TABLE_COLUMNS_HEADERS = {" ", "Desc.", "Ud.", "Dto.", "€", "E."};
 
-    public PdfGenerator(T entity) {
-        this.entity = entity;
+    private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm";
+
+    private Company company;
+
+    @Autowired
+    public void setDatabaseSeederService(DatabaseSeederService databaseSeederService) {
+        this.company = databaseSeederService.getCompany();
     }
 
-    public void setEntity(T entity) {
-        this.entity = entity;
-    }
+    public byte[] generate(Ticket ticket) {
+        final String path = "/tickets/ticket-";
 
-    private void makeDirectories(String fullPath) {
-        File file = new File(createFullPath(fullPath));
-        if (!file.exists()) {
-            file.getParentFile().mkdirs();
+        PdfBuilder pdf = new PdfBuilder(path + ticket.getDate() + ticket.getId()).pageTermic();
+        pdf.addImage(company.getLogo());
+
+        pdf.paragraphEmphasized("Tfno: " + company.getPhone()).paragraph("NIF: " + company.getNif()).paragraph(company.getPostalAddress());
+
+        pdf.barCode(ticket.getDate() + "" + ticket.getId()).separator();
+
+        SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT);
+        pdf.paragraphEmphasized(formatter.format(ticket.getCreated().getTimeInMillis()));
+
+        pdf.valuesTable(TABLE_COLUMNS_SIZES).tableHeader(TABLE_COLUMNS_HEADERS);
+        for (int i = 0; i < ticket.getShoppingList().size(); i++) {
+            Shopping shopping = ticket.getShoppingList().get(i);
+            String state = "";
+            if (shopping.getShoppingState() != ShoppingState.COMMITTED) {
+                state = "N";
+            }
+            pdf.tableCell(String.valueOf(i + 1), shopping.getDescription(), String.valueOf(shopping.getAmount()),
+                    shopping.getDiscount() + "%", new BigDecimal(shopping.getShoppingTotal()).setScale(2, RoundingMode.HALF_UP) + "€",
+                    state);
         }
+        pdf.tableColspanRight("TOTAL: " + ticket.getTicketTotal().setScale(2, RoundingMode.HALF_UP) + "€").separator();
+
+        pdf.paragraph("Periodo de devolución o cambio: 15 dias a partir de la fecha del ticket");
+        pdf.paragraphEmphasized("Gracias por su compra");
+        pdf.qrCode(ticket.getReference());
+
+        return pdf.build();
     }
 
-    private String createFullPath(String path) {
-        if (!path.startsWith(PDFS_ROOT)) {
-            path = PDFS_ROOT + path;
+    public byte[] generate(Invoice invoice) {
+        final String path = "/invoices/invoice-";
+
+        PdfBuilder pdf = new PdfBuilder(path + invoice.getId()).pageTermic();
+
+        pdf.header(company.getLogo(), company.getCompany() + "\n" + "NIF: " + company.getNif() + "\n" + company.getPostalAddress());
+        pdf.header(
+                "Factura Nº: " + invoice.getId() + "       " + new SimpleDateFormat("dd 'de' MMM 'de' yyyy").format(invoice.getCreated().getTimeInMillis()));
+        pdf.separator();
+
+        pdf.header(invoice.getTicket().getUser().getUsername() + "\n" + "DNI: " + invoice.getTicket().getUser().getDni() + "\n"
+                + invoice.getTicket().getUser().getAddress()).separator();
+
+        pdf.valuesTable(100, 20, 30, 40).tableHeader("Desc.", "Ud.", "Dto.", "€");
+        for (int i = 0; i < invoice.getTicket().getShoppingList().size(); i++) {
+            Shopping shopping = invoice.getTicket().getShoppingList().get(i);
+            pdf.tableCell(shopping.getDescription(), String.valueOf(shopping.getAmount()), shopping.getDiscount() + "%",
+                    new BigDecimal(shopping.getShoppingTotal()).setScale(2, RoundingMode.HALF_UP) + "€");
         }
-        if (!path.endsWith(PDF_FILE_EXT)) {
-            path += PDF_FILE_EXT;
-        }
-        return path;
-    }
 
-    protected abstract String path();
-
-    protected abstract PageSize pageSize();
-
-    protected abstract PdfFont font() throws IOException, URISyntaxException;
-
-    protected abstract float fontSize();
-
-    protected abstract HorizontalAlignment horizontalAlignment();
-
-    protected abstract TextAlignment textAlignment();
-
-    protected abstract float leftMargin();
-
-    protected abstract float rightMargin();
-
-    protected abstract float topMargin();
-
-    protected abstract float bottomMargin();
-
-    protected abstract void buildPdf();
-
-    private Document getDocument(String fullPath, PageSize pageSize) throws IOException {
-        PdfWriter pdfWriter = new PdfWriter(fullPath);
-        PdfDocument pdfDocument = new PdfDocument(pdfWriter);
-        return new Document(pdfDocument, pageSize);
-    }
-
-    public byte[] generatePdf() throws IOException {
-        String fullPath = this.createFullPath(this.path());
-        this.makeDirectories(fullPath);
-        document = this.getDocument(fullPath, pageSize());
-        document.setMargins(this.topMargin(), this.rightMargin(), this.bottomMargin(), this.leftMargin());
-        try{
-            document.setFont(font());
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }      
-        document.setFontSize(fontSize());
-        document.setHorizontalAlignment(horizontalAlignment());
-        document.setTextAlignment(textAlignment());
-        this.buildPdf();
-        document.close();
-        return Files.readAllBytes(new File(fullPath).toPath());
-    }
-    
-    protected String getAbsolutePathOfResource(String type, String resource) throws URISyntaxException{
-        URL resourceURL = getClass().getClassLoader().getResource(type + resource);
-        return Paths.get(resourceURL.toURI()).toFile().getAbsolutePath();
+        BigDecimal baseImponible = invoice.getTicket().getTicketTotal().divide(new BigDecimal(1.21), 2, RoundingMode.HALF_UP);
+        pdf.tableColspanRight("Base Imponible: " + baseImponible + "€");
+        pdf.tableColspanRight("21% IVA: " + baseImponible.multiply(new BigDecimal(21).movePointLeft(2)) + "€");
+        pdf.tableColspanRight("TOTAL: " + invoice.getTicket().getTicketTotal().setScale(2, RoundingMode.HALF_UP) + "€").separator();
+        pdf.barCode(String.valueOf(invoice.getId()));
+        
+        return pdf.build();
     }
 
 }

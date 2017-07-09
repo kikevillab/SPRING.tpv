@@ -19,6 +19,7 @@ import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
+import com.itextpdf.layout.border.Border;
 import com.itextpdf.layout.border.SolidBorder;
 import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Image;
@@ -120,7 +121,7 @@ public class PdfBuilder {
         return this;
 
     }
-    
+
     public PdfBuilder paragraph(String text) {
         document.add(new Paragraph(text));
         return this;
@@ -140,7 +141,7 @@ public class PdfBuilder {
         return this;
     }
 
-    public PdfBuilder table(float... widths) {
+    public PdfBuilder valuesTable(float... widths) {
         table = new Table(widths, true);
         table.setBorder(new SolidBorder(Color.WHITE, 2));
         table.setVerticalAlignment(VerticalAlignment.MIDDLE);
@@ -172,12 +173,42 @@ public class PdfBuilder {
         return this;
     }
 
+    public PdfBuilder header(String logoFileName, String header) {
+        Table table = new Table(new float[] {1, 2}, true);
+        table.setBorder(Border.NO_BORDER);
+        try {
+            Image img = new Image(ImageDataFactory.create(this.absolutePathOfResource(ResourceNames.IMAGES + logoFileName)));
+            img.setWidth(50);
+            img.setHorizontalAlignment(HorizontalAlignment.LEFT);
+            table.addCell(new Cell().add(img).setBorder(Border.NO_BORDER));
+        } catch (MalformedURLException mue) {
+            LogManager.getLogger().error("File: " + mue);
+        }
+        Paragraph paragraph = new Paragraph();
+        paragraph.setTextAlignment(TextAlignment.RIGHT);
+        paragraph.setBold();
+        paragraph.add(header);
+        table.addCell(new Cell().add(paragraph).setBorder(Border.NO_BORDER));
+        document.add(table);
+        return this;
+    }
+    
+    public PdfBuilder header(String header){
+        Paragraph paragraph = new Paragraph(header);
+        paragraph.setTextAlignment(TextAlignment.CENTER);
+        paragraph.setBold();
+        paragraph.setFontSize(TERMIC_FONT_SIZE_EMPHASIZEDD);
+        document.add(paragraph);
+        return this;
+    }
+
     public PdfBuilder barCode(String code) {
         Barcode128 code128 = new Barcode128(document.getPdfDocument());
         code128.setCodeType(Barcode128.CODE128);
         code128.setCode(code.trim());
         Image code128Image = new Image(code128.createFormXObject(document.getPdfDocument()));
         code128Image.setWidthPercent(50);
+        code128Image.setHorizontalAlignment(HorizontalAlignment.CENTER);
         document.add(code128Image);
         return this;
     }
@@ -193,7 +224,6 @@ public class PdfBuilder {
         document.add(paragraph);
         return this;
     }
-
 
     public byte[] build() {
         document.close();
