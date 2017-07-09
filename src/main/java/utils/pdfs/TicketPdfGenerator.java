@@ -1,4 +1,4 @@
-package services;
+package utils.pdfs;
 
 import static config.ResourceNames.TICKETS_PDFS_ROOT;
 import static config.ResourceNames.TICKET_PDF_FILENAME_ROOT;

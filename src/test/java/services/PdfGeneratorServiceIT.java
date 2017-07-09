@@ -38,6 +38,7 @@ import entities.core.Product;
 import entities.core.TextilePrinting;
 import entities.core.Ticket;
 import entities.core.Voucher;
+import utils.pdfs.PdfGenerationService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {PersistenceConfig.class, TestsPersistenceConfig.class})

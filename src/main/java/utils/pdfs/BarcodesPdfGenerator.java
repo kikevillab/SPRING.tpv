@@ -1,4 +1,4 @@
-package services;
+package utils.pdfs;
 
 import static config.ResourceNames.BARCODES_PDFS_ROOT;
 import static config.ResourceNames.BARCODE_PDF;

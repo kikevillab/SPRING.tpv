@@ -1,4 +1,4 @@
-package services;
+package utils.pdfs;
 
 import static config.ResourceNames.INVOICES_PDFS_ROOT;
 import static config.ResourceNames.INVOICE_PDF_FILENAME_ROOT;

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Controller;
 
 import daos.core.VoucherDao;
 import entities.core.Voucher;
-import services.PdfGenerationService;
+import utils.pdfs.PdfGenerationService;
 import wrappers.ActiveVouchersTotalValueWrapper;
 import wrappers.VoucherCreationResponseWrapper;
 import wrappers.VoucherCreationWrapper;

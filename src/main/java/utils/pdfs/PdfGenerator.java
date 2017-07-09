@@ -1,4 +1,4 @@
-package services;
+package utils.pdfs;
 
 import static config.ResourceNames.PDFS_ROOT;
 import static config.ResourceNames.PDF_FILE_EXT;
@@ -78,10 +78,10 @@ public abstract class PdfGenerator<T> {
     }
 
     public byte[] generatePdf() throws IOException {
-        String fullPath = createFullPath(path());
-        makeDirectories(fullPath);
-        document = getDocument(fullPath, pageSize());
-        document.setMargins(topMargin(), rightMargin(), bottomMargin(), leftMargin());
+        String fullPath = this.createFullPath(this.path());
+        this.makeDirectories(fullPath);
+        document = this.getDocument(fullPath, pageSize());
+        document.setMargins(this.topMargin(), this.rightMargin(), this.bottomMargin(), this.leftMargin());
         try{
             document.setFont(font());
         } catch (URISyntaxException e) {
@@ -90,7 +90,7 @@ public abstract class PdfGenerator<T> {
         document.setFontSize(fontSize());
         document.setHorizontalAlignment(horizontalAlignment());
         document.setTextAlignment(textAlignment());
-        buildPdf();
+        this.buildPdf();
         document.close();
         return Files.readAllBytes(new File(fullPath).toPath());
     }

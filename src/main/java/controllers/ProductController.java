@@ -10,7 +10,7 @@ import org.springframework.stereotype.Controller;
 
 import daos.core.ProductDao;
 import entities.core.Product;
-import services.PdfGenerationService;
+import utils.pdfs.PdfGenerationService;
 import wrappers.ProductBarcodeWrapper;
 
 @Controller

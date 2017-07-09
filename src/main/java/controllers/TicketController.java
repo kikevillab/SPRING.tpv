@@ -22,7 +22,7 @@ import entities.core.Shopping;
 import entities.core.ShoppingState;
 import entities.core.Ticket;
 import entities.users.User;
-import services.PdfGenerationService;
+import utils.pdfs.PdfGenerationService;
 import wrappers.DayTicketWrapper;
 import wrappers.ShoppingCreationWrapper;
 import wrappers.ShoppingTrackingWrapper;
