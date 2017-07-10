@@ -16,8 +16,6 @@ before_install:
 script:
 #Test unitario y de integracion
 - mvn verify --settings settings.xml
-#Lanzamos los test de api sobre PRE
-- mvn verify -Pfunctional-api-test
 deploy:
   provider: heroku
   api_key: $HEROKU_API_KEY
