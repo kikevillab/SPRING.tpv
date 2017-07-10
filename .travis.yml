@@ -15,7 +15,7 @@ before_install:
 - mysql -e 'CREATE DATABASE IF NOT EXISTS tpv;'
 script:
 #Test unitario y de integracion
-- mvn verify --settings settings.xml
+- echo "hola"
 deploy:
   provider: heroku
   api_key: $HEROKU_API_KEY
