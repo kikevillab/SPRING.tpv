@@ -6,10 +6,9 @@ branches:
   - master
   - develop
 notifications:
-  slack: tpv-miw:RR3NECTV3PaLvPZOUUd8qF7O
   email:
     recipients:
-    - j.bernal@upm.es
+    - e.arranz@alumnos.upm.es
 services:
 - mysql
 before_install:
@@ -17,19 +16,13 @@ before_install:
 script:
 #Test unitario y de integracion
 - mvn verify --settings settings.xml
-#Nos aseguramos de que este creado el administrador en la base de datos (PRE)
-- mvn install -DskipTests=true -Denvironment.type=preproduction
-- mvn test -Dtest=DatabaseSeederServiceIT#testCreateDefaultAdmin -Denvironment.type=preproduction
-- mvn test -Dtest=DatabaseSeedResourceFunctionalTesting#testSeedDatabase -Pfunctional-api-test
 #Lanzamos los test de api sobre PRE
 - mvn verify -Pfunctional-api-test
 deploy:
   provider: heroku
-  api_key:
-    secure: NIdMLsrbkWMbSSsARuq+wdJnFL6LNmT5Lj+ohutV2TuOUJGkV/2ZiOq/X0Q9BlukSWziwhEUSi6vW2MJ8O7wXU7a2+PfhiR9FyYe6Ny7E6zfnJYzNxHVL5pi85dh+pYnJ6Snb556g35fnn90BRQXyv1b7Uh2LbOMugV8TIZKrbdRIUXsx6qql4OJM9ZSQ7RztkP5CdpyD57LrEvk1KYex/dCZs24M4W810KRbKc7/oniYkNtsZ/8AKhKC8FwGoykpI47cZrJPJ+2OdORWaO23JfplAy1YheZ5U7Z7MbRTlsVMKR9luspa/jP96Z0hHB4glVdu82sjUGn0NdwYfakbVSDjIXbxtrZSmYQHaPf3q0vzzNgAdOaodfKi7/zKWW31AT4t2LD266rUXcVKOOxeXmuzq9NvloarvtfTiSTBbGVXPjs2SBPeyHHYfNFuE58OSzEbTWExd6JJO7GIfZL9xLUvRMk4H04XQKwk6dZfY37b9yex1DWHXV7JlEATHO48ERsYZdEAyqfl4n9AdD25T0ZLMDgQSG84pTTSJMYNF5xYJMPIxCUwXs/Y8YHvk4g+HSfp557dVYNQWxPGL5S/g/4lgAnNF4XfrG/EYOvCBqmc8EQz6p0bpUoTzQ1XdDLXAPGs+kq7LxquPOF/o4QkUR719Mi9U+KnXPIEHazJz4=
-  app: miw-upm-tpv
-  skip_cleanup: true
+  api_key: $HEROKU_API_KEY
+  app: test-tpv
   on:
-    repo: miw-upm/SPRING.tpv
+    repo: kikevillab/SPRING.tpv
     branch: develop
 

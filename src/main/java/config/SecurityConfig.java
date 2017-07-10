@@ -29,9 +29,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeRequests()//
-            .antMatchers(Uris.SERVLET_MAP + Uris.VERSION + Uris.TOKENS + "/**").authenticated()//
-/*                .antMatchers(HttpMethod.GET, Uris.SERVLET_MAP + Uris.VERSION + Uris.ADMINS).permitAll()//
+        http.csrf().disable().authorizeRequests().antMatchers(Uris.SERVLET_MAP + Uris.VERSION + "/**").permitAll();//
+        /*  .antMatchers(Uris.SERVLET_MAP + Uris.VERSION + Uris.TOKENS + "/**").authenticated()//
+                .antMatchers(HttpMethod.GET, Uris.SERVLET_MAP + Uris.VERSION + Uris.ADMINS).permitAll()//
                 .antMatchers(Uris.SERVLET_MAP + Uris.VERSION + Uris.DATABASE_SEED + "/**").permitAll()//.hasRole(Role.ADMIN.name())//
                 .antMatchers(Uris.SERVLET_MAP + Uris.VERSION + Uris.ADMINS + "/**").hasRole(Role.ADMIN.name())//
                 .antMatchers(HttpMethod.POST, Uris.SERVLET_MAP + Uris.VERSION + Uris.USERS + "/**").hasRole(Role.ADMIN.name())//
@@ -39,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .hasAnyRole(Role.MANAGER.name(), Role.OPERATOR.name())//                
                 .antMatchers(Uris.SERVLET_MAP + Uris.VERSION + Uris.PDF_GENERATION + "/**")
                     .hasAnyRole(Role.ADMIN.name(),Role.MANAGER.name(), Role.OPERATOR.name())*/
-                .and().httpBasic();//
+              //  .and().httpBasic();//
     }
 
     @Bean
